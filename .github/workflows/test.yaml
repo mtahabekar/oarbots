@@ -42,6 +42,6 @@ jobs:
           source /opt/ros/jazzy/setup.bash
           source install/setup.bash
           source /tmp/oarbots-venv/bin/activate
-          colcon test --packages-select rokubi_force_torque_publisher force_torque_calibration oarbot_runtime tablet_gui
+          colcon test --packages-select rokubi_force_torque_publisher force_torque_calibration oarbot_runtime tablet_gui human_hand_tracking fabric_perception
           colcon test-result --verbose
           bash scripts/check_platform.sh

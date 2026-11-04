@@ -1,0 +1,40 @@
+/**:
+  ros__parameters:
+    # EXAMPLE calibration: replace colour, size, offsets and ROI for this cell.
+    glove_tag_dictionary: DICT_4X4_50
+    glove_tag_ids: [20, 21]  # human_left, human_right; avoid robot tags 0/4
+    glove_tag_size_m: 0.04  # outer black square, excluding white margin
+    glove_hsv_lower: [35, 80, 60]  # example: bright green gloves
+    glove_hsv_upper: [90, 255, 255]
+    tag_to_grip_offsets_m: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+    tag_max_reprojection_px: 2.0
+    tag_min_color_support: 0.08
+    tag_pixel_stddev: 0.7
+    tag_position_floor_m: 0.01
+    workspace_roi: [0.0, 0.0, 1.0, 1.0]  # normalized x0,y0,x1,y1
+    segmentation_backend: hsv
+    segmentation_model: ''
+    model_input_size: [640, 384]  # width,height
+    segmentation_confidence: 0.65
+    cloth_max_value: 85
+    cloth_max_saturation: 110
+    min_component_area: 300
+    # No trained weights are bundled. Never invent UV from image coordinates.
+    uv_model: ''
+    uv_confidence: 0.7
+    uv_stddev: 0.05  # normalized material units; must be calibrated on real data
+    min_depth_m: 0.2
+    max_depth_m: 3.0
+    depth_edge_threshold_m: 0.03
+    depth_noise_floor_m: 0.003
+    depth_noise_scale: 0.002
+    sample_stride: 8
+    max_depth_samples: 1500
+    max_boundary_points: 1200
+    max_tracks: 200
+    track_max_gap_sec: 0.2
+    track_fb_threshold_px: 1.0
+    sync_slop_sec: 0.015
+    max_age_sec: 0.25
+    require_robot_mask: false
+    publish_debug_images: false

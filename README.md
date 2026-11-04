@@ -10,3 +10,8 @@ python3 scripts/apply_dependency_patches.py --workspace-src src
 ```
 
 After building and sourcing the workspace, run `bash scripts/check_platform.sh` for isolated software checks. Read the audit before deploying: camera extrinsics, serial identities, body selection, and physical stopping/calibration tests remain installation-specific.
+
+## Fabric perception
+
+See [the perception pipeline](docs/fabric-perception.md) for tagged-glove tracking,
+per-camera fabric observations, configuration, build and replay instructions.
