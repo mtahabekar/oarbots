@@ -16,7 +16,7 @@ This setup does not need to be performed on the OARBot Wi-Fi network or while an
 The location of the ROS2 directory should be easily accessible. For Linux systems, the most common convention is to create the directory `ros2_ws` in the `home/<USERNAME>` (also called `~`) directory, where `<USERNAME>` is your Linux account username. To create this directory, run
 
 ```bash
-mkdir ~/ros2_ws`
+mkdir -p ~/ros2_ws
 ```
 
 ### Cloning the Repository
@@ -46,6 +46,7 @@ To install these packages, run
 cd src
 vcs import < ../packages.repos .
 cd ..
+python3 scripts/apply_dependency_patches.py --workspace-src src
 ```
 
 If the command `vcs` is not found (this may happen on Windows but should not happen on Linux), you can try installing it or manually clone each repository from [packages.repos](https://github.com/rpiRobotics/oarbots/blob/main/packages.repos) into the `src` directory of your `ros2_ws` directory.
@@ -67,10 +68,18 @@ rosdep update
 Next, run
 
 ```bash
-rosdep install --from-paths src --ignore-src
+rosdep install --from-paths src --ignore-src --skip-keys python3-pyside6 -y
 ```
 
-to install packages required by the ROS2 nodes in your workspace. You may need to confirm installations several times during the process.
+to install ROS dependencies. On Ubuntu Noble, install the tablet GUI dependency in a virtual environment that can also see the system ROS modules:
+
+```bash
+python3 -m venv --system-site-packages .venv
+source .venv/bin/activate
+pip install PySide6==6.8.3
+```
+
+Use that environment for GUI tests and tablet execution. Dependencies are pinned in `packages.repos`; apply the repository patches before building. Do not run `vcs pull` on the patched checkouts.
 
 
 
@@ -171,7 +180,10 @@ This launches an application that allows you to view Kinect sensor data. If you 
 To update USB permission rules, run
 
 ```bash
-echo 'KERNEL=="ttyUSB*", ATTRS{idVendor}=="0403", SYMLINK+="sensor_bota_rokubi_ft_0", MODE:="666"' | sudo tee /etc/udev/rules.d/99-bota-rokubi-ft.rules
+# Inspect the actual sensor serial first; edit the template to match only that sensor.
+udevadm info --attribute-walk --name=/dev/ttyUSB0
+# Edit config/99-bota-rokubi-ft.rules, then install the completed rule:
+sudo install -m 0644 config/99-bota-rokubi-ft.rules /etc/udev/rules.d/99-bota-rokubi-ft.rules
 ```
 
 followed by
@@ -216,7 +228,7 @@ Certain projects require custom files not just on a personal device but on an OA
 
 ### Creating a user workspace on the OARBot Device
 
-Each user (or project) should work in their own ROS2 workspace directory. This avoids clutter in the OARBot device's `ros2_ws` directory. <u>Additionally, the `ros2_ws` directory is updated by Continuous Deployment, so any changes made may be removed automatically</u>.
+Each user (or project) should work in their own ROS2 workspace directory. This avoids clutter in the OARBot device's `ros2_ws` directory. Updates are now explicit maintenance operations. Stop the runtime service before running the update script; it refuses to rebuild an active platform and never resets modified dependency checkouts.
 
 To create the new directory, SSH into the device (see [Device Credentials](../getting-started/device-credentials.mdx)), navigate to `home/<OARBOT_DEVICE_USERNAME>` (also called `~`) where `<OARBOT_DEVICE_USERNAME>` is the username of the OARBot device, and run
 
@@ -230,3 +242,4 @@ All files for your project will live in this directory.
 
 :::info
 If you are looking to add a global ROS2 node, view instructions in [Fixing Bugs & Adding Features](../getting-started/fixing-bugs-and-adding-features.mdx).
+:::

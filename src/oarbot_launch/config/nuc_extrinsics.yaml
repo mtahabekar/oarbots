@@ -1,0 +1,9 @@
+# No assumed camera height or yaw. Measure six-DOF extrinsics before enabling.
+# Alternatively publish world -> nuc/camera_base from one external TF authority.
+/**:
+  ros__parameters:
+    publish_camera_tf: false
+    world_frame: world
+    camera_base_frame: nuc/camera_base
+    camera_translation: [0.0, 0.0, 0.0]
+    camera_rpy: [0.0, 0.0, 0.0]

@@ -1,6 +1,10 @@
 cmake_minimum_required(VERSION 3.28)
 project(admittance_control)
 
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+add_compile_options(-Wall -Wextra -Wpedantic)
+
 # find dependencies
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
@@ -30,8 +34,8 @@ target_include_directories(admittance_control
 )
 
 install(DIRECTORY
-  include
-  DESTINATION include/${PROJECT_NAME}
+  include/
+  DESTINATION include
 )
 
 install(TARGETS

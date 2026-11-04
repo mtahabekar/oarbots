@@ -1,65 +1,34 @@
 #ifndef BOTA_FORCE_TORQUE_SENSOR_COMM
 #define BOTA_FORCE_TORQUE_SENSOR_COMM
 
-#include <stdio.h>
-#include <stdint.h>
+#include <array>
+#include <cstddef>
+#include <cstdint>
+#include <vector>
 
+// Rokubi: 0xAA, 34 payload bytes, little-endian CRC-16/X25.
+// Decode explicitly instead of aliasing packed unions and unaligned floats.
 class BotaForceTorqueSensorComm
 {
-private:
-  bool _synced;
-  uint32_t _crc_err_count;
-  int serial_port;
-  union DataStatus
-  {
-      struct __attribute__((__packed__))
-      {
-          uint16_t app_took_too_long:1;
-          uint16_t overrange:1;
-          uint16_t invalid_measurements:1;
-          uint16_t raw_measurements:1;
-          uint16_t:12; //reserved
-      };
-      uint16_t val;
-      uint8_t bytes[1];
-  };
-  union AppOutput
-  {
-      struct __attribute__((__packed__))
-      {
-          DataStatus status;
-          float forces[6];
-          uint32_t timestamp;
-          float temperature;
-      };
-      uint8_t bytes[1];
-  };
-  union RxFrame
-  {
-      struct __attribute__((__packed__))
-      {
-          uint8_t header;
-          AppOutput data;
-          uint16_t crc;
-      };
-      uint8_t bytes[1];
-  };
-
 public:
+  struct Data {
+    uint16_t status = 0;
+    std::array<float, 6> forces{};
+    uint32_t timestamp = 0;
+    float temperature = 0;
+  };
+  struct Frame { Data data; } frame;
   enum ReadFrameRes {NO_FRAME, VALID_FRAME, NOT_VALID_FRAME, NOT_ALLIGNED_FRAME};
-  BotaForceTorqueSensorComm(int serial_port);
-  uint16_t crc16_x25(uint8_t* data, size_t len);
-  uint16_t crc16_ccitt_false(uint8_t* data, size_t len);
-  uint16_t crc16_mcrf4xx(uint8_t *data, size_t len);
-  bool isCrcOk();
-  bool checkSync();
-  bool isSynced() {return _synced;}
-  uint32_t get_crc_count() {return _crc_err_count;}
-  int serialReadBytes(uint8_t* data, size_t len);
-  int serialAvailable();
+  explicit BotaForceTorqueSensorComm(int serial_port);
+  static uint16_t crc16_x25(const uint8_t* data, size_t len);
+  uint32_t get_crc_count() const {return crc_errors_;}
+  bool isSynced() const {return synced_;}
   ReadFrameRes readFrame();
-  RxFrame frame;
+
+private:
+  int serial_port_;
+  bool synced_ = false;
+  uint32_t crc_errors_ = 0;
+  std::vector<uint8_t> buffer_;
 };
-
-
 #endif

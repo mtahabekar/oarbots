@@ -142,6 +142,18 @@
         <xacro:kinova_armjoint joint_name="${prefix}_joint_6" type="${joint_6_type}" parent="${prefix}_link_5" child="${prefix}_ft_robot_side_connector" joint_axis_xyz="${joint_6_axis_xyz}" joint_origin_xyz="${joint_6_origin_xyz}" joint_origin_rpy="${joint_6_origin_rpy}" joint_velocity_limit="${joint_6_velocity_limit}" joint_torque_limit="${joint_6_torque_limit}"/>
 
         <xacro:BFT_ROKS_KINOVA prefix="${prefix}" />
+        <!-- Wrench moments are about the sensor measurement origin, not the arm connector.
+             Axis mappings preserve the existing Blue/Silver calibration convention. -->
+        <link name="${prefix}_ft_raw"/>
+        <joint name="${prefix}_ft_raw_joint" type="fixed">
+            <parent link="${prefix}_wrench"/><child link="${prefix}_ft_raw"/>
+            <origin xyz="0 0 0" rpy="0 0 ${J_PI if prefix == 'oarbot_blue/j2n6s300' else 0}"/>
+        </joint>
+        <link name="${prefix}_ft_measurement"/>
+        <joint name="${prefix}_ft_measurement_joint" type="fixed">
+            <parent link="${prefix}_wrench"/><child link="${prefix}_ft_measurement"/>
+            <origin xyz="0 0 0" rpy="0 ${J_PI} 0"/>
+        </joint>
         <xacro:kinova_virtual_joint joint_name="${prefix}_joint_ft_robot_side_connector" type="fixed" parent="${prefix}_ft_robot_side_connector" child="${prefix}_robot_side" joint_axis_xyz="0 0 0" joint_origin_xyz="0 0 0" joint_origin_rpy="${J_PI} 0 ${J_PI}" joint_lower_limit="0" joint_upper_limit="0"/>
 
 

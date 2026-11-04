@@ -32,6 +32,9 @@ private:
     std::string estop_topic_;
     std::string com_port_;
     int serial_fd_;
+    double timeout_;
+    std::chrono::steady_clock::time_point last_valid_{};
+    void publish_stop();
     
     rclcpp::Publisher<std_msgs::msg::Bool>::SharedPtr deadman_pub_;
     rclcpp::Publisher<std_msgs::msg::Bool>::SharedPtr estop_pub_;

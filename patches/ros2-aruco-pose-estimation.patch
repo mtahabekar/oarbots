@@ -1,0 +1,247 @@
+diff --git a/aruco_pose_estimation/aruco_pose_estimation/pose_estimation.py b/aruco_pose_estimation/aruco_pose_estimation/pose_estimation.py
+index 9f2ce65..bb16f84 100755
+--- a/aruco_pose_estimation/aruco_pose_estimation/pose_estimation.py
++++ b/aruco_pose_estimation/aruco_pose_estimation/pose_estimation.py
+@@ -1,4 +1,5 @@
+ #!/usr/bin/env python3
++from __future__ import annotations
+ 
+ # Code taken and readapted from:
+ # https://github.com/GSNCodes/ArUCo-Markers-Pose-Estimation-Generation-Python/tree/main
+@@ -6,7 +7,7 @@
+ # Python imports
+ import numpy as np
+ import cv2
+-import tf_transformations
++from scipy.spatial.transform import Rotation
+ 
+ # ROS2 imports
+ from rclpy.impl import rcutils_logger
+@@ -20,6 +21,23 @@ from aruco_interfaces.msg import ArucoMarkers
+ from aruco_pose_estimation.utils import aruco_display
+ 
+ 
++class LegacyArucoDetector:
++    """OpenCV 4.6 (Ubuntu Noble) adapter for the 4.7 detector object API."""
++    def __init__(self, dictionary, parameters):
++        self.dictionary = dictionary
++        self.parameters = parameters
++
++    def detectMarkers(self, image):
++        return cv2.aruco.detectMarkers(image, self.dictionary, parameters=self.parameters)
++
++
++def create_detector(dictionary_id):
++    dictionary = cv2.aruco.getPredefinedDictionary(dictionary_id)
++    if hasattr(cv2.aruco, "ArucoDetector"):
++        return cv2.aruco.ArucoDetector(dictionary, cv2.aruco.DetectorParameters())
++    return LegacyArucoDetector(dictionary, cv2.aruco.DetectorParameters_create())
++
++
+ def pose_estimation(rgb_frame: np.ndarray, depth_frame: np.ndarray | None, aruco_detector: cv2.aruco.ArucoDetector, marker_size: float,
+                     matrix_coefficients: np.ndarray, distortion_coefficients: np.ndarray,
+                     pose_array: PoseArray, markers: ArucoMarkers) -> tuple[np.ndarray, PoseArray, ArucoMarkers]:
+@@ -63,9 +81,12 @@ def pose_estimation(rgb_frame: np.ndarray, depth_frame: np.ndarray | None, aruco
+             # tvec = tvec[0]
+ 
+             # alternative code version using solvePnP
+-            tvec, rvec, quat = my_estimatePoseSingleMarkers(corners=corners[i], marker_size=marker_size,
+-                                                                    camera_matrix=matrix_coefficients,
+-                                                                    distortion=distortion_coefficients)
++            try:
++                tvec, rvec, quat = my_estimatePoseSingleMarkers(corners=corners[i], marker_size=marker_size,
++                                                                        camera_matrix=matrix_coefficients,
++                                                                        distortion=distortion_coefficients)
++            except (ValueError, cv2.error):
++                continue
+ 
+             # show the detected markers bounding boxes
+             frame_processed = aruco_display(corners=corners, ids=marker_ids,
+@@ -87,7 +108,7 @@ def pose_estimation(rgb_frame: np.ndarray, depth_frame: np.ndarray | None, aruco
+                 # logger.info(f"tvec = {tvec[0]} {tvec[1]} {tvec[2]}")
+ 
+             # compute pose from the rvec and tvec arrays
+-            if (depth_frame is not None):
++            if depth_frame is not None and np.isfinite(centroid).all():
+                 # use computed centroid from depthcloud as estimated pose
+                 pose = Pose()
+                 pose.position.x = float(centroid[0])
+@@ -96,9 +117,9 @@ def pose_estimation(rgb_frame: np.ndarray, depth_frame: np.ndarray | None, aruco
+             else:
+                 # use tvec from aruco estimator as estimated pose
+                 pose = Pose()
+-                pose.position.x = float(tvec[0])
+-                pose.position.y = float(tvec[1])
+-                pose.position.z = float(tvec[2])
++                pose.position.x = float(tvec[0, 0])
++                pose.position.y = float(tvec[1, 0])
++                pose.position.z = float(tvec[2, 0])
+ 
+             pose.orientation.x = quat[0]
+             pose.orientation.y = quat[1]
+@@ -108,7 +129,7 @@ def pose_estimation(rgb_frame: np.ndarray, depth_frame: np.ndarray | None, aruco
+             # add the pose and marker id to the pose_array and markers messages
+             pose_array.poses.append(pose)
+             markers.poses.append(pose)
+-            markers.marker_ids.append(marker_id[0])
++            markers.marker_ids.append(int(marker_id[0]))
+ 
+     return frame_processed, pose_array, markers
+ 
+@@ -132,6 +153,8 @@ def my_estimatePoseSingleMarkers(corners, marker_size, camera_matrix, distortion
+     # solvePnP returns the rotation and translation vectors
+     retval, rvec, tvec = cv2.solvePnP(objectPoints=marker_points, imagePoints=corners,
+                                         cameraMatrix=camera_matrix, distCoeffs=distortion, flags=cv2.SOLVEPNP_IPPE_SQUARE)
++    if not retval or rvec is None or tvec is None or not np.isfinite(tvec).all() or tvec[2, 0] <= 0:
++        raise ValueError("PnP failed to produce a finite pose in front of the camera")
+     rvec = rvec.reshape(3, 1)
+     tvec = tvec.reshape(3, 1)
+        
+@@ -140,7 +163,7 @@ def my_estimatePoseSingleMarkers(corners, marker_size, camera_matrix, distortion
+     rot_matrix[0:3, 0:3] = rot
+ 
+     # convert rotation matrix to quaternion
+-    quaternion = tf_transformations.quaternion_from_matrix(rot_matrix)
++    quaternion = Rotation.from_matrix(rot_matrix[:3, :3]).as_quat()
+     norm_quat = np.linalg.norm(quaternion)
+     quaternion = quaternion / norm_quat
+ 
+@@ -171,7 +194,7 @@ def depth_to_pointcloud_centroid(depth_image: np.ndarray, intrinsic_matrix: np.n
+ 
+     for x, y in corners_indices:
+         if x < 0 or x >= width or y < 0 or y >= height:
+-            raise ValueError("One or more corners are outside the image bounds.")
++            return np.full(3, np.nan)
+ 
+     # precise marker center from the corner detector (subpixel accurate,
+     # not subject to depth-sensor edge fuzz)
+@@ -186,20 +209,14 @@ def depth_to_pointcloud_centroid(depth_image: np.ndarray, intrinsic_matrix: np.n
+ 
+     # create array of pixels inside the polygon defined by the corners
+     # search for pixels inside the squared bounding box of the polygon
+-    depths = []
+-    for x in range(x_min, x_max):
+-        for y in range(y_min, y_max):
+-            if is_pixel_in_polygon(pixel=(x, y), corners=corners_indices):
+-                # skip invalid/zero depth readings (common on ArUco markers
+-                # due to IR dropout on printed/laminated patterns)
+-                if depth_image[y, x] == 0:
+-                    continue
+-                # add point to the list of points
+-                depths.append(depth_image[y, x])
+-
+-
++    roi = depth_image[y_min:y_max+1, x_min:x_max+1]
++    mask = np.zeros(roi.shape, dtype=np.uint8)
++    cv2.fillConvexPoly(mask, corners_indices - [x_min, y_min], 1)
++    depths = roi[(mask != 0) & np.isfinite(roi) & (roi > 0)]
++    if depths.size < 9:
++        return np.full(3, np.nan)
+     z = float(np.median(depths)) / 1000.0
+-   
++
+     # convert to open3d image
+     #depth_segmented = geometry.Image(points)
+     # create pinhole camera model
+diff --git a/aruco_pose_estimation/package.xml b/aruco_pose_estimation/package.xml
+index 3aa3bb6..b838dba 100644
+--- a/aruco_pose_estimation/package.xml
++++ b/aruco_pose_estimation/package.xml
+@@ -17,7 +17,9 @@
+ 	<depend>std_msgs</depend>
+ 	<depend>sensor_msgs</depend>
+ 	<depend>cv_bridge</depend>
+-	<depend>tf_transformations</depend>
++	<exec_depend>message_filters</exec_depend>
++	<exec_depend>python3-numpy</exec_depend>
++	<exec_depend>python3-opencv</exec_depend>
+ 
+ 	<test_depend>ament_lint_auto</test_depend>
+ 	<test_depend>ament_lint_common</test_depend>
+@@ -25,4 +27,5 @@
+ 	<export>
+ 		<build_type>ament_cmake</build_type>
+ 	</export>
++  <exec_depend>python3-scipy</exec_depend>
+ </package>
+\ No newline at end of file
+diff --git a/aruco_pose_estimation/scripts/aruco_node.py b/aruco_pose_estimation/scripts/aruco_node.py
+index c689f20..0f52592 100755
+--- a/aruco_pose_estimation/scripts/aruco_node.py
++++ b/aruco_pose_estimation/scripts/aruco_node.py
+@@ -48,7 +48,7 @@ import cv2
+ 
+ # Local imports for custom defined functions
+ from aruco_pose_estimation.utils import ARUCO_DICT
+-from aruco_pose_estimation.pose_estimation import pose_estimation
++from aruco_pose_estimation.pose_estimation import pose_estimation, create_detector
+ 
+ # ROS2 message imports
+ from std_msgs.msg import Header
+@@ -76,7 +76,7 @@ class ArucoNode(rclpy.node.Node):
+                 "bad aruco_dictionary_id: {}".format(self.dictionary_id_name)
+             )
+             options = "\n".join([s for s in ARUCO_DICT])
+-            self.get_logger().error("valid options: {}".format(options))
++            raise ValueError("Invalid ArUco dictionary; valid options: " + options)
+ 
+         # Set up subscriptions to the camera info and camera image topics
+ 
+@@ -91,9 +91,9 @@ class ArucoNode(rclpy.node.Node):
+ 
+             # create a message filter to synchronize the image and depth image topics
+             self.image_sub = message_filters.Subscriber(self, Image, self.image_topic,
+-                                                        qos_profile=1)
++                                                        qos_profile=qos_profile_sensor_data)
+             self.depth_image_sub = message_filters.Subscriber(self, Image, self.depth_image_topic,
+-                                                              qos_profile=1)
++                                                              qos_profile=qos_profile_sensor_data)
+ 
+             # create synchronizer between the 2 topics using message filters and approximate time policy
+             # slop is the maximum time difference between messages that are considered synchronized
+@@ -107,7 +107,7 @@ class ArucoNode(rclpy.node.Node):
+ 
+             # create a subscription to the image topic
+             self.image_sub = self.create_subscription(
+-                Image, self.image_topic, self.image_callback, 1
++                Image, self.image_topic, self.image_callback, qos_profile_sensor_data
+             )
+ 
+         # Set up publishers
+@@ -122,8 +122,7 @@ class ArucoNode(rclpy.node.Node):
+ 
+         # code for updated version of cv2 (4.7.0)
+         self.aruco_dictionary = cv2.aruco.getPredefinedDictionary(dictionary_id)
+-        self.aruco_parameters = cv2.aruco.DetectorParameters()
+-        self.aruco_detector = cv2.aruco.ArucoDetector(self.aruco_dictionary, self.aruco_parameters)
++        self.aruco_detector = create_detector(dictionary_id)
+ 
+         # old code version
+         # self.aruco_dictionary = cv2.aruco.Dictionary_get(dictionary_id)
+@@ -191,7 +190,7 @@ class ArucoNode(rclpy.node.Node):
+             self.markers_pub.publish(markers)
+ 
+         # publish the image frame with computed markers positions over the image
+-        self.image_pub.publish(self.bridge.cv2_to_imgmsg(frame, "rgb8"))
++        self.image_pub.publish(self.bridge.cv2_to_imgmsg(frame, "rgb8", img_msg.header))
+ 
+     def depth_image_callback(self, depth_msg: Image):
+         if self.info_msg is None:
+@@ -205,8 +204,16 @@ class ArucoNode(rclpy.node.Node):
+             return
+ 
+         # convert the image messages to cv2 format
+-        cv_depth_image = self.bridge.imgmsg_to_cv2(depth_msg, desired_encoding="16UC1")
++        cv_depth_image = self.bridge.imgmsg_to_cv2(depth_msg, desired_encoding="passthrough")
++        if depth_msg.encoding == "32FC1":
++            cv_depth_image = cv_depth_image * 1000.0
++        elif depth_msg.encoding != "16UC1":
++            self.get_logger().error("Depth encoding must be 16UC1 or 32FC1")
++            return
+         cv_image = self.bridge.imgmsg_to_cv2(rgb_msg, desired_encoding="rgb8")
++        if cv_depth_image.shape != cv_image.shape[:2]:
++            self.get_logger().error("Depth must be registered to the RGB image dimensions")
++            return
+ 
+         # create the ArucoMarkers and PoseArray messages
+         markers = ArucoMarkers()

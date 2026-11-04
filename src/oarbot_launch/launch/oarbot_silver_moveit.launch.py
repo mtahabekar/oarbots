@@ -1,4 +1,7 @@
 from launch import LaunchDescription
+from launch.actions import DeclareLaunchArgument
+from launch.substitutions import LaunchConfiguration
+from launch_ros.parameter_descriptions import ParameterValue
 from launch_ros.actions import Node
 from moveit_configs_utils import MoveItConfigsBuilder
 
@@ -6,14 +9,18 @@ from moveit_configs_utils import MoveItConfigsBuilder
 def generate_launch_description():
     moveit_config = MoveItConfigsBuilder("oarbot_silver", package_name="oarbot_silver_moveit").to_moveit_configs()
 
+    moveit_config.trajectory_execution["moveit_simple_controller_manager"]["gripper_controller"]["type"] = "GripperCommand"
+
     return LaunchDescription([
+        DeclareLaunchArgument("allow_trajectory_execution", default_value="false"),
         Node(
             package="moveit_ros_move_group",
             executable="move_group",
             output="screen",
             namespace="oarbot_silver",
             parameters=[
-                moveit_config.to_dict()
+                moveit_config.to_dict(),
+                {"allow_trajectory_execution": ParameterValue(LaunchConfiguration("allow_trajectory_execution"), value_type=bool)}
             ],
             remappings=[
                 (

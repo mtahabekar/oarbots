@@ -11,3 +11,8 @@ log/
 
 # Ignore Python virtual environment
 .venv/
+# Python build and test artifacts
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/

@@ -1,12 +1,24 @@
 from launch import LaunchDescription
-from launch.actions import IncludeLaunchDescription
+from launch.actions import IncludeLaunchDescription, DeclareLaunchArgument
+from launch.conditions import IfCondition, UnlessCondition
 from launch.launch_description_sources import PythonLaunchDescriptionSource
-from launch.substitutions import PathJoinSubstitution
+from launch.substitutions import PathJoinSubstitution, LaunchConfiguration
+from launch_ros.parameter_descriptions import ParameterValue
 from launch_ros.actions import Node
 from launch_ros.substitutions import FindPackageShare
 
 def generate_launch_description() -> LaunchDescription:
     return LaunchDescription([
+        DeclareLaunchArgument("setup_mode", default_value="false", description="Supervised position-action setup; disables velocity guard"),
+        DeclareLaunchArgument("camera_fps", default_value="15"),
+        DeclareLaunchArgument("sensor_sn", default_value=""),
+        DeclareLaunchArgument("wired_sync_mode", default_value="0"),
+        DeclareLaunchArgument("subordinate_delay_off_master_usec", default_value="0"),
+        DeclareLaunchArgument("depth_delay_off_color_usec", default_value="0"),
+        DeclareLaunchArgument("color_exposure_usec", default_value="0"),
+        DeclareLaunchArgument("body_id", default_value="-1"),
+        DeclareLaunchArgument("ft_serial_port", default_value="/dev/sensor_bota_rokubi_ft_0"),
+
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource(
                 PathJoinSubstitution([
@@ -42,9 +54,17 @@ def generate_launch_description() -> LaunchDescription:
             launch_arguments={
                 "azure_kinect_namespace": "oarbot_blue/azure_kinect",
                 "frame_prefix": "oarbot_blue/",
-                "fps": "15",
+                "fps": LaunchConfiguration("camera_fps"),
                 "color_resolution": "1080P",
-                "body_tracking_enabled": "true"
+                "body_tracking_enabled": "true",
+                "sensor_sn": LaunchConfiguration("sensor_sn"),
+                "wired_sync_mode": LaunchConfiguration("wired_sync_mode"),
+                "subordinate_delay_off_master_usec": LaunchConfiguration("subordinate_delay_off_master_usec"),
+                "depth_delay_off_color_usec": LaunchConfiguration("depth_delay_off_color_usec"),
+                "color_exposure_usec": LaunchConfiguration("color_exposure_usec"),
+                "depth_mode": "NFOV_UNBINNED",
+                "point_cloud": "false",
+                "rgb_point_cloud": "false"
             }.items()
         ),
         IncludeLaunchDescription(
@@ -67,7 +87,8 @@ def generate_launch_description() -> LaunchDescription:
                     "launch",
                     "oarbot_blue_moveit.launch.py"
                 ])
-            )
+            ),
+            launch_arguments={"allow_trajectory_execution": LaunchConfiguration("setup_mode")}.items()
         ),
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource(
@@ -77,6 +98,7 @@ def generate_launch_description() -> LaunchDescription:
                     "kinova_action_servers.launch.py"
                 ])
             ),
+            condition=IfCondition(LaunchConfiguration("setup_mode")),
             launch_arguments={
                 "kinova_namespace": "oarbot_blue/kinova/",
                 "joint_prefix": "oarbot_blue"
@@ -87,12 +109,17 @@ def generate_launch_description() -> LaunchDescription:
             package="rokubi_force_torque_publisher",
             name="rokubi_force_torque_publisher",
             namespace="oarbot_blue",
-            parameters=[{
-                "tf_prefix": "oarbot_blue/",
-                "end_effector_mass": 1.1936317,
-                "center_of_mass_vector": [-0.03988221,-0.00383832,-0.0523659],
-                "force_bias_vector": [-1.98321924,-5.31865946,1.63274343],
-                "torque_bias_vector": [-0.02886351,-0.11731537,0.09439291]
-            }]
-        )
+            parameters=[
+                PathJoinSubstitution([FindPackageShare("oarbot_launch"), "config", "oarbot_blue_ft.yaml"]),
+                {"tf_prefix": "oarbot_blue/", "serial_port": ParameterValue(LaunchConfiguration("ft_serial_port"), value_type=str)}
+            ]
+        ),
+        Node(package="admittance_control", executable="admittance_control", namespace="oarbot_blue",
+             parameters=[{"tf_prefix": "oarbot_blue/"}],
+             condition=UnlessCondition(LaunchConfiguration("setup_mode"))),
+        Node(package="oarbot_runtime", executable="command_guard", namespace="oarbot_blue",
+             condition=UnlessCondition(LaunchConfiguration("setup_mode"))),
+        Node(package="oarbot_runtime", executable="human_hand_measurements", namespace="oarbot_blue",
+             parameters=[{"body_id": ParameterValue(LaunchConfiguration("body_id"), value_type=int)}],
+             remappings=[("body_tracking_data", "azure_kinect/body_tracking_data")]),
     ])

@@ -2,10 +2,11 @@ from launch import LaunchDescription, LaunchContext
 from launch.actions import DeclareLaunchArgument, OpaqueFunction
 from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import Node
+from launch_ros.parameter_descriptions import ParameterValue
 
 def verify_oarbot_namespace(context: LaunchContext, *args, **kwargs) -> list[Node]:
     oarbot_namespace_text = LaunchConfiguration("oarbot_namespace").perform(context)
-    if oarbot_namespace_text[-1] != "/" or (len(oarbot_namespace_text) > 1 and oarbot_namespace_text[0] == "/"):
+    if not oarbot_namespace_text or oarbot_namespace_text[-1] != "/" or (len(oarbot_namespace_text) > 1 and oarbot_namespace_text[0] == "/"):
         raise ValueError("oarbot_namespace should contain no leading slash and should have a trailing slash")
     
     return []
@@ -20,6 +21,9 @@ def generate_launch_description() -> LaunchDescription:
     return LaunchDescription([
         oarbot_namespace_argument,
         joint_angles_csv_argument,
+        DeclareLaunchArgument("allow_motion", default_value="false"),
+        DeclareLaunchArgument("output_file", default_value=""),
+        OpaqueFunction(function=verify_oarbot_namespace),
         Node(
             package="force_torque_calibration",
             executable="force_torque_calibration",
@@ -27,8 +31,9 @@ def generate_launch_description() -> LaunchDescription:
             namespace=LaunchConfiguration(oarbot_namespace_string),
             parameters=[{
                 "joint_angles_csv": LaunchConfiguration(joint_angles_csv_string),
-                "tf_prefix": LaunchConfiguration(oarbot_namespace_string)
+                "tf_prefix": LaunchConfiguration(oarbot_namespace_string),
+                "allow_motion": ParameterValue(LaunchConfiguration("allow_motion"), value_type=bool),
+                "output_file": ParameterValue(LaunchConfiguration("output_file"), value_type=str)
             }]
-        ),
-        OpaqueFunction(function=verify_oarbot_namespace)
+        )
     ])

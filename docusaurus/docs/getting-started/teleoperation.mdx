@@ -6,6 +6,13 @@ import useBaseUrl from "@docusaurus/useBaseUrl";
 
 # Teleoperation
 
+:::note Guarded velocity mode
+The current helper launch runs a command guard on each robot. Hold the deadman for teleoperation and admittance; after a stop or lost heartbeat, release and press it again. The defaults limit arm translation to 0.1 m/s and base translation to 0.15 m/s. These are commissioning limits, not certified safe speeds.
+
+Homing, finger position actions and the unimplemented body-following controls are disabled in this GUI mode. Perform position-action setup separately with `setup_mode:=true` under supervision; the velocity guard is disabled in that mode. Angular admittance remains disabled until its hardware mapping is validated. Consult the repository's [platform audit and acceptance checklist](https://github.com/rpiRobotics/oarbots/blob/main/docs/platform-audit.md) before deploying these changes.
+:::
+
+
 ## Launching the Teleoperation GUI
 
 Power on the tablet. Open the home directory by double-clicking the `Home` folder on the desktop. Locate the `tablet_launch.sh` file. Press and hold on that file until a menu shows up. Select *Run as a Program*. The GUI should launch. To exit the GUI, press the X in the top right corner of the GUI.

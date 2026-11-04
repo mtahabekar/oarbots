@@ -12,37 +12,15 @@ TfRelay::TfRelay() : Node("tf_relay")
     this->tf_frame_prefix = declare_parameter<std::string>("tf_frame_prefix", "", tf_frame_prefix_description);
 
 
-    if (robot_namespace.empty())
-    {
-        throw std::runtime_error("Error launching tf_relay: You must provide a non-blank value to the robot_namespace parameter");
-    }
-
-    // If there is a leading or trailing forward slash on the namespace, delete it
-    if (this->robot_namespace.front() == '/')
-    {
-        RCLCPP_WARN(this->get_logger(), "robot_namespace argument has a leading forward slash. Removing for now, but it should not be included in future runs");
-        this->robot_namespace.erase(this->robot_namespace.begin());
-    }
-    if (this->robot_namespace.back() == '/')
-    {
-        RCLCPP_WARN(this->get_logger(), "robot_namespace argument has a trailing forward slash. Removing for now, but it should not be included in future runs");
-        this->robot_namespace.pop_back();
-    }
-
-
-    // If there isn't a trailing forward slash at the end of the frame prefix, add it
-    if (!this->tf_frame_prefix.empty() && this->tf_frame_prefix.back() != '/')
-    {
-        RCLCPP_WARN(this->get_logger(), "tf_frame_prefix argument does not have a trailing forward slash. Adding one for now, but it should be included in future runs");
-        this->tf_frame_prefix += '/';
-    }
-    // If there is a leading forward slash at the front of the frame prefix, delete it
-    if (this->tf_frame_prefix.size() > 1 && this->tf_frame_prefix.front() == '/')
-    {
-        RCLCPP_WARN(this->get_logger(), "tf_frame_prefix argument has a leading forward slash. Removing for now, but it should not be included in future runs.");
-        this->tf_frame_prefix.erase(this->tf_frame_prefix.begin());
-    }
-
+    auto trim = [](std::string value) {
+        auto begin = value.find_first_not_of('/');
+        if (begin == std::string::npos) return std::string{};
+        return value.substr(begin, value.find_last_not_of('/') - begin + 1);
+    };
+    robot_namespace = trim(robot_namespace);
+    tf_frame_prefix = trim(tf_frame_prefix);
+    if (robot_namespace.empty()) throw std::invalid_argument("robot_namespace must not be empty or root");
+    if (!tf_frame_prefix.empty()) tf_frame_prefix += '/';
 
     // Create strings for the namespaced tf and tf_static topics
     std::string namespaced_tf_topic = "/" + this->robot_namespace + "/tf";
@@ -63,13 +41,11 @@ TfRelay::TfRelay() : Node("tf_relay")
 
 std::string TfRelay::add_frame_prefix(const std::string &frame) const
 {
-    // If the incoming frame is empty or just a slash, simply return it; we shouldn't add our frame prefix to these
-    if (frame.empty() || frame == "/")
-    {
-        return frame;
-    }
-
-    return this->tf_frame_prefix + frame;
+    const auto begin = frame.find_first_not_of('/');
+    if (begin == std::string::npos) return "";
+    const auto clean = frame.substr(begin);
+    if (tf_frame_prefix.empty() || clean.rfind(tf_frame_prefix, 0) == 0) return clean;
+    return tf_frame_prefix + clean;
 }
 
 void TfRelay::republish_incoming_message(const tf2_msgs::msg::TFMessage::SharedPtr msg, rclcpp::Publisher<tf2_msgs::msg::TFMessage>::SharedPtr publisher)
@@ -83,10 +59,16 @@ void TfRelay::republish_incoming_message(const tf2_msgs::msg::TFMessage::SharedP
         transform.header.frame_id = this->add_frame_prefix(transform.header.frame_id);
         transform.child_frame_id = this->add_frame_prefix(transform.child_frame_id);
 
-        output.transforms.push_back(std::move(transform));
+        if (transform.header.frame_id.empty() || transform.child_frame_id.empty() ||
+            transform.header.frame_id == transform.child_frame_id) continue;
+        if (publisher == tf_static_publisher) static_transforms_[transform.child_frame_id] = transform;
+        else output.transforms.push_back(std::move(transform));
     }
 
-    publisher->publish(output);
+    if (publisher == tf_static_publisher) {
+        for (const auto& entry : static_transforms_) output.transforms.push_back(entry.second);
+    }
+    if (!output.transforms.empty()) publisher->publish(output);
 }
 
 void TfRelay::namespaced_tf_callback(const tf2_msgs::msg::TFMessage::SharedPtr msg)

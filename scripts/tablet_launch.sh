@@ -1,5 +1,5 @@
 #!/bin/bash
-set -e
+set -eo pipefail
 
 # Source the global ROS2 installation
 source /opt/ros/jazzy/setup.bash
@@ -12,4 +12,4 @@ source ~/ros2_ws/install/local_setup.bash
 source ~/ros2_ws/.venv/bin/activate
 
 # Run your target launch file
-ros2 launch oarbot_launch tablet_gui.launch.py
+exec ros2 launch oarbot_launch tablet_gui.launch.py

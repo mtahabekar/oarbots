@@ -1,40 +1,32 @@
 import sys
-import threading
 from threading import Event
 import rclpy
+from PySide6.QtCore import QTimer
 from PySide6.QtWidgets import QApplication
 from tablet_gui.gui import MainWindow
 from tablet_gui.ros_gui_node import RosGuiNode
 
-def spin_ros(node: RosGuiNode, shutdown_event: Event):
-    try:
-        # We run spin_once() instead of spin() to periodically check for a shutdown event
-        while not shutdown_event.is_set():
-            rclpy.spin_once(node, timeout_sec=0.1)  
-    finally:
-        node.destroy_node()
-        rclpy.shutdown()
-
 
 def main(args=None):
     rclpy.init(args=args)
-    ros_node = RosGuiNode()
-
-    shutdown_event = threading.Event()
-
-    # Start the ROS2 node in a separate thread
-    ros_thread = threading.Thread(target=spin_ros, args=(ros_node, shutdown_event))
-    ros_thread.start()
-
-    # QT will be on the main thread
+    node = RosGuiNode()
     app = QApplication(sys.argv)
-    window = MainWindow(ros_node, shutdown_event)
+    event = Event()
+    # ROS callbacks and widget changes share one thread; no concurrent dictionary mutation.
+    timer = QTimer()
+    timer.timeout.connect(lambda: rclpy.spin_once(node, timeout_sec=0.0) if rclpy.ok() else app.quit())
+    timer.start(5)
+    window = MainWindow(node, event)
     window.showMaximized()
-    app.exec()
+    try:
+        app.exec()
+    finally:
+        timer.stop()
+        node.deadman_pressed = False
+        node.watchdog()
+        node.destroy_node()
+        rclpy.try_shutdown()
 
-    ros_thread.join()
-
-    print("ROS Node and GUI have been shut down.")
 
 if __name__ == '__main__':
     main()

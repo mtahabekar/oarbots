@@ -1,15 +1,12 @@
 from launch import LaunchDescription
+from launch.actions import DeclareLaunchArgument
+from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import Node
 
+
 def generate_launch_description():
+    # Requires a separately running command_guard and tablet mode/deadman heartbeats.
     return LaunchDescription([
-        Node(
-            package="dingo_teleop",
-            namespace="dingo_teleop",
-            executable="dingo_teleop"
-        ),
-        Node(
-            package="spacenav",
-            executable="spacenav_node"
-        )
+        DeclareLaunchArgument('robot_namespace'),
+        Node(package='dingo_teleop', executable='dingo_teleop', namespace=LaunchConfiguration('robot_namespace')),
     ])

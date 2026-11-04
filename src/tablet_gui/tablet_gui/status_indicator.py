@@ -14,6 +14,7 @@ class StatusIndicator(QWidget):
     def __init__(self, display_name: str, topic_node_name: str, ros_gui_node: RosGuiNode) -> None:
         super().__init__()
 
+        self.setToolTip("ROS discovery status only. Consult diagnostics for freshness, faults and calibration readiness.")
         self.display_name = display_name
         self.topic_node_name = topic_node_name
         self.ros_gui_node = ros_gui_node

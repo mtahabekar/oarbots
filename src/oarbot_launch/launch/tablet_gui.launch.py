@@ -1,5 +1,6 @@
 from launch import LaunchDescription
-from launch.actions import RegisterEventHandler, EmitEvent
+from launch.actions import RegisterEventHandler, EmitEvent, DeclareLaunchArgument
+from launch.substitutions import LaunchConfiguration
 from launch.event_handlers import OnProcessExit
 from launch.events import Shutdown
 from launch_ros.actions import Node
@@ -12,10 +13,13 @@ def generate_launch_description() -> LaunchDescription:
         executable="tablet_gui",
         name="tablet_gui",
         output="screen",
-        namespace="tablet_gui"
+        namespace="tablet_gui",
+        prefix=[LaunchConfiguration("gui_python")]
     )
 
     return LaunchDescription([
+        # Override generated console-script shebang so an activated GUI venv is honored.
+        DeclareLaunchArgument("gui_python", default_value="python3"),
         tablet_gui_node,
         Node(
             package="spacenav",
@@ -32,24 +36,6 @@ def generate_launch_description() -> LaunchDescription:
                 "com_port": "/dev/ttyACM0",
                 "arduino_deadman_switch_topic": "deadman",
                 "arduino_e_stop_topic": "e_stop"
-            }]
-        ),
-        Node(
-            package="admittance_control",
-            executable="admittance_control",
-            name="admittance_control",
-            namespace="oarbot_silver",
-            parameters=[{
-                "tf_prefix": "oarbot_silver/"
-            }]
-        ),
-        Node(
-            package="admittance_control",
-            executable="admittance_control",
-            name="admittance_control",
-            namespace="oarbot_blue",
-            parameters=[{
-                "tf_prefix": "oarbot_blue/"
             }]
         ),
         RegisterEventHandler(

@@ -1,0 +1,94 @@
+diff --git a/include/azure_kinect_ros_driver/k4a_ros_device_params.h b/include/azure_kinect_ros_driver/k4a_ros_device_params.h
+index a074be9..0fc5f9c 100644
+--- a/include/azure_kinect_ros_driver/k4a_ros_device_params.h
++++ b/include/azure_kinect_ros_driver/k4a_ros_device_params.h
+@@ -75,6 +75,8 @@
+              "Scaling factor to apply when converting IR to mono8 (see rescale_ir_to_mono8). If using illumination, "  \
+              "use the value 0.5-1. If using passive IR, use 10.",                                                      \
+              float, 1.0f)                                                                                              \
++  LIST_ENTRY(depth_delay_off_color_usec, "Depth offset relative to color exposure in microseconds", int, 0) \
++  LIST_ENTRY(color_exposure_usec, "Fixed color exposure in microseconds; zero leaves auto exposure", int, 0) \
+   LIST_ENTRY(wired_sync_mode,                                                                                          \
+               "Wired sync mode (0: OFF, 1: MASTER, 2: SUBORDINATE.",                                                   \
+               int, 0)                                                                                                  \
+diff --git a/src/k4a_ros_device.cpp b/src/k4a_ros_device.cpp
+index b54bb7f..41ed4a4 100644
+--- a/src/k4a_ros_device.cpp
++++ b/src/k4a_ros_device.cpp
+@@ -49,7 +49,7 @@ K4AROSDevice::K4AROSDevice()
+     imu_stream_end_of_file_(false)
+ {
+   // Declare an image transport
+-  auto image_transport_ = new image_transport::ImageTransport(static_cast<rclcpp::Node::SharedPtr>(this));
++  // Publishers use the existing node without creating a second owning shared_ptr(this).
+ 
+   // Declare depth topics
+   static const std::string depth_raw_topic = "depth/image_raw";
+@@ -59,6 +59,9 @@ K4AROSDevice::K4AROSDevice()
+ 
+   // Declare node parameters
+   this->declare_parameter("depth_enabled", rclcpp::ParameterValue(true));
++  this->declare_parameter("depth_unit", rclcpp::ParameterValue("16UC1"));
++  this->declare_parameter("depth_delay_off_color_usec", rclcpp::ParameterValue(0));
++  this->declare_parameter("color_exposure_usec", rclcpp::ParameterValue(0));
+   this->declare_parameter("depth_mode", rclcpp::ParameterValue("NFOV_UNBINNED"));
+   this->declare_parameter("color_enabled", rclcpp::ParameterValue(false));
+   this->declare_parameter("color_format", rclcpp::ParameterValue("bgra"));
+@@ -248,23 +251,23 @@ K4AROSDevice::K4AROSDevice()
+   }
+   else if (params_.color_format == "bgra")
+   {
+-    rgb_raw_publisher_ = image_transport_->advertise("rgb/image_raw", 1, true);
++    rgb_raw_publisher_ = image_transport::create_publisher(this, "rgb/image_raw", rmw_qos_profile_sensor_data);
+   }
+   rgb_raw_camerainfo_publisher_ = this->create_publisher<CameraInfo>("rgb/camera_info", 1);
+ 
+-  depth_raw_publisher_ = image_transport_->advertise("depth/image_raw", 1, true);
++  depth_raw_publisher_ = image_transport::create_publisher(this, "depth/image_raw", rmw_qos_profile_sensor_data);
+   depth_raw_camerainfo_publisher_ = this->create_publisher<CameraInfo>("depth/camera_info", 1);
+ 
+-  depth_raw_publisher_ = image_transport_->advertise(depth_raw_topic, 1, true);
++  depth_raw_publisher_ = image_transport::create_publisher(this, depth_raw_topic, rmw_qos_profile_sensor_data);
+   depth_raw_camerainfo_publisher_ = this->create_publisher<CameraInfo>("depth/camera_info", 1);
+ 
+-  depth_rect_publisher_ = image_transport_->advertise(depth_rect_topic, 1, true);
++  depth_rect_publisher_ = image_transport::create_publisher(this, depth_rect_topic, rmw_qos_profile_sensor_data);
+   depth_rect_camerainfo_publisher_ = this->create_publisher<CameraInfo>("depth_to_rgb/camera_info", 1);
+ 
+-  rgb_rect_publisher_ = image_transport_->advertise("rgb_to_depth/image_raw", 1, true);
++  rgb_rect_publisher_ = image_transport::create_publisher(this, "rgb_to_depth/image_raw", rmw_qos_profile_sensor_data);
+   rgb_rect_camerainfo_publisher_ = this->create_publisher<CameraInfo>("rgb_to_depth/camera_info", 1);
+ 
+-  ir_raw_publisher_ = image_transport_->advertise("ir/image_raw", 1, true);
++  ir_raw_publisher_ = image_transport::create_publisher(this, "ir/image_raw", rmw_qos_profile_sensor_data);
+   ir_raw_camerainfo_publisher_ = this->create_publisher<CameraInfo>("ir/camera_info", 1);
+ 
+   imu_orientation_publisher_ = this->create_publisher<Imu>("imu", 200);
+@@ -356,6 +359,10 @@ k4a_result_t K4AROSDevice::startCameras()
+   if (k4a_device_)
+   {
+     RCLCPP_INFO_STREAM(this->get_logger(),"STARTING CAMERAS");
++    if (params_.color_exposure_usec > 0) {
++      k4a_device_.set_color_control(K4A_COLOR_CONTROL_EXPOSURE_TIME_ABSOLUTE,
++                                   K4A_COLOR_CONTROL_MODE_MANUAL, params_.color_exposure_usec);
++    }
+     k4a_device_.start_cameras(&k4a_configuration);
+   }
+ 
+diff --git a/src/k4a_ros_device_params.cpp b/src/k4a_ros_device_params.cpp
+index ecd239d..4f51a96 100644
+--- a/src/k4a_ros_device_params.cpp
++++ b/src/k4a_ros_device_params.cpp
+@@ -19,7 +19,11 @@ K4AROSDeviceParams::K4AROSDeviceParams() : rclcpp::Node("k4a_ros_device_params_n
+ 
+ k4a_result_t K4AROSDeviceParams::GetDeviceConfig(k4a_device_configuration_t* configuration)
+ {
+-  configuration->depth_delay_off_color_usec = 0;
++  if (color_exposure_usec < 0 || subordinate_delay_off_master_usec < 0) {
++    RCLCPP_ERROR(this->get_logger(), "Exposure and subordinate delay must be nonnegative");
++    return K4A_RESULT_FAILED;
++  }
++  configuration->depth_delay_off_color_usec = depth_delay_off_color_usec;
+   configuration->disable_streaming_indicator = false;
+ 
+   RCLCPP_INFO_STREAM(this->get_logger(), "Setting wired sync mode: " << wired_sync_mode);

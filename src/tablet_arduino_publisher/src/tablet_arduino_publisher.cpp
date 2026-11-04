@@ -1,4 +1,6 @@
 #include "tablet_arduino_publisher/tablet_arduino_publisher.hpp"
+#include <cmath>
+#include <stdexcept>
 
 ArduinoReadNode::ArduinoReadNode(): Node("tablet_arduino_talker"), serial_fd_(-1)
 {
@@ -7,12 +9,10 @@ ArduinoReadNode::ArduinoReadNode(): Node("tablet_arduino_talker"), serial_fd_(-1
     estop_topic_ = this->declare_parameter<std::string>("arduino_e_stop_topic", "");
     com_port_ = this->declare_parameter<std::string>("com_port", "");
 
-    if (deadman_topic_.empty() || estop_topic_.empty() || com_port_.empty()) {
-        RCLCPP_ERROR(
-        this->get_logger(),
-        "Required parameters missing: "
-        "arduino_deadman_switch_topic='%s', arduino_e_stop_topic='%s', com_port='%s'",
-        deadman_topic_.c_str(), estop_topic_.c_str(), com_port_.c_str());
+    timeout_ = declare_parameter<double>("serial_timeout_sec", 0.2);
+    if (deadman_topic_.empty() || estop_topic_.empty() || com_port_.empty() ||
+        !std::isfinite(timeout_) || timeout_ <= 0) {
+        throw std::invalid_argument("Serial topics/device must be nonempty; timeout must be positive");
     }
 
     deadman_pub_ = this->create_publisher<std_msgs::msg::Bool>(
@@ -20,8 +20,7 @@ ArduinoReadNode::ArduinoReadNode(): Node("tablet_arduino_talker"), serial_fd_(-1
     estop_pub_ = this->create_publisher<std_msgs::msg::Bool>(
         estop_topic_, rclcpp::QoS(1));
 
-    // Mirrors the original 1s startup delay before the timer starts firing.
-    std::this_thread::sleep_for(std::chrono::seconds(1));
+    publish_stop();
 
     timer_ = this->create_wall_timer(std::chrono::milliseconds(40), std::bind(&ArduinoReadNode::readSerial, this));
 }
@@ -40,29 +39,34 @@ void ArduinoReadNode::readSerial()
     if (serial_fd_ < 0) {
         RCLCPP_INFO(this->get_logger(), "Trying to reconnect to serial");
         if (!openSerial()) {
+        publish_stop();
         RCLCPP_WARN(this->get_logger(), "Serial disconnected");
         return;
         }
         RCLCPP_INFO(this->get_logger(), "Connected to serial");
     }
 
-    uint8_t byte = 0;
-    ssize_t n = ::read(serial_fd_, &byte, 1);
-
-    if (n < 0 && errno != EAGAIN && errno != EWOULDBLOCK) {
-        // Real I/O error (e.g. device unplugged) -> disconnect and retry later.
-        RCLCPP_WARN(this->get_logger(), "Disconnecting from serial");
+    // Read the complete available batch, preserving order and handling partial input.
+    uint8_t bytes[256];
+    const ssize_t count = ::read(serial_fd_, bytes, sizeof(bytes));
+    if (count < 0 && errno != EAGAIN && errno != EWOULDBLOCK && errno != EINTR) {
+        RCLCPP_WARN(get_logger(), "Serial disconnected: %s", std::strerror(errno));
         closeSerial();
-        RCLCPP_WARN(this->get_logger(), "Serial disconnected: %s", std::strerror(errno));
+        publish_stop();
         return;
     }
+    for (ssize_t i = 0; i < count; ++i) handleSerialData(bytes[i]);
+    if (std::chrono::duration<double>(std::chrono::steady_clock::now() - last_valid_).count() > timeout_)
+        publish_stop();
+}
 
-    if (n == 1) {
-        handleSerialData(byte);
-    }
-
-    // Equivalent of ser.reset_input_buffer()
-    tcflush(serial_fd_, TCIFLUSH);
+void ArduinoReadNode::publish_stop()
+{
+    std_msgs::msg::Bool deadman, estop;
+    deadman.data = false;
+    estop.data = true;
+    deadman_pub_->publish(deadman);
+    estop_pub_->publish(estop);
 }
 
 bool ArduinoReadNode::openSerial()
@@ -85,6 +89,7 @@ bool ArduinoReadNode::openSerial()
     cfsetispeed(&tty, B115200);
     cfsetospeed(&tty, B115200);
 
+    cfmakeraw(&tty);
     tty.c_cflag |= (CLOCAL | CREAD);   // enable receiver, ignore modem control lines
     tty.c_cflag &= ~PARENB;            // no parity
     tty.c_cflag &= ~CSTOPB;            // 1 stop bit
@@ -123,7 +128,9 @@ void ArduinoReadNode::closeSerial()
 // Equivalent of handle_serial_data(): expects a single ASCII digit byte.
 void ArduinoReadNode::handleSerialData(uint8_t raw_byte)
 {
-    if (raw_byte < '0' || raw_byte > '9') {
+    if (raw_byte == '\r' || raw_byte == '\n') return;
+    if (raw_byte < '0' || raw_byte > '3') {
+        publish_stop();
         RCLCPP_WARN(this->get_logger(), "Garbage serial data");
         return;
     }
@@ -154,6 +161,7 @@ void ArduinoReadNode::handleSerialData(uint8_t raw_byte)
         return;
     }
 
+    last_valid_ = std::chrono::steady_clock::now();
     deadman_pub_->publish(deadman_msg);
     estop_pub_->publish(estop_msg);
 }

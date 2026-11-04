@@ -55,9 +55,13 @@ class OarbotWidget(QWidget):
         layout.addLayout(translation_rotation_toggle_layout)
 
         self.arm_home_button = PushButton("Arm Home", self.handle_arm_home)
+        self.arm_home_button.setEnabled(False)
+        self.arm_home_button.setToolTip("Unavailable in guarded velocity mode")
         layout.addWidget(self.arm_home_button)
 
         self.base_home_button = PushButton("Base Home", self.handle_base_home)
+        self.base_home_button.setEnabled(False)
+        self.base_home_button.setToolTip("Base homing is not implemented")
         layout.addWidget(self.base_home_button)
 
         self.arm_enable_button = ToggleButton("Arm Disabled", self.handle_arm_toggle_button)
@@ -67,6 +71,8 @@ class OarbotWidget(QWidget):
         layout.addWidget(self.base_enable_button)
 
         self.finger_position_slider = HorizontalSlider(0, 100, self.ros_gui_node.get_cur_finger_percent(self.oarbot_namespace), self.handle_finger_slider)
+        self.finger_position_slider.setEnabled(False)
+        self.finger_position_slider.setToolTip("Use supervised gripper setup before guarded velocity mode")
         layout.addWidget(self.finger_position_slider)
         finger_position_slider_text = QLabel("Arm Finger Positions")
         finger_position_slider_text.setAlignment(Qt.AlignmentFlag.AlignCenter)
@@ -82,6 +88,8 @@ class OarbotWidget(QWidget):
         self.finger_position_slider.sliderPressed.connect(lambda : setattr(self, "do_finger_position_slider_update", False))
 
         self.body_joint_following_enable_button = ToggleButton("Body Joint Following Disabled", self.handle_body_joint_following_toggle_button, 14)
+        self.body_joint_following_enable_button.setEnabled(False)
+        self.body_joint_following_enable_button.setToolTip("Human following controller is not ported")
         layout.addWidget(self.body_joint_following_enable_button)
 
         self.admittance_control_enable_button = ToggleButton("Admittance Control Disabled", self.handle_admittance_control_toggle_button, 14)

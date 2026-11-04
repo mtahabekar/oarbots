@@ -14,6 +14,31 @@
   <test_depend>ament_lint_auto</test_depend>
   <test_depend>ament_lint_common</test_depend>
 
+  <exec_depend>launch</exec_depend>
+  <exec_depend>launch_ros</exec_depend>
+  <exec_depend>ament_index_python</exec_depend>
+  <exec_depend>python3-yaml</exec_depend>
+  <exec_depend>xacro</exec_depend>
+  <exec_depend>robot_state_publisher</exec_depend>
+  <exec_depend>joint_state_renamer</exec_depend>
+  <exec_depend>oarbot_description</exec_depend>
+  <exec_depend>oarbot_blue_moveit</exec_depend>
+  <exec_depend>oarbot_silver_moveit</exec_depend>
+  <exec_depend>kinova_bringup</exec_depend>
+  <exec_depend>kinova_driver</exec_depend>
+  <exec_depend>azure_kinect_ros_driver</exec_depend>
+  <exec_depend>aruco_pose_estimation</exec_depend>
+  <exec_depend>oarbot_pose_publisher</exec_depend>
+  <exec_depend>rokubi_force_torque_publisher</exec_depend>
+  <exec_depend>tablet_gui</exec_depend>
+  <exec_depend>tablet_arduino_publisher</exec_depend>
+  <exec_depend>admittance_control</exec_depend>
+  <exec_depend>oarbot_runtime</exec_depend>
+  <exec_depend>spacenav</exec_depend>
+  <exec_depend>moveit_configs_utils</exec_depend>
+
+  <exec_depend>rosbag2_storage_mcap</exec_depend>
+
   <export>
     <build_type>ament_cmake</build_type>
   </export>

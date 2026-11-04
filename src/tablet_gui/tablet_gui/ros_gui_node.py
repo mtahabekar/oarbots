@@ -6,7 +6,10 @@ from rclpy.node import Node
 from kinova_msgs.msg import FingerPosition, PoseVelocity
 from kinova_msgs.action import SetFingersPosition, ArmJointAngles
 from geometry_msgs.msg import Twist, TwistStamped
-from std_msgs.msg import Bool
+from std_msgs.msg import Bool, String
+from time import monotonic
+from math import isfinite
+from rclpy.clock import Clock, ClockType
 from math import pi
 
 class RosGuiNode(Node):
@@ -15,6 +18,12 @@ class RosGuiNode(Node):
         # TODO: This node should have an add_listener(oarbot_namespace) function that will add listeners to all the topics it needs so it doesn't have to wait on receiving data
 
         self.get_logger().info("Started ROS2 Node")
+        self.last_deadman = self.last_estop = self.last_spacenav = float('-inf')
+        self.admittance_publishers = {}
+        self.mode_publishers = {}
+        self.base_enable_publishers = {}
+        self.steady_clock = Clock(clock_type=ClockType.STEADY_TIME)
+        self.watchdog_timer = self.create_timer(0.05, self.watchdog, clock=self.steady_clock)
         self.oarbot_settings_dict: dict[str, OarbotSettings] = dict()
         self.finger_position_subscribers: dict[str, Subscription] = dict()
         self.finger_position_actions: dict[str, ActionClient] = dict()
@@ -60,7 +69,7 @@ class RosGuiNode(Node):
         return len(self.get_publishers_info_by_topic(topic_name=topic_name)) > 0
 
     def get_cur_finger_percent(self, oarbot_namespace: str) -> int:
-        return 50
+        return self.oarbot_settings_dict[oarbot_namespace].finger_position_percent
 
     def add_oarbot(self, oarbot_name: str) -> None:
         self.oarbot_settings_dict[oarbot_name] = OarbotSettings()
@@ -75,12 +84,12 @@ class RosGuiNode(Node):
         self.arm_joint_angle_actions[oarbot_name] = ActionClient(self, ArmJointAngles, oarbot_name + "/kinova/j2n6s300_driver/joint_angles")
         self.arm_velocity_publishers[oarbot_name] = self.create_publisher(
             msg_type=PoseVelocity,
-            topic=oarbot_name + "/kinova/j2n6s300_driver/in/cartesian_velocity",
+            topic=oarbot_name + "/commands/teleop/arm",
             qos_profile=1
         )
         self.base_velocity_publishers[oarbot_name] = self.create_publisher(
             msg_type=TwistStamped,
-            topic=oarbot_name + "/dingo/cmd_vel",
+            topic=oarbot_name + "/commands/teleop/base",
             qos_profile=10
         )
         self.dingo_e_stop_publishers[oarbot_name] = self.create_publisher(
@@ -88,6 +97,40 @@ class RosGuiNode(Node):
             topic=oarbot_name + "/dingo/platform/emergency_stop",
             qos_profile=10
         )
+
+        self.mode_publishers[oarbot_name] = self.create_publisher(String, oarbot_name + "/control_mode", 1)
+        self.base_enable_publishers[oarbot_name] = self.create_publisher(Bool, oarbot_name + "/base_enable", 1)
+        self.admittance_publishers[oarbot_name] = {
+            suffix: self.create_publisher(Bool, oarbot_name + "/admittance_" + suffix, 1)
+            for suffix in ("enable", "translation_enable", "rotation_enable")
+        }
+
+    def permitted(self):
+        now = monotonic()
+        return (self.deadman_pressed and not self.e_stop_pressed and
+                now - self.last_deadman <= 0.2 and now - self.last_estop <= 0.2)
+
+    def watchdog(self):
+        permitted = self.permitted()
+        for name, settings in self.oarbot_settings_dict.items():
+            mode = 'disabled'
+            if permitted:
+                if settings.admittance_control_enabled:
+                    mode = 'admittance'
+                elif settings.arm_enabled:
+                    mode = 'teleop'
+            self.mode_publishers[name].publish(String(data=mode))
+            self.base_enable_publishers[name].publish(Bool(data=permitted and settings.base_enabled))
+            pubs = self.admittance_publishers[name]
+            pubs['enable'].publish(Bool(data=mode == 'admittance'))
+            pubs['translation_enable'].publish(Bool(data=settings.translation_enabled))
+            pubs['rotation_enable'].publish(Bool(data=settings.rotation_enabled))
+            if not permitted or monotonic() - self.last_spacenav > 0.15:
+                self.arm_velocity_publishers[name].publish(PoseVelocity())
+                msg = TwistStamped()
+                msg.header.stamp = self.get_clock().now().to_msg()
+                msg.header.frame_id = name.strip("/") + "/base_link"
+                self.base_velocity_publishers[name].publish(msg)
 
     def finger_position_callback(self, oarbot_name: str, msg) -> None:
         avg_finger_position = (msg.finger1 + msg.finger2 + msg.finger3) / 3
@@ -106,53 +149,29 @@ class RosGuiNode(Node):
         self.oarbot_settings_dict[oarbot_name].finger_position_percent = finger_position_open_percent
 
     def set_finger_position(self, oarbot_name: str, finger_position_percent: int) -> None:
-        clamped_percent = 100 - max(0, min(100, finger_position_percent))
-
-        goal_msg = SetFingersPosition.Goal()
-        # Min and max finger positions (from the docs) is 0 to 6800
-        goal_msg.fingers.finger1 = float(clamped_percent) * 68.0
-        goal_msg.fingers.finger2 = float(clamped_percent) * 68.0
-        goal_msg.fingers.finger3 = float(clamped_percent) * 68.0
-
-        future = self.finger_position_actions[oarbot_name].send_goal_async(goal_msg)
-        future.add_done_callback(self.finger_goal_done)
-
+        self.get_logger().warn("Position actions are unavailable in guarded velocity mode; use supervised setup mode")
+        return
     def finger_goal_done(self, future: Future):
         goal_handle = future.result()
-        if not goal_handle:
+        if not goal_handle or not goal_handle.accepted:
             self.get_logger().error("Action goal was rejected")
 
     def arm_home(self, oarbot_name: str) -> None:
-        goal_msg = ArmJointAngles.Goal()
-
-        if oarbot_name == "/oarbot_blue":
-            goal_msg.angles.joint1 = 180.0 / pi * -1.4774338884599887
-            goal_msg.angles.joint2 = 180.0 / pi * 2.9247900355686225
-            goal_msg.angles.joint3 = 180.0 / pi * 0.9923351677394475
-            goal_msg.angles.joint4 = 180.0 / pi * -2.074164931804627
-            goal_msg.angles.joint5 = 180.0 / pi * 1.4422766999615257
-            goal_msg.angles.joint6 = 180.0 / pi * 1.323276941918806
-        elif oarbot_name == "/oarbot_silver":
-            goal_msg.angles.joint1 = 180.0 / pi * 1.489946484525617
-            goal_msg.angles.joint2 = 180.0 / pi * 3.358340676808617
-            goal_msg.angles.joint3 = 180.0 / pi * 5.285075141195329
-            goal_msg.angles.joint4 = 180.0 / pi * 2.0765452651869394
-            goal_msg.angles.joint5 = 180.0 / pi * -1.445846667402777
-            goal_msg.angles.joint6 = 180.0 / pi * -1.301857004113245
-        else:
-            self.get_logger().error(f"arm_home() called with bad oarbot_namespace {oarbot_name}")
-            return
-
-        future = self.arm_joint_angle_actions[oarbot_name].send_goal_async(goal_msg)
-        future.add_done_callback(self.arm_home_goal_done)
+        self.get_logger().warn("Homing is unavailable in guarded velocity mode; use supervised setup mode")
 
     def arm_home_goal_done(self, future: Future) -> None:
         goal_handle = future.result()
-        if not goal_handle:
+        if not goal_handle or not goal_handle.accepted:
             self.get_logger().error("Action goal was rejected")
 
     def spacenav_callback(self, msg: Twist) -> None:
-        if not self.e_stop_pressed and self.deadman_pressed:
+        values = (msg.linear.x, msg.linear.y, msg.linear.z, msg.angular.x, msg.angular.y, msg.angular.z)
+        if not all(isfinite(v) for v in values):
+            self.last_spacenav = float('-inf')
+            self.watchdog()
+            return
+        self.last_spacenav = monotonic()
+        if self.permitted():
             for oarbot_namespace, oarbot in self.oarbot_settings_dict.items():
                 if oarbot.arm_enabled and not self.oarbot_settings_dict[oarbot_namespace].admittance_control_enabled:
                     arm_msg = PoseVelocity()
@@ -182,6 +201,7 @@ class RosGuiNode(Node):
                 if oarbot.base_enabled:
                     base_msg = TwistStamped()
                     base_msg.header.stamp = self.get_clock().now().to_msg()
+                    base_msg.header.frame_id = oarbot_namespace.strip("/") + "/base_link"
 
                     if oarbot.translation_enabled:
                         base_msg.twist.linear = msg.linear
@@ -191,101 +211,25 @@ class RosGuiNode(Node):
                     self.base_velocity_publishers[oarbot_namespace].publish(base_msg)
 
     def deadman_callback(self, msg: Bool) -> None:
+        self.last_deadman = monotonic()
         self.deadman_pressed = msg.data
+        self.watchdog()
 
     def e_stop_callback(self, msg: Bool) -> None:
-
-        # If the e-stop is active, publish to all dingo e-stop channels and disable any external controls if they are active
-        if msg.data:
-            for e_stop_publisher in self.dingo_e_stop_publishers.values():
-                e_stop_publisher.publish(msg)
-
-            for oarbot_namespace, oarbot_settings in self.oarbot_settings_dict.items():
-                if oarbot_settings.admittance_control_enabled:
-                    enable_topic = self.create_publisher(
-                        msg_type=Bool,
-                        topic=oarbot_namespace + "/admittance_enable",
-                        qos_profile=1
-                    )
-                    pub_msg = Bool()
-                    pub_msg.data = False
-                    enable_topic.publish(pub_msg)
-                    self.destroy_publisher(enable_topic)
-
-        elif not msg.data and self.e_stop_pressed: # If this is the first time the e-stop is disengaged
-            for e_stop_publisher in self.dingo_e_stop_publishers.values():
-                e_stop_publisher.publish(msg)
-
-        if not msg.data:
-            # Re-enable any external controls if they were previously disabled
-            for oarbot_namespace, oarbot_settings in self.oarbot_settings_dict.items():
-                if oarbot_settings.admittance_control_enabled:
-                    enable_topic = self.create_publisher(
-                        msg_type=Bool,
-                        topic=oarbot_namespace + "/admittance_enable",
-                        qos_profile=1
-                    )
-                    pub_msg = Bool()
-                    pub_msg.data = True
-                    enable_topic.publish(pub_msg)
-                    self.destroy_publisher(enable_topic)
-            
-
+        self.last_estop = monotonic()
         self.e_stop_pressed = msg.data
+        for publisher in self.dingo_e_stop_publishers.values():
+            publisher.publish(msg)
+        self.watchdog()
 
     def enable_admittance_control(self, oarbot_namespace: str) -> None:
         self.oarbot_settings_dict[oarbot_namespace].admittance_control_enabled = True
-
-        # Publish to the admittance control node in the same namespace as the robot.
-        # The C++ subscriber is created under /oarbot_silver or /oarbot_blue, so the
-        # topic must be fully namespaced to match.
-        enable_topic = self.create_publisher(
-            msg_type=Bool,
-            topic=oarbot_namespace + "/admittance_enable",
-            qos_profile=1
-        )
-        translation_enable_topic = self.create_publisher(
-            msg_type=Bool,
-            topic=oarbot_namespace + "/admittance_translation_enable",
-            qos_profile=1
-        )
-        rotation_enable_topic = self.create_publisher(
-            msg_type=Bool,
-            topic=oarbot_namespace + "/admittance_rotation_enable",
-            qos_profile=1
-        )
-
-        msg = Bool()
-
-        msg.data = True
-        # Only publish to the enable topic if the E-stop is off; it will be published when the E-stop is turned off if it is pressed down currently
-        if not self.e_stop_pressed:
-            enable_topic.publish(msg)
-
-        msg.data = self.oarbot_settings_dict[oarbot_namespace].translation_enabled
-        translation_enable_topic.publish(msg)
-
-        msg.data = self.oarbot_settings_dict[oarbot_namespace].rotation_enabled
-        rotation_enable_topic.publish(msg)
-
-        self.destroy_publisher(enable_topic)
-        self.destroy_publisher(translation_enable_topic)
-        self.destroy_publisher(rotation_enable_topic)
+        self.watchdog()
 
     def disable_admittance_control(self, oarbot_namespace: str) -> None:
-        enable_topic = self.create_publisher(
-            msg_type=Bool,
-            topic=oarbot_namespace + "/admittance_enable",
-            qos_profile=1
-        )
-
-        msg = Bool()
-        msg.data = False
-        enable_topic.publish(msg)
-
-        self.destroy_publisher(enable_topic)
-
         self.oarbot_settings_dict[oarbot_namespace].admittance_control_enabled = False
+        self.watchdog()
+
 
 class OarbotSettings():
     def __init__(self) -> None:

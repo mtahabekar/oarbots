@@ -12,6 +12,7 @@ def generate_launch_description() -> LaunchDescription:
 
     return LaunchDescription([
         kinova_namespace_argument,
+        joint_prefix_argument,
         Node(
             package="kinova_driver",
             executable="joint_trajectory_action_server",

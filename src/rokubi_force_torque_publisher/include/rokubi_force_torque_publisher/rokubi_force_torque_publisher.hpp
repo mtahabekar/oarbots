@@ -2,51 +2,40 @@
 #define ROKUBI_FORCE_TORQUE_PUBLISHER
 
 #include "rokubi_force_torque_publisher/BotaForceTorqueSensorComm.hpp"
-
 #include "rclcpp/rclcpp.hpp"
 #include "geometry_msgs/msg/wrench_stamped.hpp"
-#include "geometry_msgs/msg/vector3.hpp"
+#include "diagnostic_msgs/msg/diagnostic_array.hpp"
 #include "tf2/LinearMath/Vector3.hpp"
 #include "tf2_ros/buffer.hpp"
 #include "tf2_ros/transform_listener.hpp"
-
+#include <chrono>
+#include <deque>
 #include <string>
-#include <fcntl.h>      // Contains file controls like O_RDWR
-#include <errno.h>      // Error integer and strerror() function
-#include <termios.h>    // Contains POSIX terminal control definitions
-#include <unistd.h>     // write(), read(), close()
-#include <sys/ioctl.h>
-#include <linux/serial.h>
+#include <unistd.h>
 
-class RokubiForceTorquePublisher : public rclcpp::Node
-{
+class RokubiForceTorquePublisher : public rclcpp::Node {
 public:
-    RokubiForceTorquePublisher();
+  RokubiForceTorquePublisher();
 private:
-    std::string raw_publish_topic;
-    std::string calibrated_publish_topic;
-    std::string tf_prefix;
-    double end_effector_mass;
-    geometry_msgs::msg::Vector3 center_of_mass_vector;
-    geometry_msgs::msg::Vector3 force_bias_vector;
-    geometry_msgs::msg::Vector3 torque_bias_vector;
-
-    geometry_msgs::msg::WrenchStamped latest_raw_force_torque_data;
-
-    rclcpp::Publisher<geometry_msgs::msg::WrenchStamped>::SharedPtr raw_ft_publisher;
-    rclcpp::Publisher<geometry_msgs::msg::WrenchStamped>::SharedPtr calibrated_ft_publisher;
-    rclcpp::TimerBase::SharedPtr publish_timer;
-
-    std::shared_ptr<tf2_ros::TransformListener> tf_listener;
-    std::unique_ptr<tf2_ros::Buffer> tf_buffer;
-
-    std::unique_ptr<BotaForceTorqueSensorComm> ft_sensor;
-    struct termios tty;
-    struct serial_struct ser_info;
-    
-    tf2::Vector3 get_gravity_in_ft_frame();
-    void publish_raw_ft_data();
-    void publish_calibrated_ft_data();
+  struct SerialDescriptor {int value = -1; ~SerialDescriptor() {if (value >= 0) ::close(value);}} serial_;
+  std::string prefix_, raw_frame_, calibrated_frame_, gravity_frame_;
+  double mass_, max_age_;
+  tf2::Vector3 com_, force_bias_, torque_bias_;
+  bool blue_;
+  uint16_t sensor_status_ = 0;
+  uint32_t sensor_timestamp_ = 0;
+  uint64_t received_ = 0, invalid_ = 0, tf_dropped_ = 0, coalesced_ = 0;
+  std::chrono::steady_clock::time_point last_receive_{};
+  struct Pending {geometry_msgs::msg::WrenchStamped msg; std::chrono::steady_clock::time_point received;};
+  std::deque<Pending> pending_;
+  rclcpp::Publisher<geometry_msgs::msg::WrenchStamped>::SharedPtr raw_pub_, calibrated_pub_;
+  rclcpp::Publisher<diagnostic_msgs::msg::DiagnosticArray>::SharedPtr diagnostics_pub_;
+  rclcpp::TimerBase::SharedPtr timer_, diagnostics_timer_;
+  std::unique_ptr<tf2_ros::Buffer> tf_buffer_;
+  std::shared_ptr<tf2_ros::TransformListener> tf_listener_;
+  std::unique_ptr<BotaForceTorqueSensorComm> sensor_;
+  tf2::Vector3 vector_parameter(const std::string& name);
+  void poll();
+  void diagnostics();
 };
-
 #endif

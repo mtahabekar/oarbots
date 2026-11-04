@@ -12,7 +12,7 @@ from launch_ros.actions import Node
 def check_namespace_trailing_forward_slash(context: LaunchContext, *args, **kwargs) -> None:
     oarbot_namespace_text = LaunchConfiguration("oarbot_namespace").perform(context)
 
-    if (oarbot_namespace_text[-1] != "/"):
+    if not oarbot_namespace_text or oarbot_namespace_text.startswith("/") or not oarbot_namespace_text.endswith("/"):
         raise ValueError("oarbot_namespace must end in a forward slash")
 
 
@@ -39,7 +39,7 @@ def generate_robot_state_publisher_node(context: LaunchContext, *args, **kwargs)
 def generate_launch_description() -> LaunchDescription:
     """
     For a whole, singular OARBot, this launch file launches a joint_state_publisher and robot_state_publisher that publish 
-    coordinate frames to /tf and /tf_static as well as a robot description to a namespaced robot_description topic.
+    coordinate frames from timestamp-preserving partial joint streams.
     """
 
 
@@ -54,18 +54,8 @@ def generate_launch_description() -> LaunchDescription:
         oarbot_namespace_argument,
         robot_description_argument,
 
-        Node(
-            package="joint_state_publisher",
-            executable="joint_state_publisher",
-            name="joint_state_publisher",
-            namespace=LaunchConfiguration(oarbot_namespace_string),
-            parameters=[{
-                "source_list": [
-                    "kinova/j2n6s300_driver/out/prefix_joint_state",
-                    "dingo/platform/prefix_joint_states"
-                ]
-            }]
-        ),
+        OpaqueFunction(function=check_namespace_trailing_forward_slash),
+        OpaqueFunction(function=generate_robot_state_publisher_node),
         Node(
             package="joint_state_renamer",
             executable="joint_state_renamer",
@@ -74,7 +64,7 @@ def generate_launch_description() -> LaunchDescription:
             parameters=[{
                 "joint_state_prefix": LaunchConfiguration(oarbot_namespace_string),
                 "input_topic": "dingo/platform/joint_states",
-                "output_topic": "dingo/platform/prefix_joint_states"
+                "output_topic": "joint_states"
             }]
         ),
         Node(
@@ -85,9 +75,7 @@ def generate_launch_description() -> LaunchDescription:
             parameters=[{
                 "joint_state_prefix": LaunchConfiguration(oarbot_namespace_string),
                 "input_topic": "kinova/j2n6s300_driver/out/joint_state",
-                "output_topic": "kinova/j2n6s300_driver/out/prefix_joint_state"
+                "output_topic": "joint_states"
             }]
         ),
-        OpaqueFunction(function=check_namespace_trailing_forward_slash),
-        OpaqueFunction(function=generate_robot_state_publisher_node),
     ])

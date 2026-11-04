@@ -1,0 +1,359 @@
+diff --git a/kinova_demo/package.xml b/kinova_demo/package.xml
+index 1bda4c4..a4436c1 100644
+--- a/kinova_demo/package.xml
++++ b/kinova_demo/package.xml
+@@ -29,4 +29,5 @@
+   <export>
+     <build_type>ament_cmake</build_type>
+   </export>
++  <exec_depend>action_msgs</exec_depend>
+ </package>
+diff --git a/kinova_demo/ros2_nodes/pose_action_client.py b/kinova_demo/ros2_nodes/pose_action_client.py
+index 0f68d9a..216f21f 100755
+--- a/kinova_demo/ros2_nodes/pose_action_client.py
++++ b/kinova_demo/ros2_nodes/pose_action_client.py
+@@ -1,53 +1,78 @@
+ #!/usr/bin/env python3
+-
++"""Supervised pose-action example. Requires explicit target and motion opt-in."""
++from math import isfinite, sqrt
+ import rclpy
+ from rclpy.action import ActionClient
+ from rclpy.node import Node
+-
+ from kinova_msgs.action import ArmPose
+-from std_msgs.msg import Header
+-from geometry_msgs.msg import Point, Quaternion
++from kinova_msgs.srv import Stop
++from action_msgs.msg import GoalStatus
++
+ 
+ class CartesianPoseClient(Node):
+     def __init__(self):
+         super().__init__('cartesian_pose_client')
++        if not self.declare_parameter('execute_motion', False).value:
++            raise ValueError('Set execute_motion:=true only in supervised setup mode with an explicit position target')
++        position=self.declare_parameter('position', [float('nan')]*3).value
++        orientation=self.declare_parameter('orientation_xyzw', [0.0,0.0,0.0,1.0]).value
++        frame=self.declare_parameter('frame_id', 'j2n6s300_link_base').value
++        if len(position)!=3 or len(orientation)!=4 or not all(isfinite(v) for v in position+orientation) or not frame:
++            raise ValueError('Supply a finite three-element position, four-element quaternion and frame')
++        norm=sqrt(sum(v*v for v in orientation))
++        if not isfinite(norm) or norm < 1e-9:
++            raise ValueError('Quaternion must have a finite, nonzero norm')
++        self.goal=ArmPose.Goal()
++        self.goal.pose.header.frame_id=frame
++        self.goal.pose.pose.position.x,self.goal.pose.pose.position.y,self.goal.pose.pose.position.z=position
++        q=self.goal.pose.pose.orientation
++        q.x,q.y,q.z,q.w=[v/norm for v in orientation]
++        self.timeout=self.declare_parameter('timeout_sec',60.0).value
++        if not isfinite(self.timeout) or self.timeout <= 0:
++            raise ValueError('timeout_sec must be finite and positive')
++        self.client=ActionClient(self,ArmPose,'j2n6s300_driver/tool_pose')
++        self.stop_client=self.create_client(Stop,'j2n6s300_driver/in/stop')
+ 
+-        self.position = [0.212322831154, -0.257197618484, 0.509646713734]
+-        self.orientation = [1.63771402836, 1.11316478252, 0.134094119072, 0.]
+-
+-        self.client = ActionClient(self, ArmPose, '/j2n6s300_driver/tool_pose')
+-
+-        self.get_logger().info('Waiting for action server...')
+-        self.client.wait_for_server()
++    def stop(self):
++        if self.stop_client.wait_for_service(timeout_sec=1.0):
++            future=self.stop_client.call_async(Stop.Request())
++            rclpy.spin_until_future_complete(self,future,timeout_sec=2.0)
+ 
+     def send_goal(self):
+-        goal = ArmPose.Goal()
+-        goal.pose.header = Header(frame_id='j2n6s300_link_base')
+-        goal.pose.pose.position = Point(x=self.position[0], y=self.position[1], z=self.position[2])
+-        goal.pose.pose.orientation = Quaternion(x=self.orientation[0], y=self.orientation[1], z=self.orientation[2], w=self.orientation[3])
++        if not self.client.wait_for_server(timeout_sec=5.0):
++            raise RuntimeError('Pose action server is unavailable')
++        self.goal.pose.header.stamp=self.get_clock().now().to_msg()
++        future=self.client.send_goal_async(self.goal)
++        rclpy.spin_until_future_complete(self,future,timeout_sec=5.0)
++        if not future.done():
++            self.stop()
++            raise TimeoutError('Pose goal acceptance timed out; stop requested')
++        handle=future.result()
++        if not handle.accepted:
++            raise RuntimeError('Pose goal rejected')
++        result=handle.get_result_async()
++        rclpy.spin_until_future_complete(self,result,timeout_sec=self.timeout)
++        if not result.done():
++            handle.cancel_goal_async()
++            self.stop()
++            raise TimeoutError('Pose goal timed out; stop requested')
++        if result.result().status != GoalStatus.STATUS_SUCCEEDED:
++            self.stop()
++            raise RuntimeError('Pose action failed')
++        self.get_logger().info('Pose action succeeded')
+ 
+-        self.get_logger().info('Sending goal...')
+-        self.client.send_goal(goal)
+-
+-        self.get_logger().info('Waiting for result...')
+-        self.client.wait_for_result()
+-
+-        result = self.client.get_result()
+-        if not result:
+-            self.get_logger().info('Goal failed')
+-        else:
+-            self.get_logger().info(f'Result: {result.pose.pose}')
+ 
+ def main(args=None):
+     rclpy.init(args=args)
++    node=None
++    try:
++        node=CartesianPoseClient()
++        node.send_goal()
++    finally:
++        if node is not None:
++            node.destroy_node()
++        rclpy.try_shutdown()
+ 
+-    node = CartesianPoseClient()
+-    node.send_goal()
+-
+-    rclpy.spin(node)
+-
+-    node.destroy_node()
+-    rclpy.shutdown()
+ 
+ if __name__ == '__main__':
+     main()
+diff --git a/kinova_driver/include/kinova/KinovaTypes.h b/kinova_driver/include/kinova/KinovaTypes.h
+index 85caaa0..2ccdd08 100644
+--- a/kinova_driver/include/kinova/KinovaTypes.h
++++ b/kinova_driver/include/kinova/KinovaTypes.h
+@@ -1,3 +1,4 @@
++#include <stdexcept>
+ #ifndef KINOVA_TYPE_H_
+ #define KINOVA_TYPE_H_
+ 
+@@ -479,6 +480,7 @@ struct AngularInfo
+ 			case 4: return Actuator5;
+ 			case 5: return Actuator6;
+ 			case 6: return Actuator7;
++            default: throw std::out_of_range("Actuator index must be 0..6");
+ 		}
+ 	}
+         float operator [](const int idx) const{
+@@ -491,6 +493,7 @@ struct AngularInfo
+ 			case 4: return Actuator5;
+ 			case 5: return Actuator6;
+ 			case 6: return Actuator7;
++            default: throw std::out_of_range("Actuator index must be 0..6");
+ 		}
+ 	}
+ };
+diff --git a/kinova_driver/include/kinova_driver/kinova_arm.h b/kinova_driver/include/kinova_driver/kinova_arm.h
+index 879d9a6..b340d29 100644
+--- a/kinova_driver/include/kinova_driver/kinova_arm.h
++++ b/kinova_driver/include/kinova_driver/kinova_arm.h
+@@ -42,6 +42,7 @@
+ #include "kinova_msgs/msg/cartesian_force.hpp"
+ 
+ #include <time.h>
++#include <chrono>
+ #include <math.h>
+ #include <vector>
+ 
+@@ -208,7 +209,11 @@ class KinovaArm
+ 
+     double status_interval_seconds_;
+     double finger_conv_ratio_;
+-    bool convert_joint_velocities_;
++    bool convert_joint_velocities_ = true;
++    bool velocity_active_ = false;
++    double velocity_timeout_sec_ = 0.2;
++    std::chrono::steady_clock::time_point last_velocity_{};
++    rclcpp::TimerBase::SharedPtr velocity_watchdog_;
+ 
+     // State tracking or utility members
+     AngularInfo joint_velocities_;
+diff --git a/kinova_driver/src/joint_trajectory_action/gripper_command_action_server.cpp b/kinova_driver/src/joint_trajectory_action/gripper_command_action_server.cpp
+index 2201731..184f9b6 100644
+--- a/kinova_driver/src/joint_trajectory_action/gripper_command_action_server.cpp
++++ b/kinova_driver/src/joint_trajectory_action/gripper_command_action_server.cpp
+@@ -1,5 +1,6 @@
+ #include <kinova_driver/gripper_command_action_server.h>
+ #include <rclcpp/utilities.hpp>
++#include <algorithm>
+ 
+ using namespace kinova;
+ 
+@@ -36,12 +37,12 @@ GripperCommandActionController::GripperCommandActionController(std::shared_ptr<r
+         nh_->declare_parameter("gripper_command_goal_constraint_", gripper_command_goal_constraint_);
+     nh_->get_parameter("gripper_command_goal_constraint_", gripper_command_goal_constraint_);
+ 
+-    finger_max_turn_ = 6400.0;
++    finger_max_turn_ = 6800.0;
+     if (!nh_->has_parameter("finger_max_turn_"))
+         nh_->declare_parameter("finger_max_turn_", finger_max_turn_);
+     nh_->get_parameter("finger_max_turn_", finger_max_turn_);
+ 
+-    finger_conv_ratio_ = 1.4 / 6400.0;
++    finger_conv_ratio_ = (80.0 * M_PI / 180.0) / 6800.0;
+     if (!nh_->has_parameter("finger_conv_ratio_"))
+         nh_->declare_parameter("finger_conv_ratio_", finger_conv_ratio_);
+     nh_->get_parameter("finger_conv_ratio_", finger_conv_ratio_);
+@@ -136,6 +137,7 @@ void GripperCommandActionController::result_callback(const rclcpp_action::Client
+ 
+ void GripperCommandActionController::goalCBFollow(std::shared_ptr<GoalHandleGCAS> gh)
+ {
++    active_result_ = std::make_shared<GCAS::Result>();
+     active_goal_ = gh;
+     const auto goal = gh->get_goal();
+     RCLCPP_INFO(nh_->get_logger(), "Gripper_command_action_server received goal!");
+@@ -151,7 +153,7 @@ void GripperCommandActionController::goalCBFollow(std::shared_ptr<GoalHandleGCAS
+ 
+     has_active_goal_ = true;
+     // gripper_gap 0 is open, 1.4 is close. Here command.position from Moveit.rviz is finger radian value, rather than Cartesian gap of gripper in meter.
+-    double gripper_gap = goal->command.position * (180 / M_PI);
++    double gripper_gap = std::max(0.0, std::min(goal->command.position / finger_conv_ratio_, finger_max_turn_));
+     RCLCPP_INFO(nh_->get_logger(), "Gripper_command_action_server accepted goal!");
+ 
+     // send the goal to fingers position action server, Todo: check what's going on mathematically
+diff --git a/kinova_driver/src/kinova_arm.cpp b/kinova_driver/src/kinova_arm.cpp
+index 445b18d..2b09795 100644
+--- a/kinova_driver/src/kinova_arm.cpp
++++ b/kinova_driver/src/kinova_arm.cpp
+@@ -240,6 +240,9 @@ KinovaArm::KinovaArm(KinovaComm &arm, const std::shared_ptr<rclcpp::Node> nodeHa
+     if (!node_handle_->has_parameter("publish_joint_command_rate_hz"))
+         node_handle_->declare_parameter("publish_joint_command_rate_hz", publish_joint_command_rate_hz_);
+     node_handle_->get_parameter("publish_joint_command_rate_hz", publish_joint_command_rate_hz_);
++    if (!std::isfinite(publish_joint_angles_rate_hz_) || publish_joint_angles_rate_hz_ <= 0 || publish_joint_angles_rate_hz_ > 1000 ||
++        !std::isfinite(publish_joint_command_rate_hz_) || publish_joint_command_rate_hz_ <= 0 || publish_joint_command_rate_hz_ > 1000)
++      throw std::invalid_argument("Joint publication rates must be finite and in (0, 1000] Hz");
+     int publish_joint_angles_rate_ms_ = std::lround(1000.0 / publish_joint_angles_rate_hz_);
+     int publish_joint_command_rate_ms_ = std::lround(1000.0 / publish_joint_command_rate_hz_);
+     RCLCPP_INFO(node_handle_->get_logger(), "Publishing joint angles at %lf Hz (%d ms)", publish_joint_angles_rate_hz_, publish_joint_angles_rate_ms_);
+@@ -249,7 +252,7 @@ KinovaArm::KinovaArm(KinovaComm &arm, const std::shared_ptr<rclcpp::Node> nodeHa
+     // 0..360 range (0..180 for positive values, 181..360 for negative ones).
+     // This indicates that the ROS node should convert them first before
+     // updating the joint_state topic.
+-    bool convert_joint_velocities_ = true;
++    convert_joint_velocities_ = true;
+     if (!node_handle_->has_parameter("convert_joint_velocities"))
+         node_handle_->declare_parameter("convert_joint_velocities", convert_joint_velocities_);
+     node_handle_->get_parameter("convert_joint_velocities", convert_joint_velocities_);
+@@ -257,6 +260,16 @@ KinovaArm::KinovaArm(KinovaComm &arm, const std::shared_ptr<rclcpp::Node> nodeHa
+     this->publish_joint_angles_timer_ = node_handle_->create_wall_timer(std::chrono::milliseconds(publish_joint_angles_rate_ms_), std::bind(&KinovaArm::publishJointAngles, this));
+     this->publish_joint_command_timer = node_handle_->create_wall_timer(std::chrono::milliseconds(publish_joint_command_rate_ms_), std::bind(&KinovaArm::publishJointCommand, this));
+ 
++    velocity_timeout_sec_ = node_handle_->declare_parameter<double>("velocity_timeout_sec", 0.2);
++    if (!std::isfinite(velocity_timeout_sec_) || velocity_timeout_sec_ <= 0)
++      throw std::invalid_argument("velocity_timeout_sec must be finite and positive");
++    velocity_watchdog_ = node_handle_->create_wall_timer(std::chrono::milliseconds(20), [this] {
++      if (velocity_active_ && std::chrono::duration<double>(std::chrono::steady_clock::now() - last_velocity_).count() > velocity_timeout_sec_) {
++        velocity_active_ = false;
++        kinova_comm_.stopAPI();
++        RCLCPP_ERROR(node_handle_->get_logger(), "Velocity stream timed out: API stopped; explicit start service required");
++      }
++    });
+     RCLCPP_INFO(node_handle_->get_logger(), "The arm is ready to use.");
+ }
+ 
+@@ -361,6 +374,8 @@ bool KinovaArm::setTorqueControlParametersService(
+ 
+ void KinovaArm::jointVelocityCallback(const kinova_msgs::msg::JointVelocity::SharedPtr joint_vel)
+ {
++    last_velocity_ = std::chrono::steady_clock::now();
++    velocity_active_ = true;
+     if (!kinova_comm_.isStopped())
+     {
+         joint_velocities_.Actuator1 = joint_vel->joint1;
+@@ -556,6 +571,8 @@ bool KinovaArm::setEndEffectorOffsetCallback(
+ 
+ void KinovaArm::cartesianVelocityCallback(const kinova_msgs::msg::PoseVelocity::SharedPtr cartesian_vel)
+ {
++    last_velocity_ = std::chrono::steady_clock::now();
++    velocity_active_ = true;
+     if (!kinova_comm_.isStopped())
+     {
+         cartesian_velocities_.X = cartesian_vel->twist_linear_x;
+@@ -572,6 +589,8 @@ void KinovaArm::cartesianVelocityCallback(const kinova_msgs::msg::PoseVelocity::
+ 
+ void KinovaArm::cartesianVelocityWithFingersCallback(const kinova_msgs::msg::PoseVelocityWithFingers::SharedPtr cartesian_vel_with_fingers)
+ {
++    last_velocity_ = std::chrono::steady_clock::now();
++    velocity_active_ = true;
+     if (!kinova_comm_.isStopped())
+     {
+         cartesian_velocities_.X = cartesian_vel_with_fingers->twist_linear_x;
+@@ -600,6 +619,8 @@ void KinovaArm::cartesianVelocityWithFingersCallback(const kinova_msgs::msg::Pos
+ 
+ void KinovaArm::cartesianVelocityWithFingerVelocityCallback(const kinova_msgs::msg::PoseVelocityWithFingerVelocity::SharedPtr cartesian_vel_with_finger_velocity)
+ {
++    last_velocity_ = std::chrono::steady_clock::now();
++    velocity_active_ = true;
+     if (!kinova_comm_.isStopped())
+     {
+         cartesian_velocities_.X = cartesian_vel_with_finger_velocity->twist_linear_x;
+@@ -808,10 +829,7 @@ void KinovaArm::publishToolWrench(void)
+     current_wrench.header.frame_id = tf_prefix_ + "link_base";
+ 
+ 
+-    // Same conversion issue as with velocities:
+-    if (convert_joint_velocities_) {
+-        convertKinDeg(current_wrench.wrench.torque);
+-    }
++    // API torques are already moments, not angular velocities. Do not convert to radians.
+ 
+     tool_wrench_publisher_->publish(current_wrench);
+ }
+diff --git a/kinova_driver/src/kinova_fingers_action.cpp b/kinova_driver/src/kinova_fingers_action.cpp
+index 299806f..30be3c6 100644
+--- a/kinova_driver/src/kinova_fingers_action.cpp
++++ b/kinova_driver/src/kinova_fingers_action.cpp
+@@ -89,7 +89,7 @@ KinovaFingersActionServer::~KinovaFingersActionServer()
+ 
+ rclcpp_action::GoalResponse KinovaFingersActionServer::handle_goal(const rclcpp_action::GoalUUID &uuid, std::shared_ptr<const SetFingersPosition::Goal>goal)
+ {
+-    RCLCPP_INFO(node_handle_->get_logger(), "Received goal request with pose %d", goal->fingers);
++    RCLCPP_INFO(node_handle_->get_logger(), "Received motion goal request");
+     (void) uuid;
+     return rclcpp_action::GoalResponse::ACCEPT_AND_EXECUTE;
+ }
+diff --git a/kinova_driver/src/kinova_joint_angles_action.cpp b/kinova_driver/src/kinova_joint_angles_action.cpp
+index b965f77..11df317 100644
+--- a/kinova_driver/src/kinova_joint_angles_action.cpp
++++ b/kinova_driver/src/kinova_joint_angles_action.cpp
+@@ -97,7 +97,7 @@ KinovaAnglesActionServer::~KinovaAnglesActionServer()
+ 
+ rclcpp_action::GoalResponse KinovaAnglesActionServer::handle_goal(const rclcpp_action::GoalUUID &uuid, std::shared_ptr<const ArmJointAngles::Goal>goal)
+ {
+-    RCLCPP_INFO(node_handle_->get_logger(), "Received goal request with pose %d", goal->angles);
++    RCLCPP_INFO(node_handle_->get_logger(), "Received motion goal request");
+     (void) uuid;
+     return rclcpp_action::GoalResponse::ACCEPT_AND_EXECUTE;
+ }
+diff --git a/kinova_driver/src/kinova_tool_pose_action.cpp b/kinova_driver/src/kinova_tool_pose_action.cpp
+index d4208d6..fc6ad96 100644
+--- a/kinova_driver/src/kinova_tool_pose_action.cpp
++++ b/kinova_driver/src/kinova_tool_pose_action.cpp
+@@ -134,7 +134,7 @@ KinovaPoseActionServer::~KinovaPoseActionServer()
+ 
+ rclcpp_action::GoalResponse KinovaPoseActionServer::handle_goal(const rclcpp_action::GoalUUID &uuid, std::shared_ptr<const ArmPose::Goal>goal)
+ {
+-    RCLCPP_INFO(node_handle_->get_logger(), "Received goal request with pose %d", goal->pose);
++    RCLCPP_INFO(node_handle_->get_logger(), "Received motion goal request");
+     (void) uuid;
+     return rclcpp_action::GoalResponse::ACCEPT_AND_EXECUTE;
+ }
+diff --git a/kinova_driver/src/nodes/kinova_interactive_control.cpp b/kinova_driver/src/nodes/kinova_interactive_control.cpp
+index 4d513bc..6ce8eeb 100644
+--- a/kinova_driver/src/nodes/kinova_interactive_control.cpp
++++ b/kinova_driver/src/nodes/kinova_interactive_control.cpp
+@@ -379,7 +379,7 @@ void processFeedback( const visualization_msgs::msg::InteractiveMarkerFeedback::
+ 
+     case visualization_msgs::msg::InteractiveMarkerFeedback::MOUSE_DOWN:
+         // the moment mouse is clicked down, not the moment keeps down.
+-        if(mouse_was_up=true)
++        if(mouse_was_up)
+         {
+             quaternion_mousedown = tf2::Quaternion(feedback->pose.orientation.x, feedback->pose.orientation.y, feedback->pose.orientation.z, feedback->pose.orientation.w);
+             tf2::Matrix3x3(quaternion_mousedown).getRPY(roll_mousedown, pitch_mousedown, yaw_mousedown);

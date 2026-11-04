@@ -6,6 +6,7 @@ After=network-online.target
 
 [Service]
 Type=oneshot
+User=tablet
 ExecStart=/usr/local/bin/tablet_cd.sh
 WorkingDirectory=/home/tablet/ros2_ws
 
@@ -13,5 +14,4 @@ KillMode=control-group
 TimeoutStopSec=10
 SendSIGKILL=yes
 
-[Install]
-WantedBy=multi-user.target
+# Maintenance only: invoke explicitly, never enable automatic code updates at boot.

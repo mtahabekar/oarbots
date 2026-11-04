@@ -1,45 +1,31 @@
 #ifndef ADMITTANCE_CONTROL_HPP
 #define ADMITTANCE_CONTROL_HPP
-
 #include "rclcpp/rclcpp.hpp"
 #include "geometry_msgs/msg/wrench_stamped.hpp"
-#include "geometry_msgs/msg/wrench.hpp"
-#include "geometry_msgs/msg/vector3.hpp"
 #include "std_msgs/msg/bool.hpp"
 #include "kinova_msgs/msg/pose_velocity.hpp"
 #include "tf2_ros/buffer.hpp"
 #include "tf2_ros/transform_listener.hpp"
+#include "tf2/LinearMath/Vector3.hpp"
+#include <chrono>
 
-#include <string>
-#include <memory>
-
-class AdmittanceControl : public rclcpp::Node
-{
+class AdmittanceControl : public rclcpp::Node {
 public:
-    AdmittanceControl();
+  AdmittanceControl();
 private:
-    std::string tf_prefix;
-
-    bool publish_enable;
-    bool translation_enable;
-    bool rotation_enable;
-
-    tf2::Vector3 cur_linear_velocity;
-    tf2::Vector3 cur_angular_velocity;
-
-    
-    rclcpp::Subscription<geometry_msgs::msg::WrenchStamped>::SharedPtr calibrated_ft_subscription;
-    rclcpp::Publisher<kinova_msgs::msg::PoseVelocity>::SharedPtr kinova_velocity_publisher;
-
-    rclcpp::Subscription<std_msgs::msg::Bool>::SharedPtr enable_subscription;
-    rclcpp::Subscription<std_msgs::msg::Bool>::SharedPtr enable_translation_subscription;
-    rclcpp::Subscription<std_msgs::msg::Bool>::SharedPtr enable_rotation_subscription;
-
-    std::shared_ptr<tf2_ros::TransformListener> tf_listener;
-    std::unique_ptr<tf2_ros::Buffer> tf_buffer;
-
-    geometry_msgs::msg::Wrench::SharedPtr convert_to_base_link_frame(const geometry_msgs::msg::Wrench &wrench_in_ft_sensor_frame);    
-    void force_torque_callback(geometry_msgs::msg::WrenchStamped::SharedPtr msg);
+  std::string prefix_;
+  bool enabled_ = false, translation_ = true, rotation_ = false, angular_validated_ = false;
+  double timeout_, max_age_, mass_, inertia_, damping_, angular_damping_, force_cutoff_, torque_cutoff_, linear_limit_, angular_limit_;
+  tf2::Vector3 linear_{0,0,0}, angular_{0,0,0};
+  std::chrono::steady_clock::time_point last_enable_{}, last_wrench_{};
+  rclcpp::Time last_stamp_{0,0,RCL_ROS_TIME};
+  rclcpp::Subscription<geometry_msgs::msg::WrenchStamped>::SharedPtr wrench_sub_;
+  rclcpp::Subscription<std_msgs::msg::Bool>::SharedPtr enable_sub_, translation_sub_, rotation_sub_;
+  rclcpp::Publisher<kinova_msgs::msg::PoseVelocity>::SharedPtr publisher_;
+  rclcpp::TimerBase::SharedPtr watchdog_;
+  std::unique_ptr<tf2_ros::Buffer> buffer_;
+  std::shared_ptr<tf2_ros::TransformListener> listener_;
+  void stop();
+  void wrench(const geometry_msgs::msg::WrenchStamped& msg);
 };
-
 #endif

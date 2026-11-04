@@ -2,6 +2,7 @@
 #define DINGO_TF_RELAY_CPP
 
 #include "rclcpp/rclcpp.hpp"
+#include <map>
 #include "tf2_msgs/msg/tf_message.hpp"
 #include "geometry_msgs/msg/transform_stamped.hpp"
 
@@ -10,6 +11,7 @@ class TfRelay : public rclcpp::Node
 public:
     TfRelay();
 private:
+    std::map<std::string, geometry_msgs::msg::TransformStamped> static_transforms_;
     std::string robot_namespace;
     std::string tf_frame_prefix;
 

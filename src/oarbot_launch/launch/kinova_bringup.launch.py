@@ -22,7 +22,7 @@ def generate_launch_description() -> LaunchDescription:
     kinova_yaml_params = yaml_to_dict(os.path.join(get_package_share_directory("kinova_bringup"), "launch/config", "robot_parameters.yaml"))
     
     configurable_parameters = [
-        {"name": "use_urdf",              "default": "true"},
+        {"name": "use_urdf",              "default": True},
         {"name": "kinova_robotType",      "default": "j2n6s300"},
         {"name": "kinova_robotSerial",    "default": "not_set"},
         {"name": "use_jaco_v1_fingers",   "default": False},
@@ -34,7 +34,7 @@ def generate_launch_description() -> LaunchDescription:
             Node(
                 package="kinova_driver",
                 executable="kinova_arm_driver",
-                parameters=[dict([(param["name"], param["default"]) for param in configurable_parameters]), kinova_yaml_params],
+                parameters=[dict([(param["name"], param["default"]) for param in configurable_parameters]), kinova_yaml_params, {"publish_joint_angles_rate_hz": 50.0, "convert_joint_velocities": True}],
                 output="screen",
                 namespace=LaunchConfiguration(kinova_namespace_string)
             )

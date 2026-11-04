@@ -1,6 +1,7 @@
 #include "geometry_msgs/msg/twist.hpp"
 #include "geometry_msgs/msg/twist_stamped.hpp"
 #include "rclcpp/rclcpp.hpp"
+#include <cmath>
 
 class DingoTeleop : public rclcpp::Node
 {
@@ -8,21 +9,27 @@ public:
     DingoTeleop() : Node("dingo_teleop")
     {
         this->latest_message = geometry_msgs::msg::TwistStamped();
-        dingo_cmd_vel_publisher = this->create_publisher<geometry_msgs::msg::TwistStamped>("/oarbot_blue/dingo/cmd_vel", 1);
+        dingo_cmd_vel_publisher = this->create_publisher<geometry_msgs::msg::TwistStamped>("commands/teleop/base", 1);
         auto handle_input = [this](geometry_msgs::msg::Twist::UniquePtr msg) -> void {
+            const double values[] = {msg->linear.x,msg->linear.y,msg->linear.z,msg->angular.x,msg->angular.y,msg->angular.z};
+            for (double value : values) if (!std::isfinite(value)) return;
+            received_ = std::chrono::steady_clock::now();
             latest_message.twist = *msg;
             latest_message.header.stamp = this->get_clock()->now();
-            latest_message.header.frame_id = "world";
+            latest_message.header.frame_id = std::string(get_namespace()).substr(1) + "/base_link";
         };
 
-        input_subscription = this->create_subscription<geometry_msgs::msg::Twist>("/spacenav/twist", 10, handle_input);
+        input_subscription = this->create_subscription<geometry_msgs::msg::Twist>("/tablet_gui/spacenav/twist", 10, handle_input);
 
         this->timer = create_wall_timer(std::chrono::milliseconds(100), [this]() -> void {
-            RCLCPP_INFO(this->get_logger(), "Publishing message");
+            if (std::chrono::duration<double>(std::chrono::steady_clock::now()-received_).count() > 0.15)
+                latest_message.twist = geometry_msgs::msg::Twist();
+            latest_message.header.stamp = now();
             this->dingo_cmd_vel_publisher->publish(this->latest_message);
         });
     }
 private:
+    std::chrono::steady_clock::time_point received_{};
     geometry_msgs::msg::TwistStamped latest_message;
     rclcpp::Publisher<geometry_msgs::msg::TwistStamped>::SharedPtr dingo_cmd_vel_publisher;
     rclcpp::Subscription<geometry_msgs::msg::Twist>::SharedPtr input_subscription;
