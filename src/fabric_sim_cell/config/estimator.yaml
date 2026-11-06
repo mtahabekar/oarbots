@@ -1,0 +1,97 @@
+# Simulated cell, nominal baseline: the plant's own sheet (0.84 m, 0.2 kg/m^2, Style3D stretch
+# [30000,30000,6000], bend [0.002,0.001,0.0005] from fabric_sim full_sim.yaml at 249e940) on a
+# 15x15 mesh, whose vertices coincide with every fourth plant particle. Forces off.
+mesh:
+  width_m: 0.84
+  height_m: 0.84
+  rows: 15
+  columns: 15
+  areal_density_kg_m2: 0.2
+physics:
+  backend: newton_style3d
+  device: cuda:0
+  max_step_sec: 0.004166666666666667
+  gravity:
+  - 0.0
+  - 0.0
+  - -9.81
+  newton_stretch:
+  - 30000.0
+  - 30000.0
+  - 6000.0
+  newton_bend:
+  - 0.002
+  - 0.001
+  - 0.0005
+  iterations: 4
+observer:
+  ensemble_size: 32
+  localization_m: 0.3
+  inflation: 1.02
+  initial_sag_m: 0.03
+  initial_position_std_m: 0.04
+  initial_velocity_std_mps: 0.08
+  residual_force_std_n: 0.05
+  residual_force_walk_n_sqrt_sec: 0.01
+  velocity_noise_mps_sqrt_sec: 0.02
+  stale_after_sec: 0.5
+  max_gap_sec: 0.5
+  forecast_limit_sec: 0.6
+  max_edge_strain: 0.4
+  covariance_floor_m: 0.005
+  seed: 7
+observations:
+  max_depth: 64
+  max_boundary: 48
+  max_tracks: 48
+  association_gate_m: 0.15
+  visibility_tolerance_m: 0.02
+  pixel_stddev: 3.0
+  depth_floor_m: 0.01
+  max_surface_speed_mps: 1.0
+  use_uv: false
+runtime:
+  world_frame: world
+  observation_topics:
+  - /oarbot_blue/azure_kinect/fabric/observations
+  - /oarbot_silver/azure_kinect/fabric/observations
+  - /nuc/fabric/observations
+  hand_topic: /fabric/hand_states
+  robot_grip_frames:
+  - oarbot_blue/fabric_grip
+  - oarbot_silver/fabric_grip
+  robot_position_std_m: 0.005
+  glove_extrinsic_std_m: 0.01
+  hand_max_age_sec: 0.25
+  # Simulated cell: camera liveness is judged in wall-clock time against this window, stamps in
+  # sim time. At ~0.23x real time the 5 Hz overhead arrives every ~0.9 s of wall time; 0.75 s
+  # treats it as silent, so its captures were not waited for. 1.5 s covers it.
+  max_capture_age_sec: 1.5
+  max_wait_sec: 0.4
+  reorder_wait_sec: 0.02
+  camera_sync_tolerance_sec: 0.015
+  prediction_limit_sec: 0.2
+  publish_rate_hz: 15.0
+  forecast_rate_hz: 2.0
+  forecast_horizons_sec:
+  - 0.1
+  - 0.2
+  - 0.33
+  use_forces: false
+  force_topics:
+  - /oarbot_blue/force_torque_calibrated
+  - /oarbot_silver/force_torque_calibrated
+  force_on_sheet_sign: -1.0
+  force_stddev_n: 0.5
+  force_max_age_sec: 0.1
+reference:
+  position_model_std_m: 0.02
+  velocity_model_std_mps: 0.2
+  initial_position_std_m: 0.2
+  initial_velocity_std_mps: 0.3
+  residual_force_std_n: 0.05
+  residual_force_walk_n: 0.02
+  huber_threshold: 3.0
+  max_nfev: 50
+  association_rounds: 2
+  initial_sag_m: 0.08

@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>fabric_sim_cell</name><version>0.1.0</version>
+  <description>Runs the fabric perception and state estimator against the simulated OARBot cell (oarbot_simulation): deployment calibration, labelled oracle hand input, recording and scoring against the plant's private truth.</description>
+  <maintainer email="oconna4@rpi.edu">OARBot maintainers</maintainer>
+  <license>Apache-2.0</license>
+  <exec_depend>rclpy</exec_depend><exec_depend>tf2_msgs</exec_depend><exec_depend>nav_msgs</exec_depend>
+  <exec_depend>geometry_msgs</exec_depend><exec_depend>diagnostic_msgs</exec_depend><exec_depend>std_msgs</exec_depend>
+  <exec_depend>fabric_state_msgs</exec_depend><exec_depend>fabric_state_estimator</exec_depend>
+  <exec_depend>fabric_perception</exec_depend><exec_depend>human_hand_tracking</exec_depend>
+  <exec_depend>joint_state_renamer</exec_depend><exec_depend>robot_state_publisher</exec_depend>
+  <exec_depend>rokubi_force_torque_publisher</exec_depend>
+  <exec_depend>python3-numpy</exec_depend><exec_depend>python3-yaml</exec_depend>
+  <test_depend>python3-pytest</test_depend>
+  <export><build_type>ament_python</build_type></export>
+</package>

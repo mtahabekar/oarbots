@@ -1,0 +1,6 @@
+# Deliberate calibration errors for a sensitivity run (calibration_publisher errors_file).
+# Each entry offsets what the deployment believes a frame is, in that frame's own axes.
+errors:
+  oarbot_blue/fabric_grip: {translation: [0.005, 0.0, 0.0]}        # 5 mm grip-point error
+  oarbot_silver/fabric_grip: {translation: [0.0, 0.005, 0.0]}
+  nuc/camera_base: {rotation_rpy_deg: [0.0, 0.5, 0.0]}             # 0.5 deg overhead extrinsic error

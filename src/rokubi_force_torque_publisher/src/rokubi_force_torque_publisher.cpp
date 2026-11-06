@@ -1,4 +1,5 @@
 #include "rokubi_force_torque_publisher/rokubi_force_torque_publisher.hpp"
+#include "rokubi_force_torque_publisher/compensation.hpp"
 #include "tf2_geometry_msgs/tf2_geometry_msgs.hpp"
 #include "tf2/LinearMath/Transform.hpp"
 #include <algorithm>
@@ -107,16 +108,16 @@ void RokubiForceTorquePublisher::poll() {
       tf2::Transform tf;
       tf2::fromMsg(transform.transform, tf);
       const auto gravity = tf.getBasis() * tf2::Vector3(0, 0, -9.80665);
-      tf2::Vector3 f, t;
-      tf2::fromMsg(sample.msg.wrench.force, f);
-      tf2::fromMsg(sample.msg.wrench.torque, t);
+      tf2::Vector3 raw_force, raw_torque, f, t;
+      tf2::fromMsg(sample.msg.wrench.force, raw_force);
+      tf2::fromMsg(sample.msg.wrench.torque, raw_torque);
       // Same sensor origin; rotate axes only. URDF documents these two frames.
-      f = tf2::Vector3(blue_ ? f.x() : -f.x(), blue_ ? -f.y() : f.y(), -f.z());
-      t = tf2::Vector3(blue_ ? t.x() : -t.x(), blue_ ? -t.y() : t.y(), -t.z());
+      rokubi::compensate(raw_force, raw_torque, blue_, gravity,
+                         rokubi::Calibration{mass_, com_, force_bias_, torque_bias_}, f, t);
       auto output = sample.msg;
       output.header.frame_id = calibrated_frame_;
-      output.wrench.force = tf2::toMsg(f - mass_*gravity - force_bias_);
-      output.wrench.torque = tf2::toMsg(t - mass_*com_.cross(gravity) - torque_bias_);
+      output.wrench.force = tf2::toMsg(f);
+      output.wrench.torque = tf2::toMsg(t);
       calibrated_pub_->publish(output);
       pending_.pop_front();
     } catch (const tf2::TransformException&) {
