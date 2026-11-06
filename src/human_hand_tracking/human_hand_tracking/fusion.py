@@ -38,11 +38,12 @@ def transform_measurement(measurement, rotation, translation, extrinsic_stddev):
                        rotation @ measurement.covariance @ rotation.T + np.eye(3)*extrinsic_stddev**2)
 
 
-def fuse_views(measurements, stamp_ns, floor=.01, max_speed=1., spatial_gate=.15, mahalanobis_gate=16.3):
+def fuse_views(measurements, stamp_ns, max_speed=1., spatial_gate=.15, mahalanobis_gate=16.3):
     """Maximum consistent clique; ties between conflicting views are missing data.
 
-    Camera calibration errors are correlated. The final floor is deliberately
-    added after fusion so additional views cannot average it away.
+    The returned covariance excludes the correlated calibration floor; the
+    HandFilter adds it to its output so neither extra views nor extra frames
+    can average it away.
     """
     by_camera = {}
     for m in measurements:
@@ -75,14 +76,19 @@ def fuse_views(measurements, stamp_ns, floor=.01, max_speed=1., spatial_gate=.15
     precision = [np.linalg.inv(m.covariance) for m in selected]
     covariance = np.linalg.inv(sum(precision))
     position = covariance @ sum(info @ m.position for info, m in zip(precision, selected))
-    return position, covariance + np.eye(3)*floor**2, selected
+    return position, covariance, selected
 
 
 class HandFilter:
-    def __init__(self, jerk_stddev=3., max_gap=.5, innovation_gate=16.3):
-        if not np.isfinite([jerk_stddev, max_gap, innovation_gate]).all() or min(jerk_stddev, max_gap, innovation_gate) <= 0:
+    """Constant-acceleration filter. ``floor`` is a slowly varying bias
+    (tag-to-grip offset, hand-eye calibration): it is invisible in the
+    innovations, so it is added to the published position covariance rather
+    than treated as white measurement noise that filtering would average out."""
+    def __init__(self, jerk_stddev=3., max_gap=.5, innovation_gate=16.3, floor=.01):
+        if (not np.isfinite([jerk_stddev, max_gap, innovation_gate, floor]).all()
+                or min(jerk_stddev, max_gap, innovation_gate) <= 0 or floor < 0):
             raise ValueError('Invalid hand filter settings')
-        self.jerk, self.gap, self.gate = jerk_stddev, max_gap, innovation_gate
+        self.jerk, self.gap, self.gate, self.floor = jerk_stddev, max_gap, innovation_gate, floor
         self.x, self.p, self.stamp = None, None, None
 
     def update(self, position, covariance, stamp_ns):
@@ -113,4 +119,6 @@ class HandFilter:
             self.p = joseph @ p @ joseph.T + gain @ covariance @ gain.T
             self.p = (self.p+self.p.T)/2
         self.stamp = stamp_ns
-        return self.x[:6].copy(), self.p[:6, :6].copy()
+        covariance = self.p[:6, :6].copy()
+        covariance[:3, :3] += np.eye(3)*self.floor**2
+        return self.x[:6].copy(), covariance

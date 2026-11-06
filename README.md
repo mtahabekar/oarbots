@@ -15,3 +15,7 @@ After building and sourcing the workspace, run `bash scripts/check_platform.sh` 
 
 See [the perception pipeline](docs/fabric-perception.md) for tagged-glove tracking,
 per-camera fabric observations, configuration, build and replay instructions.
+
+See [fabric mesh estimation](docs/fabric-estimation/README.md) for the modular
+Tier B ensemble observer, Tier A offline reconstruction, synthetic walkthrough,
+independent tests, and real-hardware commissioning procedures.

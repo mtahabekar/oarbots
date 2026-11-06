@@ -72,7 +72,7 @@ def test_robust_view_consensus_and_correlated_floor():
     views = [measurement('a', 1), measurement('b', 1.01), measurement('c', 2)]
     position, covariance, selected = fuse_views(views, views[0].stamp_ns)
     assert len(selected) == 2 and position[0] == pytest.approx(1.005)
-    assert covariance[0, 0] == pytest.approx(.01**2/2 + .01**2)
+    assert covariance[0, 0] == pytest.approx(.01**2/2)  # floor is applied by HandFilter output
     assert fuse_views([views[0], views[2]], views[0].stamp_ns) is None
     assert fuse_views([views[0], views[0]], views[0].stamp_ns) is None
     assert fuse_views([], views[0].stamp_ns) is None
@@ -96,3 +96,32 @@ def test_hand_filter_joint_velocity_rejection_dropout_and_reacquisition():
     reacquired, uncertainty = tracker.update(np.array([1., 2., 3.]), covariance, last_stamp+1_000_000_000)
     np.testing.assert_allclose(reacquired, [1., 2., 3., 0., 0., 0.])
     assert uncertainty[3, 3] >= .25
+
+
+def test_calibration_floor_is_not_averaged_away_over_time():
+    floor = .01
+    tracker = HandFilter(floor=floor)
+    for i in range(200):
+        _, uncertainty = tracker.update(np.zeros(3), np.eye(3)*.005**2, int(1e9 + i*.033e9))
+    # Many frames shrink the random part, never the shared calibration bias.
+    assert np.linalg.eigvalsh(uncertainty[:3, :3]).min() >= floor**2
+    assert np.linalg.eigvalsh(tracker.p[:3, :3]).max() < floor**2
+
+
+def test_glove_region_search_matches_full_frame_and_skips_tags_without_glove_colour():
+    detector = GloveDetector(tag_size_m=.06)
+    image = np.full((1080, 1920, 3), 230, np.uint8)
+    image[300:520, 300:520] = (0, 220, 0)  # one glove, tag on its back
+    draw_tag(image, detector.dictionary, 20, 370, 370)
+    draw_tag(image, detector.dictionary, 21, 1400, 600)  # on white: no glove nearby
+    k = np.array([[910., 0., 960.], [0., 910., 540.], [0., 0., 1.]])
+    mask, hands = detector.detect(image, k, np.zeros(5))
+    assert [hand.hand_id for hand in hands] == ['human_left']
+    # Same corners as an unrestricted search, so cropping does not bias the pose.
+    full, ids = detector._aruco(image)
+    reference = detector.from_corners(20, full[ids.index(20)][0].astype(np.float64), k, np.zeros(5))
+    np.testing.assert_allclose(hands[0].position, reference.position, atol=1e-6)
+    # Overlapping glove regions are merged, so one tag is never seen twice.
+    image[300:520, 520:700] = (0, 220, 0)
+    image[300:520, 515:525] = 230
+    assert [hand.hand_id for hand in detector.detect(image, k, np.zeros(5))[1]] == ['human_left']

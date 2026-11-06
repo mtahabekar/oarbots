@@ -11,6 +11,7 @@
     tag_min_color_support: 0.08
     tag_pixel_stddev: 0.7
     tag_position_floor_m: 0.01
+    glove_min_area_px: 100  # glove-colour blobs smaller than this are not searched for tags
     workspace_roi: [0.0, 0.0, 1.0, 1.0]  # normalized x0,y0,x1,y1
     segmentation_backend: hsv
     segmentation_model: ''
@@ -37,4 +38,6 @@
     sync_slop_sec: 0.015
     max_age_sec: 0.25
     require_robot_mask: false
+    # Wrist cameras: mono PNG at raw RGB resolution, nonzero over the own gripper.
+    static_exclusion_mask: ''
     publish_debug_images: false

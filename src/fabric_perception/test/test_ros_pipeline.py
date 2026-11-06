@@ -158,12 +158,79 @@ def test_fusion_uses_capture_tf_assumes_holding_and_does_not_refresh_missing_dat
         assert hand.source_cameras == ['fixture_wrist'] and hand.source_stamps == [msg.header.stamp]
     pub.publish(msg); spin(executor, .1)
     assert len(output) == 1
-    # Missing transforms remove the observation rather than using another time/frame.
+    # Missing transforms remove the observation (after the bounded TF wait)
+    # rather than using another time/frame.
     pub.publish(glove_message(producer, frame='unavailable_optical')); spin(executor, .1)
-    assert output[-1].hands == []
+    assert len(output) == 1
+    spin(executor, .35)
+    assert len(output) == 2 and output[-1].hands == []
     count = len(output)
     spin(executor, .35)
     assert len(output) == count
+
+
+def test_fusion_waits_for_capture_time_tf_that_arrives_after_the_observation(graph):
+    # Wrist TF passes through ArUco base localization, so the sample after a
+    # wrist capture typically arrives later than the glove observation.
+    fusion, producer, executor = graph(HandFusion, ['-p', 'observation_topics:=[/gloves_fixture]'])
+    pub = producer.create_publisher(GloveObservations, '/gloves_fixture', qos_profile_sensor_data)
+    output = []
+    producer.create_subscription(HandStates, '/fabric/hand_states', output.append, qos_profile_sensor_data)
+    spin(executor, .25)
+    capture = producer.get_clock().now().nanoseconds - 20_000_000
+    set_tf(fusion, Time(nanoseconds=capture-100_000_000).to_msg(), 1.)
+    pub.publish(glove_message(producer, Time(nanoseconds=capture).to_msg())); spin(executor, .1)
+    assert not output
+    set_tf(fusion, Time(nanoseconds=capture+50_000_000).to_msg(), 4.)
+    spin(executor, .05)
+    assert output and len(output[-1].hands) == 2
+    for hand in output[-1].hands:
+        assert hand.position.x == pytest.approx(3.1)  # interpolated at capture time
+
+
+def test_fusion_keeps_earlier_capture_from_slower_camera(graph):
+    fusion, producer, executor = graph(HandFusion, ['-p', 'observation_topics:=[/gloves_a,/gloves_b]'])
+    pubs = {c: producer.create_publisher(GloveObservations, '/gloves_' + c, qos_profile_sensor_data) for c in 'ab'}
+    output = []
+    producer.create_subscription(HandStates, '/fabric/hand_states', output.append, qos_profile_sensor_data)
+    for camera in 'ab':
+        tf = TransformStamped(header=Header(frame_id='world'), child_frame_id=camera + '_optical')
+        tf.transform.rotation.w = 1.
+        fusion.tf.set_transform_static(tf, 'fixture')
+    spin(executor, .25)
+    def send(camera, ns):
+        msg = glove_message(producer, Time(nanoseconds=ns).to_msg(), camera + '_optical')
+        msg.camera_id = camera
+        pubs[camera].publish(msg)
+    now = producer.get_clock().now().nanoseconds
+    # Make both cameras live; these are already past max_wait, so no waiting.
+    send('a', now-400_000_000); send('b', now-370_000_000); spin(executor, .05)
+    assert len(output) == 2
+    # b captures later but arrives first; a's earlier capture must not be dropped.
+    send('b', now-20_000_000); spin(executor, .06)
+    assert len(output) == 2
+    send('a', now-40_000_000); spin(executor, .4)
+    assert [list(o.hands[0].source_cameras) for o in output[2:]] == [['a'], ['b']]
+    assert 'dropped' not in fusion.failure
+
+
+def test_camera_static_exclusion_mask_removes_own_gripper(graph, tmp_path):
+    path = str(tmp_path / 'gripper.png')
+    mask = np.zeros((120, 160), np.uint8); mask[:, 80:] = 255
+    cv2.imwrite(path, mask)
+    _, producer, executor = graph(FabricCamera, ['-r', '__ns:=/camera_fixture', '-p', 'static_exclusion_mask:=' + path])
+    rgb_pub, depth_pub, info_pub, _ = camera_inputs(producer)
+    output = []
+    producer.create_subscription(FabricObservations, '/camera_fixture/fabric/observations', output.append, qos_profile_sensor_data)
+    spin(executor, .25)
+    rgb, depth, info = images(producer)
+    info_pub.publish(info); rgb_pub.publish(rgb); depth_pub.publish(depth)
+    spin(executor, .15)
+    assert output and output[-1].depth
+    assert all(sample.u < 76 for sample in output[-1].depth)
+    for boundary in output[-1].boundaries:
+        for pixel, weight in zip(boundary.pixels, boundary.confidence):
+            assert pixel.x < 77 and (pixel.x < 73 or weight == 0)
 
 
 def test_fusion_rejects_duplicate_identity_atomically(graph):

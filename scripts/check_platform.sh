@@ -7,4 +7,4 @@ export ROS_AUTOMATIC_DISCOVERY_RANGE=LOCALHOST
 export RMW_IMPLEMENTATION=rmw_fastrtps_cpp
 export ROS_LOG_DIR="${ROS_LOG_DIR:-/tmp/oarbots-test-logs}"
 cd "$repo_dir"
-python3 -m pytest -q tests src/oarbot_runtime/test src/force_torque_calibration/test/test_calibration.py src/fabric_perception/test src/human_hand_tracking/test
+python3 -m pytest -q tests src/oarbot_runtime/test src/force_torque_calibration/test/test_calibration.py src/fabric_perception/test src/human_hand_tracking/test src/fabric_state_estimator/test src/fabric_reference_reconstruction/test

@@ -23,14 +23,16 @@ class GloveDetector:
                  grip_offsets=(0., 0., 0., 0., 0., 0.),
                  hsv_lower=(35, 80, 60), hsv_upper=(90, 255, 255),
                  dictionary='DICT_4X4_50', max_reprojection_px=2.0,
-                 min_color_support=0.08, pixel_stddev=0.7, position_floor_m=0.01):
+                 min_color_support=0.08, pixel_stddev=0.7, position_floor_m=0.01,
+                 min_glove_area_px=100):
         if (len(tag_ids) != 2 or len(set(tag_ids)) != 2 or
                 len(grip_offsets) != 6 or not np.isfinite(grip_offsets).all()):
             raise ValueError('Two unique glove IDs and two finite 3D tag-to-grip offsets required')
         if (not np.isfinite([tag_size_m, max_reprojection_px, pixel_stddev, position_floor_m]).all()
                 or min(tag_size_m, max_reprojection_px, pixel_stddev, position_floor_m) <= 0
-                or not 0 <= min_color_support <= 1):
-            raise ValueError('Invalid tag size, reprojection gate, colour support or noise')
+                or not 0 <= min_color_support <= 1 or min_glove_area_px < 1):
+            raise ValueError('Invalid tag size, reprojection gate, colour support, glove area or noise')
+        self.min_area = int(min_glove_area_px)
         self.lower, self.upper = np.array(hsv_lower), np.array(hsv_upper)
         for bound in (self.lower, self.upper):
             if bound.shape != (3,) or np.any(bound < 0) or np.any(bound > (179, 255, 255)):
@@ -55,10 +57,7 @@ class GloveDetector:
     def detect(self, bgr, k, distortion):
         hsv = cv2.cvtColor(bgr, cv2.COLOR_BGR2HSV)
         mask = cv2.inRange(hsv, self.lower, self.upper)
-        if hasattr(cv2.aruco, 'ArucoDetector'):
-            corners, ids, _ = cv2.aruco.ArucoDetector(self.dictionary, self.parameters).detectMarkers(bgr)
-        else:
-            corners, ids, _ = cv2.aruco.detectMarkers(bgr, self.dictionary, parameters=self.parameters)
+        corners, ids = self.markers(bgr, mask)
         measurements = []
         if ids is None:
             return mask, measurements
@@ -82,6 +81,50 @@ class GloveDetector:
             if measurement is not None:
                 measurements.append(measurement)
         return mask, measurements
+
+    def _aruco(self, image):
+        if hasattr(cv2.aruco, 'ArucoDetector'):
+            corners, ids, _ = cv2.aruco.ArucoDetector(self.dictionary, self.parameters).detectMarkers(image)
+        else:
+            corners, ids, _ = cv2.aruco.detectMarkers(image, self.dictionary, parameters=self.parameters)
+        return list(corners), ([] if ids is None else [int(i) for i in ids.ravel()])
+
+    def markers(self, bgr, mask):
+        """Search for tags only near glove-coloured regions.
+
+        Full-frame 1080p detection dominates per-frame cost. A tag without
+        glove colour nearby fails the support gate anyway, so this loses
+        nothing. Overlapping boxes are merged so one tag is never reported
+        twice (which the duplicate-ID rule would reject).
+        """
+        h, w = mask.shape
+        _, _, stats, _ = cv2.connectedComponentsWithStats(mask)
+        boxes = []
+        for x, y, bw, bh, area in stats[1:]:
+            if area >= self.min_area:
+                pad = max(48, int(bw), int(bh))
+                boxes.append([max(0, x-pad), max(0, y-pad), min(w, x+bw+pad), min(h, y+bh+pad)])
+        merged = True
+        while merged:
+            merged = False
+            for i in range(len(boxes)):
+                for j in range(i+1, len(boxes)):
+                    a, b = boxes[i], boxes[j]
+                    if a[0] < b[2] and b[0] < a[2] and a[1] < b[3] and b[1] < a[3]:
+                        boxes[i] = [min(a[0], b[0]), min(a[1], b[1]), max(a[2], b[2]), max(a[3], b[3])]
+                        del boxes[j]
+                        merged = True
+                        break
+                if merged:
+                    break
+        if len(boxes) > 8:  # cluttered colour mask: fall back to one full-frame search
+            boxes = [[0, 0, w, h]]
+        corners, ids = [], []
+        for x0, y0, x1, y1 in boxes:
+            found, tags = self._aruco(np.ascontiguousarray(bgr[y0:y1, x0:x1]))
+            corners += [quad + np.float32([x0, y0]) for quad in found]
+            ids += tags
+        return corners, (np.array(ids, np.int32).reshape(-1, 1) if ids else None)
 
     def from_corners(self, tag, points, k, distortion, support=1.0):
         """Pose and first-order pixel-noise covariance, with a calibration floor."""

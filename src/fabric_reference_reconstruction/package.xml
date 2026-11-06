@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>fabric_reference_reconstruction</name><version>0.1.0</version>
+  <description>Offline weak-constraint fabric reconstruction from recorded observations.</description>
+  <maintainer email="oconna4@rpi.edu">OARBot maintainers</maintainer>
+  <license>Apache-2.0</license>
+  <exec_depend>fabric_state_estimator</exec_depend><exec_depend>rosbag2_py</exec_depend>
+  <exec_depend>rclpy</exec_depend><exec_depend>rosidl_runtime_py</exec_depend>
+  <exec_depend>tf2_msgs</exec_depend><exec_depend>fabric_state_msgs</exec_depend>
+  <exec_depend>python3-scipy</exec_depend><exec_depend>python3-numpy</exec_depend>
+  <test_depend>python3-pytest</test_depend>
+  <export><build_type>ament_python</build_type></export>
+</package>

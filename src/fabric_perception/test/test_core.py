@@ -27,6 +27,24 @@ def test_segmentation_excludes_gloves_robots_and_workspace_without_bridging():
     assert sum(len(c) for c, _, _ in bounded) <= 6
 
 
+def test_boundary_samples_are_dense_and_confidence_is_local_to_each_edge():
+    image = np.full((1080, 1920, 3), 220, np.uint8)
+    image[200:850, 300:1600] = 40
+    robots = np.zeros(image.shape[:2], np.uint8); robots[600:, 1200:] = 255
+    sheet, _, confidence, occlusion, roi = Segmenter().infer(image, np.zeros_like(robots), robots)
+    (contour, weights, hole), = boundaries(sheet, confidence, occlusion, roi, max_points=1200)
+    assert not hole and 1000 <= len(contour) <= 1200
+    spacing = np.linalg.norm(np.diff(contour, axis=0), axis=1)
+    assert spacing.max() < 6  # no straight edge collapses to its two end vertices
+    x, y = contour.T
+    true_bottom = (y == 849) & (x < 1180)
+    true_right = (x == 1599) & (y < 580)
+    beside_robot = (x >= 1194) & (y >= 594)  # within the 4 px invalid band of the dilated robot
+    assert true_bottom.sum() > 100 and np.all(weights[true_bottom] > 0)
+    assert true_right.sum() > 50 and np.all(weights[true_right] > 0)
+    assert beside_robot.sum() > 50 and np.all(weights[beside_robot] == 0)
+
+
 def test_depth_gates_holes_fold_edges_boundaries_and_uses_metric_units():
     c = camera()
     depth = np.full((120, 160), 1000, np.uint16)

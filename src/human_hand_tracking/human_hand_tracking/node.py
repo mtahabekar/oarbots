@@ -25,8 +25,11 @@ class HandFusion(Node):
         topics = param('observation_topics', [
             '/oarbot_blue/azure_kinect/fabric/gloves', '/oarbot_silver/azure_kinect/fabric/gloves', '/nuc/fabric/gloves'])
         self.world = param('world_frame', 'world')
-        self.max_age = param('max_age_sec', .25)
-        self.reorder_delay = param('reorder_delay_sec', .03)
+        self.max_age = param('max_age_sec', .5)
+        # Capture-relative deadline for slower cameras and capture-time TF.
+        # Wrist-camera TF passes through ArUco base localization, whose next
+        # sample after a capture arrives only after NUC capture + detection.
+        self.max_wait = param('max_wait_sec', .35)
         self.sync_tolerance = param('sync_tolerance_sec', .015)
         self.extrinsic_noise = param('extrinsic_stddev_m', .01)
         self.fusion_floor = param('fusion_floor_m', .01)
@@ -36,24 +39,24 @@ class HandFusion(Node):
         gap = param('filter_max_gap_sec', .5)
         tags = param('glove_tag_ids', [20, 21])
         uvs = param('human_corner_uv', [0., 1., 1., 1.])
-        numeric = [self.max_age, self.reorder_delay, self.sync_tolerance, self.extrinsic_noise,
+        numeric = [self.max_age, self.max_wait, self.sync_tolerance, self.extrinsic_noise,
                    self.fusion_floor, self.max_speed, self.spatial_gate]
         if (not topics or len(topics) > 8 or len(set(topics)) != len(topics) or not self.world
                 or not np.isfinite(numeric).all() or min(numeric) <= 0
-                or self.sync_tolerance > self.reorder_delay or self.reorder_delay >= self.max_age
+                or self.sync_tolerance >= self.max_wait or self.max_wait >= self.max_age
                 or len(tags) != 2 or len(set(tags)) != 2 or len(uvs) != 4
                 or not np.isfinite(uvs).all() or min(uvs) < 0 or max(uvs) > 1):
             raise ValueError('Invalid camera topics, timing, calibration or hand identity settings')
         self.tags = dict(zip(('human_left', 'human_right'), tags))
         self.uvs = dict(zip(self.tags, np.asarray(uvs).reshape(2, 2)))
-        self.filters = {hand: HandFilter(jerk, gap) for hand in self.tags}
+        self.filters = {hand: HandFilter(jerk, gap, floor=self.fusion_floor) for hand in self.tags}
         self.tf = Buffer()
         self.listener = TransformListener(self.tf, self)
         self.publisher = self.create_publisher(HandStates, '/fabric/hand_states', qos_profile_sensor_data)
         self.diagnostics_pub = self.create_publisher(DiagnosticArray, '/fabric/hand_tracking_status', 10)
         self.subscriptions_ = [self.create_subscription(GloveObservations, topic, self.observations,
                                                       qos_profile_sensor_data) for topic in topics]
-        self.queue, self.sequence, self.last_camera = [], 0, {}
+        self.queue, self.sequence, self.last_camera, self.camera_arrival = [], 0, {}, {}
         self.last_group, self.last_arrival, self.last_count = 0, None, 0
         self.failure = 'Waiting for glove observations and capture-time TF'
         self.create_timer(.01, self.flush)
@@ -67,25 +70,46 @@ class HandFusion(Node):
             self.failure = 'Rejected stale, duplicate, future or unidentified camera sample'
             return
         self.last_camera[msg.camera_id] = ns
+        self.camera_arrival[msg.camera_id] = monotonic()
         heapq.heappush(self.queue, (ns, self.sequence, monotonic(), msg))
         self.sequence += 1
         if len(self.queue) > 80:
             heapq.heappop(self.queue)
             self.failure = 'Observation queue overflow'
 
+    def ready(self, head, group):
+        """True once no earlier capture can still arrive and TF covers the group.
+
+        Every camera publishes one message per processed frame (empty when no
+        glove is seen), and each camera's stamps are strictly increasing. A
+        live camera whose newest stamp is at or after the head therefore
+        cannot deliver anything earlier. Cameras silent for max_age are not
+        waited for. TF is checked without blocking; the caller's deadline
+        bounds the wait.
+        """
+        now = monotonic()
+        for camera, arrival in self.camera_arrival.items():
+            if now-arrival <= self.max_age and self.last_camera[camera] < head:
+                return False
+        return all(self.tf.can_transform(self.world, msg.header.frame_id, Time.from_msg(msg.header.stamp))
+                   for *_, msg in group)
+
     def flush(self):
-        while self.queue and monotonic()-self.queue[0][2] >= self.reorder_delay:
-            first = heapq.heappop(self.queue)
-            group = [first]
-            while self.queue and self.queue[0][0]-first[0] <= self.sync_tolerance*1e9:
-                group.append(heapq.heappop(self.queue))
+        while self.queue:
+            head = self.queue[0][0]
+            age = (self.get_clock().now().nanoseconds - head)/1e9
+            if head <= self.last_group or age > self.max_age:
+                heapq.heappop(self.queue)
+                self.failure = ('Late observation dropped; filters never run backward' if head <= self.last_group
+                                else 'Queued observations expired')
+                continue
+            group = [item for item in self.queue if item[0]-head <= self.sync_tolerance*1e9]
+            if age < self.max_wait and not self.ready(head, group):
+                return  # wait for slower cameras or capture-time TF, up to max_wait
+            members = {id(item) for item in group}
+            self.queue = [item for item in self.queue if id(item) not in members]
+            heapq.heapify(self.queue)
             latest = max(item[0] for item in group)
-            if first[0] <= self.last_group:
-                self.failure = 'Late group dropped; filters never run backward'
-                continue
-            if (self.get_clock().now().nanoseconds - first[0])/1e9 > self.max_age:
-                self.failure = 'Queued observations expired'
-                continue
             self.last_group = latest
             measurements = {hand: [] for hand in self.tags}
             failures = []
@@ -114,7 +138,7 @@ class HandFusion(Node):
                     failures.append(str(error))
             output = HandStates(header=Header(stamp=Time(nanoseconds=latest).to_msg(), frame_id=self.world))
             for hand, views in measurements.items():
-                fused = fuse_views(views, latest, self.fusion_floor, self.max_speed, self.spatial_gate)
+                fused = fuse_views(views, latest, self.max_speed, self.spatial_gate)
                 if fused is None:
                     if views:
                         failures.append(hand + ': conflicting views')

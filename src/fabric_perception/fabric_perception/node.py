@@ -70,7 +70,16 @@ class FabricCamera(Node):
             param('glove_hsv_lower', [35, 80, 60]), param('glove_hsv_upper', [90, 255, 255]),
             param('glove_tag_dictionary', 'DICT_4X4_50'), param('tag_max_reprojection_px', 2.),
             param('tag_min_color_support', .08), param('tag_pixel_stddev', .7),
-            param('tag_position_floor_m', .01))
+            param('tag_position_floor_m', .01), param('glove_min_area_px', 100))
+        # Wrist cameras see their own gripper at a fixed image location while the
+        # fabric is grasped; exclude it without needing a TF/URDF renderer.
+        static_mask = param('static_exclusion_mask', '')
+        self.static_mask = None
+        if static_mask:
+            image = cv2.imread(static_mask, cv2.IMREAD_GRAYSCALE)
+            if image is None:
+                raise ValueError('Cannot read static_exclusion_mask ' + static_mask)
+            self.static_mask = np.uint8(image > 0) * 255
         self.bridge = CvBridge()
         self.info, self.last_stamp, self.calibration = None, 0, None
         self.robot_masks = OrderedDict()
@@ -138,6 +147,10 @@ class FabricCamera(Node):
                         (mask_msg.width, mask_msg.height) != (rgb.width, rgb.height)):
                     raise ValueError('Robot mask must be mono8 in this RGB capture frame/resolution')
                 robot_mask = self.bridge.imgmsg_to_cv2(mask_msg, 'mono8')
+            if self.static_mask is not None:
+                if self.static_mask.shape != bgr.shape[:2]:
+                    raise ValueError('static_exclusion_mask must match the raw RGB resolution')
+                robot_mask = self.static_mask if robot_mask is None else cv2.bitwise_or(robot_mask, self.static_mask)
             signature = (info.width, info.height, tuple(info.k), tuple(info.d))
             if self.calibration is not None and signature != self.calibration:
                 self.tracker.gray = self.tracker.points = None
@@ -197,7 +210,8 @@ class FabricCamera(Node):
             self.summary = {'sheet_pixels': int(np.count_nonzero(sheet)), 'depth_valid_fraction': fraction,
                 'tracks': len(output.tracks), 'gloves': len(hands), 'processing_ms': (monotonic()-start)*1000,
                 'capture_age_ms': publication_age*1000, 'segmentation': self.segment_source, 'UV': self.uv_source,
-                'robot_exclusion': 'mask' if robot_mask is not None else 'model' if self.segmenter.net is not None else 'ROI only'}
+                'robot_exclusion': ('mask' if mask_msg is not None else 'static mask' if self.static_mask is not None
+                                    else 'model' if self.segmenter.net is not None else 'ROI only')}
         except (ValueError, cv2.error, CvBridgeError) as error:
             self.drop_reason = str(error)
             self.get_logger().warning(self.drop_reason, throttle_duration_sec=5.)

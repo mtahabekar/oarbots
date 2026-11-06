@@ -102,26 +102,34 @@ class Segmenter:
 def boundaries(sheet, confidence, occlusion, roi, max_points=1200):
     if max_points < 3:
         raise ValueError('Boundary sample budget must be at least three')
-    contours, hierarchy = cv2.findContours(sheet, cv2.RETR_CCOMP, cv2.CHAIN_APPROX_SIMPLE)
+    # Dense pixel chains, resampled at uniform arc length. Polygon vertices are
+    # not used: a straight edge would collapse to two points, and a vertex at a
+    # fabric/occluder junction cannot say which adjacent edge is observed.
+    contours, hierarchy = cv2.findContours(sheet, cv2.RETR_CCOMP, cv2.CHAIN_APPROX_NONE)
     if hierarchy is None:
         return []
     # Occluder and workspace edges do not observe the fabric's true boundary.
     invalid = cv2.dilate(occlusion, np.ones((9, 9), np.uint8)) > 0
     invalid |= cv2.erode(roi, np.ones((5, 5), np.uint8), borderType=cv2.BORDER_CONSTANT, borderValue=0) == 0
-    candidates = [(cv2.approxPolyDP(c, .5, True)[:, 0], bool(tree[3] >= 0))
-                  for c, tree in zip(contours, hierarchy[0])]
-    candidates = sorted((item for item in candidates if len(item[0]) >= 3),
-                        key=lambda item: cv2.contourArea(item[0]), reverse=True)[:max_points//3]
+    candidates = []
+    for contour, tree in zip(contours, hierarchy[0]):
+        points = contour[:, 0]
+        if len(points) < 3:
+            continue
+        steps = np.linalg.norm(np.diff(points, axis=0, append=points[:1]), axis=1)
+        candidates.append((points, np.r_[0., np.cumsum(steps)], bool(tree[3] >= 0)))
+    candidates = sorted(candidates, key=lambda item: item[1][-1], reverse=True)[:max_points//3]
     extra = max_points-3*len(candidates)
-    demand = max(1, sum(len(contour)-3 for contour, _ in candidates))
+    total = max(1., sum(arc[-1] for _, arc, _ in candidates))
     output = []
-    for contour, hole in candidates:
-        budget = min(len(contour), 3 + extra*(len(contour)-3)//demand)
-        contour = contour[np.linspace(0, len(contour)-1, budget, dtype=int)]
-        x, y = contour.T
-        weights = confidence[y, x].copy()
+    for points, arc, hole in candidates:
+        count = min(len(points), 3 + int(extra*arc[-1]/total))
+        index = np.searchsorted(arc, np.arange(count)*arc[-1]/count, side='right') - 1
+        samples = points[np.clip(index, 0, len(points)-1)]
+        x, y = samples.T
+        weights = confidence[y, x].astype(np.float32)
         weights[invalid[y, x]] = 0.
-        output.append((contour, weights, hole))
+        output.append((samples, weights, hole))
     return output
 
 

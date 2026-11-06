@@ -1,0 +1,12 @@
+# Small deterministic software configuration. Not a hardware material model.
+mesh:
+  rows: 3
+  columns: 3
+physics:
+  backend: spring
+  device: cpu
+observer:
+  ensemble_size: 12
+runtime:
+  observation_topics: [/synthetic/fabric/observations]
+  forecast_horizons_sec: [0.1]

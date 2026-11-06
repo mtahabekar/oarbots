@@ -8,8 +8,8 @@
     glove_tag_ids: [20, 21]
     # Convention: robot corners v=0, human corners v=1. Configure to match mesh.
     human_corner_uv: [0.0, 1.0, 1.0, 1.0]
-    max_age_sec: 0.25
-    reorder_delay_sec: 0.03
+    max_age_sec: 0.5
+    max_wait_sec: 0.35  # capture-relative wait for slower cameras and capture-time TF
     sync_tolerance_sec: 0.015
     extrinsic_stddev_m: 0.01
     fusion_floor_m: 0.01

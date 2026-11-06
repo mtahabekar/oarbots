@@ -10,6 +10,7 @@ rosidl_generate_interfaces(${PROJECT_NAME}
   "msg/Boundary2D.msg" "msg/DepthObservation.msg" "msg/PointTrack.msg"
   "msg/UVPrior.msg" "msg/FabricObservations.msg" "msg/GloveObservation.msg"
   "msg/GloveObservations.msg" "msg/HandState.msg" "msg/HandStates.msg"
+  "msg/FabricModel.msg" "msg/FabricState.msg" "msg/FabricForecasts.msg"
   DEPENDENCIES std_msgs sensor_msgs geometry_msgs builtin_interfaces)
 ament_export_dependencies(rosidl_default_runtime)
 ament_package()
