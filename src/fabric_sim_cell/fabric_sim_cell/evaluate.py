@@ -47,6 +47,26 @@ def score(estimate, truth_positions, mesh, label):
     return report
 
 
+def hand_errors(hands, truth_times_ns, grid, start_s=None, end_s=None):
+    """Hand-state position error against the true sheet at each hand's grip material coordinate.
+
+    `hands` rows: stamp_ns, hand (0 left, 1 right), x, y, z, grip u, grip v, received_ns.
+    """
+    out = {}
+    t = hands[:, 0] / 1e9
+    for index, name in enumerate(('human_left', 'human_right')):
+        rows = hands[(hands[:, 1] == index) & (True if start_s is None else (t >= start_s) & (t < end_s))]
+        if not len(rows):
+            out[name] = {'count': 0}
+            continue
+        truth = truth_at(rows[:, 0].astype(np.int64), truth_times_ns, grid, rows[:1, 5:7])[:, 0]
+        keep = np.isfinite(truth).all(axis=1)
+        error = np.linalg.norm(rows[keep, 2:5] - truth[keep], axis=1)
+        out[name] = {'count': int(keep.sum()), 'p50_m': float(np.percentile(error, 50)),
+                     'p95_m': float(np.percentile(error, 95)), 'max_m': float(error.max())} if keep.any() else {'count': 0}
+    return out
+
+
 def main(args=None):
     parser = argparse.ArgumentParser(description=__doc__.split('\n')[0])
     parser.add_argument('truth'); parser.add_argument('estimate'); parser.add_argument('config'); parser.add_argument('output')
@@ -78,6 +98,13 @@ def main(args=None):
         reports[name] = score(subset, aligned[mask], mesh, name)
         if name == 'analysis':
             np.savez(out / 'truth_analysis.npz', times_ns=subset['times_ns'], positions=aligned[mask])
+    hands_file = Path(options.estimate).with_name(Path(options.estimate).stem + '.hands.npy')
+    if hands_file.exists():
+        hands = np.load(hands_file)
+        windows = {'analysis': (None, None), **{f'analysis_{n}': (float(a), float(b)) for n, a, b in options.window}}
+        for name, (start, end) in windows.items():
+            if name in reports:
+                reports[name]['hand_error_m'] = hand_errors(hands, truth['times_ns'], grid, start, end)
     reports['plant_truth'] = {'frames': int(len(truth['times_ns'])), 'start_s': float(truth['times_ns'][0] / 1e9),
                               'end_s': float(truth['times_ns'][-1] / 1e9)}
     (out / 'metrics.json').write_text(json.dumps(reports, indent=2))
@@ -85,7 +112,8 @@ def main(args=None):
         if 'all' in r and r['all']:
             print(f"{name}: {r['states']} states, p50 {r['all']['p50_m']*1e3:.1f} mm, p95 {r['all']['p95_m']*1e3:.1f} mm, "
                   f"max {r['all']['max_m']*1e3:.1f} mm, 95% coverage {r.get('position_95_percent_coverage', float('nan')):.2f}, "
-                  f"degraded {r['degraded_fraction']:.2f}")
+                  f"degraded {r['degraded_fraction']:.2f}" + ''.join(
+                      f", {h} p95 {e['p95_m']*1e3:.1f} mm" for h, e in r.get('hand_error_m', {}).items() if e.get('count')))
     print('SIM_CELL_EVALUATED', out / 'metrics.json')
 
 

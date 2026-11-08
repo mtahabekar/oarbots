@@ -34,3 +34,33 @@ Run the estimator stack with a Python that has NumPy below 2 and Newton (see
 plant) is running, and tears down its own stack's process group at exit: stacks that outlive
 their run share every topic and TF frame with the next one. Scores vary between identical runs
 (the estimator's analyses depend on message timing), so compare conditions over repeated runs.
+
+## Demo
+
+```bash
+# One-time: the robot meshes for RViz
+cd ~/ros2_colcon_ws && ~/venvs/fabric_ros/bin/python -m colcon build --packages-select oarbot_description fabric_sim_cell
+# Watch one run (~2-3 min): Isaac Sim shows the true cloth, RViz the estimate from sensors only
+# (blue sheet, white estimated corners, green = hand positions the estimator receives),
+# also drawn over the overhead and wrist images; the requirement scorecard prints at the end
+src/oarbots/src/fabric_sim_cell/scripts/run_demo.sh live gloves     # or: live oracle
+# The same, but you move the hands (the leader corners) from the keyboard instead of the scripted
+# descent: it prints the teleop command to run in a second terminal; 60 s simulated (~4 min)
+src/oarbots/src/fabric_sim_cell/scripts/run_demo.sh teleop gloves 60
+# live and teleop use the real-time profile (PROFILE=fast, default; plant ~0.45x real time, estimate
+# shown ~15 ms behind the plant). PROFILE=full runs the original, slower settings:
+PROFILE=full src/oarbots/src/fabric_sim_cell/scripts/run_demo.sh live gloves
+# Evidence: the six experiments x 3 (~1 h) and the scorecard (scorecard.md in the output folder)
+src/oarbots/src/fabric_sim_cell/scripts/run_demo.sh evidence
+ros2 run fabric_sim_cell scorecard <results folder>                  # re-score existing runs
+```
+
+The real-time profile is `sim_cell.launch.py profile:=fast` (`estimator_fast.yaml`: 8 x 8 mesh, 16
+members, no KLT tracks; `perception_*_fast.yaml`: no tracker, fewer published samples, depth-assisted
+glove tags for the plant's half-resolution cameras) with the plant options `run_demo.sh` passes.
+Measurements and reasons: oarbot_simulation `SIM_CELL.md`, "Real-time profile".
+
+The scorecard compares each experiment with the online targets proposed in
+`docs/fabric-state-estimation-research.md` section 15 (surface p95 <= 50 mm, hand p95 <= 20-30 mm,
+capture-to-state age p95 <= 100 ms, calibrated coverage). Latency cannot be judged here: the plant
+runs at ~0.23x real time.

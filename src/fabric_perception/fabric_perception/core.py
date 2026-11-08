@@ -59,13 +59,14 @@ class Segmenter:
         self.threshold = confidence_threshold
         self.net = cv2.dnn.readNetFromONNX(model_path) if backend == 'onnx' else None
 
-    def infer(self, bgr, glove_mask, robot_mask=None):
+    def infer(self, bgr, glove_mask, robot_mask=None, hsv=None):
+        """`hsv`: the caller's HSV conversion of `bgr`, if it already has one (the glove detector's)."""
         h, w = bgr.shape[:2]
         roi = np.zeros((h, w), np.uint8)
         x0, y0, x1, y1 = self.roi or (0., 0., 1., 1.)
         roi[int(y0*h):int(y1*h), int(x0*w):int(x1*w)] = 255
         if self.net is None:
-            hsv = cv2.cvtColor(bgr, cv2.COLOR_BGR2HSV)
+            hsv = cv2.cvtColor(bgr, cv2.COLOR_BGR2HSV) if hsv is None else hsv
             sheet = cv2.inRange(hsv, (0, 0, 0), (179, self.max_s, self.max_v))
             labels = np.zeros((h, w), np.uint8)
             confidence = np.full((h, w), .5, np.float32)  # heuristic, not calibrated probability
@@ -150,7 +151,10 @@ class DepthProcessor:
         local_max = cv2.dilate(values, np.ones((3, 3), np.uint8))
         interior = cv2.erode(sheet, np.ones((5, 5), np.uint8), borderType=cv2.BORDER_CONSTANT, borderValue=0) > 0
         valid &= interior & (local_min > 0) & ((local_max - local_min) <= self.edge)
-        variance = (self.floor + self.scale * values**2)**2
+        variance = values * values  # (floor + scale*z^2)^2, in place: one full-frame buffer
+        variance *= self.scale
+        variance += self.floor
+        variance *= variance
         grid = np.zeros_like(valid); grid[::self.stride, ::self.stride] = True
         y, x = np.nonzero(valid & grid)
         if len(x) > self.limit:

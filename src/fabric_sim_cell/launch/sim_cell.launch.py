@@ -31,6 +31,11 @@ def nodes(context):
     if not urdf_dir:
         raise RuntimeError('urdf_dir is required: oarbot_simulation/assets/oarbots_jazzy (the plant robots)')
     sim = {'use_sim_time': True}
+    # profile:=fast selects the real-time configs (perception_*_fast.yaml, estimator_fast.yaml)
+    # made for the plant's real-time settings (oarbot_simulation run_demo.sh fast/teleop).
+    if get('profile') not in ('', 'fast'):
+        raise RuntimeError("profile must be '' or 'fast'")
+    suffix = '_fast' if get('profile') == 'fast' else ''
     out = []
     for color in COLORS:
         ns = f'oarbot_{color}'
@@ -48,7 +53,7 @@ def nodes(context):
         if camera_id == 'overhead' and get('overhead') != 'true':
             continue
         out.append(Node(package='fabric_perception', executable='camera', namespace=namespace, name='fabric_perception',
-                        output='screen', parameters=[str(config('', f'perception_{camera_id}.yaml')),
+                        output='screen', parameters=[str(config('', f'perception_{camera_id}{suffix}.yaml')),
                                                      {'camera_id': camera_id, **sim}]))
     # With the grasp gate, the hand source publishes to /fabric/hand_states_ungated and the gate
     # forwards it only while both grippers are closed: estimation starts once the corners are held.
@@ -68,7 +73,7 @@ def nodes(context):
         out.append(Node(package='fabric_sim_cell', executable='grasp_gate', name='grasp_gate', output='screen',
                         parameters=[sim]))
     out.append(Node(package='fabric_state_estimator', executable='observer', name='fabric_state_estimator', output='screen',
-                    parameters=[{'config_file': str(config(get('estimator_config'), 'estimator.yaml')), **sim}]))
+                    parameters=[{'config_file': str(config(get('estimator_config'), f'estimator{suffix}.yaml')), **sim}]))
     if get('force_torque') == 'true':
         calibration = yaml.safe_load(Path(calibration_file).read_text())['force_torque']
         for color in COLORS:
@@ -76,6 +81,12 @@ def nodes(context):
             out.append(Node(package='rokubi_force_torque_publisher', executable='rokubi_force_torque_compensator',
                             namespace=ns, name='rokubi_force_torque_compensator', output='screen',
                             parameters=[{'tf_prefix': f'{ns}/', **calibration[ns], **sim}]))
+    if get('rviz') == 'true':
+        # Demo view: the estimated mesh (sensors only) in 3D and drawn over the camera images.
+        out.append(Node(package='fabric_sim_cell', executable='demo_markers', name='sim_cell_demo_markers',
+                        parameters=[sim]))
+        out.append(Node(package='rviz2', executable='rviz2', name='sim_cell_rviz', output='log',
+                        arguments=['-d', str(share / 'config' / 'sim_cell_demo.rviz')], parameters=[sim]))
     if get('record'):
         out.append(Node(package='fabric_sim_cell', executable='recorder', name='sim_cell_recorder', output='screen',
                         parameters=[{'output': get('record'), 'record_forces': get('force_torque') == 'true', **sim}]))
@@ -88,6 +99,7 @@ def generate_launch_description():
         DeclareLaunchArgument('calibration_file', default_value='', description='Default: config/calibration_exact.yaml'),
         DeclareLaunchArgument('errors_file', default_value='', description='Deliberate calibration errors (YAML)'),
         DeclareLaunchArgument('estimator_config', default_value='', description='Default: config/estimator.yaml'),
+        DeclareLaunchArgument('profile', default_value='', description="'fast': real-time perception and estimator configs"),
         DeclareLaunchArgument('hands', default_value='oracle', description="'oracle' (labelled ideal input) or 'gloves'"),
         DeclareLaunchArgument('oracle_position_std_m', default_value='0.005', description='Covariance the oracle states'),
         DeclareLaunchArgument('oracle_noise_m', default_value='0.0', description='Noise the oracle actually adds'),
@@ -96,5 +108,6 @@ def generate_launch_description():
                               description='Start estimation only once both grippers are closed (false: from launch)'),
         DeclareLaunchArgument('force_torque', default_value='false', description='Run the F/T compensators'),
         DeclareLaunchArgument('record', default_value='', description='Recorder output NPZ; empty = no recorder'),
+        DeclareLaunchArgument('rviz', default_value='false', description='Demo view: estimated mesh over the camera images'),
         OpaqueFunction(function=nodes),
     ])

@@ -16,5 +16,7 @@ setup(
         'oracle_hands = fabric_sim_cell.nodes:oracle_hands_main',
         'recorder = fabric_sim_cell.nodes:recorder_main',
         'grasp_gate = fabric_sim_cell.nodes:grasp_gate_main',
+        'scorecard = fabric_sim_cell.scorecard:main',
+        'demo_markers = fabric_sim_cell.nodes:demo_markers_main',
         'evaluate = fabric_sim_cell.evaluate:main']},
 )

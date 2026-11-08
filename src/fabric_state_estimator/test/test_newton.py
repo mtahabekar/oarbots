@@ -33,3 +33,24 @@ def test_newton_world_independence_pin_motion_and_force_buffer():
         model.style3d.edge_bending_cot, model.edge_indices, model.edge_bending_properties], outputs=[forces], device='cpu')
     expected = physics.internal_forces(perturbed[None].astype(float))[0]
     np.testing.assert_allclose(expected, forces.numpy(), atol=max(1e-7, 1e-4*np.abs(expected).max()), rtol=0)
+
+
+@pytest.mark.skipif(importlib.util.find_spec('newton') is None, reason='Optional Newton backend is not installed')
+def test_captured_step_graph_matches_launch_by_launch_stepping():
+    import warp as wp
+    from dataclasses import replace
+    if not wp.get_cuda_device_count():
+        pytest.skip('CUDA graphs need a GPU')
+    mesh = MaterialMesh(MeshSpec(rows=6, columns=6))
+    spec = PhysicsSpec(backend='newton_style3d', device='cuda:0', max_step_sec=1/240)
+    rng = np.random.default_rng(1)
+    q = np.repeat(mesh.rest[None], 3, axis=0) + rng.normal(0, .002, (3, mesh.count, 3)); q[:, :, 2] += 1.
+    v, loads = rng.normal(0, .02, q.shape), rng.normal(0, .05, (3, 3))
+    grips = q[:, mesh.corners] + rng.normal(0, .002, (3, 4, 3))
+    graph, plain = make_physics(mesh, spec), make_physics(mesh, replace(spec, cuda_graph=False))
+    for duration in (1/15, 1/15, .1):  # first call per (steps, dt) captures, later calls replay
+        a, b = graph.advance(q, v, duration, grips, loads), plain.advance(q, v, duration, grips, loads)
+        np.testing.assert_allclose(a[0], b[0], atol=2e-5)
+        np.testing.assert_allclose(a[1], b[1], atol=2e-3)
+        np.testing.assert_allclose(a[0][:, mesh.corners], grips, atol=1e-6)
+    assert len(graph.worlds[3]['graphs']) == 1  # one captured 1/240 s step serves 1/15 s and 0.1 s

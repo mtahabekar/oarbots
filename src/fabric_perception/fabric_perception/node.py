@@ -63,14 +63,21 @@ class FabricCamera(Node):
         self.depth = DepthProcessor(param('min_depth_m', .2), param('max_depth_m', 3.),
             param('depth_edge_threshold_m', .03), param('depth_noise_floor_m', .003),
             param('depth_noise_scale', .002), param('sample_stride', 8), param('max_depth_samples', 1500))
-        self.tracker = PointTracker(param('max_tracks', 200), param('track_max_gap_sec', .2),
-                                    param('track_fb_threshold_px', 1.))
+        # max_tracks 0 disables KLT tracking (its tracks are optional estimator factors).
+        max_tracks = param('max_tracks', 200)
+        self.tracker = PointTracker(max_tracks, param('track_max_gap_sec', .2),
+                                    param('track_fb_threshold_px', 1.)) if max_tracks > 0 else None
         self.gloves = GloveDetector(param('glove_tag_ids', [20, 21]), param('glove_tag_size_m', .04),
             param('tag_to_grip_offsets_m', [0., 0., 0., 0., 0., 0.]),
             param('glove_hsv_lower', [35, 80, 60]), param('glove_hsv_upper', [90, 255, 255]),
             param('glove_tag_dictionary', 'DICT_4X4_50'), param('tag_max_reprojection_px', 2.),
             param('tag_min_color_support', .08), param('tag_pixel_stddev', .7),
-            param('tag_position_floor_m', .01), param('glove_min_area_px', 100))
+            param('tag_position_floor_m', .01), param('glove_min_area_px', 100),
+            param('tag_depth_gate_m', .005), param('tag_max_range_correction', .25), param('tag_roi_upscale', 1))
+        # tag_use_depth: give the glove detector the registered depth, which resolves ambiguous
+        # (small, frontal) tag poses and replaces the biased PnP range; a tag whose depth does not
+        # support it is then dropped. Off by default: it needs depth that is valid on the tags.
+        self.tag_use_depth = param('tag_use_depth', False)
         # Wrist cameras see their own gripper at a fixed image location while the
         # fabric is grasped; exclude it without needing a TF/URDF renderer.
         static_mask = param('static_exclusion_mask', '')
@@ -153,10 +160,14 @@ class FabricCamera(Node):
                 robot_mask = self.static_mask if robot_mask is None else cv2.bitwise_or(robot_mask, self.static_mask)
             signature = (info.width, info.height, tuple(info.k), tuple(info.d))
             if self.calibration is not None and signature != self.calibration:
-                self.tracker.gray = self.tracker.points = None
+                if self.tracker is not None:
+                    self.tracker.gray = self.tracker.points = None
             self.calibration = signature
-            glove_mask, hands = self.gloves.detect(bgr, camera.k, camera.distortion)
-            sheet, labels, confidence, occlusion, roi = self.segmenter.infer(bgr, glove_mask, robot_mask)
+            # One HSV conversion for the glove detector and the segmenter.
+            hsv = cv2.cvtColor(bgr, cv2.COLOR_BGR2HSV)
+            glove_mask, hands = self.gloves.detect(bgr, camera.k, camera.distortion,
+                                                   depth=metres if self.tag_use_depth else None, hsv=hsv)
+            sheet, labels, confidence, occlusion, roi = self.segmenter.infer(bgr, glove_mask, robot_mask, hsv=hsv)
             valid, variance, pixels, points, fraction = self.depth.process(metres, sheet, camera)
             output = FabricObservations(header=rgb.header, camera_id=self.camera_id, camera_info=info,
                 depth_stamp=depth.header.stamp, segmentation_source=self.segment_source,
@@ -179,7 +190,8 @@ class FabricCamera(Node):
                 output.uv_priors.append(UVPrior(u_pixel=float(pixel[0]), v_pixel=float(pixel[1]),
                     material_uv=uv[:2].tolist(), confidence=float(uv[2]),
                     covariance=[self.uv.stddev**2, 0., 0., self.uv.stddev**2]))
-            for identity, first, previous, point, old, error in self.tracker.update(bgr, sheet, capture):
+            tracks = self.tracker.update(bgr, sheet, capture) if self.tracker is not None else []
+            for identity, first, previous, point, old, error in tracks:
                 x, y = np.rint(point).astype(int)
                 track = PointTrack(id=identity, first_stamp=time_msg(first), previous_stamp=time_msg(previous),
                     u=float(point[0]), v=float(point[1]), previous_u=float(old[0]), previous_v=float(old[1]),

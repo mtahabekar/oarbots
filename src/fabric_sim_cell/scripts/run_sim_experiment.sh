@@ -43,7 +43,9 @@ trap stop_stack EXIT
 for _ in $(seq 120); do grep -q "Preparing physics backend" "$OUT/stack.log" 2>/dev/null && break; sleep 1; done
 sleep 20
 nvidia-smi --query-gpu=memory.used,memory.total --format=csv,noheader > "$OUT/gpu_before_plant.txt" 2>/dev/null
-( cd "$SIM" && timeout 5400 ./run_oarbot_fabric.sh --headless --fast --validate --sensors --gloves --mocap-hands \
+# PLANT_GUI=1 opens the Isaac Sim window (live demo); default headless.
+HEADLESS="--headless"; [[ "${PLANT_GUI:-0}" == 1 ]] && HEADLESS=""
+( cd "$SIM" && timeout 5400 ./run_oarbot_fabric.sh $HEADLESS --fast --validate --sensors --gloves --mocap-hands \
     --truth-output "$OUT/truth.npz" --report "$OUT/plant.json" $PLANT_ARGS ) > "$OUT/plant.log" 2>&1 &
 PLANT=$!
 PEAK=0
@@ -60,5 +62,8 @@ source /opt/ros/jazzy/setup.bash; source "$WS/install/setup.bash"
 WINDOWS=()
 while [[ $# -ge 3 ]]; do WINDOWS+=(--window "$1" "$2" "$3"); shift 3; done
 CONFIG=$(python3 -c "import sys; a=sys.argv[1].split(); print(next((x.split(':=')[1] for x in a if x.startswith('estimator_config:=')), ''))" "$LAUNCH_ARGS")
-[[ -z "$CONFIG" ]] && CONFIG="$WS/install/fabric_sim_cell/share/fabric_sim_cell/config/estimator.yaml"
+if [[ -z "$CONFIG" ]]; then  # the launch default, which profile:=fast changes
+  SUFFIX=""; [[ " $LAUNCH_ARGS " == *" profile:=fast "* ]] && SUFFIX="_fast"
+  CONFIG="$WS/install/fabric_sim_cell/share/fabric_sim_cell/config/estimator$SUFFIX.yaml"
+fi
 ros2 run fabric_sim_cell evaluate "$OUT/truth.npz" "$OUT/estimate.npz" "$CONFIG" "$OUT/eval" "${WINDOWS[@]}" 2>&1 | tee "$OUT/eval.log"

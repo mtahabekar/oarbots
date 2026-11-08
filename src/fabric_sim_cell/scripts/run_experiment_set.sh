@@ -6,6 +6,7 @@ HERE=$(dirname "$(realpath "$0")")
 WS=${COLCON_WS:-/home/taha/ros2_colcon_ws}
 SHARE="$WS/install/fabric_sim_cell/share/fabric_sim_cell/config"
 OUT=$(realpath -m "$1"); shift
+mkdir -p "$OUT"
 # Robots attach at ~9.0 s and report closed fingers at ~10.0 s, when the grasp gate starts estimation.
 # The leaders then hold for 2 s (11.0 s), descend 0.5 m over 5 s (to 16.0 s) and hold to the end (18.5 s).
 DESCEND="--attach --route-cbf --demo-leader 0 0 -0.1 --demo-after 120 --demo-duration 300 --steps 1110"

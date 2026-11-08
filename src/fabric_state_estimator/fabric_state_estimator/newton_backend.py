@@ -19,13 +19,20 @@ except ImportError as error:
 
 
 @wp.kernel
-def pin_corners(corners: wp.array[int], starts: wp.array[wp.vec3], targets: wp.array[wp.vec3],
-                count: int, fraction: float, duration: float,
-                q: wp.array[wp.vec3], v: wp.array[wp.vec3]):
+def pin_corners_linear(corners: wp.array[int], starts: wp.array[wp.vec3], velocity: wp.array[wp.vec3],
+                       count: int, elapsed: wp.array[float], q: wp.array[wp.vec3], v: wp.array[wp.vec3]):
+    # Prescribed linear corner path: starts + (elapsed/duration)*(targets-starts), with
+    # velocity = (targets-starts)/duration precomputed; all per-call data on the device so one
+    # captured step can be replayed for any duration.
     n, c = wp.tid()
     i = n*4+c
-    q[n*count+corners[c]] = starts[i]+fraction*(targets[i]-starts[i])
-    v[n*count+corners[c]] = (targets[i]-starts[i])/duration
+    q[n*count+corners[c]] = starts[i]+elapsed[0]*velocity[i]
+    v[n*count+corners[c]] = velocity[i]
+
+
+@wp.kernel
+def advance_clock(elapsed: wp.array[float], dt: float):
+    elapsed[0] = elapsed[0]+dt
 
 
 @wp.kernel
@@ -35,6 +42,10 @@ def uniform_load(loads: wp.array[wp.vec3], weights: wp.array[float], count: int,
 
 
 class NewtonPhysics:
+    # Captured single steps kept per ensemble size, keyed by step length. Durations that are
+    # multiples of the 60 Hz clock all use max_step_sec itself, so one entry usually serves all.
+    MAX_GRAPHS = 8
+
     def __init__(self, mesh, spec):
         self.mesh, self.spec, self.worlds = mesh, spec, {}
 
@@ -85,7 +96,11 @@ class NewtonPhysics:
         solver.collision = None
         record = dict(model=model, solver=solver, a=model.state(), b=model.state(), control=model.control(),
             contacts=model.contacts(), corners=wp.array(self.mesh.corners, dtype=int, device=model.device),
-            weights=wp.array(self.mesh.mass/self.mesh.mass.sum(), dtype=float, device=model.device))
+            weights=wp.array(self.mesh.mass/self.mesh.mass.sum(), dtype=float, device=model.device),
+            starts=wp.zeros(size*4, dtype=wp.vec3, device=model.device),
+            velocity=wp.zeros(size*4, dtype=wp.vec3, device=model.device),
+            load=wp.zeros(size, dtype=wp.vec3, device=model.device),
+            elapsed=wp.zeros(1, dtype=float, device=model.device), graphs={})
         self.worlds[size] = record
         if not hasattr(self, 'coeff'):
             faces = model.tri_indices.numpy()[:len(self.mesh.triangles)]
@@ -129,29 +144,70 @@ class NewtonPhysics:
         force += loads[:, None]*(self.mesh.mass/self.mesh.mass.sum())[None, :, None]
         return -force[:, self.mesh.corners]
 
+    def _step(self, world, size, dt, a, b):
+        """One solver step from state a into b; the elapsed time advances on the device."""
+        model = world['model']
+        a.clear_forces()
+        # Write AFTER force clearing. These are residual external loads,
+        # never the measured grip reaction applied a second time.
+        wp.launch(uniform_load, model.particle_count, inputs=[world['load'], world['weights'], self.mesh.count, a.particle_f],
+                  device=model.device)
+        wp.launch(advance_clock, 1, inputs=[world['elapsed'], dt], device=model.device)
+        args = [world['corners'], world['starts'], world['velocity'], self.mesh.count, world['elapsed']]
+        wp.launch(pin_corners_linear, (size, 4), inputs=args+[a.particle_q, a.particle_qd], device=model.device)
+        world['solver'].step(a, b, world['control'], world['contacts'], dt)
+        wp.launch(pin_corners_linear, (size, 4), inputs=args+[b.particle_q, b.particle_qd], device=model.device)
+
+    def _step_graphs(self, world, size, dt):
+        """Captured a->b and b->a steps of length dt, or None (no CUDA / disabled / not warmed up)."""
+        if not self.spec.cuda_graph or not wp.get_device(world['model'].device).is_cuda:
+            return None
+        key = round(dt, 9)
+        if key in world['graphs']:
+            return world['graphs'][key]
+        if len(world['graphs']) >= self.MAX_GRAPHS:
+            world['graphs'].pop(next(iter(world['graphs'])))
+        graphs = {}
+        for name, (src, dst) in (('ab', (world['a'], world['b'])), ('ba', (world['b'], world['a']))):
+            with wp.ScopedCapture(device=world['model'].device) as capture:  # records only
+                self._step(world, size, dt, src, dst)
+            graphs[name] = capture.graph
+        world['graphs'][key] = graphs
+        return graphs
+
     def advance(self, q, v, duration, grips, loads=None):
         q, v, grips, loads = validate_inputs(self.mesh, q, v, duration, grips, loads)
         if duration == 0:
             return q, v
-        world = self._world(len(q)); model = world['model']
-        a, b = world['a'], world['b']
-        a.particle_q.assign(q.reshape(-1, 3).astype(np.float32))
-        a.particle_qd.assign(v.reshape(-1, 3).astype(np.float32))
-        b.assign(a)
-        starts = wp.array(q[:, self.mesh.corners].reshape(-1, 3), dtype=wp.vec3, device=model.device)
-        targets = wp.array(grips.reshape(-1, 3), dtype=wp.vec3, device=model.device)
-        load = wp.array(loads, dtype=wp.vec3, device=model.device)
+        size = len(q)
+        world = self._world(size); model = world['model']
+        world['a'].particle_q.assign(q.reshape(-1, 3).astype(np.float32))
+        world['a'].particle_qd.assign(v.reshape(-1, 3).astype(np.float32))
+        starts = q[:, self.mesh.corners].reshape(-1, 3)
+        world['starts'].assign(starts.astype(np.float32))
+        world['velocity'].assign(((grips.reshape(-1, 3)-starts)/duration).astype(np.float32))
+        world['load'].assign(loads.astype(np.float32))
+        world['elapsed'].zero_()
         steps = int(np.ceil(duration/self.spec.max_step_sec)); dt = duration/steps
+        a, b = world['a'], world['b']
+        b.assign(a)
+        # Each solver step is dozens of tiny kernel launches; launching them one by one from
+        # Python costs ~4 ms per step whatever the ensemble or mesh size. A captured step,
+        # replayed `steps` times (ping-ponging the two state buffers as below), runs the same
+        # kernels in a fraction of that. The first step of a new length runs uncaptured, which
+        # also loads its kernels and solver buffers before the capture.
+        graphs = world['graphs'].get(round(dt, 9))
         for step in range(steps):
-            a.clear_forces()
-            # Write AFTER force clearing. These are residual external loads,
-            # never the measured grip reaction applied a second time.
-            wp.launch(uniform_load, model.particle_count, inputs=[load, world['weights'], self.mesh.count, a.particle_f], device=model.device)
-            args = [world['corners'], starts, targets, self.mesh.count, (step+1)/steps, duration]
-            wp.launch(pin_corners, (len(q), 4), inputs=args+[a.particle_q, a.particle_qd], device=model.device)
-            world['solver'].step(a, b, world['control'], world['contacts'], dt)
-            wp.launch(pin_corners, (len(q), 4), inputs=args+[b.particle_q, b.particle_qd], device=model.device)
+            if graphs is None and step == 1:
+                graphs = self._step_graphs(world, size, dt)
+            if graphs is None:
+                self._step(world, size, dt, a, b)
+            else:
+                wp.capture_launch(graphs['ab' if a is world['a'] else 'ba'])
             a, b = b, a
+        if a is not world['a']:
+            world['a'].assign(a)
+        a = world['a']
         out_q, out_v = a.particle_q.numpy().reshape(q.shape).astype(float), a.particle_qd.numpy().reshape(v.shape).astype(float)
         if not np.isfinite(out_q).all() or not np.isfinite(out_v).all():
             raise FloatingPointError('Newton produced nonfinite states')

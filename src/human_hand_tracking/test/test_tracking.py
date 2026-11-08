@@ -125,3 +125,47 @@ def test_glove_region_search_matches_full_frame_and_skips_tags_without_glove_col
     image[300:520, 520:700] = (0, 220, 0)
     image[300:520, 515:525] = 230
     assert [hand.hand_id for hand in detector.detect(image, k, np.zeros(5))[1]] == ['human_left']
+
+
+def plane_depth(detector, rvec, tvec, k, shape):
+    """Ideal registered depth of the tag's plane (and beyond it, of the same plane)."""
+    rotation = cv2.Rodrigues(rvec)[0]
+    normal, origin = rotation[:, 2], tvec.ravel()
+    v, u = np.mgrid[0:shape[0], 0:shape[1]]
+    rays = np.stack(((u - k[0, 2]) / k[0, 0], (v - k[1, 2]) / k[1, 1], np.ones(shape)), axis=-1)
+    return (normal @ origin / (rays @ normal)).astype(np.float32)  # z of the ray's plane hit
+
+
+def test_ambiguous_small_tag_is_resolved_by_depth_and_range_corrected():
+    """A distant, nearly frontal tag has two poses; without depth it is rejected, with depth
+    the one matching the measured tilt wins, and a range-biased (shrunken) corner set is
+    moved back to the measured depth."""
+    k = np.array([[1700., 0., 1023.5], [0., 1700., 767.5], [0., 0., 1.]])
+    detector = GloveDetector(tag_size_m=.08, grip_offsets=[0., -.06, -.0155, 0., -.06, -.0155])
+    rvec = cv2.Rodrigues(cv2.Rodrigues(np.array([np.pi, 0., 0.]))[0] @ cv2.Rodrigues(np.array([.25, .1, 0.]))[0])[0]
+    tvec = np.array([[.3], [.2], [2.2]])
+    truth = cv2.Rodrigues(rvec)[0] @ [0., -.06, -.0155] + tvec.ravel()
+    points = cv2.projectPoints(detector.object_points, rvec, tvec, k, None)[0][:, 0]
+    candidates = cv2.solvePnPGeneric(detector.object_points, points, k, None, flags=cv2.SOLVEPNP_IPPE_SQUARE)
+    grips = [cv2.Rodrigues(r)[0] @ [0., -.06, -.0155] + t.ravel() for r, t in zip(candidates[1], candidates[2])]
+    assert len(grips) == 2 and np.linalg.norm(grips[0] - grips[1]) > .03  # genuinely ambiguous
+    depth = plane_depth(detector, rvec, tvec, k, (1536, 2048))
+    resolved = detector.from_corners(21, points, k, np.zeros(5), depth=depth)
+    assert resolved is not None and np.linalg.norm(resolved.position - truth) < .005
+    # Corners localised 0.8 px inward (as on anti-aliased renders) read the tag 2-3 % too far.
+    centre = points.mean(axis=0)
+    shrunk = centre + (points - centre) * (1 - .8 / np.linalg.norm(points[0] - centre))
+    corrected = detector.from_corners(21, shrunk, k, np.zeros(5), depth=depth)
+    assert corrected is not None and np.linalg.norm(corrected.position - truth) < .01
+    flat = detector.from_corners(21, shrunk, k, np.zeros(5), depth=np.full((1536, 2048), np.nan, np.float32))
+    assert flat is None  # no depth: still ambiguous, still rejected
+
+
+def test_depth_that_is_not_the_tag_rejects_rather_than_passing_a_biased_range():
+    k = np.array([[1700., 0., 1023.5], [0., 1700., 767.5], [0., 0., 1.]])
+    detector = GloveDetector(tag_size_m=.08, grip_offsets=[0., -.06, -.0155, 0., -.06, -.0155])
+    rvec, tvec = np.array([[np.pi], [0.], [0.]]), np.array([[.3], [.2], [2.2]])
+    points = cv2.projectPoints(detector.object_points, rvec, tvec, k, None)[0][:, 0]
+    behind = plane_depth(detector, rvec, tvec + [[0.], [0.], [.8]], k, (1536, 2048))  # 36 % farther
+    assert detector.from_corners(21, points, k, np.zeros(5), depth=behind) is None
+    assert detector.from_corners(21, points, k, np.zeros(5)) is not None  # without depth: PnP alone

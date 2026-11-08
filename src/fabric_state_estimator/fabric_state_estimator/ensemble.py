@@ -144,11 +144,17 @@ class EnsembleObserver:
         return grips[None]+np.einsum('cij,ncj->nci', np.linalg.cholesky(covariance), self.corner_noise)
 
     def _project(self, dt):
-        before = self.q.copy()
         # Bound overextension; compressed edges may represent slack and are not
         # expanded to their rest lengths by an arbitrary geometry projection.
         # Sequential (Gauss-Seidel) passes: measured faster and better
         # converged at 17x17 than a vectorized Jacobi variant.
+        # With no edge over the bound every correction below is exactly zero, so the
+        # passes change nothing; check that in one vectorized step first (the usual case:
+        # the loop alone cost ~17 ms per analysis at 15x15).
+        a, b = self.mesh.edges.T
+        if not np.any(np.linalg.norm(self.q[:, b]-self.q[:, a], axis=2) > self.mesh.lengths*(1+self.spec.max_edge_strain)):
+            return
+        before = self.q.copy()
         pinned = set(self.mesh.corners.tolist())
         for _ in range(3):
             for edge, rest in zip(self.mesh.edges, self.mesh.lengths):

@@ -14,6 +14,7 @@ class PhysicsSpec:
     newton_bend: tuple = (2e-5, 2e-5, 1e-5)
     device: str = 'cpu'
     iterations: int = 4
+    cuda_graph: bool = True  # newton_style3d on CUDA: replay captured step sequences
 
 
 def validate_spec(spec):

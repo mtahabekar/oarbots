@@ -133,6 +133,61 @@ class GraspGate(Node):
             self.forwarded += 1
 
 
+class DemoMarkers(Node):
+    """Demo view of the estimate: a translucent surface, a visible wireframe, its corners, and the
+    hand positions the estimator receives. Display only; it reads the estimator's public topics."""
+
+    def __init__(self):
+        super().__init__('sim_cell_demo_markers')
+        from fabric_state_msgs.msg import FabricModel, FabricState, HandStates
+        from visualization_msgs.msg import MarkerArray
+        self.MarkerArray = MarkerArray
+        self.model, self.hands = None, {}
+        self.create_subscription(FabricModel, '/fabric/model', self.set_model, LATCHED)
+        self.create_subscription(FabricState, '/fabric/estimated_state', self.state, qos_profile_sensor_data)
+        self.create_subscription(HandStates, '/fabric/hand_states', self.hand_states, qos_profile_sensor_data)
+        self.publisher = self.create_publisher(MarkerArray, '/fabric/demo_markers', 10)
+
+    def set_model(self, msg):
+        self.model = msg
+
+    def hand_states(self, msg):
+        for hand in msg.hands:
+            self.hands[hand.hand_id] = hand.position
+
+    def state(self, msg):
+        from geometry_msgs.msg import Point as P
+        from std_msgs.msg import ColorRGBA
+        from visualization_msgs.msg import Marker
+        model = self.model
+        if model is None or model.model_id != msg.model_id or len(model.triangles) % 3:
+            return
+        points = msg.positions
+        faces = np.asarray(model.triangles, dtype=int).reshape(-1, 3)
+        if not len(points) or faces.max(initial=0) >= len(points):
+            return
+        # One colour: the estimator's `degraded` flag is set in most states by transient TF waits,
+        # not by estimate quality (95 % coverage 0.99), so it is not shown as a warning colour.
+        sheet = (0.15, 0.55, 1.0)
+
+        def marker(ident, kind, scale, color, alpha):
+            m = Marker(header=msg.header, ns='estimate', id=ident, type=kind, action=Marker.ADD)
+            m.pose.orientation.w = 1.0
+            m.scale.x, m.scale.y, m.scale.z = scale
+            m.color = ColorRGBA(r=color[0], g=color[1], b=color[2], a=alpha)
+            return m
+        surface = marker(0, Marker.TRIANGLE_LIST, (1.0, 1.0, 1.0), sheet, 0.45)
+        surface.points = [points[int(i)] for i in faces.ravel()]
+        edges = np.unique(np.sort(faces[:, [[0, 1], [1, 2], [2, 0]]].reshape(-1, 2), axis=1), axis=0)
+        wire = marker(1, Marker.LINE_LIST, (0.006, 0.0, 0.0), sheet, 0.95)
+        wire.points = [points[int(i)] for i in edges.ravel()]
+        corners = marker(2, Marker.SPHERE_LIST, (0.035, 0.035, 0.035), (1.0, 1.0, 1.0), 1.0)
+        corners.points = [points[int(i)] for i in model.corner_indices]
+        hands = marker(3, Marker.SPHERE_LIST, (0.05, 0.05, 0.05), (0.1, 0.9, 0.3), 0.9)
+        hands.points = [P(x=p.x, y=p.y, z=p.z) for p in self.hands.values()]
+        self.publisher.publish(self.MarkerArray(markers=[surface, wire, corners] + ([hands] if hands.points else [])))
+
+
 class Recorder(Node):
     """Collects estimator states; writes the replay NPZ format on exit and every few seconds."""
 
@@ -153,7 +208,19 @@ class Recorder(Node):
                                          lambda m, n=name: self.force(n, m), qos_profile_sensor_data)
         self.create_subscription(FabricState, '/fabric/estimated_state', self.state, qos_profile_sensor_data)
         self.create_subscription(DiagnosticArray, '/fabric/estimator_status', self.diagnostics, 10)
+        # The hand states the estimator receives (oracle or glove fusion), to score hand tracking.
+        from fabric_state_msgs.msg import HandStates
+        self.hands = []
+        self.create_subscription(HandStates, '/fabric/hand_states', self.hand_states, qos_profile_sensor_data)
         self.create_timer(5.0, self.save)
+
+    def hand_states(self, msg):
+        stamp, received = nanoseconds(msg.header.stamp), self.get_clock().now().nanoseconds
+        for hand in msg.hands:
+            if hand.hand_id in ('human_left', 'human_right') and len(hand.grip_uv) == 2:
+                p = hand.position
+                self.hands.append([stamp, ('human_left', 'human_right').index(hand.hand_id), p.x, p.y, p.z,
+                                   hand.grip_uv[0], hand.grip_uv[1], received])
 
     def state(self, msg):
         self.states.append(dict(
@@ -206,6 +273,9 @@ class Recorder(Node):
         for name, rows in self.forces.items():
             if rows:
                 np.save(self.output.with_name(f'{self.output.stem}.{name}_force_world.npy'), np.asarray(rows))
+        if self.hands:
+            # stamp_ns, hand (0 left, 1 right), x, y, z (world), grip u, v, received_ns
+            np.save(self.output.with_name(f'{self.output.stem}.hands.npy'), np.asarray(self.hands, dtype=float))
         self.output.with_suffix('.status.json').write_text(json.dumps(self.status[-200:], indent=1))
 
 
@@ -241,3 +311,7 @@ def recorder_main():
 
 def grasp_gate_main():
     _run(GraspGate)
+
+
+def demo_markers_main():
+    _run(DemoMarkers)

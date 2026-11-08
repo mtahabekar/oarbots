@@ -46,6 +46,7 @@ class FabricObserverNode(Node):
         self.hand_history = deque(maxlen=200)
         self.force_history = [deque(maxlen=200), deque(maxlen=200)]
         self.queue, self.sequence, self.last_camera, self.arrivals = [], 0, {}, {}
+        self.intervals = {}  # camera -> recent capture intervals (ns), for its capture period
         self.grip_velocity, self.prediction, self.last_forecast = np.zeros((4, 3)), None, -np.inf
         self.last_success, self.failure, self.last_latency_ms = None, 'Waiting for observations, grips and capture-time TF', 0.
         self.state_pub = self.create_publisher(FabricState, '/fabric/estimated_state', qos_profile_sensor_data)
@@ -86,10 +87,28 @@ class FabricObserverNode(Node):
                 or not -.01 <= age <= self.runtime.max_capture_age_sec):
             self.failure = 'Rejected duplicate, backward, stale or future capture'
             return
+        if msg.camera_id in self.last_camera:
+            self.intervals.setdefault(msg.camera_id, deque(maxlen=10)).append(capture-self.last_camera[msg.camera_id])
         self.last_camera[msg.camera_id] = capture; self.arrivals[msg.camera_id] = monotonic()
         heapq.heappush(self.queue, (capture, self.sequence, monotonic(), msg)); self.sequence += 1
         if len(self.queue) > 80:
             heapq.heappop(self.queue); self.failure = 'Observation queue overflow'
+
+    def may_still_deliver(self, camera, stamp, capture):
+        """Whether `camera` (newest capture `stamp`) can still send a capture at or before `capture`.
+
+        Only a recently live camera can. Its next capture comes about one capture period after
+        `stamp` (the period is the shortest of its recent intervals; 80 % of it absorbs jitter),
+        so a 5 Hz camera that just delivered is not waited for by the 15 Hz captures in between.
+        Until a camera's period is known, any earlier stamp means waiting, as before.
+        """
+        if stamp >= capture or monotonic()-self.arrivals[camera] >= self.runtime.max_capture_age_sec:
+            return False
+        intervals = self.intervals.get(camera)
+        if not intervals or len(intervals) < 3:
+            return True
+        tolerance = int(self.runtime.camera_sync_tolerance_sec*1e9)
+        return stamp + 0.8*min(intervals) <= capture + tolerance
 
     @staticmethod
     def latest(history, capture):
@@ -167,8 +186,7 @@ class FabricObserverNode(Node):
             if monotonic()-arrival < self.runtime.reorder_wait_sec:
                 return
             # Watermark of every camera that has actually been live recently.
-            waiting = any(monotonic()-self.arrivals[c] < self.runtime.max_capture_age_sec and stamp < capture
-                          for c, stamp in self.last_camera.items())
+            waiting = any(self.may_still_deliver(c, stamp, capture) for c, stamp in self.last_camera.items())
             if waiting and age < self.runtime.max_wait_sec:
                 return
             try:

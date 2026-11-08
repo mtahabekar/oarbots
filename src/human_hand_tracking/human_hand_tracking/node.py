@@ -1,4 +1,5 @@
 """Central capture-time tagged-hand fusion. Does not infer grasp or contact."""
+from collections import deque
 import heapq
 from time import monotonic
 import numpy as np
@@ -57,6 +58,7 @@ class HandFusion(Node):
         self.subscriptions_ = [self.create_subscription(GloveObservations, topic, self.observations,
                                                       qos_profile_sensor_data) for topic in topics]
         self.queue, self.sequence, self.last_camera, self.camera_arrival = [], 0, {}, {}
+        self.intervals = {}  # camera -> recent capture intervals (ns), for its capture period
         self.last_group, self.last_arrival, self.last_count = 0, None, 0
         self.failure = 'Waiting for glove observations and capture-time TF'
         self.create_timer(.01, self.flush)
@@ -69,6 +71,8 @@ class HandFusion(Node):
                 or not -.01 <= age <= self.max_age):
             self.failure = 'Rejected stale, duplicate, future or unidentified camera sample'
             return
+        if msg.camera_id in self.last_camera:
+            self.intervals.setdefault(msg.camera_id, deque(maxlen=10)).append(ns - self.last_camera[msg.camera_id])
         self.last_camera[msg.camera_id] = ns
         self.camera_arrival[msg.camera_id] = monotonic()
         heapq.heappush(self.queue, (ns, self.sequence, monotonic(), msg))
@@ -83,13 +87,21 @@ class HandFusion(Node):
         Every camera publishes one message per processed frame (empty when no
         glove is seen), and each camera's stamps are strictly increasing. A
         live camera whose newest stamp is at or after the head therefore
-        cannot deliver anything earlier. Cameras silent for max_age are not
-        waited for. TF is checked without blocking; the caller's deadline
-        bounds the wait.
+        cannot deliver anything earlier. Nor can one whose next capture, about
+        one capture period after its newest stamp (shortest recent interval,
+        80 % of it for jitter), comes after the head: a 5 Hz camera that just
+        delivered is not waited for by the 15 Hz captures in between. Cameras
+        silent for max_age are not waited for. TF is checked without blocking;
+        the caller's deadline bounds the wait.
         """
         now = monotonic()
+        tolerance = self.sync_tolerance*1e9
         for camera, arrival in self.camera_arrival.items():
-            if now-arrival <= self.max_age and self.last_camera[camera] < head:
+            last = self.last_camera[camera]
+            if now-arrival > self.max_age or last >= head:
+                continue
+            intervals = self.intervals.get(camera)
+            if not intervals or len(intervals) < 3 or last + 0.8*min(intervals) <= head + tolerance:
                 return False
         return all(self.tf.can_transform(self.world, msg.header.frame_id, Time.from_msg(msg.header.stamp))
                    for *_, msg in group)
