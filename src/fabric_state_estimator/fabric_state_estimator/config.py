@@ -9,6 +9,8 @@ from .ensemble import ObserverSpec
 
 @dataclass
 class RuntimeSpec:
+    monitoring: dict = field(default_factory=dict)
+    publish_predictions: bool = True
     world_frame: str = 'world'
     observation_topics: list = field(default_factory=lambda: ['/oarbot_blue/azure_kinect/fabric/observations',
         '/oarbot_silver/azure_kinect/fabric/observations', '/nuc/fabric/observations'])

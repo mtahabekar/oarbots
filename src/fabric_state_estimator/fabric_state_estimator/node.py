@@ -19,6 +19,7 @@ from .data import Frame, Grip, Force
 from .ensemble import EnsembleObserver
 from .observations import ObservationBuilder
 from .physics import make_physics
+from .monitoring import MonitorPolicy, MonitorSpec
 from .ros_adapters import nanoseconds, transform_matrix, view_from_message, state_message
 
 
@@ -30,14 +31,16 @@ class FabricObserverNode(Node):
         self.mesh, physics, observer, self.runtime, options, _ = load_config(path)
         r = self.runtime
         numeric = [r.robot_position_std_m, r.hand_max_age_sec, r.max_capture_age_sec, r.max_wait_sec,
-                   r.reorder_wait_sec, r.prediction_limit_sec, r.publish_rate_hz, r.forecast_rate_hz,
+                   r.reorder_wait_sec, r.prediction_limit_sec, r.publish_rate_hz,
                    r.force_stddev_n, r.force_max_age_sec]
         if (not np.isfinite(numeric).all() or min(numeric) <= 0 or r.max_wait_sec >= r.max_capture_age_sec
+                or not np.isfinite(r.forecast_rate_hz) or r.forecast_rate_hz < 0
                 or r.prediction_limit_sec > observer.forecast_limit_sec or len(r.robot_grip_frames) != 2
                 or not r.observation_topics or len(set(r.observation_topics)) != len(r.observation_topics)
                 or len(r.force_topics) != 2 or r.force_on_sheet_sign not in (-1., 1.)
                 or any(h < 0 or h+r.prediction_limit_sec > observer.forecast_limit_sec for h in r.forecast_horizons_sec)):
             raise ValueError('Invalid observer runtime timing, topics, grip frames or force calibration sign')
+        self.monitor = MonitorPolicy(MonitorSpec(**r.monitoring))
         self.observer = EnsembleObserver(self.mesh, make_physics(self.mesh, physics), observer,
                                         ObservationBuilder(self.mesh, **options))
         self.get_logger().info('Preparing physics backend before accepting live captures')
@@ -89,7 +92,7 @@ class FabricObserverNode(Node):
             return
         if msg.camera_id in self.last_camera:
             self.intervals.setdefault(msg.camera_id, deque(maxlen=10)).append(capture-self.last_camera[msg.camera_id])
-        self.last_camera[msg.camera_id] = capture; self.arrivals[msg.camera_id] = monotonic()
+        self.last_camera[msg.camera_id] = capture; self.arrivals[msg.camera_id] = self.get_clock().now().nanoseconds
         heapq.heappush(self.queue, (capture, self.sequence, monotonic(), msg)); self.sequence += 1
         if len(self.queue) > 80:
             heapq.heappop(self.queue); self.failure = 'Observation queue overflow'
@@ -102,7 +105,7 @@ class FabricObserverNode(Node):
         so a 5 Hz camera that just delivered is not waited for by the 15 Hz captures in between.
         Until a camera's period is known, any earlier stamp means waiting, as before.
         """
-        if stamp >= capture or monotonic()-self.arrivals[camera] >= self.runtime.max_capture_age_sec:
+        if stamp >= capture or (self.get_clock().now().nanoseconds-self.arrivals[camera])/1e9 >= self.runtime.max_capture_age_sec:
             return False
         intervals = self.intervals.get(camera)
         if not intervals or len(intervals) < 3:
@@ -219,21 +222,25 @@ class FabricObserverNode(Node):
                     continue
                 snapshot['degraded'] = snapshot['degraded'] or self.last_latency_ms > 100
                 snapshot['degraded'] = snapshot['degraded'] or self.runtime.use_forces and len(frame.forces) != 2
+                # Monitoring assesses capture-time agreement, not the optional live-display
+                # 100 ms latency target. The capture-age deadline and policy watchdog still apply.
+                self.monitor.update(capture, self.observer.status, snapshot.get('depth_cameras', []))
                 # Measured hand velocities and long-baseline robot TF velocity;
                 # differencing successive grip targets amplified localization jitter.
                 self.grip_velocity = grip_velocity
                 self.prediction = None
                 self.state_pub.publish(state_message(snapshot, self.mesh, self.observer.physics.spec.backend, self.runtime.world_frame))
-                self.last_success, self.failure = monotonic(), ''
+                self.last_success, self.failure = self.get_clock().now().nanoseconds, ''
                 if self.runtime.use_forces and len(frame.forces) != 2:
                     self.failure = 'One or both optional force factors missing'
             except (ValueError, FloatingPointError, np.linalg.LinAlgError) as error:
                 self.failure = str(error)
+                self.monitor.reset()
                 self.observer.q = None  # never publish a partially updated invalid ensemble
                 self.observer.time_ns = None
 
     def predict(self):
-        if self.observer.q is None:
+        if self.observer.q is None or not self.runtime.publish_predictions:
             return
         age = (self.get_clock().now().nanoseconds-self.observer.time_ns)/1e9
         if not 0 <= age <= self.runtime.prediction_limit_sec:
@@ -246,9 +253,12 @@ class FabricObserverNode(Node):
             (snapshot,), self.prediction = self.observer.rollout([age], self.grip_velocity, start)
             snapshot['degraded'] = snapshot['degraded'] or age > .1 or bool(self.failure)
             self.state_pub.publish(state_message(snapshot, self.mesh, self.observer.physics.spec.backend, self.runtime.world_frame))
-            if monotonic()-self.last_forecast < 1/self.runtime.forecast_rate_hz:
+            # Neither the demo nor recorder consumes forecasts. Avoid an entire unused rollout.
+            # A subscribed consumer retains the existing contract; zero explicitly disables forecasts.
+            if (self.runtime.forecast_rate_hz == 0 or not self.forecast_pub.get_subscription_count()
+                    or (self.get_clock().now().nanoseconds-self.last_forecast)/1e9 < 1/self.runtime.forecast_rate_hz):
                 return
-            self.last_forecast = monotonic()
+            self.last_forecast = self.get_clock().now().nanoseconds
             snapshots, _ = self.observer.rollout([age+h for h in self.runtime.forecast_horizons_sec],
                                                  self.grip_velocity, self.prediction)
             for forecast in snapshots:
@@ -261,12 +271,20 @@ class FabricObserverNode(Node):
             self.failure = str(error)
 
     def diagnostics(self):
-        fresh = self.last_success is not None and monotonic()-self.last_success <= self.runtime.max_capture_age_sec
+        fresh = (self.last_success is not None and
+                 0 <= (self.get_clock().now().nanoseconds-self.last_success)/1e9 <= self.runtime.max_capture_age_sec)
         degraded = not fresh or self.observer.status['degraded'] or bool(self.failure) or self.last_latency_ms > 100
+        now = self.get_clock().now().nanoseconds
+        mode = self.monitor.mode(now)
+        # A current diagnostic must never keep throttling cameras after analyses have stopped.
+        monitor_values = [KeyValue(key='monitor_mode', value=mode),
+                          KeyValue(key='measurement_ns', value=str(self.observer.time_ns or 0)),
+                          KeyValue(key='prior_depth_p95_m', value=str(self.observer.status.get('prior_depth_p95_m', float('inf')))),
+                          KeyValue(key='marginal_innovation_score', value=str(self.observer.status.get('marginal_innovation_score', float('inf'))))]
         self.status_pub.publish(DiagnosticArray(header=Header(stamp=self.get_clock().now().to_msg()), status=[DiagnosticStatus(
             level=DiagnosticStatus.WARN if degraded else DiagnosticStatus.OK, name=self.get_fully_qualified_name(),
             hardware_id=self.mesh.model_id, message=self.failure or self.observer.status['reason'],
-            values=[KeyValue(key='capture_to_analysis_ms', value=str(self.last_latency_ms)),
+            values=monitor_values+[KeyValue(key='capture_to_analysis_ms', value=str(self.last_latency_ms)),
                     KeyValue(key='physics', value=self.observer.physics.spec.backend),
                     KeyValue(key='contact_assumption', value='all four prescribed corners; no self/obstacle collision')])]))
 

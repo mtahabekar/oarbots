@@ -54,16 +54,23 @@ while kill -0 $PLANT 2>/dev/null; do
   [[ -n "$used" && "$used" -gt "$PEAK" ]] && PEAK=$used
   sleep 5
 done
-wait $PLANT; echo "plant exit $?" >> "$OUT/plant.log"
+PLANT_RESULT=0
+wait "$PLANT" || PLANT_RESULT=$?
+echo "plant exit $PLANT_RESULT" >> "$OUT/plant.log"
 echo "$PEAK" > "$OUT/gpu_peak_mib.txt"
 sleep 3
 stop_stack
+if [[ "$PLANT_RESULT" -ne 0 ]] || ! grep -q COMBINED_VALIDATED "$OUT/plant.log"; then
+  echo "SIM_EXPERIMENT_ABORTED: plant validation failed (exit $PLANT_RESULT); see $OUT/plant.log" >&2
+  exit 4
+fi
 source /opt/ros/jazzy/setup.bash; source "$WS/install/setup.bash"
 WINDOWS=()
 while [[ $# -ge 3 ]]; do WINDOWS+=(--window "$1" "$2" "$3"); shift 3; done
 CONFIG=$(python3 -c "import sys; a=sys.argv[1].split(); print(next((x.split(':=')[1] for x in a if x.startswith('estimator_config:=')), ''))" "$LAUNCH_ARGS")
 if [[ -z "$CONFIG" ]]; then  # the launch default, which profile:=fast changes
   SUFFIX=""; [[ " $LAUNCH_ARGS " == *" profile:=fast "* ]] && SUFFIX="_fast"
+  [[ " $LAUNCH_ARGS " == *" profile:=monitor "* ]] && SUFFIX="_monitor"
   CONFIG="$WS/install/fabric_sim_cell/share/fabric_sim_cell/config/estimator$SUFFIX.yaml"
 fi
 ros2 run fabric_sim_cell evaluate "$OUT/truth.npz" "$OUT/estimate.npz" "$CONFIG" "$OUT/eval" "${WINDOWS[@]}" 2>&1 | tee "$OUT/eval.log"

@@ -28,13 +28,19 @@ def transform_weights(predictions, values, variances, localization, inflation=1.
     return mean_weights, transform
 
 
-def localized_update(mesh, q, v, loads, factors, physics, radius, inflation=1.02):
+def localized_update(mesh, q, v, loads, factors, physics, radius, inflation=1.02, diagnostics=None):
     if not factors:
         return q.copy(), v.copy(), loads.copy(), np.nan
     predictions = np.column_stack([factor.predict(q, v, loads, physics) for factor in factors])
     values, variance = np.array([f.value for f in factors]), np.array([f.variance for f in factors])
     if not np.isfinite(predictions).all():
         raise FloatingPointError('Nonfinite predicted measurements')
+    if diagnostics is not None:
+        normal = np.array([f.kind == 'normal' for f in factors])
+        diagnostics['depth_factors'] = int(normal.sum())
+        diagnostics['depth_cameras'] = sorted({f.view.camera_id for f in factors if f.kind == 'normal' and f.view is not None})
+        diagnostics['prior_depth_p95_m'] = (float(np.percentile(np.abs(values[normal]-predictions.mean(axis=0)[normal]), 95))
+                                               if normal.any() else float('inf'))
     anchors = np.array([f.vertices[np.argmax(f.weights)] for f in factors])
     # Same per-vertex transform as transform_weights(), batched over vertices:
     # a Python loop over vertices cost ~85 ms at 17x17/N=32 per analysis.
@@ -185,8 +191,9 @@ class EnsembleObserver:
         # Grip uncertainty was already sampled into prescribed boundary motion.
         # Do not assimilate the same measurement again as a second likelihood.
         factors = [factor for factor in self.builder.build(self.q.mean(axis=0), frame) if factor.kind != 'grip']
+        prior_diagnostics = {}
         self.q, self.v, self.loads, score = localized_update(self.mesh, self.q, self.v, self.loads, factors,
-            self.physics, self.spec.localization_m, self.spec.inflation)
+            self.physics, self.spec.localization_m, self.spec.inflation, prior_diagnostics)
         self._project(dt)
         # Positions of the prescribed uncertain grips remain ensemble boundary
         # conditions; filtering cannot turn them into deterministic exact pins.
@@ -206,7 +213,7 @@ class EnsembleObserver:
         self.status = {'degraded': visual == 0 or not np.isfinite(score) or score > 25 or rank < 3 or violation,
             'reason': 'no visual factors' if visual == 0 else 'edge strain bound violated' if violation else 'low ensemble spread' if rank < 3 else 'large innovation' if score > 25 else 'observations assimilated',
             'factors': len(factors), 'visual_factors': visual, 'marginal_innovation_score': score,
-            'reinitialized': reinitialized, 'physics_backend': self.physics.spec.backend, 'effective_rank': rank, 'max_edge_strain': max_strain}
+            'reinitialized': reinitialized, 'physics_backend': self.physics.spec.backend, 'effective_rank': rank, 'max_edge_strain': max_strain, **prior_diagnostics}
         if not np.isfinite(self.q).all() or not np.isfinite(self.v).all():
             raise FloatingPointError('Nonfinite assimilation state')
         return self.snapshot()

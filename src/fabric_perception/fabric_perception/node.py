@@ -17,6 +17,7 @@ from sensor_msgs.msg import CameraInfo, Image
 from fabric_state_msgs.msg import (Boundary2D, DepthObservation, FabricObservations,
                                    GloveObservation, GloveObservations, PointTrack, UVPrior)
 from human_hand_tracking.tags import GloveDetector
+from .sampling import FabricSampler
 from .core import Camera, DepthProcessor, PointTracker, Segmenter, UVRegressor, boundaries, depth_metres
 
 
@@ -41,6 +42,10 @@ class FabricCamera(Node):
         super().__init__('fabric_camera')
         param = lambda name, default: self.declare_parameter(name, default).value
         self.camera_id = param('camera_id', 'camera')
+        self.sampler = FabricSampler(param('fabric_rate_hz', 0.), param('monitor_rate_hz', 1.),
+                                     param('adaptive_sampling', False), param('monitor_timeout_sec', 2.5))
+        if self.sampler.adaptive:
+            self.create_subscription(DiagnosticArray, '/fabric/estimator_status', self.sampling_feedback, 10)
         self.max_age = param('max_age_sec', .25)
         self.sync_slop = param('sync_slop_sec', .015)
         self.publish_debug = param('publish_debug_images', False)
@@ -105,6 +110,26 @@ class FabricCamera(Node):
         self.synchronizer.registerCallback(self.images)
         self.create_timer(.5, self.diagnostics)
 
+    def sampling_feedback(self, msg):
+        for status in msg.status:
+            if status.name != '/fabric_state_estimator':
+                continue
+            values = {v.key: v.value for v in status.values}
+            try:
+                self.sampler.feedback(stamp_ns(msg.header.stamp), int(values.get('measurement_ns', 0)),
+                                      values.get('monitor_mode') == 'monitor')
+            except ValueError:
+                self.sampler.slow = False
+
+    def publish_hands(self, header, hands):
+        output = GloveObservations(header=header, camera_id=self.camera_id)
+        for hand in hands:
+            output.hands.append(GloveObservation(hand_id=hand.hand_id, tag_id=hand.tag_id,
+                position=Point(x=float(hand.position[0]), y=float(hand.position[1]), z=float(hand.position[2])),
+                covariance=hand.covariance.ravel().tolist(), reprojection_error_px=hand.reprojection_error,
+                color_support=hand.color_support))
+        self.hands_pub.publish(output)
+
     def camera_info(self, msg):
         self.info = msg
 
@@ -167,6 +192,13 @@ class FabricCamera(Node):
             hsv = cv2.cvtColor(bgr, cv2.COLOR_BGR2HSV)
             glove_mask, hands = self.gloves.detect(bgr, camera.k, camera.distortion,
                                                    depth=metres if self.tag_use_depth else None, hsv=hsv)
+            if not self.sampler.due(capture):
+                # Hand input remains at camera cadence even while fabric checks are sparse.
+                if (self.get_clock().now().nanoseconds-capture)/1e9 <= self.max_age:
+                    self.publish_hands(rgb.header, hands)
+                    self.last_stamp, self.last_arrival, self.drop_reason = capture, monotonic(), ''
+                    self.summary['fabric_sampling'] = 'skipped; gloves processed'
+                return
             sheet, labels, confidence, occlusion, roi = self.segmenter.infer(bgr, glove_mask, robot_mask, hsv=hsv)
             valid, variance, pixels, points, fraction = self.depth.process(metres, sheet, camera)
             output = FabricObservations(header=rgb.header, camera_id=self.camera_id, camera_info=info,
@@ -201,19 +233,13 @@ class FabricCamera(Node):
                     track.position = Point32(x=float(position[0]), y=float(position[1]), z=float(position[2]))
                     track.axial_variance = float(variance[y, x])
                 output.tracks.append(track)
-            glove_output = GloveObservations(header=rgb.header, camera_id=self.camera_id)
-            for hand in hands:
-                glove_output.hands.append(GloveObservation(hand_id=hand.hand_id, tag_id=hand.tag_id,
-                    position=Point(x=float(hand.position[0]), y=float(hand.position[1]), z=float(hand.position[2])),
-                    covariance=hand.covariance.ravel().tolist(), reprojection_error_px=hand.reprojection_error,
-                    color_support=hand.color_support))
             publication_age = (self.get_clock().now().nanoseconds - capture)/1e9
             if publication_age > self.max_age:
                 self.last_stamp = capture
                 self.drop_reason = 'Processing exceeded capture-to-publication age limit'
                 return
             self.observations_pub.publish(output)
-            self.hands_pub.publish(glove_output)  # empty arrays explicitly report no detections
+            self.publish_hands(rgb.header, hands)  # empty arrays explicitly report no detections
             if self.publish_debug:
                 for publisher, data in ((self.labels_pub, labels), (self.depth_valid_pub, np.uint8(valid)*255)):
                     msg = self.bridge.cv2_to_imgmsg(data, 'mono8'); msg.header = rgb.header

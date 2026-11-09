@@ -111,7 +111,7 @@ def main(args=None):
              'n/a' if r['coverage'] is None else ('consistent or conservative' if r['coverage']['worst'] >= 0.90
                                                   else 'overconfident')),
             ('Capture-to-state age', 'p95 <= 100 ms at <= 0.1 m/s', fmt(r['age_p95_s'], 1e3, ' ms', 0),
-             'not assessable: simulation time at ~0.23x real time'),
+             'simulation-time age; wall-clock latency not recorded'),
         ]
         if r['ft_quasi_static_p95_n'] is not None:
             rows.append(('F/T compensation residual (slow motion)', 'small vs cloth load (5-8 N)',

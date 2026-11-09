@@ -1,6 +1,7 @@
 """Synthetic observation-to-state ROS contract; no drivers or command topics."""
 import time
 import numpy as np
+import pytest
 import rclpy
 from rclpy.executors import SingleThreadedExecutor
 from rclpy.qos import qos_profile_sensor_data, QoSProfile, DurabilityPolicy
@@ -20,13 +21,23 @@ def spin(executor, duration):
         executor.spin_once(timeout_sec=.005)
 
 
-def test_ros_model_state_forecast_and_stale_measurement_contract(tmp_path):
+@pytest.mark.parametrize('mode', ['live', 'monitor', 'unsubscribed'])
+def test_ros_model_state_forecast_and_stale_measurement_contract(tmp_path, mode):
     path = tmp_path/'config.yaml'
     path.write_text('mesh: {rows: 3, columns: 3}\nphysics: {backend: spring}\n'
         'observer: {ensemble_size: 8}\nruntime:\n  observation_topics: [/synthetic/fabric/observations]\n'
-        '  forecast_horizons_sec: [0.02]\n  publish_rate_hz: 10.0\n')
+        '  forecast_horizons_sec: [0.33]\n  publish_rate_hz: 10.0\n')
+    if mode == 'monitor':
+        with path.open('a') as config:
+            config.write('  publish_predictions: false\n  forecast_rate_hz: 0.0\n')
     rclpy.init(args=['--ros-args', '-p', 'config_file:='+str(path)])
     node = FabricObserverNode()
+    rollout = node.observer.rollout
+    horizons = []
+    def record_rollout(values, *args, **kwargs):
+        horizons.extend(values)
+        return rollout(values, *args, **kwargs)
+    node.observer.rollout = record_rollout
     producer = rclpy.create_node('observer_fixture', use_global_arguments=False)
     executor = SingleThreadedExecutor(); executor.add_node(node); executor.add_node(producer)
     try:
@@ -34,7 +45,8 @@ def test_ros_model_state_forecast_and_stale_measurement_contract(tmp_path):
         producer.create_subscription(FabricModel, '/fabric/model', models.append,
             QoSProfile(depth=1, durability=DurabilityPolicy.TRANSIENT_LOCAL))
         producer.create_subscription(FabricState, '/fabric/estimated_state', states.append, qos_profile_sensor_data)
-        producer.create_subscription(FabricForecasts, '/fabric/predicted_states', forecasts.append, qos_profile_sensor_data)
+        if mode != 'unsubscribed':
+            producer.create_subscription(FabricForecasts, '/fabric/predicted_states', forecasts.append, qos_profile_sensor_data)
         hands_pub = producer.create_publisher(HandStates, '/fabric/hand_states', qos_profile_sensor_data)
         camera_pub = producer.create_publisher(FabricObservations, '/synthetic/fabric/observations', qos_profile_sensor_data)
         spin(executor, .15)
@@ -82,8 +94,15 @@ def test_ros_model_state_forecast_and_stale_measurement_contract(tmp_path):
         marker = mesh_marker(models[-1], states[-1])
         assert marker.points and len(marker.colors) == len(marker.points)
         assert marker.header == states[-1].header and marker.lifetime.nanosec == 500_000_000
-        assert forecasts and forecasts[-1].states[0].measurement_stamp == header.stamp
-        assert forecasts[-1].states[0].header.stamp != header.stamp
+        if mode == 'live':
+            assert forecasts and forecasts[-1].states[0].measurement_stamp == header.stamp
+            assert forecasts[-1].states[0].header.stamp != header.stamp
+        else:
+            assert not forecasts
+        if mode == 'monitor':
+            assert len(states) == 1 and not horizons
+        elif mode == 'unsubscribed':
+            assert max(horizons, default=0.) <= .2
         spin(executor, .15)
         count = len(states)
         spin(executor, .2)

@@ -287,3 +287,37 @@ def test_rendered_rgbd_to_world_grip_pipeline(graph):
     finally:
         executor.remove_node(fusion)
         fusion.destroy_node()
+
+
+def test_monitoring_skips_fabric_work_but_keeps_each_glove_observation(graph):
+    from diagnostic_msgs.msg import DiagnosticArray, DiagnosticStatus, KeyValue
+    from rosgraph_msgs.msg import Clock
+    camera, producer, executor = graph(FabricCamera, ['-r', '__ns:=/camera_fixture',
+        '-p', 'use_sim_time:=true', '-p', 'adaptive_sampling:=true', '-p', 'fabric_rate_hz:=5.0'])
+    output, gloves = [], []
+    producer.create_subscription(FabricObservations, '/camera_fixture/fabric/observations', output.append, qos_profile_sensor_data)
+    producer.create_subscription(GloveObservations, '/camera_fixture/fabric/gloves', gloves.append, qos_profile_sensor_data)
+    clock_pub = producer.create_publisher(Clock, '/clock', 10)
+    status_pub = producer.create_publisher(DiagnosticArray, '/fabric/estimator_status', 10)
+    rgb_pub, depth_pub, info_pub, _ = camera_inputs(producer)
+    spin(executor, .15)
+    def send(ns):
+        stamp = Time(nanoseconds=ns).to_msg()
+        clock_pub.publish(Clock(clock=stamp)); spin(executor, .015)
+        rgb, depth, info = images(producer, stamp=stamp)
+        info_pub.publish(info); rgb_pub.publish(rgb); depth_pub.publish(depth)
+        spin(executor, .035)
+    send(1_000_000_000)
+    feedback = DiagnosticArray(header=Header(stamp=Time(nanoseconds=1_000_000_000).to_msg()), status=[
+        DiagnosticStatus(name='/fabric_state_estimator', values=[KeyValue(key='monitor_mode', value='monitor'),
+            KeyValue(key='measurement_ns', value='1000000000')])])
+    status_pub.publish(feedback); spin(executor, .03)
+    for k in range(1, 5):
+        send(1_000_000_000+k*200_000_000)
+    # One extra fabric check on changing rate is allowed; four intervening captures still emit gloves.
+    assert 1 <= len(output) <= 2
+    assert len(gloves) == 5
+    assert len({(m.header.stamp.sec, m.header.stamp.nanosec) for m in gloves}) == 5
+    before = len(output)
+    send(4_000_000_000); send(4_200_000_000)
+    assert len(output) == before+2  # expired feedback restores the full 5 Hz stream

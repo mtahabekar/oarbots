@@ -54,3 +54,24 @@ def test_captured_step_graph_matches_launch_by_launch_stepping():
         np.testing.assert_allclose(a[1], b[1], atol=2e-3)
         np.testing.assert_allclose(a[0][:, mesh.corners], grips, atol=1e-6)
     assert len(graph.worlds[3]['graphs']) == 1  # one captured 1/240 s step serves 1/15 s and 0.1 s
+
+
+@pytest.mark.skipif(importlib.util.find_spec('newton') is None, reason='Optional Newton backend is not installed')
+def test_bending_force_isolated_from_dominant_membrane_forces():
+    import warp as wp
+    from newton._src.solvers.style3d.kernels import eval_bend_kernel
+    mesh = MaterialMesh(MeshSpec(rows=8, columns=8))
+    physics = make_physics(mesh, PhysicsSpec(backend='newton_style3d', device='cpu'))
+    world = physics._world(1)
+    model = world['model']
+    q = mesh.rest.astype(np.float32).copy()
+    q[:, 2] += .02*np.sin(np.pi*mesh.uv[:, 0])*np.sin(np.pi*mesh.uv[:, 1])
+    native = wp.zeros(mesh.count, dtype=wp.vec3, device='cpu')
+    wp.launch(eval_bend_kernel, model.edge_count, inputs=[wp.array(q, dtype=wp.vec3, device='cpu'),
+        model.style3d.edge_rest_area, model.style3d.edge_bending_cot,
+        model.edge_indices, model.edge_bending_properties], outputs=[native], device='cpu')
+    expected = native.numpy()
+    assert np.max(np.abs(expected)) > 1e-6
+    physics.stretch[:] = 0.  # isolate bending: large membrane force must not hide coefficient errors
+    actual = physics.internal_forces(q[None].astype(float))[0]
+    np.testing.assert_allclose(actual, expected, atol=1e-6, rtol=2e-5)

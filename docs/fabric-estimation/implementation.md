@@ -67,6 +67,13 @@ The installed Style3D collision handler does not isolate overlapping ensemble wo
 
 Style3D's `0.998` velocity multiplier remains part of the solver. Effective damping depends on actual substeps, so archive `max_step_sec`, timestamps, solver version and iteration count. `damping_per_sec` and `spring_stiffness_n_m` apply only to `spring`; they are not conversions of Newton's anisotropic coefficients.
 
+The optional force observation uses the installed Newton bending law separately from native
+state prediction. For Newton 1.6 and newer, its quadratic bending matrix coefficient is
+`3*k/A`; the supported older backend used `(k/A)^2`. An isolated bending-only native-kernel
+regression checks this coefficient, since a mixed membrane/bending comparison can hide a
+bending error under the much larger membrane-force tolerance. This correction does not make
+point-grip reactions equivalent to a finite grip patch or validate dynamic force fusion.
+
 The residual load has exactly three coefficients: total world force distributed proportional to lumped mass. This represents uniform distributed acceleration, not an arbitrary per-node force field. Tier B owns it online; Tier A owns a separate offline sequence estimate. Turn off any other online disturbance observer before consuming it elsewhere.
 
 ## Observation operators

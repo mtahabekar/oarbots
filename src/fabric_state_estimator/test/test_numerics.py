@@ -218,3 +218,15 @@ def test_projection_bounds_overextension_without_moving_attachments():
     lengths = np.linalg.norm(observer.q[:, mesh.edges[:, 1]]-observer.q[:, mesh.edges[:, 0]], axis=2)
     assert np.max(lengths/mesh.lengths) <= 1.1+1e-4
     np.testing.assert_array_equal(observer.q[:, mesh.corners], corners)
+
+
+def test_monitor_depth_residual_is_measured_before_assimilation():
+    mesh, _, _ = fixture(); physics = make_physics(mesh, PhysicsSpec())
+    q = np.zeros((8, mesh.count, 3)); q[:, :, 2] = np.linspace(-.01, .01, 8)[:, None]
+    v, loads = np.zeros_like(q), np.zeros((8, 3))
+    factor = Factor('normal', np.array([4]), np.ones(1), .04, .000001, np.array([0., 0., 1.]))
+    diagnostics = {}
+    updated, _, _, _ = localized_update(mesh, q, v, loads, [factor], physics, 10., diagnostics=diagnostics)
+    assert diagnostics['depth_factors'] == 1
+    assert diagnostics['prior_depth_p95_m'] == pytest.approx(.04)
+    assert abs(.04-updated[:, 4, 2].mean()) < diagnostics['prior_depth_p95_m']

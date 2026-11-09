@@ -1,6 +1,5 @@
 """Capture scheduling: whom the estimator waits for before assimilating a capture."""
 from collections import deque
-from time import monotonic
 from types import SimpleNamespace
 
 from fabric_state_estimator.config import RuntimeSpec
@@ -10,9 +9,10 @@ MS = 1_000_000
 
 
 def node(intervals):
-    now = monotonic()
+    now = 2_000_000_000
     return SimpleNamespace(runtime=RuntimeSpec(), arrivals={'wrist': now, 'overhead': now},
-                           intervals={k: deque(v, maxlen=10) for k, v in intervals.items()})
+                           intervals={k: deque(v, maxlen=10) for k, v in intervals.items()},
+                           get_clock=lambda: SimpleNamespace(now=lambda: SimpleNamespace(nanoseconds=now)))
 
 
 def test_slow_camera_is_waited_for_only_when_it_can_still_deliver_an_earlier_capture():
@@ -27,5 +27,12 @@ def test_slow_camera_is_waited_for_only_when_it_can_still_deliver_an_earlier_cap
     assert wait(node({'overhead': [200 * MS]}), 'overhead', 1000 * MS, 1067 * MS)
     # A camera that already delivered this capture, or went silent, is never waited for.
     assert not wait(state, 'overhead', 1200 * MS, 1200 * MS)
-    state.arrivals['overhead'] -= 10.
+    state.arrivals['overhead'] -= 10_000_000_000
     assert not wait(state, 'overhead', 1000 * MS, 1200 * MS)
+
+
+def test_camera_liveness_uses_source_clock_even_if_the_wall_clock_pauses(monkeypatch):
+    import fabric_state_estimator.node as module
+    state = node({'overhead': [200*MS]*4})
+    monkeypatch.setattr(module, 'monotonic', lambda: 1e12)
+    assert FabricObserverNode.may_still_deliver(state, 'overhead', 1000*MS, 1200*MS)

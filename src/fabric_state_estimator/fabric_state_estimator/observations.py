@@ -103,7 +103,7 @@ class ObservationBuilder:
                     continue
                 normal /= norm
                 factors.append(Factor('normal', vertices, bary, float(observed @ normal),
-                    float(sample[5]+self.depth_floor**2+temporal_variance), normal))
+                    float(sample[5]+self.depth_floor**2+temporal_variance), normal, view))
             projected, z = project(q, view)
             edges = self.mesh.boundary_edges
             for pixel in self.sample(view.boundary[view.boundary[:, 2] > 0], self.limits[1]):

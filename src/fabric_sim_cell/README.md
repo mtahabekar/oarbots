@@ -64,3 +64,21 @@ The scorecard compares each experiment with the online targets proposed in
 `docs/fabric-state-estimation-research.md` section 15 (surface p95 <= 50 mm, hand p95 <= 20-30 mm,
 capture-to-state age p95 <= 100 ms, calibrated coverage). Latency cannot be judged here: the plant
 runs at ~0.23x real time.
+
+## Intermittent validation and lean plant
+
+`PROFILE=monitor scripts/run_demo.sh live gloves` starts fabric checks at 5 Hz, with an
+adaptive reduction to 1 Hz after sustained acceptable pre-correction depth residuals.
+Overhead images and gloves remain at 5 Hz. With oracle hands, overhead capture can also
+fall to 1 Hz. Bad checks or expired feedback restore the higher rate. Continuous state
+prediction and future forecasts are disabled; timestamps identify checked captures.
+This is camera/model agreement, not physical material identification.
+
+`PROFILE=lean` adds an approximate 28x28-cell plant (29x29 particles), eight substeps with
+six outer/three inner iterations, and a 7-cell CBF predictor. Sheet dimensions, areal density
+and 3 cm grip span are preserved. It trades some plant fidelity for speed; the combined
+simulation's `PERFORMANCE_REVIEW.md` records fine-versus-coarse geometry, tension, runtime
+and strict controller-feasibility checks. `fast` keeps the fine plant and remains default.
+
+The fast/monitor/lean paths now use synchronized manually scheduled camera capture.
+Rebuild `fabric_perception`, `fabric_state_estimator`, and `fabric_sim_cell` before use.

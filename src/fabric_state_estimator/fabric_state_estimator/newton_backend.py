@@ -115,7 +115,12 @@ class NewtonPhysics:
             edges = edges[valid]
             cot = model.style3d.edge_bending_cot.numpy()[valid]
             weights = np.column_stack((-cot[:, 0]-cot[:, 2], -cot[:, 1]-cot[:, 3], cot[:, 2]+cot[:, 3], cot[:, 0]+cot[:, 1]))
-            weights *= (model.edge_bending_properties.numpy()[valid, 0]/model.style3d.edge_rest_area.numpy()[valid])[:, None]
+            ratio = model.edge_bending_properties.numpy()[valid, 0]/model.style3d.edge_rest_area.numpy()[valid]
+            # Q = weights weights^T. Newton >= 1.6 uses 3*k/A, while the supported
+            # older backend used (k/A)^2. Native prediction was already correct;
+            # this matrix is the optional quasi-static force observation operator.
+            version = tuple(int(part) for part in newton.__version__.split('.')[:2])
+            weights *= (np.sqrt(3.*ratio) if version >= (1, 6) else ratio)[:, None]
             blocks = weights[:, :, None]*weights[:, None, :]
             rows = np.broadcast_to(edges[:, :, None], blocks.shape)
             cols = np.broadcast_to(edges[:, None, :], blocks.shape)

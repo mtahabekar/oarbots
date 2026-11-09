@@ -33,9 +33,12 @@ def nodes(context):
     sim = {'use_sim_time': True}
     # profile:=fast selects the real-time configs (perception_*_fast.yaml, estimator_fast.yaml)
     # made for the plant's real-time settings (oarbot_simulation run_demo.sh fast/teleop).
-    if get('profile') not in ('', 'fast'):
-        raise RuntimeError("profile must be '' or 'fast'")
-    suffix = '_fast' if get('profile') == 'fast' else ''
+    if get('profile') not in ('', 'fast', 'monitor'):
+        raise RuntimeError("profile must be '', 'fast' or 'monitor'")
+    suffix = '_fast' if get('profile') in ('fast', 'monitor') else ''
+    estimator_suffix = '_monitor' if get('profile') == 'monitor' else suffix
+    sampling = ({'adaptive_sampling': True, 'fabric_rate_hz': 5.0, 'monitor_rate_hz': 1.0,
+                 'monitor_timeout_sec': 2.5} if get('profile') == 'monitor' else {})
     out = []
     for color in COLORS:
         ns = f'oarbot_{color}'
@@ -54,7 +57,7 @@ def nodes(context):
             continue
         out.append(Node(package='fabric_perception', executable='camera', namespace=namespace, name='fabric_perception',
                         output='screen', parameters=[str(config('', f'perception_{camera_id}{suffix}.yaml')),
-                                                     {'camera_id': camera_id, **sim}]))
+                                                     {'camera_id': camera_id, **sampling, **sim}]))
     # With the grasp gate, the hand source publishes to /fabric/hand_states_ungated and the gate
     # forwards it only while both grippers are closed: estimation starts once the corners are held.
     gated = get('grasp_gate') == 'true'
@@ -73,7 +76,7 @@ def nodes(context):
         out.append(Node(package='fabric_sim_cell', executable='grasp_gate', name='grasp_gate', output='screen',
                         parameters=[sim]))
     out.append(Node(package='fabric_state_estimator', executable='observer', name='fabric_state_estimator', output='screen',
-                    parameters=[{'config_file': str(config(get('estimator_config'), f'estimator{suffix}.yaml')), **sim}]))
+                    parameters=[{'config_file': str(config(get('estimator_config'), f'estimator{estimator_suffix}.yaml')), **sim}]))
     if get('force_torque') == 'true':
         calibration = yaml.safe_load(Path(calibration_file).read_text())['force_torque']
         for color in COLORS:
@@ -99,7 +102,7 @@ def generate_launch_description():
         DeclareLaunchArgument('calibration_file', default_value='', description='Default: config/calibration_exact.yaml'),
         DeclareLaunchArgument('errors_file', default_value='', description='Deliberate calibration errors (YAML)'),
         DeclareLaunchArgument('estimator_config', default_value='', description='Default: config/estimator.yaml'),
-        DeclareLaunchArgument('profile', default_value='', description="'fast': real-time perception and estimator configs"),
+        DeclareLaunchArgument('profile', default_value='', description="'fast': live observer; 'monitor': adaptive 5-to-1 Hz fabric validation"),
         DeclareLaunchArgument('hands', default_value='oracle', description="'oracle' (labelled ideal input) or 'gloves'"),
         DeclareLaunchArgument('oracle_position_std_m', default_value='0.005', description='Covariance the oracle states'),
         DeclareLaunchArgument('oracle_noise_m', default_value='0.0', description='Noise the oracle actually adds'),
