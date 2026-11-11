@@ -1,0 +1,604 @@
+{
+  "report_date": "2026-11-10",
+  "timezone": "America/New_York",
+  "repository_head": "b7821acce0e6ddbde252092c5f3fa251d66f7f13",
+  "external_simulation_head_at_audit": "a196775be353938b5dcd20fb5186324fbf8cb516",
+  "scope": "Source review, existing simulation artifact inspection, fresh synthetic software tests and a controlled boundary probe. No new physical or Isaac GPU run.",
+  "environment": {
+    "numpy": "1.26.4",
+    "scipy": "1.11.4",
+    "newton": "1.6.1",
+    "warp-lang": "1.17.0",
+    "pytest": "7.4.4",
+    "python": "3.12.3",
+    "opencv": "4.6.0"
+  },
+  "fresh_tests": {
+    "command": "source /opt/ros/jazzy/setup.bash\nsource /home/taha/ros2_colcon_ws/install/setup.bash\nexport PYTHONPATH=\"$PWD/src/fabric_perception:$PWD/src/human_hand_tracking:$PWD/src/fabric_state_estimator:$PWD/src/fabric_reference_reconstruction:$PWD/src/fabric_sim_cell:$PYTHONPATH\"\nexport WARP_CACHE_PATH=/tmp/oarbots-progress-warp\nexport ROS_LOG_DIR=/tmp/oarbots-progress-ros\nexport PYTHONDONTWRITEBYTECODE=1\nexport FASTDDS_BUILTIN_TRANSPORTS=UDPv4\n/home/taha/venvs/fabric_ros/bin/python -m pytest -q -ra -p no:cacheprovider --basetemp=/tmp/oarbots-progress-pytest src/fabric_perception/test src/human_hand_tracking/test src/fabric_state_estimator/test src/fabric_reference_reconstruction/test src/fabric_sim_cell/test",
+    "passed": 71,
+    "skipped": 1,
+    "warnings": 3,
+    "duration_sec": 16.75,
+    "skip_reason": "CUDA graph equivalence test: no CUDA device available to this execution environment.",
+    "warning": "Newton Model.contacts() deprecated; use CollisionPipeline.contacts().",
+    "limits": "Includes CPU Newton 1.6.1, numerical, localhost ROS and MCAP tests. Does not validate physical accuracy or GPU throughput."
+  },
+  "boundary_probe": {
+    "mesh": [
+      3,
+      3
+    ],
+    "ensemble_size": 16,
+    "seed": 7,
+    "grip_position_std_m": 0.01,
+    "initial_sag_m": 0.0,
+    "initial_position_std_m": 0.0,
+    "initial_velocity_std_mps": 0.0,
+    "factor": "Single depth-normal scalar at corner 0, z=1.05 m, variance=1e-6 m^2; nominal corner z=1 m.",
+    "mean_corner_shifts_m": [
+      0.04987565890003841,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "max_member_corner_shift_m": 0.07401089716359215,
+    "interpretation": "Actual assimilate() does not preserve sampled prescribed corner positions. This diagnoses a boundary contract ambiguity; it does not isolate the cause of historical teleop failures."
+  },
+  "external_sources": {
+    "comparison": {
+      "path": "/media/taha/ExtermeLinux/oarbot_simulation/logs/sim_cell/performance_review_final/comparison.json",
+      "sha256": "3c2c85bc8ce76fb4f375566417ea2a7a6095e6a6c9d008bcc1a07681dcf70c95"
+    },
+    "performance_review": {
+      "path": "/media/taha/ExtermeLinux/oarbot_simulation/PERFORMANCE_REVIEW.md",
+      "sha256": "02496e506fd71748403b23cce4313ad6f61e808307e94ac4f7044134c024be71"
+    },
+    "sim_cell": {
+      "path": "/media/taha/ExtermeLinux/oarbot_simulation/SIM_CELL.md",
+      "sha256": "05144c1fa9f254cf12afc5818fc4b93016f0f6cb2bb37ec4d022d6dd2fee8851"
+    },
+    "newton_style3d_kernels": {
+      "path": "/home/taha/venvs/fabric_ros/lib/python3.12/site-packages/newton/_src/solvers/style3d/kernels.py",
+      "sha256": "8cd4591a8a6cfa8a4098aad5d57793cce946db47eecf436adf86b701d2f63f1f"
+    },
+    "newton_style3d_solver": {
+      "path": "/home/taha/venvs/fabric_ros/lib/python3.12/site-packages/newton/_src/solvers/style3d/solver_style3d.py",
+      "sha256": "c5238ae0ca8901dfbec80d862319d7b540624922a5fca965398b5dd2709fe295"
+    },
+    "newton_xpbd_solver": {
+      "path": "/home/taha/venvs/fabric_ros/lib/python3.12/site-packages/newton/_src/solvers/xpbd/solver_xpbd.py",
+      "sha256": "e00f36bb590e33d76efa03ca9690d09ea63a2590d11372fda9ebf982dafa76c9"
+    }
+  },
+  "runs": {
+    "fast_gloves": {
+      "metrics_path": "/media/taha/ExtermeLinux/oarbot_simulation/logs/sim_cell/final_baseline/fast/eval/metrics.json",
+      "metrics_sha256": "fb551f4752e8484eeb2fcfc866b87c21eeed1ecbadc4ceeccb399188f52f5559",
+      "existing_artifact_not_rerun": true,
+      "plant_validation_marker_present": true,
+      "plant_exit_0_present": true,
+      "analysis_attached": {
+        "states": 97,
+        "all": {
+          "count": 6208,
+          "p50_m": 0.0091423045760613,
+          "p95_m": 0.023832384409560096,
+          "max_m": 0.14252888688728985
+        },
+        "observed": {
+          "count": 6208,
+          "p50_m": 0.0091423045760613,
+          "p95_m": 0.023832384409560096,
+          "max_m": 0.14252888688728985
+        },
+        "inferred": null,
+        "stale": null,
+        "position_95_percent_coverage": 0.9832474226804123,
+        "per_state_p95_m": {
+          "median": 0.017237506265091344,
+          "worst": 0.056772527178376817
+        },
+        "grip_error_m": {
+          "blue": 0.011687800062144984,
+          "silver": 0.012165305083442584,
+          "human_left": 0.08707189544792736,
+          "human_right": 0.062253678862826206
+        },
+        "hand_error_m": {
+          "human_left": {
+            "count": 38,
+            "p50_m": 0.0016442694261188117,
+            "p95_m": 0.00292658827950179,
+            "max_m": 0.0036106416815219226
+          },
+          "human_right": {
+            "count": 27,
+            "p50_m": 0.002260190507569262,
+            "p95_m": 0.0037861537784264817,
+            "max_m": 0.00404696747995224
+          }
+        },
+        "degraded_fraction": 0.1958762886597938,
+        "capture_to_receipt_sim_s": {
+          "p50": 0.05,
+          "p95": 0.3033333331999998
+        }
+      },
+      "performance_summary": {
+        "validated": true,
+        "frame_ms": 30.102850493681586,
+        "real_time_factor": 0.5536574242417642,
+        "analyses": 97,
+        "max_gap_sec": 1.8000000000000007,
+        "fraction_diagnostics_in_monitor": 0.0
+      }
+    },
+    "monitor_fine_gloves": {
+      "metrics_path": "/media/taha/ExtermeLinux/oarbot_simulation/logs/sim_cell/monitor_final_gloves_v2/monitor/eval/metrics.json",
+      "metrics_sha256": "c66394775628c0e2f4690e99cfb16736ab2f8759e888e631c82fec1905e7da8d",
+      "existing_artifact_not_rerun": true,
+      "plant_validation_marker_present": true,
+      "plant_exit_0_present": true,
+      "analysis_attached": {
+        "states": 33,
+        "all": {
+          "count": 2112,
+          "p50_m": 0.009281867025674899,
+          "p95_m": 0.030372905366482097,
+          "max_m": 0.11323521629429267
+        },
+        "observed": {
+          "count": 2112,
+          "p50_m": 0.009281867025674899,
+          "p95_m": 0.030372905366482097,
+          "max_m": 0.11323521629429267
+        },
+        "inferred": null,
+        "stale": null,
+        "position_95_percent_coverage": 0.9611742424242424,
+        "per_state_p95_m": {
+          "median": 0.021967887750841974,
+          "worst": 0.06501728851773213
+        },
+        "grip_error_m": {
+          "blue": 0.012858343179835701,
+          "silver": 0.012893403301549854,
+          "human_left": 0.094547141059315,
+          "human_right": 0.056603745613468266
+        },
+        "hand_error_m": {
+          "human_left": {
+            "count": 38,
+            "p50_m": 0.0018811488730083009,
+            "p95_m": 0.002657542359741035,
+            "max_m": 0.004189915448320031
+          },
+          "human_right": {
+            "count": 22,
+            "p50_m": 0.0033995560779691908,
+            "p95_m": 0.005296494251739529,
+            "max_m": 0.006221817008444011
+          }
+        },
+        "degraded_fraction": 0.30303030303030304,
+        "capture_to_receipt_sim_s": {
+          "p50": 0.05,
+          "p95": 0.216666667
+        }
+      },
+      "performance_summary": {
+        "validated": true,
+        "frame_ms": 25.93276527116416,
+        "real_time_factor": 0.6426875997369669,
+        "analyses": 33,
+        "max_gap_sec": 1.799999999999999,
+        "fraction_diagnostics_in_monitor": 0.0
+      }
+    },
+    "lean_gloves": {
+      "metrics_path": "/media/taha/ExtermeLinux/oarbot_simulation/logs/sim_cell/lean_final_gloves/gloves/eval/metrics.json",
+      "metrics_sha256": "1868cd945c0fa986db8331ba8f4b5876403ea27cb6613e94bbfda99e7a7a8e84",
+      "existing_artifact_not_rerun": true,
+      "plant_validation_marker_present": true,
+      "plant_exit_0_present": true,
+      "analysis_attached": {
+        "states": 40,
+        "all": {
+          "count": 2560,
+          "p50_m": 0.008276297883313702,
+          "p95_m": 0.03549912541771897,
+          "max_m": 0.1534369732195525
+        },
+        "observed": {
+          "count": 2560,
+          "p50_m": 0.008276297883313702,
+          "p95_m": 0.03549912541771897,
+          "max_m": 0.1534369732195525
+        },
+        "inferred": null,
+        "stale": null,
+        "position_95_percent_coverage": 0.943359375,
+        "per_state_p95_m": {
+          "median": 0.02813599588323513,
+          "worst": 0.06588584741732345
+        },
+        "grip_error_m": {
+          "blue": 0.01346602994835547,
+          "silver": 0.011521358044391217,
+          "human_left": 0.09382893288094399,
+          "human_right": 0.0591549522097033
+        },
+        "hand_error_m": {
+          "human_left": {
+            "count": 41,
+            "p50_m": 0.0019428255042145475,
+            "p95_m": 0.003124207395528594,
+            "max_m": 0.004139497455310006
+          },
+          "human_right": {
+            "count": 29,
+            "p50_m": 0.0024617785132044693,
+            "p95_m": 0.004362214973888468,
+            "max_m": 0.004943208968540003
+          }
+        },
+        "degraded_fraction": 0.2,
+        "capture_to_receipt_sim_s": {
+          "p50": 0.083333333,
+          "p95": 0.23416666634999997
+        }
+      },
+      "performance_summary": {
+        "validated": true,
+        "frame_ms": 16.11740521166867,
+        "real_time_factor": 1.0340787768120605,
+        "analyses": 40,
+        "max_gap_sec": 0.6000000000000014,
+        "fraction_diagnostics_in_monitor": 0.0
+      }
+    },
+    "lean_oracle": {
+      "metrics_path": "/media/taha/ExtermeLinux/oarbot_simulation/logs/sim_cell/lean_inner3_oracle/eval/metrics.json",
+      "metrics_sha256": "77502405e3e5c38f37697bb61896631f3b465c8f207c2f2e51ff6bf72ef816bb",
+      "existing_artifact_not_rerun": true,
+      "plant_validation_marker_present": true,
+      "plant_exit_0_present": true,
+      "analysis_attached": {
+        "states": 22,
+        "all": {
+          "count": 1408,
+          "p50_m": 0.002958187029328923,
+          "p95_m": 0.009498739188205188,
+          "max_m": 0.03957917323320995
+        },
+        "observed": {
+          "count": 1408,
+          "p50_m": 0.002958187029328923,
+          "p95_m": 0.009498739188205188,
+          "max_m": 0.03957917323320995
+        },
+        "inferred": null,
+        "stale": null,
+        "position_95_percent_coverage": 1.0,
+        "per_state_p95_m": {
+          "median": 0.0072600555201486955,
+          "worst": 0.030971317948826464
+        },
+        "grip_error_m": {
+          "blue": 0.008258476978524146,
+          "silver": 0.007136987445313104,
+          "human_left": 0.006530741057238789,
+          "human_right": 0.0034877065632682044
+        },
+        "hand_error_m": {
+          "human_left": {
+            "count": 128,
+            "p50_m": 0.0,
+            "p95_m": 0.0,
+            "max_m": 0.0
+          },
+          "human_right": {
+            "count": 128,
+            "p50_m": 0.0,
+            "p95_m": 0.0,
+            "max_m": 0.0
+          }
+        },
+        "degraded_fraction": 0.045454545454545456,
+        "capture_to_receipt_sim_s": {
+          "p50": 0.083333333,
+          "p95": 0.166666667
+        }
+      },
+      "performance_summary": {
+        "validated": true,
+        "frame_ms": 15.35517659998371,
+        "real_time_factor": 1.085410288715556,
+        "analyses": 22,
+        "max_gap_sec": 1.0,
+        "fraction_diagnostics_in_monitor": 0.6111111111111112
+      }
+    },
+    "teleop_222046": {
+      "metrics_path": "/media/taha/ExtermeLinux/oarbot_simulation/logs/sim_cell/teleop_20261108_222046/gloves/eval/metrics.json",
+      "metrics_sha256": "67983093841bc77dc214aa40485771633da00597ef40f03d0d02dbddfacb33df",
+      "existing_artifact_not_rerun": true,
+      "plant_validation_marker_present": true,
+      "plant_exit_0_present": true,
+      "analysis_attached": {
+        "states": 651,
+        "all": {
+          "count": 41664,
+          "p50_m": 0.012771544565786268,
+          "p95_m": 0.05349567544672388,
+          "max_m": 0.2690030772587882
+        },
+        "observed": {
+          "count": 41625,
+          "p50_m": 0.012761825984333881,
+          "p95_m": 0.053129527786718346,
+          "max_m": 0.2690030772587882
+        },
+        "inferred": {
+          "count": 37,
+          "p50_m": 0.08163186403876012,
+          "p95_m": 0.11510999657867725,
+          "max_m": 0.1204081537977654
+        },
+        "stale": {
+          "count": 2,
+          "p50_m": 0.07858990907513748,
+          "p95_m": 0.10405866380520354,
+          "max_m": 0.10688852544187755
+        },
+        "position_95_percent_coverage": 0.753864247311828,
+        "per_state_p95_m": {
+          "median": 0.046572116442221416,
+          "worst": 0.15793344410851623
+        },
+        "grip_error_m": {
+          "blue": 0.014875759853704644,
+          "silver": 0.013933619461651996,
+          "human_left": 0.11060458530055245,
+          "human_right": 0.12161471203705145
+        },
+        "hand_error_m": {
+          "human_left": {
+            "count": 212,
+            "p50_m": 0.001635519060677935,
+            "p95_m": 0.0029257415096430295,
+            "max_m": 0.015335933110836062
+          },
+          "human_right": {
+            "count": 192,
+            "p50_m": 0.0016904192855794983,
+            "p95_m": 0.003922413380463731,
+            "max_m": 0.004974854073809567
+          }
+        },
+        "degraded_fraction": 0.19047619047619047,
+        "capture_to_receipt_sim_s": {
+          "p50": 0.05,
+          "p95": 0.316666666
+        }
+      }
+    },
+    "teleop_223543": {
+      "metrics_path": "/media/taha/ExtermeLinux/oarbot_simulation/logs/sim_cell/teleop_20261108_223543/gloves/eval/metrics.json",
+      "metrics_sha256": "116392c8bd1832db8f5cde62cf195c9458c0bbdba0ce0e6395e42a8c18ceb2d1",
+      "existing_artifact_not_rerun": true,
+      "plant_validation_marker_present": true,
+      "plant_exit_0_present": true,
+      "analysis_attached": {
+        "states": 667,
+        "all": {
+          "count": 42688,
+          "p50_m": 0.018732064813509294,
+          "p95_m": 0.07956334495556006,
+          "max_m": 0.306510045349832
+        },
+        "observed": {
+          "count": 42626,
+          "p50_m": 0.018710773896617433,
+          "p95_m": 0.07942171582929386,
+          "max_m": 0.306510045349832
+        },
+        "inferred": {
+          "count": 18,
+          "p50_m": 0.08327130082650144,
+          "p95_m": 0.12944713645342756,
+          "max_m": 0.15302178167586716
+        },
+        "stale": {
+          "count": 44,
+          "p50_m": 0.04849165393783982,
+          "p95_m": 0.07169715291932292,
+          "max_m": 0.08504002227209576
+        },
+        "position_95_percent_coverage": 0.545516304347826,
+        "per_state_p95_m": {
+          "median": 0.056498464765353834,
+          "worst": 0.17799834998054506
+        },
+        "grip_error_m": {
+          "blue": 0.01914575099115845,
+          "silver": 0.019245640926028918,
+          "human_left": 0.09576208770878568,
+          "human_right": 0.2200593837651072
+        },
+        "hand_error_m": {
+          "human_left": {
+            "count": 227,
+            "p50_m": 0.0016791106845746291,
+            "p95_m": 0.002300477025214473,
+            "max_m": 0.003729085604835529
+          },
+          "human_right": {
+            "count": 273,
+            "p50_m": 0.00146958362930492,
+            "p95_m": 0.003805103585426397,
+            "max_m": 0.054494688386938245
+          }
+        },
+        "degraded_fraction": 0.1469265367316342,
+        "capture_to_receipt_sim_s": {
+          "p50": 0.05,
+          "p95": 0.3
+        }
+      }
+    },
+    "teleop_223917": {
+      "metrics_path": "/media/taha/ExtermeLinux/oarbot_simulation/logs/sim_cell/teleop_20261108_223917/gloves/eval/metrics.json",
+      "metrics_sha256": "bd464ce7b3d323718adcbd2e5ffb887a34473f660433b5d91461c731c91b15f3",
+      "existing_artifact_not_rerun": true,
+      "plant_validation_marker_present": true,
+      "plant_exit_0_present": true,
+      "analysis_attached": {
+        "states": 381,
+        "all": {
+          "count": 24384,
+          "p50_m": 0.015876586651708866,
+          "p95_m": 0.07439453642574681,
+          "max_m": 0.37898073447110653
+        },
+        "observed": {
+          "count": 24254,
+          "p50_m": 0.01580970208187905,
+          "p95_m": 0.0711256205567304,
+          "max_m": 0.37898073447110653
+        },
+        "inferred": {
+          "count": 130,
+          "p50_m": 0.10768070899645957,
+          "p95_m": 0.166023640680487,
+          "max_m": 0.24698312874632977
+        },
+        "stale": null,
+        "position_95_percent_coverage": 0.6696604330708661,
+        "per_state_p95_m": {
+          "median": 0.05088698444940233,
+          "worst": 0.2189272926681324
+        },
+        "grip_error_m": {
+          "blue": 0.0162134929995539,
+          "silver": 0.015131827910699076,
+          "human_left": 0.10182668606375173,
+          "human_right": 0.13778120440755864
+        },
+        "hand_error_m": {
+          "human_left": {
+            "count": 112,
+            "p50_m": 0.0014673211762365299,
+            "p95_m": 0.0027425141589383956,
+            "max_m": 0.0038866965444446368
+          },
+          "human_right": {
+            "count": 277,
+            "p50_m": 0.00159541467320946,
+            "p95_m": 0.004054995752161344,
+            "max_m": 0.007017746058106654
+          }
+        },
+        "degraded_fraction": 0.30183727034120733,
+        "capture_to_receipt_sim_s": {
+          "p50": 0.05,
+          "p95": 0.35
+        }
+      }
+    }
+  },
+  "second_pass": {
+    "date": "2026-11-10",
+    "repository_head": "b7821acce0e6ddbde252092c5f3fa251d66f7f13",
+    "fresh_tests": {
+      "passed": 72,
+      "skipped": 0,
+      "warnings": 5,
+      "duration_sec": 18.08,
+      "gpu": "NVIDIA GeForce RTX 5070 Laptop GPU",
+      "note": "Same command as fresh_tests, basetemp/caches in a session scratch directory; CUDA-graph equivalence test ran and passed."
+    },
+    "boundary_probe_reproduced": {
+      "mean_corner_shifts_m": [
+        0.04987566,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "frozen_grip_noise_probe": {
+      "description": "EnsembleObserver.corner_noise drawn once in __init__ (seed 7), reused for every prediction and reinitialization; not centred. Values in units of the grip standard deviation.",
+      "ensemble_16": {
+        "per_corner_mean_norm": [
+          0.399,
+          0.471,
+          0.463,
+          0.35
+        ],
+        "mean_per_axis_sample_std": 0.848
+      },
+      "ensemble_32": {
+        "per_corner_mean_norm": [
+          0.182,
+          0.239,
+          0.289,
+          0.271
+        ],
+        "mean_per_axis_sample_std": 0.927
+      }
+    },
+    "omitted_propagation_noise": {
+      "description": "Position std per axis omitted by grips_at() extrapolation p+tau*v without process noise, under HandFilter white-jerk model sigma_j=3 m/s^3: sigma_j*sqrt(tau^5/20).",
+      "jerk_stddev_mps3": 3.0,
+      "std_m_by_tau_s": {
+        "0.1": 0.0021,
+        "0.2": 0.012,
+        "0.3": 0.0331,
+        "0.45": 0.0911
+      },
+      "fast_and_monitor_hand_max_age_sec": 0.45
+    },
+    "corner_vs_hand_p95_m": {
+      "description": "From runs.*.analysis_attached: grip_error_m is estimated fabric-corner vertex p95; hand_error_m is hand-state p95 at its own stamp.",
+      "lean_oracle": {
+        "human_corners": [
+          0.0065,
+          0.0035
+        ],
+        "robot_corners": [
+          0.0083,
+          0.0071
+        ]
+      },
+      "lean_gloves": {
+        "human_corners": [
+          0.0938,
+          0.0592
+        ],
+        "robot_corners": [
+          0.0135,
+          0.0115
+        ],
+        "hand_states": [
+          0.0031,
+          0.0044
+        ]
+      },
+      "teleop_range": {
+        "human_corners": [
+          0.0958,
+          0.2201
+        ],
+        "hand_states": [
+          0.0023,
+          0.0041
+        ]
+      }
+    },
+    "newton_releases_after_1_6_1": {
+      "v1.7.0": "2026-10-14",
+      "v1.8.0rc2": "2026-11-10"
+    },
+    "citation_check": "All arXiv identifiers in the progress and learning reports resolved to the described papers; added DOIs resolved via Crossref."
+  }
+}

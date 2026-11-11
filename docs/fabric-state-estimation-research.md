@@ -1,5 +1,7 @@
 > Repository findings below were first written against the pre-hardening snapshot (`a6eb6fa`) and are annotated with the post-hardening status reported in [the platform audit](platform-audit.md). That audit holds the authoritative list of fixes, changed interfaces, and hardware acceptance gates.
 
+> For implementation progress after this proposal, current evidence, and a critical review of the plan, see the [10 November 2026 progress report](fabric-state-estimation-progress-report.md).
+
 **Dry woven carbon-fiber state estimation for OARbot Blue and Silver**
 
 Research and implementation proposal. First version 3 November 2026; **revised 4 November 2026** after a second literature review that deliberately challenged the first recommendation.

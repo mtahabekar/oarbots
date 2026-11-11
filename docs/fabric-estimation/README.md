@@ -6,6 +6,8 @@ Start with the [software walkthrough](usage.md), then follow the [hardware commi
 
 | Document | Contents |
 |---|---|
+| [Progress report and technical review](../fabric-state-estimation-progress-report.md) | 10 November source audit, measured simulation limitations, theory, implementation challenges, alternatives and staged next steps |
+| [Learning methods report](../fabric-learning-methods-report.md) | Data/labels, architectures, losses, training/tuning, uncertainty, deployment and validation across perception, contact, dynamics, identification and control |
 | [Implementation](implementation.md) | Modules, algorithms, units, covariance, observation association, ROS and recording contracts |
 | [Usage](usage.md) | Installation, complete synthetic example, replay, offline fitting, output inspection, configuration |
 | [Real hardware](hardware.md) | Sheet measurements, corner mapping, camera/TF/TCP/glove calibration, synchronization, force calibration, capture and validation |
