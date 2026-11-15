@@ -43,7 +43,7 @@ class FabricCbfBridge(Node):
         # H3): Silver's arm base is mounted 180 degrees about Z relative to its chassis.
         self.command_frame = param('command_frame', prefix+'/j2n6s300_link_base')
         self.tool_frame = param('tool_frame', prefix+'/fabric_grip')
-        self.bridge = CbfBridge(param('max_speed_mps', .1), param('command_timeout_sec', .1), param('force_limit_n', 15.),
+        self.bridge = CbfBridge(param('max_speed_mps', .1), param('command_timeout_sec', .1), param('force_limit_n', 6.),
                                 param('force_timeout_sec', .25), param('workspace_min', [-10., -10., -10.]),
                                 param('workspace_max', [10., 10., 10.]), param('pose_timeout_sec', .25))
         self.tf = Buffer(); self.listener = TransformListener(self.tf, self)

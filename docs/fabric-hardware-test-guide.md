@@ -47,8 +47,11 @@ Plant with gloves seen at 15 Hz as on the real cell. The human hands carry the s
 | Run | True clearance from the obstacle capsule | True clearance from the box | Twin error vs true sheet (p50 / p95) |
 | --- | --- | --- | --- |
 | No filter | **−5.9 cm** (sheet touches the box) | 0.0 cm | 2.3 / 17.3 mm |
-| Twin CBF, 5 cm margin | 4.3 cm | 8.0 cm | 6.3 / 20.4 mm |
-| Twin CBF, 8 cm margin, after warm-up calibration | **5.7 cm** | 10.4 cm | 3.9 / 17.3 mm |
+| Twin CBF, 5 cm margin (superseded) | 4.3 cm | 8.0 cm | 6.3 / 20.4 mm |
+| Twin CBF, 8 cm margin, after warm-up calibration (superseded) | 5.7 cm | 10.4 cm | 3.9 / 17.3 mm |
+| **Current settings** (stretch guard, clearance-only CBF, 4 cm margin) | 3.9 cm | **8.2 cm** | 4.4 / 20.8 mm |
+
+The first three runs used CBF settings that stretched the sheet to hold clearance; §3 explains why they were replaced.
 
 The live estimator in these runs: p50 4–8 mm, p95 15–26 mm, coverage 0.95–0.97.
 
@@ -63,16 +66,84 @@ The plant was given different coefficients (bending ×3, shear ×0.4). The robot
 
 Headless, with the same mesh on both sides, the fit recovered (3.0, 0.4) as (3.36, 0.42) and (0.5, 2.0) as (0.42, 1.68).
 
-## 3. Problems found that you should know about
+## 3. Tension: what limits it, and how it is controlled
 
-- **Tension is the weak point.** The plant's true grip tension reached 60–70 N during the carry, against a 20 N policy limit, and the twin's CBF reported its tension and strain limits relaxed on about three quarters of its updates. A sheet held exactly to its width turns every centimetre of following lag into tens of newtons; the first rehearsal stretched the true sheet by 17 mm. The node now keeps 4 cm of slack toward the hands and 2 cm sideways, which reduced it but did not remove it. On hardware, **the wrist-force stop in the bridge is the only real tension protection**; set its limit conservatively and keep the sheet visibly slack.
+**The 20 N limit had no basis and is gone.** It was the default of the simulator's CBF. Two problems:
+
+- **The value itself.** Nothing about this cell supports 20 N.
+- **The quantity behind it.** The tension was predicted by the twin's sheet model, from a stretch stiffness that is uncalibrated and that the warm-up cannot identify (a taut sheet's shape does not depend on it).
+
+**What happened with it.** In rehearsal the CBF learned a safety margin on tension from its own prediction errors. That margin grew to 28–30 N, larger than the limit, so the tension rows were infeasible and relaxed on most updates. The cause is that the twin's robot corners follow the measured arms, which lag the commands, and near tautness 1 mm of error is about 90 N in the model. The CBF then kept obstacle clearance by spreading and raising the robots until the sheet was taut. Robot-to-robot distance reached 0.83–0.85 m on a 0.84 m sheet, and the true grip pull reached 60 N.
+
+### 3.1 What actually limits the pull at a grip
+
+| Limit | Estimate | Basis | Status |
+| --- | --- | --- | --- |
+| Arm payload margin | roughly 3–6 N per arm | Kinova rates the Jaco2 6-DOF 1.6 kg continuous at mid-range and 1.3 kg at full reach ([product page](https://assistive.kinovarobotics.com/product/jaco-robotic-arm), [2018 specification sheet](https://brussels.autonomia.org/pdf/docs/605/KINO-2018-TechSpecs-07-Jaco6DS-EN-Web.pdf)). In the robot model, joint 6 carries the 0.99 kg stock hand plus 0.95 kg added by this cell: wrist sensor stack 0.26 kg, camera bracket and connectors 0.25 kg, Azure camera 0.44 kg. | Datasheet plus model, assuming the rating is beyond the stock hand. **Measure it.** |
+| Robot grip slip on dry carbon | unknown | Depends on finger force, finger material and the ply. No published value found for the KG-3 on dry carbon. | **Measure it.** |
+| What the person holds comfortably | probably 10 N or less | Tip-pinch strength is about 70–110 N maximum in adults ([Mathiowetz et al. 1985](https://pubmed.ncbi.nlm.nih.gov/3970660/)). A sustained comfortable fraction is far lower; my estimate, not a sourced figure. | **Ask and measure.** |
+| Fibre damage | not the limit | Dry tows are strong in tension. The risk is distortion: pre-tension must run along the fibres, because off-axis pulls distort woven fabric ([review of automated ply handling](https://www.tandfonline.com/doi/full/10.1080/20550340.2020.1750329)). | Protected by geometry, not a force number. |
+
+The literature on human-robot sheet co-manipulation does not use a fixed tension limit. It either regulates a small measured tension with force control ([Kruse et al., ICRA 2015](https://sites.ecse.rpi.edu/~rjradke/papers/kruse-icra15.pdf), from this lab) or keeps the grips slightly closer than the ply's length ([Ojanen et al. 2026](https://arxiv.org/abs/2606.11818)).
+
+### 3.2 The approach now
+
+1. **Geometry first: the stretch guard** (`fabric_twin/stretch.py`, `stretch_guard` in `twin.yaml`). Every grip pair through a robot stays at least 3 cm shorter than the sheet between them: the two robot-to-hand edges, the robot-to-robot edge, and the two diagonals. It uses only measured positions (robot TF and the glove filter) and runs after the CBF, with priority over clearance. In this slack regime the pull at a grip is set by the sheet's weight and motion, not by the unknown stretch stiffness. The 3 cm must exceed the grip position error plus arm speed × latency; recompute it from the measured errors.
+2. **The CBF does clearance only** (`fabric_twin/config/cbf.json`). Tension and strain rows are removed; the strain limits (2% stretch, 0.2 shear cosine) had no basis either and added nothing measurable once the guard was in place. Arm acceleration is limited to 0.4 m/s² instead of 3 m/s², close to the 0.3 m/s² the CBF assumes for the human. Abrupt clearance corrections were the main source of the remaining pull peaks: at 1 m/s² the p95 pull doubled.
+3. **The clearance margin is derived**, not inherited: 4 cm, which is the twin's error against the real sheet (about 2 cm p95) plus 0.1 m/s × 0.15 s. The capsule envelope already lies 7.3 cm above the box top at its centre.
+4. **The measured wrist force is the backstop.** It has two thresholds, both to be set from the measured capacities in §3.1:
+   - `force_soft_n` in the guard: the robot yields along the cloth's pull. Off until gates H5/H6 pass. Placeholder 3 N.
+   - `force_limit_n` in the bridge: the arm stops. Placeholder 6 N, the upper end of the estimated arm margin.
+
+   A suggested rule: stop at the smallest of the arm margin, half the robot grip slip force, and what the person holds comfortably; yield at half of that.
+
+### 3.3 Results
+
+| Run (same carry, hands to 0.5 m) | Robot-grip pull p50 / p95 / p99 / max | Hand-grip pull p95 / max | Robot grips above 6 N | Clearance from box |
+| --- | --- | --- | --- | --- |
+| Before: CBF with 20 N tension and strain rows, no guard | 4.2 / 23.4 / 36.9 / 60.2 N | 15.1 / 48.6 N | 36% of the time | 8.0 cm |
+| **Now:** guard, clearance-only CBF, 0.4 m/s², 4 cm margin | 2.5 / 6.9 / 12.9 / 23.5 N | 4.4 / 30.0 N | 7% | 8.2 cm |
+| No CBF (sheet touches the obstacle) | 1.3 / 3.9 / 4.7 / 6.3 N | 3.2 / 5.0 N | 0% | 0.0 cm |
+| Now, plus force yielding above 3 N (two-way grip forces, simulated wrist sensors) | 2.5 / 7.2 / 11.6 / 13.1 N | 5.8 / 13.5 N | 8% | 7.9 cm |
+
+These are Isaac runs, with the true pull computed from the plant's own 57×57 cloth mechanics, independent of the twin's 29×29 mesh. They use the simulator's uncalibrated material and a 0.14 kg sheet. Read them as comparisons, not as hardware forces. Single-frame maxima are unreliable in the slack regime: a crumpling corner gives one-frame spikes, for example 4 → 105 → 22 N within 0.1 s in a headless run, while every grip distance was shrinking.
+
+The force-yield run also checks the hardware force path end to end: simulated wrist sensor, compensator, rotation into the world at the sample time, and the sign convention (`force_on_robot_sign: +1`). The sensors read 2.3 N median and 6.7 N p95 of cloth pull on each robot, close to the plant's mechanics. Yielding cut the single-frame peaks (13 N against 23.5 N) but not the p95, in one run each.
+
+Most of the remaining time above 6 N happens when the guard has no fresh hand measurement and stops the robots while the hands keep moving. The CBF needed no hard-row relaxation on any update (472 feasible, 171 soft-relaxed for clearance).
+
+**Hand height is the lever.** Headless, with the current settings:
+
+| Hands lowered to | Robot-grip pull p95 | Box clearance | What the CBF does |
+| --- | --- | --- | --- |
+| 0.65 m | 2.8 N | 16 cm | nothing; the sheet clears on its own |
+| 0.60 m | 2.8 N | 11 cm | nothing; the 4 cm margin is already met |
+| 0.55 m | 4.3 N | 10 cm | changes the command on 52% of updates; cannot hold the full margin on 28% |
+| 0.50 m | 4.1 N | 8 cm | 57%; 32% |
+
+Repeated headless runs vary by about 2 N in p95, so 0.55 m and 0.50 m are not distinguishable.
+
+Holding the sheet clear costs pull, and the lower the hands go over the obstacle, the more it costs. For the demo, the person should go low enough that the CBF visibly acts, and no lower than the measured force limit allows.
+
+### 3.4 What to measure on site
+
+1. **Sheet mass.** Weigh it; this sets the static pull.
+2. **Arm margin.** At the grasp pose, with the full tool, hang known masses (0.2, 0.4, 0.6 kg) from the grip, then pull horizontally toward the person with a spring scale. Watch the arm's joint efforts against Kinova's actuator ratings and the position hold. Take the force where the arm still holds with margin.
+3. **Robot grip slip.** Close the fingers on a corner as in the demo and pull the sheet along the edge and along the diagonal while recording the wrist force. The slip force is the peak before the corner slides; repeat five times.
+4. **The person.** Hold a corner with the tagged glove for two minutes at increasing pulls; note the comfortable level and the slip level.
+5. **Grip position error.** Robot grip calibration residual and glove tag-to-pinch error. These set the guard's slack.
+
+Then set `force_limit_n` (bridge), `force_soft_n` (guard, after H5/H6) and `edge_slack_m`/`diagonal_slack_m` from those numbers.
+
+## 4. Problems found that you should know about
+
+- **Glove dropouts stop the robots.** When a hand has not been seen for `hand_coast_sec` (1 s), the guard sends zero. Commands were zero on 5–9% of updates in the latest rehearsals. While the hands keep moving, that is also the main source of the remaining pull peaks. The cause is glove visibility, not the controller.
 - **The twin does not run at 60 Hz beside Isaac.** Frame time was 16 ms median and 30 ms p95 with Isaac, the estimator and the twin on one 8 GB GPU; alone it is 6.5 ms. The real cell has no Isaac, but the estimator shares the GPU, so measure it there (gate H12).
-- **A slack sheet is not predictable from coefficients alone.** Two identical simulations of a sheet with 6 cm of slack drift 20 mm apart in 10 s. With 3 cm they stay within 0.05 mm. Keep warm-up insets small (2–4 cm), which is why the defaults changed from the plan's 3/6/9 cm.
+- **A slack sheet is not predictable from coefficients alone.** Two identical simulations of a sheet with 6 cm of slack drift 20 mm apart in 10 s; with 3 cm they stay within 0.05 mm. Keep warm-up insets small (2–4 cm), which is why the defaults changed from the plan's 3/6/9 cm.
 - **Feedback narrows a model error but does not close it.** With coefficients wrong by ×3 and ×0.4 on a slack sheet, the corrective force brought the twin from 77 mm to 59 mm of error. Calibration is what removes it.
-- **Online adaptation is unproven live.** `Bank.adapt` is tested headless (it moves toward the better coefficient and refuses to act on a taut sheet). It has not been run in the live loop; it is off by default in the simulated-cell launch and set to every 10 s in `fabric_cell`. Decide after watching it in a shadow session.
-- **`grip measurement is missing` appeared on 5–13% of CBF updates** in the live runs, each of which sends zero to the robots. I did not find out whether the cause is glove dropouts or TF timing.
+- **Online adaptation is unproven live.** `Bank.adapt` is tested headless: it moves toward the better coefficient and refuses to act on a taut sheet. It has not run in the live loop. It is off by default in the simulated-cell launch and set to every 10 s in `fabric_cell`. Decide after watching it in a shadow session.
 
-## 4. Running it
+## 5. Running it
 
 Build with the environment that has Newton 1.6.1 (`~/venvs/fabric_ros`):
 
@@ -119,7 +190,7 @@ Operating the twin:
 
 The obstacle is the `obstacle` section of `twin.yaml` (centre, half extents, yaw in the world frame). The twin sends zero whenever a grip measurement is missing, the estimator is stale, the CBF fails, or the simulated sheet touches the obstacle.
 
-## 5. What is left for you, in order
+## 6. What is left for you, in order
 
 1. **On this laptop (needs `sudo`):** install `ros-jazzy-rmw-cyclonedds-cpp` and `chrony`; attach a USB Ethernet adapter and put its interface name in a copy of `config/cyclonedds_wired.xml`.
 2. **On the helpers:** build `oarbot_runtime` and `tablet_gui` with the new guard mode, bridge and GUI toggle. Neither could be built or run here (no `kinova_msgs`, no PySide6). Rebuild `fabric_state_msgs` everywhere: `HandState` changed.
@@ -127,6 +198,6 @@ The obstacle is the `obstacle` section of `twin.yaml` (centre, half extents, yaw
 4. **Hardware gates** from the plan (§5): carbon depth first, then H1–H3, H5, H7, H9, H12, H15. For H3, run the bridge with a 2 cm/s command along each world axis and confirm the arm moves that way; the Kinova command frame in `bridge.yaml` is an assumption.
 5. **Shadow sessions before any closed loop:** estimator alone, then twin with `commands:=false`, then warm-up, then closed loop without an obstacle.
 
-## 6. Changes outside this repository
+## 7. Changes outside this repository
 
 `/media/taha/ExtermeLinux/oarbot_simulation/scripts/run_oarbot_fabric.py` gained `--external-followers` and `--external-timeout` (the plant's robots take grip velocities from `/oarbot_{blue,silver}/fabric_cbf/cmd_world`). That checkout already had uncommitted changes of yours; mine are additive. Rehearsal outputs are under `logs/sim_cell/hwprep/` there (about 2 GB).

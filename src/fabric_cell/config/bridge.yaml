@@ -3,7 +3,12 @@ common:
   world_frame: world
   max_speed_mps: 0.1            # also limited by command_guard (0.1 m/s)
   command_timeout_sec: 0.1      # a command older than this by its own stamp is ignored
-  force_limit_n: 15.0           # stop if the wrist force moves this far from its value at arming
+  # Stop if the wrist force moves this far from its value at arming. PLACEHOLDER from the arm's
+  # estimated payload margin: Kinova rates the Jaco2 1.6 kg continuous at mid-range (1.3 kg at full
+  # reach); this cell adds about 0.95 kg beyond the stock hand (wrist sensor stack, camera bracket,
+  # Azure camera), leaving roughly 3-6 N. Replace with min(measured arm margin, half the measured
+  # grip slip force, what the person holds comfortably); see the test guide, "Tension".
+  force_limit_n: 6.0
   force_timeout_sec: 0.25
   pose_timeout_sec: 0.25
   # Tool positions (world, metres) the arm may occupy while following the twin. Set to the

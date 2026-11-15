@@ -42,7 +42,7 @@ class ParameterBankNode(Node):
     def __init__(self):
         super().__init__('fabric_parameter_bank')
         share = Path(get_package_share_directory('fabric_twin'))
-        self.spec, _, _, runtime, _ = load_twin_config(self.declare_parameter('config_file', str(share/'config'/'twin.yaml')).value)
+        self.spec, _, _, runtime, *_ = load_twin_config(self.declare_parameter('config_file', str(share/'config'/'twin.yaml')).value)
         estimator = self.declare_parameter('estimator_config', '').value
         topics = load_config(estimator)[3].observation_topics if estimator else [
             '/oarbot_blue/azure_kinect/fabric/observations', '/oarbot_silver/azure_kinect/fabric/observations', '/nuc/fabric/observations']

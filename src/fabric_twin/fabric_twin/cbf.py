@@ -6,6 +6,7 @@ capsule and stays inside the tension and strain limits, given the leader (human)
 velocities. The controller works in the twin frame; this wrapper converts to and from the world.
 """
 from dataclasses import replace
+from pathlib import Path
 import numpy as np
 
 from .vendor import use_capsule_cbf
@@ -16,6 +17,15 @@ from capsule_cbf.cloth_state import ClothState  # noqa: E402
 from capsule_cbf.reduced_cloth import ReducedCloth  # noqa: E402
 from capsule_cbf.sensitivity_cbf import SensitivityCbfController  # noqa: E402
 from capsule_cbf.settings import Settings, load_settings  # noqa: E402,F401
+
+
+def default_settings_path():
+    """This package's CBF settings (clearance rows only), from the source tree or the install."""
+    source = Path(__file__).resolve().parents[1]/'config'/'cbf.json'
+    if source.is_file():
+        return source
+    from ament_index_python.packages import get_package_share_directory
+    return Path(get_package_share_directory('fabric_twin'))/'config'/'cbf.json'
 
 
 class TwinCbf:
@@ -75,6 +85,20 @@ class TwinCbf:
         speed = np.linalg.norm(followers, axis=1, keepdims=True)  # the controller bounds each axis; the arm limit is a norm
         followers = followers*np.minimum(1., self.settings.max_speed/np.maximum(speed, 1e-12))
         return cloth.vector_to_world(followers), debug
+
+    def applied(self, followers_world, leader_velocity):
+        """Tell the controller which follower velocities were actually sent (world, (2, 3)).
+
+        A later layer (the stretch guard) may change the CBF's output. The controller's rate box,
+        command smoothing and prediction scoring must continue from what was sent, not from
+        what it proposed.
+        """
+        c = self.controller
+        followers = self.cloth.vector_to_twin(np.asarray(followers_world, float).reshape(2, 3))
+        c.u_prev = followers.copy()
+        last = c.frame-1
+        if last in c.history:
+            c.history[last] = np.concatenate((followers.ravel(), self.cloth.vector_to_twin(leader_velocity).ravel()))
 
     def clearance(self):
         """Smallest signed distance (m) from the sheet to the capsule."""

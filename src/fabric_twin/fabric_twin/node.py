@@ -21,7 +21,7 @@ import rclpy
 import yaml
 from ament_index_python.packages import get_package_share_directory
 from diagnostic_msgs.msg import DiagnosticArray, DiagnosticStatus, KeyValue
-from geometry_msgs.msg import Point, TwistStamped
+from geometry_msgs.msg import Point, TwistStamped, WrenchStamped
 from rclpy.node import Node
 from rclpy.qos import DurabilityPolicy, QoSProfile, qos_profile_sensor_data
 from rclpy.time import Time
@@ -33,10 +33,11 @@ from visualization_msgs.msg import Marker, MarkerArray
 from fabric_state_msgs.msg import FabricModel, FabricState, HandStates
 from human_hand_tracking.fusion import HandTrack
 
-from .cbf import TwinCbf, load_settings
+from .cbf import TwinCbf, default_settings_path, load_settings
 from .cloth import Obstacle, TwinCloth, TwinSpec
 from .feedback import FeedbackSpec, Nudger
 from .vendor import fabric_sim_root
+from .stretch import StretchGuard, StretchSpec
 from .warmup import WarmupScript
 
 LATCHED = QoSProfile(depth=1, durability=DurabilityPolicy.TRANSIENT_LOCAL)
@@ -51,7 +52,7 @@ def nanoseconds(stamp):
 def load_twin_config(path):
     """Plain structured YAML: sections `sheet`, `obstacle`, `feedback`, `cbf`, `runtime`, `warmup`."""
     value = yaml.safe_load(Path(path).read_text()) or {}
-    unknown = set(value)-{'sheet', 'obstacle', 'feedback', 'cbf', 'runtime', 'warmup'}
+    unknown = set(value)-{'sheet', 'obstacle', 'feedback', 'cbf', 'runtime', 'warmup', 'stretch_guard'}
     if unknown:
         raise ValueError(f'Unknown twin configuration sections: {sorted(unknown)}')
     sheet = dict(value.get('sheet', {}))
@@ -75,16 +76,27 @@ def load_twin_config(path):
     if unknown:
         raise ValueError(f'Unknown twin cbf settings: {sorted(unknown)}')
     cbf.update(value.get('cbf', {}))
+    stretch = dict(value.get('stretch_guard', {}))
+    forces = dict(topics=stretch.pop('force_topics', ['/oarbot_blue/force_torque_calibrated',
+                                                       '/oarbot_silver/force_torque_calibrated']),
+                  sign=float(stretch.pop('force_on_robot_sign', 1.)))
+    if forces['sign'] not in (-1., 1.) or len(forces['topics']) != 2:
+        raise ValueError('stretch.force_on_robot_sign must be +1 or -1, with two force topics')
     return (TwinSpec(obstacle=obstacle, **sheet), FeedbackSpec(**value.get('feedback', {})), cbf, runtime,
-            dict(value.get('warmup', {})))
+            dict(value.get('warmup', {})), StretchSpec(**stretch), forces)
 
 
 class FabricTwinNode(Node):
     def __init__(self):
         super().__init__('fabric_twin')
         default = str(Path(get_package_share_directory('fabric_twin'))/'config'/'twin.yaml')
-        self.spec, self.feedback_spec, self.cbf_options, self.runtime, warmup = load_twin_config(
-            self.declare_parameter('config_file', default).value)
+        (self.spec, self.feedback_spec, self.cbf_options, self.runtime, warmup, stretch,
+         self.force_options) = load_twin_config(self.declare_parameter('config_file', default).value)
+        self.guard = StretchGuard(self.spec.width_m, self.spec.height_m, stretch)
+        self.forces = [None, None]  # newest cloth pull on each robot: (receipt monotonic s, world vector)
+        if stretch.force_feedback:
+            for k, topic in enumerate(self.force_options['topics']):
+                self.create_subscription(WrenchStamped, topic, lambda m, k=k: self.wrench(k, m), qos_profile_sensor_data)
         r = self.runtime
         self.tf = Buffer(); self.listener = TransformListener(self.tf, self)
         self.hands = {}  # corner (2, 3) -> HandTrack
@@ -224,6 +236,44 @@ class FabricTwinNode(Node):
                 grips[corner], leaders[corner-2] = grip['position'], grip['velocity']
         return grips, leaders
 
+    def wrench(self, k, msg):
+        """Calibrated wrist force, rotated into the world at its own stamp."""
+        try:
+            q = self.tf.lookup_transform(self.runtime['world_frame'], msg.header.frame_id,
+                                         Time.from_msg(msg.header.stamp)).transform.rotation
+        except TransformException:
+            return
+        x, y, z, w = q.x, q.y, q.z, q.w
+        rotation = np.array([[1-2*(y*y+z*z), 2*(x*y-z*w), 2*(x*z+y*w)], [2*(x*y+z*w), 1-2*(x*x+z*z), 2*(y*z-x*w)],
+                             [2*(x*z-y*w), 2*(y*z+x*w), 1-2*(x*x+y*y)]])
+        f = msg.wrench.force
+        self.forces[k] = (time.monotonic(), self.force_options['sign']*(rotation @ [f.x, f.y, f.z]))
+
+    def measured_now(self):
+        """Newest robot grips (TF), hand grips and hand velocities (glove filter carried to now)."""
+        r, now = self.runtime, self.get_clock().now().nanoseconds
+        robots, hands, velocity = np.full((2, 3), np.nan), np.full((2, 3), np.nan), np.zeros((2, 3))
+        for k, frame in enumerate(r['robot_grip_frames']):
+            try:
+                t = self.tf.lookup_transform(r['world_frame'], frame, Time()).transform.translation
+                robots[k] = [t.x, t.y, t.z]
+            except TransformException:
+                pass
+            track = self.hands.get(2+k)
+            hand = None if track is None else track.at(now, r['hand_coast_sec'])
+            if hand is not None:
+                hands[k], velocity[k] = hand['position'], hand['velocity']
+        return robots, hands, velocity
+
+    def guarded(self, command):
+        """The CBF command after the stretch guard (priority over clearance); zero without measurements."""
+        robots, hands, velocity = self.measured_now()
+        if not (np.isfinite(robots).all() and np.isfinite(hands).all()):
+            return np.zeros((2, 3)), dict(status='missing grips')
+        forces = [None if f is None or time.monotonic()-f[0] > self.guard.spec.force_max_age_sec else f[1]
+                  for f in self.forces]
+        return self.guard.filter(robots, hands, velocity, command, forces)
+
     def follow_command(self):
         """Nominal robot grip velocities: follow each hand at the formation offset.
 
@@ -268,7 +318,7 @@ class FabricTwinNode(Node):
         if self.model is not None:
             self.nudger = Nudger(self.cloth, self.model.rows, self.model.columns, self.feedback_spec)
         if self.cbf_options['enabled']:
-            path = self.cbf_options['config'] or str(Path(get_package_share_directory('fabric_twin'))/'config'/'cbf.json')
+            path = self.cbf_options['config'] or str(default_settings_path())
             settings = load_settings(path)
             settings.controller = self.cbf_options['controller']  # 'none': the nominal command, unfiltered
             self.cbf = TwinCbf(self.cloth, settings, self.cbf_options['period'],
@@ -336,6 +386,8 @@ class FabricTwinNode(Node):
             nominal = self.warmup.command(time_ns, held[:2]) if self.warmup.active(time_ns) else self.follow_command()
             try:
                 self.command, self.debug = self.cbf.update(self.leader_velocity, nominal)
+                self.command, self.debug['stretch_guard'] = self.guarded(self.command)
+                self.cbf.applied(self.command, self.leader_velocity)
                 self.cbf_ms.append(self.debug.get('controller_ms', 0.))
                 if self.debug.get('status') == 'solver_failure':
                     self.fault = self.fault or 'CBF solver failure'

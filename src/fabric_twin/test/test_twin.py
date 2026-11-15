@@ -140,3 +140,17 @@ def test_closed_loop_follows_the_real_sheet_and_the_cbf_runs():
     assert np.median(log['error_p95'][moving]) < .005
     assert len(log['status']) > 50 and 'solver_failure' not in set(log['status'].tolist())
     assert log['clearance_real'].min() > .05
+
+
+def test_carry_keeps_the_real_sheet_slack_and_clear_of_the_obstacle():
+    """Headless rehearsal of the carry with the default settings: the stretch guard keeps every
+    robot-to-grip distance under the sheet's size minus the slack, the CBF needs no hard rows,
+    and the pull at the robot grips stays at the level of the sheet's own weight and motion."""
+    from fabric_twin.scenario import CarrySpec, carry
+    log = carry(CarrySpec(segments=(('move', 0., 0., -.5, .08), ('hold', 3.)), seconds=16.))
+    after = log['time'] > 3.
+    assert log['distance'][after][:, :3].max() <= .84-.03+.005  # edges through a robot, 5 mm for arm lag
+    assert log['distance'][after][:, 3:5].max() <= np.hypot(.84, .84)-.03+.005
+    assert 'relaxed_hard' not in set(log['status'].tolist())
+    assert log['clearance'][after].min() > .05
+    assert np.percentile(log['tension'][after][:, :2], 95) < 10.  # model pull, N; 46 N before the guard

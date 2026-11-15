@@ -14,7 +14,7 @@ def norm(v):
 
 
 class CbfBridge:
-    def __init__(self, max_speed=.1, command_timeout=.1, force_limit_n=15., force_timeout=.25,
+    def __init__(self, max_speed=.1, command_timeout=.1, force_limit_n=6., force_timeout=.25,
                  workspace_min=(-1e9, -1e9, -1e9), workspace_max=(1e9, 1e9, 1e9), pose_timeout=.25):
         values = [max_speed, command_timeout, force_limit_n, force_timeout, pose_timeout, *workspace_min, *workspace_max]
         if (not all(isfinite(v) for v in values) or min(max_speed, command_timeout, force_limit_n, force_timeout, pose_timeout) <= 0
