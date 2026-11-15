@@ -2,9 +2,11 @@
 # (oarbot_simulation logs, 2026-11-08): an 8 x 8 mesh with 16 members, no KLT tracks (they made
 # the estimate worse), 24 boundary samples; ~20 ms per analysis instead of 153 ms, dense-grid
 # error p50 2.1-2.5 mm / p95 4.6-5.6 mm against 1.9 / 7.2 mm for the full profile.
-# hand_max_age_sec 0.45: glove hands come only from the 5 Hz overhead, so one missed detection
-# must not stop estimation; the estimator propagates an older hand with its velocity and
-# inflates its covariance accordingly.
+# All four corners are prescribed boundary conditions: robot grips from TF, human grips from the
+# hand filter carried to the capture time with its own model (covariance grows with the age of
+# the last glove detection). Camera evidence never moves a corner. hand_max_age_sec only limits
+# how old a glove detection may be when an ensemble starts; a running one keeps a hand for
+# hand_coast_sec (default 1 s) and then holds that grip in place instead of dropping the frame.
 mesh:
   width_m: 0.84
   height_m: 0.84
@@ -29,6 +31,10 @@ physics:
   - 0.0005
   iterations: 4
 observer:
+  # Relaxation to prior spread: half of the spread an analysis removes is put back. On the
+  # replayed teleoperation clips this raised 95 % coverage from 0.68-0.85 to 0.81-0.92 at the
+  # same surface error; 0.8-1.0 covered more but cost up to 15 mm of p95.
+  relaxation: 0.5
   ensemble_size: 16
   localization_m: 0.3
   inflation: 1.02

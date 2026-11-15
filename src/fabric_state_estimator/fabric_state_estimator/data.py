@@ -10,17 +10,22 @@ from .physics import PhysicsSpec
 
 @dataclass
 class Grip:
+    """A grip position at the frame time. ``age_sec`` is how old the newest measurement behind
+    it is: a human grip propagated from an earlier glove measurement carries a covariance that
+    already includes that propagation, and its age is reported, never hidden."""
     corner: int
     position: np.ndarray
     covariance: np.ndarray
+    age_sec: float = 0.
 
     def __post_init__(self):
         self.position = np.asarray(self.position, float).reshape(3)
         self.covariance = np.asarray(self.covariance, float).reshape(3, 3)
         if (self.corner not in range(4) or not np.isfinite(self.position).all()
                 or not np.isfinite(self.covariance).all() or not np.allclose(self.covariance, self.covariance.T)
-                or np.linalg.eigvalsh(self.covariance).min() <= 0):
-            raise ValueError('Invalid measured grip or covariance')
+                or np.linalg.eigvalsh(self.covariance).min() <= 0
+                or not np.isfinite(self.age_sec) or self.age_sec < 0):
+            raise ValueError('Invalid measured grip, covariance or age')
 
 
 @dataclass

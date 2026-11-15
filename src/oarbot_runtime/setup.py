@@ -10,5 +10,6 @@ setup(
     entry_points={'console_scripts': [
         'command_guard = oarbot_runtime.command_guard:main',
         'human_hand_measurements = oarbot_runtime.human_hand_measurements:main',
+        'fabric_cbf_bridge = oarbot_runtime.fabric_cbf_bridge:main',
     ]},
 )

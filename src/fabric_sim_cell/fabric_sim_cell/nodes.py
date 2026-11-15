@@ -61,8 +61,12 @@ class OracleHands(Node):
         from fabric_state_msgs.msg import HandState, HandStates
         self.HandState, self.HandStates = HandState, HandStates
         self.world = self.declare_parameter('world_frame', 'world').value
-        self.covariance = hand_covariance(self.declare_parameter('position_std_m', 0.005).value,
-                                          self.declare_parameter('velocity_std_mps', 0.05).value)
+        position_std = self.declare_parameter('position_std_m', 0.005).value
+        velocity_std = self.declare_parameter('velocity_std_mps', 0.05).value
+        self.covariance = hand_covariance(position_std, velocity_std)
+        # The oracle has no acceleration estimate: zero mean with a broad stated uncertainty.
+        self.jerk = float(self.declare_parameter('jerk_stddev', 3.0).value)
+        self.filter_covariance = np.diag([position_std ** 2] * 3 + [velocity_std ** 2] * 3 + [1.0] * 3).ravel().tolist()
         self.noise = OracleNoise(self.declare_parameter('noise_position_std_m', 0.0).value,
                                  self.declare_parameter('noise_velocity_std_mps', 0.0).value,
                                  self.declare_parameter('seed', 0).value)
@@ -95,7 +99,8 @@ class OracleHands(Node):
                                         velocity=Vector3(x=velocity[0], y=velocity[1], z=velocity[2]),
                                         covariance=self.covariance, source_cameras=['oracle_mocap'],
                                         source_stamps=[m.header.stamp], holding_state=self.HandState.HOLDING,
-                                        holding_is_assumed=True, grip_uv=list(uv)))
+                                        holding_is_assumed=True, grip_uv=list(uv),
+                                        filter_covariance=self.filter_covariance, jerk_stddev=self.jerk))
         self.publisher.publish(self.HandStates(header=Header(stamp=next(iter(self.latest.values())).header.stamp,
                                                              frame_id=self.world), hands=hands))
 

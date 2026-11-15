@@ -5,7 +5,8 @@ from fabric_state_estimator.mesh import MaterialMesh, MeshSpec
 from fabric_state_estimator.physics import PhysicsSpec, make_physics
 from fabric_state_estimator.data import Frame, View, Grip, save_sequence, load_sequence
 from fabric_state_estimator.observations import Factor, ObservationBuilder, ray_stencils
-from fabric_state_estimator.ensemble import ObserverSpec, EnsembleObserver, localized_update, gaspari_cohn
+from fabric_state_estimator.ensemble import (ObserverSpec, EnsembleObserver, localized_update, gaspari_cohn,
+                                              centred_normal, relax_to_prior_spread)
 from fabric_state_estimator.transforms import TransformHistory
 from fabric_state_estimator.metrics import evaluate
 
@@ -216,7 +217,7 @@ def test_projection_bounds_overextension_without_moving_attachments():
     observer.q[:, 4, 2] -= .5  # centre pulled far below its neighbours
     observer._project(.04)
     lengths = np.linalg.norm(observer.q[:, mesh.edges[:, 1]]-observer.q[:, mesh.edges[:, 0]], axis=2)
-    assert np.max(lengths/mesh.lengths) <= 1.1+1e-4
+    assert np.max(lengths/mesh.lengths) <= 1.1+2e-3  # three relaxation passes: a bound, not an exact projection
     np.testing.assert_array_equal(observer.q[:, mesh.corners], corners)
 
 
@@ -230,3 +231,80 @@ def test_monitor_depth_residual_is_measured_before_assimilation():
     assert diagnostics['depth_factors'] == 1
     assert diagnostics['prior_depth_p95_m'] == pytest.approx(.04)
     assert abs(.04-updated[:, 4, 2].mean()) < diagnostics['prior_depth_p95_m']
+
+
+# ---------------------------------------------------------------- boundary contract
+class OneVisualFactor:
+    """A single strong camera factor at one mesh vertex, to isolate assimilation semantics."""
+    def __init__(self, vertex, value):
+        self.vertex, self.value, self.bindings = vertex, value, {}
+
+    def build(self, q, frame):
+        return [Factor('normal', np.array([self.vertex]), np.ones(1), self.value, 1e-6, np.array([0., 0., 1.]))]
+
+
+def boundary_observer(builder=None, **spec):
+    mesh, grips, frame = fixture()
+    values = dict(ensemble_size=16, initial_sag_m=0., initial_position_std_m=0., initial_velocity_std_mps=0.)
+    values.update(spec)
+    observer = EnsembleObserver(mesh, make_physics(mesh, PhysicsSpec()), ObserverSpec(**values), builder)
+    observer.assimilate(Frame(frame.time_ns, grips=[Grip(i, p, np.eye(3)*.01**2) for i, p in enumerate(grips)]))
+    return mesh, grips, observer
+
+
+def test_grip_perturbations_are_centred_with_unit_spread():
+    for members in (4, 16, 32):
+        draws = centred_normal(np.random.default_rng(7), members, (4, 3))
+        np.testing.assert_allclose(draws.mean(axis=0), 0, atol=1e-12)
+        for corner in range(4):
+            np.testing.assert_allclose(draws[:, corner].T @ draws[:, corner]/(members-1), np.eye(3), atol=1e-9)
+    mesh, grips, observer = boundary_observer()
+    np.testing.assert_allclose(observer.q[:, mesh.corners].mean(axis=0), grips, atol=1e-12)
+    np.testing.assert_allclose(observer.q[:, mesh.corners].std(axis=0, ddof=1), .01, atol=1e-9)
+
+
+def test_camera_evidence_cannot_move_a_prescribed_corner():
+    for corner in (0, 2):  # a robot-held and a human-held corner
+        mesh, grips, observer = boundary_observer()
+        frame = lambda ns: Frame(ns, grips=[Grip(i, p, np.eye(3)*.01**2) for i, p in enumerate(grips)])  # noqa: E731
+        observer.assimilate(frame(1_050_000_000))
+        before = observer.q[:, mesh.corners].copy()
+        observer.builder = OneVisualFactor(mesh.corners[corner], 1.05)
+        observer.assimilate(frame(1_100_000_000))
+        # The old analysis moved this corner's ensemble mean by 49.9 mm under this single factor.
+        np.testing.assert_allclose(observer.q[:, mesh.corners], before, atol=1e-9)
+        np.testing.assert_allclose(observer.q[:, mesh.corners[:2]].mean(axis=0), grips[:2], atol=1e-9)
+
+
+def test_missing_hand_does_not_stop_estimation_and_is_reported():
+    mesh, grips, observer = boundary_observer()
+    human = mesh.corners[2:]
+    held = observer.q[:, human].copy()
+    for step in range(1, 9):  # no glove estimate at all for 0.4 s
+        state = observer.assimilate(Frame(1_000_000_000+step*50_000_000,
+                                          grips=[Grip(i, grips[i], np.eye(3)*.01**2) for i in (0, 1)]))
+        assert not state['reinitialized']
+    np.testing.assert_allclose(observer.q[:, human], held, atol=1e-9)  # an unmeasured grip holds its place
+    assert observer.status['hand_age_sec'] == [None, None] and observer.status['degraded']
+    # A hand estimate propagated from an old glove measurement arrives with a larger covariance.
+    aged = Grip(2, grips[2]+[.02, 0., 0.], np.eye(3)*.05**2, age_sec=.3)
+    observer.assimilate(Frame(1_450_000_000, grips=[Grip(i, grips[i], np.eye(3)*.01**2) for i in (0, 1)]+[aged]))
+    spread = observer.q[:, human[0]].std(axis=0, ddof=1)
+    assert np.all(spread <= .05+1e-9)  # never more than stated; the taut sheet scales it down
+    np.testing.assert_allclose(observer.q[:, human[0]].mean(axis=0), aged.position, atol=1e-9)  # mean is never shifted
+    assert observer.status['hand_age_sec'] == [.3, None]
+
+
+def test_relaxation_restores_part_of_the_prior_spread_and_huber_is_configurable():
+    random = np.random.default_rng(2)
+    prior = random.normal(size=(20, 5, 3)); posterior = prior.mean(axis=0)+.2*(prior-prior.mean(axis=0))
+    relaxed = relax_to_prior_spread(prior, posterior, .5)
+    np.testing.assert_allclose(relaxed.mean(axis=0), posterior.mean(axis=0), atol=1e-12)
+    np.testing.assert_allclose(relaxed.std(axis=0, ddof=1), .6*prior.std(axis=0, ddof=1))
+    assert relax_to_prior_spread(prior, posterior, 0.) is posterior
+    mesh, _, _ = fixture(); physics = make_physics(mesh, PhysicsSpec())
+    q = np.zeros((12, mesh.count, 3)); q[:, :, 2] = random.normal(0, .01, (12, 1))
+    outlier = Factor('normal', np.array([4]), np.ones(1), 1., 1e-4, np.array([0., 0., 1.]))
+    moved = [localized_update(mesh, q, q*0, np.zeros((12, 3)), [outlier], physics, 10., huber=h)[0][:, 4, 2].mean()
+             for h in (1., 30.)]
+    assert moved[1] > 2*moved[0]

@@ -18,5 +18,7 @@ setup(
         'grasp_gate = fabric_sim_cell.nodes:grasp_gate_main',
         'scorecard = fabric_sim_cell.scorecard:main',
         'demo_markers = fabric_sim_cell.nodes:demo_markers_main',
+        'leader_replay = fabric_sim_cell.leader_replay:main',
+        'leader_script = fabric_sim_cell.leader_script:main',
         'evaluate = fabric_sim_cell.evaluate:main']},
 )

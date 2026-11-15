@@ -28,7 +28,11 @@ def nodes(context):
     share = Path(FindPackageShare('fabric_sim_cell').perform(context))
     config = lambda value, default: Path(value) if value else share / 'config' / default  # noqa: E731
     urdf_dir = get('urdf_dir')
-    if not urdf_dir:
+    # replay:=true runs only the consumers of a recorded bag (hand fusion or oracle, grasp gate,
+    # estimator, recorder). TF, compact camera observations and glove measurements come from the
+    # bag, so no robot_state_publisher, calibration publisher or perception node is started.
+    replay = get('replay') == 'true'
+    if not urdf_dir and not replay:
         raise RuntimeError('urdf_dir is required: oarbot_simulation/assets/oarbots_jazzy (the plant robots)')
     sim = {'use_sim_time': True}
     # profile:=fast selects the real-time configs (perception_*_fast.yaml, estimator_fast.yaml)
@@ -40,7 +44,7 @@ def nodes(context):
     sampling = ({'adaptive_sampling': True, 'fabric_rate_hz': 5.0, 'monitor_rate_hz': 1.0,
                  'monitor_timeout_sec': 2.5} if get('profile') == 'monitor' else {})
     out = []
-    for color in COLORS:
+    for color in () if replay else COLORS:
         ns = f'oarbot_{color}'
         description = (Path(urdf_dir) / f'oarbot_{color}_ros.urdf').read_text()
         out.append(Node(package='robot_state_publisher', executable='robot_state_publisher', name='robot_state_publisher',
@@ -50,10 +54,11 @@ def nodes(context):
                             namespace=ns, parameters=[{'joint_state_prefix': f'{ns}/', 'input_topic': source,
                                                        'output_topic': 'joint_states', **sim}]))
     calibration_file = str(config(get('calibration_file'), 'calibration_exact.yaml'))
-    out.append(Node(package='fabric_sim_cell', executable='calibration_publisher', name='sim_cell_calibration',
-                    parameters=[{'calibration_file': calibration_file, 'errors_file': get('errors_file'), **sim}]))
+    if not replay:
+        out.append(Node(package='fabric_sim_cell', executable='calibration_publisher', name='sim_cell_calibration',
+                        parameters=[{'calibration_file': calibration_file, 'errors_file': get('errors_file'), **sim}]))
     for camera_id, namespace in CAMERAS.items():
-        if camera_id == 'overhead' and get('overhead') != 'true':
+        if replay or camera_id == 'overhead' and get('overhead') != 'true':
             continue
         out.append(Node(package='fabric_perception', executable='camera', namespace=namespace, name='fabric_perception',
                         output='screen', parameters=[str(config('', f'perception_{camera_id}{suffix}.yaml')),
@@ -90,6 +95,22 @@ def nodes(context):
                         parameters=[sim]))
         out.append(Node(package='rviz2', executable='rviz2', name='sim_cell_rviz', output='log',
                         arguments=['-d', str(share / 'config' / 'sim_cell_demo.rviz')], parameters=[sim]))
+    if get('twin') == 'true':
+        # The fabric twin: a simulated sheet slaved to the measured grips, corrected by the
+        # estimator, with the sensitivity CBF on a simulated obstacle. Shadow mode unless
+        # twin_commands:=true (then its follower commands are published for the robots).
+        out.append(Node(package='fabric_twin', executable='twin', name='fabric_twin', output='screen',
+                        parameters=[{'config_file': str(config(get('twin_config'), 'twin.yaml')),
+                                     'commands_enabled': get('twin_commands'), **sim}]))
+        if get('twin_bank') == 'true':
+            out.append(Node(package='fabric_twin', executable='parameter_bank', name='fabric_parameter_bank', output='screen',
+                            parameters=[{'config_file': str(config(get('twin_config'), 'twin.yaml')),
+                                         'estimator_config': str(config(get('estimator_config'), f'estimator{estimator_suffix}.yaml')),
+                                         'adapt_period_sec': float(get('twin_adapt_period_sec')),
+                                         **sim}]))
+        if get('twin_record'):
+            out.append(Node(package='fabric_twin', executable='twin_recorder', name='twin_recorder', output='screen',
+                            parameters=[{'output': get('twin_record'), **sim}]))
     if get('record'):
         out.append(Node(package='fabric_sim_cell', executable='recorder', name='sim_cell_recorder', output='screen',
                         parameters=[{'output': get('record'), 'record_forces': get('force_torque') == 'true', **sim}]))
@@ -112,5 +133,13 @@ def generate_launch_description():
         DeclareLaunchArgument('force_torque', default_value='false', description='Run the F/T compensators'),
         DeclareLaunchArgument('record', default_value='', description='Recorder output NPZ; empty = no recorder'),
         DeclareLaunchArgument('rviz', default_value='false', description='Demo view: estimated mesh over the camera images'),
+        DeclareLaunchArgument('twin', default_value='false', description='Run the fabric twin beside the estimator'),
+        DeclareLaunchArgument('twin_commands', default_value='', description="'true': the twin's follower commands are sent to the robots"),
+        DeclareLaunchArgument('twin_config', default_value='', description='Default: config/twin.yaml'),
+        DeclareLaunchArgument('twin_bank', default_value='false', description='Run the parameter bank (calibration, adaptation)'),
+        DeclareLaunchArgument('twin_adapt_period_sec', default_value='0.0', description='Online adaptation period (s); 0 = off'),
+        DeclareLaunchArgument('twin_record', default_value='', description='Twin recorder output NPZ; empty = none'),
+        DeclareLaunchArgument('replay', default_value='false',
+                              description='Consumers only, fed by `ros2 bag play --clock` of a recorded run'),
         OpaqueFunction(function=nodes),
     ])

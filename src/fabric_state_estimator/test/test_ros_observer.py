@@ -75,8 +75,9 @@ def test_ros_model_state_forecast_and_stale_measurement_contract(tmp_path, mode)
         covariance = np.diag([.002**2]*3+[.01**2]*3).ravel().tolist()
         # Fusion omits hands a camera group did not see: with unsynchronized
         # cameras each hand typically arrives in a different message.
+        full = dict(filter_covariance=np.diag([.002**2]*3+[.01**2]*3+[.1**2]*3).ravel().tolist(), jerk_stddev=3.)
         for offset, hand in ((3_000_000, HandState(hand_id='human_left', position=Point(x=0., y=.84, z=1.), covariance=covariance,
-                                                    grip_uv=[0., 1.], holding_state=1, holding_is_assumed=True)),
+                                                    grip_uv=[0., 1.], holding_state=1, holding_is_assumed=True, **full)),
                              (1_000_000, HandState(hand_id='human_right', position=Point(x=.84, y=.84, z=1.), covariance=covariance,
                                                     grip_uv=[1., 1.], holding_state=1, holding_is_assumed=True))):
             hands_pub.publish(HandStates(header=Header(stamp=Time(nanoseconds=capture-offset).to_msg(), frame_id='world'), hands=[hand]))

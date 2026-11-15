@@ -14,6 +14,10 @@ physics:
   newton_bend: [0.00002, 0.00002, 0.00001]
   iterations: 4
 observer:
+  # Relaxation to prior spread: half of the spread an analysis removes is put back. On the
+  # replayed teleoperation clips this raised 95 % coverage from 0.68-0.85 to 0.81-0.92 at the
+  # same surface error; 0.8-1.0 covered more but cost up to 15 mm of p95.
+  relaxation: 0.5
   ensemble_size: 32
   localization_m: 0.3
   inflation: 1.02

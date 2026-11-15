@@ -161,12 +161,15 @@ class HandFusion(Node):
                     failures.append(hand + ': temporal innovation rejected')
                     continue
                 x, p = filtered
+                full, full_covariance = self.filters[hand].full()
                 output.hands.append(HandState(hand_id=hand, tag_id=self.tags[hand],
                     position=Point(x=float(x[0]), y=float(x[1]), z=float(x[2])),
                     velocity=Vector3(x=float(x[3]), y=float(x[4]), z=float(x[5])),
                     covariance=p.ravel().tolist(), source_cameras=[m.camera_id for m in selected],
                     source_stamps=[Time(nanoseconds=m.stamp_ns).to_msg() for m in selected],
-                    holding_state=HandState.HOLDING, holding_is_assumed=True, grip_uv=self.uvs[hand].tolist()))
+                    holding_state=HandState.HOLDING, holding_is_assumed=True, grip_uv=self.uvs[hand].tolist(),
+                    acceleration=Vector3(x=float(full[6]), y=float(full[7]), z=float(full[8])),
+                    filter_covariance=full_covariance.ravel().tolist(), jerk_stddev=float(self.filters[hand].jerk)))
             self.publisher.publish(output)
             self.last_arrival, self.last_count = monotonic(), len(output.hands)
             self.failure = '; '.join(failures)

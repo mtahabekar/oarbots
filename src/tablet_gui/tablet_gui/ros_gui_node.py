@@ -115,7 +115,9 @@ class RosGuiNode(Node):
         for name, settings in self.oarbot_settings_dict.items():
             mode = 'disabled'
             if permitted:
-                if settings.admittance_control_enabled:
+                if settings.fabric_cbf_enabled:
+                    mode = 'fabric_cbf'  # arm follows the fabric twin's CBF through fabric_cbf_bridge
+                elif settings.admittance_control_enabled:
                     mode = 'admittance'
                 elif settings.arm_enabled:
                     mode = 'teleop'
@@ -173,7 +175,7 @@ class RosGuiNode(Node):
         self.last_spacenav = monotonic()
         if self.permitted():
             for oarbot_namespace, oarbot in self.oarbot_settings_dict.items():
-                if oarbot.arm_enabled and not self.oarbot_settings_dict[oarbot_namespace].admittance_control_enabled:
+                if oarbot.arm_enabled and not self.oarbot_settings_dict[oarbot_namespace].admittance_control_enabled and not self.oarbot_settings_dict[oarbot_namespace].fabric_cbf_enabled:
                     arm_msg = PoseVelocity()
 
                     if oarbot.translation_enabled:
@@ -230,6 +232,10 @@ class RosGuiNode(Node):
         self.oarbot_settings_dict[oarbot_namespace].admittance_control_enabled = False
         self.watchdog()
 
+    def set_fabric_cbf(self, oarbot_namespace: str, enabled: bool) -> None:
+        self.oarbot_settings_dict[oarbot_namespace].fabric_cbf_enabled = bool(enabled)
+        self.watchdog()
+
 
 class OarbotSettings():
     def __init__(self) -> None:
@@ -239,4 +245,5 @@ class OarbotSettings():
         self.base_enabled = False
         self.body_joint_following_enabled = False
         self.admittance_control_enabled = False
+        self.fabric_cbf_enabled = False
         self.finger_position_percent = 0

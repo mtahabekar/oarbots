@@ -1,0 +1,20 @@
+# Fabric CBF bridge on each robot helper (oarbot_runtime fabric_cbf_bridge).
+common:
+  world_frame: world
+  max_speed_mps: 0.1            # also limited by command_guard (0.1 m/s)
+  command_timeout_sec: 0.1      # a command older than this by its own stamp is ignored
+  force_limit_n: 15.0           # stop if the wrist force moves this far from its value at arming
+  force_timeout_sec: 0.25
+  pose_timeout_sec: 0.25
+  # Tool positions (world, metres) the arm may occupy while following the twin. Set to the
+  # reachable region around the grasp for this cell; the defaults do not restrict anything.
+  workspace_min: [-10.0, -10.0, -10.0]
+  workspace_max: [10.0, 10.0, 10.0]
+blue:
+  # The frame the Kinova driver interprets Cartesian velocities in. Verify for each robot with
+  # a 2 cm/s command along each world axis before any closed-loop run (gate H3).
+  command_frame: oarbot_blue/j2n6s300_link_base
+  tool_frame: oarbot_blue/fabric_grip
+silver:
+  command_frame: oarbot_silver/j2n6s300_link_base   # mounted 180 degrees about Z on its chassis
+  tool_frame: oarbot_silver/fabric_grip

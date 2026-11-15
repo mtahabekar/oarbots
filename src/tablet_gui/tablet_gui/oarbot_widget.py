@@ -95,6 +95,10 @@ class OarbotWidget(QWidget):
         self.admittance_control_enable_button = ToggleButton("Admittance Control Disabled", self.handle_admittance_control_toggle_button, 14)
         layout.addWidget(self.admittance_control_enable_button)
 
+        self.fabric_cbf_enable_button = ToggleButton("Fabric Follow (CBF) Disabled", self.handle_fabric_cbf_toggle_button, 14)
+        self.fabric_cbf_enable_button.setToolTip("Arm follows the fabric twin's CBF commands; the bridge on the robot must be armed")
+        layout.addWidget(self.fabric_cbf_enable_button)
+
     def resizeEvent(self, event):
         # Capture this event to set all button widths to be 90% of the available width
         # Each button is set to 90% width then moved over 5% of the available width to center it
@@ -177,6 +181,10 @@ class OarbotWidget(QWidget):
     def handle_body_joint_following_toggle_button(self, toggled: bool) -> None:
         self.ros_gui_node.oarbot_settings_dict[self.oarbot_namespace].body_joint_following_enabled = toggled
         self.body_joint_following_enable_button.setText("Body Joint Following Enabled" if toggled else "Body Joint Following Disabled")
+
+    def handle_fabric_cbf_toggle_button(self, toggled: bool) -> None:
+        self.ros_gui_node.set_fabric_cbf(self.oarbot_namespace, toggled)
+        self.fabric_cbf_enable_button.setText("Fabric Follow (CBF) Enabled" if toggled else "Fabric Follow (CBF) Disabled")
 
     def handle_admittance_control_toggle_button(self, toggled: bool) -> None:
         if toggled:

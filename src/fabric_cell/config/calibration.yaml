@@ -1,0 +1,27 @@
+# Static calibration of the real cell: TEMPLATE. Every transform below is a placeholder.
+# Measure each one (platform audit gates H7 and H15), set `measured: true`, and keep exactly one
+# TF authority per child frame. With parked bases, measure each base pose once (average the
+# ArUco pose over about 10 s) and enter it here instead of running the live ArUco localization.
+measured: false
+world_frame: world
+transforms:
+- parent: world
+  child: nuc/camera_base          # overhead camera, six degrees of freedom
+  translation: [0.0, 0.0, 2.6]
+  rotation_xyzw: [0.0, 0.0, 0.0, 1.0]
+- parent: world
+  child: oarbot_blue/base_link    # parked base pose
+  translation: [0.0, 0.0, 0.0]
+  rotation_xyzw: [0.0, 0.0, 0.0, 1.0]
+- parent: world
+  child: oarbot_silver/base_link
+  translation: [0.0, 0.0, 0.0]
+  rotation_xyzw: [0.0, 0.0, 0.0, 1.0]
+- parent: oarbot_blue/j2n6s300_end_effector
+  child: oarbot_blue/fabric_grip  # where the fingers hold the sheet, in the tool frame
+  translation: [0.0, 0.0, 0.0]
+  rotation_xyzw: [0.0, 0.0, 0.0, 1.0]
+- parent: oarbot_silver/j2n6s300_end_effector
+  child: oarbot_silver/fabric_grip
+  translation: [0.0, 0.0, 0.0]
+  rotation_xyzw: [0.0, 0.0, 0.0, 1.0]

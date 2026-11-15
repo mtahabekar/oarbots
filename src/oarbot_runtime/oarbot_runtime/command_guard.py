@@ -37,7 +37,7 @@ class CommandGuard(Node):
         self.create_subscription(Bool, '/tablet_gui/e_stop', lambda m: self.guard.estop_update(m.data, monotonic()), 1)
         self.create_subscription(String, 'control_mode', lambda m: self.guard.mode_update(m.data, monotonic()), 1)
         self.create_subscription(Bool, 'base_enable', lambda m: self.guard.base_update(m.data, monotonic()), 1)
-        for source in ('teleop', 'admittance'):
+        for source in ('teleop', 'admittance', 'fabric_cbf'):
             self.create_subscription(PoseVelocity, f'commands/{source}/arm',
                 lambda m, source=source: self.guard.command(source, tuple(getattr(m, f) for f in FIELDS), monotonic(), *self.limits[:2]), qos)
         self.create_subscription(TwistStamped, 'commands/teleop/base', self.base_command, qos)
@@ -77,7 +77,8 @@ class CommandGuard(Node):
         msg = DiagnosticArray()
         msg.header.stamp = self.get_clock().now().to_msg()
         # Multiple controllers on a selected input are a configuration fault, not last-writer-wins.
-        inputs = ('control_mode', 'base_enable', 'commands/teleop/arm', 'commands/admittance/arm', 'commands/teleop/base')
+        inputs = ('control_mode', 'base_enable', 'commands/teleop/arm', 'commands/admittance/arm', 'commands/fabric_cbf/arm',
+                  'commands/teleop/base')
         self.ambiguous = any(self.count_publishers(topic) > 1 for topic in inputs)
         if self.ambiguous:
             self.guard.trip()

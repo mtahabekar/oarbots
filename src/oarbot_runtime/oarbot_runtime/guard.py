@@ -13,6 +13,10 @@ def limited(values, linear_limit, angular_limit):
     return tuple(result)
 
 
+# 'fabric_cbf': arm velocities from the fabric twin's sensitivity CBF, through fabric_cbf_bridge.
+MODES = ('disabled', 'teleop', 'admittance', 'fabric_cbf')
+
+
 class Guard:
     def __init__(self, timeout=0.25, command_timeout=0.15):
         if not all(isfinite(v) and v > 0 for v in (timeout, command_timeout)):
@@ -44,7 +48,7 @@ class Guard:
         self.commands.clear()
 
     def mode_update(self, mode, now):
-        if mode not in ('disabled', 'teleop', 'admittance'):
+        if mode not in MODES:
             mode = 'disabled'
         if mode != self.mode:
             self.commands.clear()

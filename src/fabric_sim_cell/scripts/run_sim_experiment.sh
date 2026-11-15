@@ -9,7 +9,7 @@ WS=${COLCON_WS:-/home/taha/ros2_colcon_ws}
 
 # A consumer stack left from an earlier run shares every topic and TF frame with this one (its
 # calibration publisher, for instance, competes with a deliberately perturbed one). Refuse to start.
-STALE=$(pgrep -af "ros2 launch fabric_sim_cell|/install/(fabric_sim_cell|fabric_perception|human_hand_tracking|fabric_state_estimator)/lib/|run_oarbot_fabric.py" || true)
+STALE=$(pgrep -af "ros2 launch fabric_sim_cell|/install/(fabric_sim_cell|fabric_perception|human_hand_tracking|fabric_state_estimator|fabric_twin)/lib/|run_oarbot_fabric.py" || true)
 if [[ -n "$STALE" ]]; then
   echo "SIM_EXPERIMENT_ABORTED: sim-cell processes are already running; stop them first:" >&2
   echo "$STALE" >&2
@@ -43,6 +43,26 @@ trap stop_stack EXIT
 for _ in $(seq 120); do grep -q "Preparing physics backend" "$OUT/stack.log" 2>/dev/null && break; sleep 1; done
 sleep 20
 nvidia-smi --query-gpu=memory.used,memory.total --format=csv,noheader > "$OUT/gpu_before_plant.txt" 2>/dev/null
+# SIM_EXTRA: optional helper commands run beside the plant (a leader replay, a bag recorder),
+# with ROS sourced and OUT exported. They get their own process group and stop with the run.
+EXTRA=
+if [[ -n "${SIM_EXTRA:-}" ]]; then
+  OUT="$OUT" setsid python3 -c 'import os, signal, sys; signal.signal(signal.SIGINT, signal.SIG_DFL); os.execvp("bash", ["bash", "-c", sys.argv[1]])' \
+    "source /opt/ros/jazzy/setup.bash; source '$WS/install/setup.bash'; $SIM_EXTRA" > "$OUT/extra.log" 2>&1 &
+  EXTRA=$!
+fi
+stop_extra() {
+  [[ -z "$EXTRA" ]] && return
+  # Background jobs of a non-interactive shell ignore SIGINT; SIGTERM lets `ros2 bag record`
+  # close its file (an unterminated MCAP needs `ros2 bag reindex`).
+  kill -INT -- "-$EXTRA" 2>/dev/null; sleep 1
+  kill -TERM -- "-$EXTRA" 2>/dev/null
+  for _ in $(seq 20); do pgrep -g "$EXTRA" > /dev/null 2>&1 || break; sleep 0.5; done
+  kill -KILL -- "-$EXTRA" 2>/dev/null
+  wait "$EXTRA" 2>/dev/null
+  EXTRA=
+}
+trap 'stop_extra; stop_stack' EXIT
 # PLANT_GUI=1 opens the Isaac Sim window (live demo); default headless.
 HEADLESS="--headless"; [[ "${PLANT_GUI:-0}" == 1 ]] && HEADLESS=""
 ( cd "$SIM" && timeout 5400 ./run_oarbot_fabric.sh $HEADLESS --fast --validate --sensors --gloves --mocap-hands \
@@ -59,6 +79,7 @@ wait "$PLANT" || PLANT_RESULT=$?
 echo "plant exit $PLANT_RESULT" >> "$OUT/plant.log"
 echo "$PEAK" > "$OUT/gpu_peak_mib.txt"
 sleep 3
+stop_extra
 stop_stack
 if [[ "$PLANT_RESULT" -ne 0 ]] || ! grep -q COMBINED_VALIDATED "$OUT/plant.log"; then
   echo "SIM_EXPERIMENT_ABORTED: plant validation failed (exit $PLANT_RESULT); see $OUT/plant.log" >&2
@@ -74,3 +95,6 @@ if [[ -z "$CONFIG" ]]; then  # the launch default, which profile:=fast changes
   CONFIG="$WS/install/fabric_sim_cell/share/fabric_sim_cell/config/estimator$SUFFIX.yaml"
 fi
 ros2 run fabric_sim_cell evaluate "$OUT/truth.npz" "$OUT/estimate.npz" "$CONFIG" "$OUT/eval" "${WINDOWS[@]}" 2>&1 | tee "$OUT/eval.log"
+if [[ -f "$OUT/twin.npz" ]]; then
+  python3 -m fabric_twin.evaluate "$OUT/truth.npz" "$OUT/twin.npz" "$OUT/twin_eval.json" --start "${TWIN_START:-12}" 2>&1 | tee -a "$OUT/eval.log"
+fi

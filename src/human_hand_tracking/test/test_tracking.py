@@ -3,7 +3,7 @@ import numpy as np
 import pytest
 from human_hand_tracking.tags import GloveDetector
 from human_hand_tracking.fusion import (Measurement, HandFilter, fuse_views, rotation_matrix,
-                                       transform_measurement)
+                                       transform_measurement, propagate, HandTrack)
 
 
 def calibration():
@@ -169,3 +169,44 @@ def test_depth_that_is_not_the_tag_rejects_rather_than_passing_a_biased_range():
     behind = plane_depth(detector, rvec, tvec + [[0.], [0.], [.8]], k, (1536, 2048))  # 36 % farther
     assert detector.from_corners(21, points, k, np.zeros(5), depth=behind) is None
     assert detector.from_corners(21, points, k, np.zeros(5)) is not None  # without depth: PnP alone
+
+
+def test_consumer_propagation_uses_the_filter_model_and_adds_its_process_noise():
+    state = np.r_[[1., 2., 3.], [.1, 0., 0.], [0., .5, 0.]]
+    covariance = np.diag([.005**2]*3+[.05**2]*3+[.3**2]*3)
+    for tau in (.1, .2, .45):
+        out, p = propagate(state, covariance, 3., tau)
+        np.testing.assert_allclose(out[:3], [1+.1*tau, 2+.25*tau**2, 3.])  # acceleration is not dropped
+        frozen = np.sqrt(.005**2+(tau*.05)**2+(tau**2/2*.3)**2)
+        # The jerk term alone is 91 mm per axis at 0.45 s for sigma_j = 3 m/s^3.
+        np.testing.assert_allclose(np.sqrt(p[0, 0]-frozen**2), 3*np.sqrt(tau**5/20), rtol=1e-9)
+    np.testing.assert_allclose(propagate(state, covariance, 3., 0.)[1], covariance)
+    filt = HandFilter(jerk_stddev=3., floor=.01)
+    filt.update(np.zeros(3), np.eye(3)*.005**2, 1_000_000_000)
+    filt.update(np.array([.01, 0., 0.]), np.eye(3)*.005**2, 1_100_000_000)
+    full, full_covariance = filt.full()
+    assert full.shape == (9,) and full_covariance.shape == (9, 9)
+    np.testing.assert_allclose(np.diag(full_covariance)[:3], np.diag(filt.p)[:3]+.01**2)
+
+
+def test_hand_track_interpolates_between_detections_and_extrapolates_honestly():
+    # A hand that accelerates: x(t) = 0.5 * 0.8 * t^2, detected every 0.2 s.
+    track, filt = HandTrack(floor=.01), HandFilter(jerk_stddev=3., floor=.01)
+    for k in range(8):
+        t = k*.2
+        assert filt.update(np.array([.4*t*t, 0., 1.]), np.eye(3)*.003**2, int(1e9+t*1e9)) is not None
+        assert track.add(int(1e9+t*1e9), *filt.full(), 3.)
+    assert not track.add(int(1e9), *filt.full(), 3.)  # never runs backward
+    query = int(1e9+1.1e9)  # midway between the detections at 1.0 s and 1.2 s
+    between = track.at(query, 1.)
+    assert between['bracketed'] and between['age_sec'] == pytest.approx(.1)
+    assert abs(between['position'][0]-.4*1.1**2) < .005
+    causal = HandTrack(floor=.01); causal.states = [s for s in track.states if s[0] <= query]
+    ahead = causal.at(query, 1.)
+    assert not ahead['bracketed']
+    # Past the last detection the stated uncertainty is larger than between two detections.
+    assert np.trace(ahead['covariance']) > np.trace(between['covariance'])
+    assert abs(ahead['position'][0]-.4*1.1**2) < 3*np.sqrt(ahead['covariance'][0, 0])
+    late = track.at(int(1e9+1.4e9+.5e9), 1.)  # 0.5 s after the newest detection
+    assert not late['bracketed'] and np.sqrt(late['covariance'][0, 0]) > .05
+    assert track.at(int(1e9+1.4e9+2e9), 1.) is None and track.at(int(.5e9), 1.) is None

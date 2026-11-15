@@ -3,6 +3,35 @@ from dataclasses import dataclass
 import numpy as np
 from .observations import ObservationBuilder
 
+ROBOT, HUMAN = (0, 1), (2, 3)  # material corners held by the robots and by the human hands
+
+
+def centred_normal(random, members, shape):
+    """Standard normal draws with exactly zero ensemble mean and unit ensemble covariance.
+
+    Raw draws from a small ensemble have a nonzero mean and too little spread (0.35-0.47
+    sigma offset and 0.85 sigma spread at 16 members for the old fixed seed), which biased
+    every prescribed grip for the life of the node.
+    """
+    draws = random.normal(size=(members,)+tuple(shape))
+    draws -= draws.mean(axis=0)
+    flat = draws.reshape(members, -1, shape[-1])
+    for k in range(flat.shape[1]):
+        covariance = flat[:, k].T @ flat[:, k]/(members-1)
+        flat[:, k] = flat[:, k] @ np.linalg.inv(np.linalg.cholesky(covariance)).T
+    return flat.reshape(draws.shape)
+
+
+def relax_to_prior_spread(prior, posterior, alpha):
+    """Relaxation to prior spread (Whitaker and Hamill 2012): the analysis spread of every
+    variable is moved a fraction alpha of the way back to its prior spread."""
+    if alpha <= 0:
+        return posterior
+    before, after = prior.std(axis=0, ddof=1), posterior.std(axis=0, ddof=1)
+    factor = np.where(before > after, 1+alpha*(before-after)/np.maximum(after, 1e-12), 1.)
+    mean = posterior.mean(axis=0)
+    return mean+(posterior-mean)*np.minimum(factor, 1e3)
+
 
 def gaspari_cohn(distance, radius):
     """Compact material-geodesic taper, zero beyond twice radius."""
@@ -28,7 +57,7 @@ def transform_weights(predictions, values, variances, localization, inflation=1.
     return mean_weights, transform
 
 
-def localized_update(mesh, q, v, loads, factors, physics, radius, inflation=1.02, diagnostics=None):
+def localized_update(mesh, q, v, loads, factors, physics, radius, inflation=1.02, diagnostics=None, huber=3.):
     if not factors:
         return q.copy(), v.copy(), loads.copy(), np.nan
     predictions = np.column_stack([factor.predict(q, v, loads, physics) for factor in factors])
@@ -52,7 +81,7 @@ def localized_update(mesh, q, v, loads, factors, physics, radius, inflation=1.02
         anomalies = predictions-predictions.mean(axis=0)
         innovation = values-predictions.mean(axis=0)
         normalized = np.abs(innovation)/np.sqrt(variance+np.var(predictions, axis=0, ddof=1))
-        precision = taper[active]/variance*np.minimum(1., 3./np.maximum(normalized, 1e-12))
+        precision = taper[active]/variance*np.minimum(1., huber/np.maximum(normalized, 1e-12))
         information = (n-1)/inflation*np.eye(n) + (anomalies[None]*precision[:, None, :]) @ anomalies.T
         eigenvalues, vectors = np.linalg.eigh(information)
         eigenvalues = np.maximum(eigenvalues, 1e-10)
@@ -64,7 +93,7 @@ def localized_update(mesh, q, v, loads, factors, physics, radius, inflation=1.02
         result = mean + np.einsum('ai,aid->ad', mean_w, state_anomalies)[:, None] + transform @ state_anomalies
         result = result.transpose(1, 0, 2)
         out_q[:, active], out_v[:, active] = result[..., :3], result[..., 3:]
-    mean_w, transform = transform_weights(predictions, values, variance, np.ones(len(factors)), inflation)
+    mean_w, transform = transform_weights(predictions, values, variance, np.ones(len(factors)), inflation, huber)
     load_anomaly = loads-loads.mean(axis=0)
     out_loads = loads.mean(axis=0)+mean_w @ load_anomaly+transform @ load_anomaly
     # Marginal innovation score, not a calibrated chi-square consistency test.
@@ -89,6 +118,12 @@ class ObserverSpec:
     max_edge_strain: float = .4
     covariance_floor_m: float = .005
     seed: int = 7
+    # Fraction of the spread removed by an analysis that is put back (0 = off).
+    relaxation: float = 0.
+    huber_threshold: float = 3.
+    hand_unobserved_after_sec: float = 1.
+    # A grip cannot be farther from another grip than the sheet between them allows.
+    corner_reach_strain: float = .02
 
 
 class EnsembleObserver:
@@ -103,8 +138,11 @@ class EnsembleObserver:
         self.q = self.v = self.loads = None
         self.time_ns = None
         self.last_seen = np.full(mesh.count, -1, np.int64)
-        self.corner_noise = self.random.normal(size=(spec.ensemble_size, 4, 3))
+        self.corner_noise = centred_normal(self.random, spec.ensemble_size, (4, 3))
+        self.boundary = {}
         self.status = {'degraded': True, 'reason': 'uninitialized'}
+        w, h = mesh.spec.width_m, mesh.spec.height_m
+        self.reach = {(0, 2): h, (1, 3): h, (0, 3): np.hypot(w, h), (1, 2): np.hypot(w, h), (2, 3): w}
 
     def check_corners(self, grips):
         """Reject physically impossible or twisted corner assignments.
@@ -149,6 +187,37 @@ class EnsembleObserver:
     def _sample_grips(self, grips, covariance):
         return grips[None]+np.einsum('cij,ncj->nci', np.linalg.cholesky(covariance), self.corner_noise)
 
+    def _boundary_targets(self, frame):
+        """Each member's four prescribed corner targets at the frame time.
+
+        A measured grip is the measurement plus the member's fixed, centred offset scaled by
+        the grip covariance. For a robot that is its calibration uncertainty. For a human hand
+        the node supplies the hand filter's estimate at this time, interpolated between glove
+        detections or carried past the last one with a covariance that grows by the filter's
+        own model. A grip with no measurement holds its place: the analysis still runs.
+        """
+        corners = self.mesh.corners
+        targets = self.q[:, corners].copy()
+        grips, covariance = frame.grip_targets(self.q.mean(axis=0)[corners])
+        measured = {g.corner for g in frame.grips}
+        for corner in measured:
+            targets[:, corner] = grips[corner]+self.corner_noise[:, corner] @ np.linalg.cholesky(covariance[corner]).T
+        # A grip cannot be farther from another grip than the sheet between them allows. Members
+        # sampled beyond that would overstretch the mesh, so the spread of a human grip is scaled
+        # down, about its unchanged mean, until every member fits. (Pulling only the offending
+        # members inward moved the ensemble mean by centimetres whenever the grip was uncertain.)
+        limit = 1+self.spec.corner_reach_strain
+        for corner in HUMAN:
+            if corner not in measured:
+                continue
+            offsets = targets[:, corner]-grips[corner]
+            for scale in np.linspace(1., 0., 11):
+                targets[:, corner] = grips[corner]+scale*offsets
+                if all(np.all(np.linalg.norm(targets[:, j]-targets[:, i], axis=1) <= rest*limit)
+                       for (i, j), rest in self.reach.items() if corner in (i, j)):
+                    break
+        return targets
+
     def _project(self, dt):
         # Bound overextension; compressed edges may represent slack and are not
         # expanded to their rest lengths by an arbitrary geometry projection.
@@ -184,20 +253,36 @@ class EnsembleObserver:
             dt = .02
         else:
             dt = (frame.time_ns-self.time_ns)/1e9
-            grips, covariance = frame.grip_targets(self.q.mean(axis=0)[self.mesh.corners])
             self.loads += self.random.normal(size=self.loads.shape)*self.spec.residual_force_walk_n_sqrt_sec*np.sqrt(dt)
-            self.q, self.v = self.physics.advance(self.q, self.v, dt, self._sample_grips(grips, covariance), self.loads)
+            self.q, self.v = self.physics.advance(self.q, self.v, dt, self._boundary_targets(frame), self.loads)
+            corner_velocity = self.v[:, self.mesh.corners].copy()
             self.v += self.random.normal(size=self.v.shape)*self.spec.velocity_noise_mps_sqrt_sec*np.sqrt(dt)
+            self.v[:, self.mesh.corners] = corner_velocity
         # Grip uncertainty was already sampled into prescribed boundary motion.
         # Do not assimilate the same measurement again as a second likelihood.
         factors = [factor for factor in self.builder.build(self.q.mean(axis=0), frame) if factor.kind != 'grip']
         prior_diagnostics = {}
+        prior_q, prior_v = self.q, self.v
+        corners = self.mesh.corners
         self.q, self.v, self.loads, score = localized_update(self.mesh, self.q, self.v, self.loads, factors,
-            self.physics, self.spec.localization_m, self.spec.inflation, prior_diagnostics)
+            self.physics, self.spec.localization_m, self.spec.inflation, prior_diagnostics, self.spec.huber_threshold)
+        self.q = relax_to_prior_spread(prior_q, self.q, self.spec.relaxation)
+        self.v = relax_to_prior_spread(prior_v, self.v, self.spec.relaxation)
+        # Corners are boundary conditions for the analysis too. Camera evidence must not move
+        # them: one depth factor used to move a robot corner by 5 cm, and on replayed
+        # teleoperation the camera update dragged the human corners 4-15 cm (p50-p95) away from
+        # glove estimates that were within 2-7 mm of the true grip, because the glove hides the
+        # sheet's corner. The grips are measured far better than the cameras can place them.
+        self.q[:, corners], self.v[:, corners] = prior_q[:, corners], prior_v[:, corners]
         self._project(dt)
-        # Positions of the prescribed uncertain grips remain ensemble boundary
-        # conditions; filtering cannot turn them into deterministic exact pins.
         self.time_ns = frame.time_ns
+        hand_age = [next((g.age_sec for g in frame.grips if g.corner == corner), None) for corner in HUMAN]
+        self.boundary = dict(time_ns=frame.time_ns, reinitialized=reinitialized,
+            grips=[dict(corner=g.corner, position=g.position.tolist(), age_sec=g.age_sec,
+                        stddev_m=float(np.sqrt(np.trace(g.covariance)/3))) for g in frame.grips],
+            hand_age_sec=hand_age,
+            corner_mean=self.q[:, corners].mean(axis=0).tolist(),
+            corner_std=self.q[:, corners].std(axis=0, ddof=1).mean(axis=1).tolist())
         for factor in factors:
             if factor.kind != 'force':
                 self.last_seen[factor.vertices[factor.weights > .05]] = frame.time_ns
@@ -210,8 +295,10 @@ class EnsembleObserver:
         rank = int(np.count_nonzero(eigenvalues > max(1e-12, eigenvalues[-1]*1e-6)))
         max_strain = float(np.max(np.linalg.norm(self.q[:, self.mesh.edges[:, 1]]-self.q[:, self.mesh.edges[:, 0]], axis=2)/self.mesh.lengths)-1)
         violation = max_strain > self.spec.max_edge_strain+.02
-        self.status = {'degraded': visual == 0 or not np.isfinite(score) or score > 25 or rank < 3 or violation,
-            'reason': 'no visual factors' if visual == 0 else 'edge strain bound violated' if violation else 'low ensemble spread' if rank < 3 else 'large innovation' if score > 25 else 'observations assimilated',
+        unobserved = any(age is None or age > self.spec.hand_unobserved_after_sec for age in hand_age)
+        self.status = {'degraded': visual == 0 or not np.isfinite(score) or score > 25 or rank < 3 or violation or unobserved,
+            'hand_age_sec': hand_age,
+            'reason': 'no visual factors' if visual == 0 else 'human grip unobserved' if unobserved else 'edge strain bound violated' if violation else 'low ensemble spread' if rank < 3 else 'large innovation' if score > 25 else 'observations assimilated',
             'factors': len(factors), 'visual_factors': visual, 'marginal_innovation_score': score,
             'reinitialized': reinitialized, 'physics_backend': self.physics.spec.backend, 'effective_rank': rank, 'max_edge_strain': max_strain, **prior_diagnostics}
         if not np.isfinite(self.q).all() or not np.isfinite(self.v).all():

@@ -18,7 +18,17 @@ class RuntimeSpec:
     robot_grip_frames: list = field(default_factory=lambda: ['oarbot_blue/fabric_grip', 'oarbot_silver/fabric_grip'])
     robot_position_std_m: float = .005
     glove_extrinsic_std_m: float = .01  # Tier A import; match hand fusion extrinsic_stddev_m
-    hand_max_age_sec: float = .25
+    hand_max_age_sec: float = .25  # newest glove measurement allowed when starting an ensemble
+    # A running ensemble keeps using a hand estimate this long after its last glove
+    # measurement, with covariance grown by the hand filter's model; then the grip holds.
+    hand_coast_sec: float = 1.
+    hand_jerk_stddev: float = 3.  # used only when a hand state does not state its own
+    # An analysis waits up to this long after its capture for the next glove detection, so
+    # the human grips are interpolated between detections instead of extrapolated past the
+    # last one. Set it to about one glove period plus the hand-fusion delay; 0 never waits.
+    hand_wait_sec: float = 0.
+    hand_floor_m: float = .01  # calibration bias kept on an interpolated grip
+    boundary_log: str = ''  # JSON-lines file of the grips each analysis consumed; empty = off
     max_capture_age_sec: float = .75
     max_wait_sec: float = .4
     reorder_wait_sec: float = .02
