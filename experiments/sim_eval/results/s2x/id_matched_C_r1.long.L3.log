@@ -1,0 +1,65 @@
+Warp 1.17.0 initialized:
+   CUDA Toolkit 12.9, Driver 13.0
+   Devices:
+     "cpu"      : "x86_64"
+     "cuda:0"   : "NVIDIA GeForce RTX 5070 Laptop GPU" (8 GiB, sm_120, mempool enabled)
+   Kernel cache:
+     /home/taha/.cache/warp/1.17.0
+Module newton._src.utils.mesh 92b663b load on device 'cpu' took 1.44 ms  (cached)
+Module newton._src.geometry.bvh 58a3a49 load on device 'cuda:0' took 1.52 ms  (cached)
+Module newton._src.solvers.style3d.kernels 6e609e0 load on device 'cuda:0' took 2.85 ms  (cached)
+Module newton._src.solvers.style3d.collision.bvh.kernels eed0ece load on device 'cuda:0' took 1.88 ms  (cached)
+    Module newton._src.solvers.style3d.builder eb1b915 load on device 'cpu' took 0.38 ms  (cached)
+    Module newton._src.solvers.style3d.builder 013f25b load on device 'cuda:0' took 3.51 ms  (cached)
+SolverStyle3D::precompute() took 14.69 ms
+Module fabric_twin.cloth 2b29def load on device 'cuda:0' took 0.60 ms  (cached)
+Module capsule_cbf.newton_runtime 8379e06 load on device 'cuda:0' took 0.56 ms  (cached)
+Module newton._src.sim.collide f369c1a load on device 'cuda:0' took 1.01 ms  (cached)
+Module narrow_phase_primitive_write_contact_False_False_False 6b2fd5c load on device 'cuda:0' took 1.20 ms  (cached)
+Module newton._src.geometry.narrow_phase 3519ebf load on device 'cuda:0' took 1.48 ms  (cached)
+Module newton._src.geometry.kernels d546c9d load on device 'cuda:0' took 5.70 ms  (cached)
+Module newton._src.solvers.style3d.collision.bvh.kernels ebf1724 load on device 'cuda:0' took 1.59 ms  (cached)
+Module newton._src.solvers.style3d.collision.kernels f54ca9e load on device 'cuda:0' took 2.76 ms  (cached)
+Module newton._src.solvers.style3d.linear_solver f457b3c load on device 'cuda:0' took 2.52 ms  (cached)
+SolverStyle3D::precompute() took 7.39 ms
+SolverStyle3D::precompute() took 6.42 ms
+SolverStyle3D::precompute() took 6.16 ms
+SolverStyle3D::precompute() took 5.98 ms
+SolverStyle3D::precompute() took 5.98 ms
+SolverStyle3D::precompute() took 5.80 ms
+SolverStyle3D::precompute() took 5.22 ms
+SolverStyle3D::precompute() took 5.38 ms
+SolverStyle3D::precompute() took 4.67 ms
+SolverStyle3D::precompute() took 4.85 ms
+SolverStyle3D::precompute() took 4.67 ms
+SolverStyle3D::precompute() took 4.57 ms
+SolverStyle3D::precompute() took 4.35 ms
+SolverStyle3D::precompute() took 4.48 ms
+SolverStyle3D::precompute() took 4.60 ms
+SolverStyle3D::precompute() took 4.51 ms
+SolverStyle3D::precompute() took 4.38 ms
+SolverStyle3D::precompute() took 4.55 ms
+SolverStyle3D::precompute() took 4.40 ms
+SolverStyle3D::precompute() took 4.52 ms
+SolverStyle3D::precompute() took 4.39 ms
+SolverStyle3D::precompute() took 4.51 ms
+SolverStyle3D::precompute() took 4.44 ms
+SolverStyle3D::precompute() took 4.62 ms
+SolverStyle3D::precompute() took 4.34 ms
+SolverStyle3D::precompute() took 4.51 ms
+SolverStyle3D::precompute() took 4.44 ms
+SolverStyle3D::precompute() took 4.62 ms
+SolverStyle3D::precompute() took 4.42 ms
+SolverStyle3D::precompute() took 133.24 ms
+SolverStyle3D::precompute() took 4.48 ms
+SolverStyle3D::precompute() took 4.58 ms
+SolverStyle3D::precompute() took 4.50 ms
+SolverStyle3D::precompute() took 4.53 ms
+SolverStyle3D::precompute() took 4.47 ms
+SolverStyle3D::precompute() took 4.52 ms
+SolverStyle3D::precompute() took 4.67 ms
+SolverStyle3D::precompute() took 4.62 ms
+SolverStyle3D::precompute() took 4.45 ms
+SolverStyle3D::precompute() took 4.82 ms
+SolverStyle3D::precompute() took 4.69 ms
+id_matched_C_r1 long twin/measured/depth: bend 1.000 shear 3.364 (true 0.333, 2.500) cost 5.61 mm, 1819 s

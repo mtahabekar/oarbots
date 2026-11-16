@@ -1,0 +1,6 @@
+analysis: 4334 states, p50 4.5 mm, p95 15.2 mm, max 47.4 mm, 95% coverage 0.97, degraded 0.00, human_left p95 2.0 mm, human_right p95 3.9 mm
+prediction: 4331 states, p50 3.9 mm, p95 14.2 mm, max 51.1 mm, 95% coverage 0.98, degraded 0.00
+analysis_attached: 4304 states, p50 4.5 mm, p95 15.2 mm, max 47.4 mm, 95% coverage 0.97, degraded 0.00, human_left p95 2.0 mm, human_right p95 3.9 mm
+SIM_CELL_EVALUATED /home/taha/ros2_colcon_ws/src/oarbots/experiments/material_20261115_171017/eval/metrics.json
+twin vs plant truth: 4316 states, p50 2.0 mm, p95 5.2 mm, max 49.7 mm; lowest 5% height error mean -1.2 mm; plant true clearance min 55.1 cm
+TWIN_EVALUATED /home/taha/ros2_colcon_ws/src/oarbots/experiments/material_20261115_171017/twin_eval.json

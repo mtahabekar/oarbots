@@ -188,7 +188,7 @@ class FabricTwinNode(Node):
         if msg.predicted:
             return
         self.estimate, self.estimate_received = msg, self.get_clock().now().nanoseconds
-        if self.model is not None and msg.model_id == self.model.model_id:
+        if self.model is not None and msg.model_id == self.model.model_id and self.feedback_spec.enabled:
             self.pending_estimates.append(msg)
 
     def apply_estimates(self):
@@ -307,7 +307,8 @@ class FabricTwinNode(Node):
         started = time.perf_counter()
         self.cloth = TwinCloth(self.spec, grips)
         estimate = self.estimate
-        if (estimate is not None and self.model is not None and estimate.model_id == self.model.model_id
+        if (self.feedback_spec.enabled and estimate is not None and self.model is not None
+                and estimate.model_id == self.model.model_id
                 and abs(nanoseconds(estimate.measurement_stamp)-time_ns) < 1e9):
             self.cloth.place_from_mesh(np.array([[p.x, p.y, p.z] for p in estimate.positions]),
                                        self.model.rows, self.model.columns, grips)

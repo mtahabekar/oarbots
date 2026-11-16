@@ -1,0 +1,781 @@
+Starting kit application with the following args:  ['/media/taha/ExtermeLinux/isaacsim6.2/exts/isaacsim.simulation_app/isaacsim/simulation_app/simulation_app.py', '/media/taha/ExtermeLinux/isaacsim6.2/apps/isaacsim.exp.base.python.kit', '--/app/tokens/exe-path=/media/taha/ExtermeLinux/isaacsim6.2/kit', '--/persistent/app/viewport/displayOptions=3094', '--/rtx/materialDb/syncLoads=True', '--/rtx/hydra/materialSyncLoads=True', '--/omni/kit/plugin/syncUsdLoads=True', '--/app/renderer/resolution/width=1280', '--/app/renderer/resolution/height=720', '--/app/window/width=1440', '--/app/window/height=900', '--/renderer/multiGpu/enabled=True', '--/app/fastShutdown=True', '--/app/installSignalHandlers=0', '--ext-folder', '/media/taha/ExtermeLinux/isaacsim6.2/exts', '--ext-folder', '/media/taha/ExtermeLinux/isaacsim6.2/apps', '--/physics/cudaDevice=0', '--/plugins/carb.tasking.plugin/threadCount=16', '--/plugins/omni.tbb.globalcontrol/maxThreadCount=16', '--portable']
+Passing the following args to the base kit application:  ['--/app/hydraEngine/waitIdle=true', '--/app/updateOrder/checkForHydraRenderComplete=1000', '--/rtx/hydra/supportMultiTickRate=false', '--/rtx/rendering/perSensorTickTlas=false']
+2026-11-15T22:00:20Z [Info] [carb] Logging to file: /media/taha/ExtermeLinux/isaacsim6.2/kit/logs/Kit/Isaac-Sim Python/6.2/kit_20261115_170019.log
+[1.215s] [ext: omni.assets.plugins-0.0.0] startup
+[1.216s] [ext: omni.blobkey-1.1.2] startup
+[1.216s] [ext: omni.kit.async_engine-0.0.5] startup
+[1.437s] [ext: omni.client.lib-1.1.1] startup
+[1.444s] [ext: omni.client-1.3.0] startup
+[1.498s] [ext: omni.protobuf.lib-1.0.1] startup
+[1.499s] [ext: omni.grpc.lib-1.0.1] startup
+[1.501s] [ext: omni.metrics.core-0.0.3] startup
+[1.501s] [ext: omni.datastore-0.0.0] startup
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1794780021.012163  103865 descriptor_database.cc:633] File already exists in database: grpc/health/v1/health.proto
+W0000 00:00:1794780021.012180  103865 message.cc:301] Protobuf GeneratedMessageFactory: File is already registered: grpc/health/v1/health.proto
+[1.502s] [ext: omni.gpu_foundation.shadercache.vulkan-1.0.0] startup
+[1.504s] [ext: omni.hsscclient-1.1.4] startup
+[1.504s] [ext: omni.stats-1.0.1] startup
+[1.505s] [ext: omni.ujitso.default-1.0.0] startup
+[1.507s] [ext: omni.gpu_foundation-0.0.0] startup
+[1.770s] [ext: carb.windowing.plugins-1.0.1] startup
+[1.796s] [ext: omni.kit.renderer.init-1.0.1] startup
+2026-11-15T22:00:21Z [913ms] [Warning] [omni.rtx] Skipping unsupported non-NVIDIA GPU: Intel(R) Graphics (ARL)
+2026-11-15T22:00:21Z [914ms] [Warning] [omni.rtx] Skipping unsupported non-NVIDIA GPU: Intel(R) Graphics (ARL)
+
+|---------------------------------------------------------------------------------------------|
+| Driver Version: 580.178.04    | Graphics API: Vulkan
+|=============================================================================================|
+| GPU | Name                             | Active | LDA | GPU Memory | Vendor-ID | LUID       |
+|     |                                  |        |     |            | Device-ID | UUID       |
+|     |                                  |        |     |            | Bus-ID    |            |
+|---------------------------------------------------------------------------------------------|
+| 0   | NVIDIA GeForce RTX 5070 Laptop.. | Yes: 0 |     | 8151    MB | 10de      | 0          |
+|     |                                  |        |     |            | 2d58      | 7ecb1ded.. |
+|     |                                  |        |     |            | 2         |            |
+|---------------------------------------------------------------------------------------------|
+| 1   | Intel(R) Graphics (ARL)          |        |     | 23633   MB | 8086      | 0          |
+|     |                                  |        |     |            | 7d67      | 8680677d.. |
+|     |                                  |        |     |            | 0         |            |
+|=============================================================================================|
+| OS: 24.04.5 LTS (Noble Numbat) ubuntu, Version: 24.04.5, Kernel: 7.0.0-43-generic
+| XServer Vendor: The X.Org Foundation, XServer Version: 12302006 (1.23.2.6)
+| Processor: Intel(R) Core(TM) Ultra 9 275HX
+| Cores: 24 | Logical Cores: 24
+|---------------------------------------------------------------------------------------------|
+| Total Memory (MB): 31511 | Free Memory: 10241
+| Total Page/Swap (MB): 7629 | Free Page/Swap: 7629
+|---------------------------------------------------------------------------------------------|
+2026-11-15T22:00:21Z [1,248ms] [Warning] [omni.rtx] CPU performance profile is set to powersave. This profile sets the CPU to the lowest frequency reducing performance.
+2026-11-15T22:00:21Z [1,258ms] [Warning] [omni.rtx] PCIe link width current (8) and maximum (16) for device 0 don't match.
+2026-11-15T22:00:21Z [1,258ms] [Warning] [omni.rtx] IOMMU is enabled.
+[2.570s] [ext: omni.kit.pipapi-0.0.0] startup
+[2.571s] [ext: omni.kit.pip_archive-0.0.0] startup
+[2.571s] [ext: isaacsim.pip.newton-0.12.1] startup
+[2.572s] [ext: isaacsim.pip.nv-1.0.2] startup
+[2.572s] [ext: isaacsim.pip.onnx-1.0.1] startup
+[2.572s] [ext: omni.pip.compute-1.9.7] startup
+[2.573s] [ext: omni.isaac.core_archive-5.4.1] startup
+[2.573s] [ext: omni.kit.telemetry-0.5.2] startup
+[2.589s] [ext: omni.kit.loop-isaac-1.6.2] startup
+[2.590s] [ext: omni.kit.test-2.2.3] startup
+[2.624s] [ext: omni.materialx.libs-1.0.9] startup
+[2.629s] [ext: omni.gpucompute.plugins-0.0.0] startup
+[2.630s] [ext: omni.usd.config-1.0.8] startup
+[2.632s] [ext: omni.usd.libs-1.0.3] startup
+[2.694s] [ext: omni.iray.libs-0.0.1] startup
+[2.697s] [ext: omni.mdl-57.0.6] startup
+[2.713s] [ext: omni.mdl.neuraylib-0.2.23] startup
+[2.714s] [ext: omni.kit.usd.mdl-1.1.12] startup
+[2.785s] [ext: omni.appwindow-1.2.2] startup
+[2.790s] [ext: omni.kit.renderer.core-1.3.2] startup
+[2.886s] [ext: omni.kit.renderer.capture-2.0.2] startup
+[2.888s] [ext: omni.kit.renderer.imgui-2.2.1] startup
+[3.008s] [ext: omni.ui-3.3.10] startup
+[3.016s] [ext: omni.kit.mainwindow-1.0.4] startup
+[3.017s] [ext: carb.audio-0.1.0] startup
+[3.019s] [ext: omni.uiaudio-1.0.0] startup
+[3.020s] [ext: omni.kit.uiapp-0.0.0] startup
+[3.020s] [ext: omni.usd.schema.metrics.assembler-110.1.1] startup
+[3.023s] [ext: omni.usd.schema.audio-0.0.1] startup
+[3.025s] [ext: omni.usd_resolver-1.0.0] startup
+[3.028s] [ext: omni.usd.core-1.10.42] startup
+[3.031s] [ext: omni.metropolis.schema-0.0.3] startup
+[3.032s] [ext: isaacsim.anim.robot.schema-0.1.1] startup
+[3.032s] [ext: isaacsim.common-6.2.0] startup
+[3.033s] [ext: omni.usd.schema.anim-0.0.1] startup
+[3.050s] [ext: omni.usd.schema.geospatial-0.0.1] startup
+[3.052s] [ext: omni.usd.schema.omnigraph-1.0.1] startup
+[3.060s] [ext: omni.usd.schema.semantics-0.0.0] startup
+[3.062s] [ext: omni.activity.core-1.0.4] startup
+[3.063s] [ext: omni.cubric-0.1.0] startup
+[3.063s] [ext: omni.graph.exec-0.9.6] startup
+[3.063s] [ext: omni.hydra.scene_delegate-0.3.5] startup
+[3.067s] [ext: usdrt.scenegraph-7.6.3] startup
+[3.089s] [ext: omni.hydra.usdrt_delegate-7.5.2] startup
+[3.094s] [ext: omni.inspect-1.0.2] startup
+[3.095s] [ext: omni.kit.actions.core-1.2.1] startup
+[3.097s] [ext: omni.kit.audiodeviceenum-1.0.2] startup
+[3.098s] [ext: omni.kit.commands-1.6.2] startup
+[3.101s] [ext: omni.kit.exec.core-0.13.6] startup
+[3.102s] [ext: omni.kit.usd_undo-0.1.8] startup
+[3.102s] [ext: omni.kit.window.popup_dialog-2.0.26] startup
+[3.105s] [ext: omni.kit.widget.connection_manager-1.0.4] startup
+[3.109s] [ext: omni.timeline-1.1.2] startup
+[3.111s] [ext: omni.usd-1.19.11] startup
+[3.144s] [ext: omni.graph.core-3.1.8] startup
+[3.146s] [ext: omni.kit.notification_manager-1.0.17] startup
+[3.147s] [ext: isaacsim.core.deprecation_manager-0.4.5] startup
+[3.148s] [ext: isaacsim.replicator.agent.schema-0.1.2] startup
+[3.149s] [ext: isaacsim.robot.schema-7.0.2] startup
+[3.151s] [ext: isaacsim.robot_motion.schema-0.2.2] startup
+[3.152s] [ext: omni.anim.behavior.schema-110.4.0] startup
+[3.152s] [ext: omni.anim.graph.schema-110.4.0] startup
+[3.153s] [ext: omni.anim.navigation.schema-110.4.0] startup
+[3.153s] [ext: omni.behavior.tree.schema-110.4.0] startup
+[3.154s] [ext: omni.isaac.ml_archive-3.4.0] startup
+[3.154s] [ext: omni.kit.asset_converter-6.1.0] startup
+[3.163s] [ext: omni.pip.cloud-1.5.7] startup
+[3.165s] [ext: omni.usd.schema.flow-110.0.0] startup
+[3.165s] [ext: omni.usd.schema.newton-1.5.0] startup
+[3.165s] [ext: omni.usd.schema.mujoco-1.1.4] startup
+[3.166s] [ext: omni.usd.schema.omni_dome_light-1.0.0] startup
+[3.166s] [ext: omni.usd.schema.omni_lens_distortion-1.0.0] startup
+[3.166s] [ext: omni.usd.schema.omni_projectors-1.0.0] startup
+[3.167s] [ext: omni.usd.schema.omni_sensors-0.0.0] startup
+[3.173s] [ext: omni.usd.schema.omniscripting-1.0.1] startup
+[3.176s] [ext: omni.usd.schema.physical_lighting-0.1.0] startup
+[3.179s] [ext: omni.usd.schema.physx-110.4.4] startup
+[3.200s] [ext: omni.usd.schema.render_settings.rtx-1.0.3] startup
+[3.203s] [ext: omni.usd.schema.usd_particle_field-1.0.0] startup
+[3.204s] [ext: omni.kit.menu.core-1.3.0] startup
+[3.204s] [ext: omni.kit.menu.utils-2.2.8] startup
+[3.209s] [ext: omni.kit.usd.layers-2.7.9] startup
+[3.215s] [ext: omni.kit.primitive.mesh-1.1.1] startup
+[3.217s] [ext: omni.kit.stage_template.core-1.1.23] startup
+[3.217s] [ext: omni.kit.stage_templates-2.0.3] startup
+[3.218s] [ext: omni.usd.metrics.assembler-110.1.2] startup
+[3.220s] [ext: omni.warp.core-1.17.0] startup
+[3.360s] [ext: isaacsim.core.experimental.utils-0.23.3] startup
+[3.361s] [ext: omni.convexdecomposition-110.4.4] startup
+[3.363s] [ext: omni.physics-110.4.4] startup
+[3.366s] [ext: omni.physx.gpu-110.4.4] startup
+[3.366s] [ext: omni.physx.foundation-110.4.4] startup
+[3.367s] [ext: omni.usdphysics-110.4.4] startup
+[3.368s] [ext: omni.physx.cooking-110.4.4] startup
+Warning: Possible version incompatibility. Attempting to load carb::ujitso::IFactory with version v0.3 against v0.2.
+[3.370s] [ext: omni.physx-110.4.4] startup
+[3.378s] [ext: omni.physics.physx-110.4.4] startup
+[3.380s] [ext: omni.physics.stageupdate-110.4.4] startup
+[3.381s] [ext: omni.physics.tensors-110.4.4] startup
+[3.384s] [ext: omni.physx.tensors-110.4.4] startup
+[3.388s] [ext: omni.usdex.libs-3.0.0] startup
+[3.396s] [ext: isaacsim.core.simulation_manager-1.17.4] startup
+[3.405s] [ext: isaacsim.test.docstring-1.3.2] startup
+[3.409s] [ext: isaacsim.core.experimental.prims-1.12.1] startup
+[3.421s] [ext: isaacsim.core.experimental.primdata-0.3.6] startup
+[3.423s] [ext: omni.kit.clipboard-1.1.1] startup
+[3.424s] [ext: omni.kit.widget.context_menu-1.5.0] startup
+[3.425s] [ext: omni.kit.context_menu-1.10.0] startup
+[3.426s] [ext: omni.kit.helper.file_utils-0.1.10] startup
+[3.427s] [ext: omni.kit.widget.nucleus_info-2.0.2] startup
+[3.427s] [ext: omni.kit.search_core-1.0.8] startup
+[3.428s] [ext: omni.kit.widget.path_field-2.0.14] startup
+[3.428s] [ext: omni.kit.widget.browser_bar-2.0.11] startup
+[3.429s] [ext: omni.kit.widget.filebrowser-2.14.5] startup
+[3.432s] [ext: omni.kit.widget.nucleus_connector-2.4.0] startup
+[3.432s] [ext: omni.kit.widget.options_menu-1.1.7] startup
+[3.434s] [ext: omni.kit.widget.options_button-1.0.3] startup
+[3.434s] [ext: omni.kit.widget.search_delegate-1.0.10] startup
+[3.435s] [ext: omni.ui.scene-2.1.1] startup
+[3.439s] [ext: omni.kit.window.filepicker-3.0.18] startup
+[3.450s] [ext: omni.kit.window.file_importer-1.1.22] startup
+[3.451s] [ext: omni.kit.material.library-3.1.8] startup
+[3.454s] [ext: isaacsim.core.experimental.materials-0.11.1] startup
+[3.456s] [ext: isaacsim.core.experimental.objects-0.9.1] startup
+[3.508s] [ext: isaacsim.robot_motion.experimental.motion_generation-7.2.0] startup
+[3.520s] [ext: isaacsim.robot_motion.controllers-0.4.0] startup
+[3.526s] [ext: isaacsim.robot_motion.cumotion-1.5.0] startup
+[3.534s] [ext: isaacsim.core.version-2.2.1] startup
+[3.535s] [ext: isaacsim.app.about-2.3.2] startup
+[3.539s] [ext: isaacsim.asset.transformer-6.2.1] startup
+[3.542s] [ext: omni.scene.optimizer.core-110.3.1] startup
+[3.588s] [ext: isaacsim.asset.importer.utils-1.9.1] startup
+[3.590s] [ext: isaacsim.asset.exporter.urdf-2.2.10] startup
+[3.596s] [ext: isaacsim.asset.transformer.rules-1.7.25] startup
+[3.604s] [ext: isaacsim.asset.importer.mjcf-3.13.0] startup
+[3.605s] [ext: isaacsim.asset.importer.urdf-3.11.12] startup
+[3.608s] [ext: isaacsim.storage.native-1.12.2] startup
+[3.609s] [ext: omni.usd.metrics.assembler.physics-110.4.4] startup
+[3.610s] [ext: isaacsim.core.utils-4.1.9] startup
+[3.612s] [ext: isaacsim.core.prims-0.11.7] startup
+[4.324s] [ext: isaacsim.core.api-5.3.2] startup
+[4.329s] [ext: isaacsim.core.cloner-1.7.6] startup
+[4.331s] [ext: omni.graph.tools-1.81.0] startup
+[4.347s] [ext: omni.graph-1.142.6] startup
+[4.378s] [ext: isaacsim.core.experimental.actuators-0.2.1] startup
+[4.391s] [ext: omni.hydra.engine.stats-1.0.5] startup
+[4.393s] [ext: omni.hydra.rtx.shadercache.vulkan-1.0.0] startup
+[4.394s] [ext: omni.index.libs-392300.2120.0] startup
+[4.394s] [ext: omni.index-1.0.1] startup
+[4.395s] [ext: omni.ujitso.client-0.0.0] startup
+[4.395s] [ext: omni.usd.schema.playback-1.1.0] startup
+[4.395s] [ext: omni.volume-0.5.2] startup
+[4.399s] [ext: omni.hydra.rtx-1.0.5] startup
+2026-11-15T22:00:23Z [3,223ms] [Warning] [omni.log] Source: omni.hydra was already registered.
+[4.423s] [ext: omni.kit.hydra_texture-1.6.2] startup
+[4.439s] [ext: omni.kit.raycast.query-1.2.0] startup
+[4.443s] [ext: omni.kit.viewport.legacy_gizmos-1.0.24] startup
+[4.445s] [ext: omni.kit.viewport.registry-104.0.6] startup
+[4.446s] [ext: omni.kit.viewport.scene_camera_model-1.0.7] startup
+[4.449s] [ext: omni.kit.widget.viewport-110.0.1] startup
+[4.453s] [ext: omni.kit.window.drop_support-1.0.8] startup
+[4.453s] [ext: omni.kit.viewport.window-110.0.5] startup
+[4.466s] [ext: omni.kit.viewport.utility-2.1.2] startup
+[4.467s] [ext: isaacsim.core.rendering_manager-0.5.3] startup
+[4.470s] [ext: omni.graph.action_core-1.1.9] startup
+[4.472s] [ext: omni.graph.action_nodes_core-2.11.0] startup
+[4.474s] [ext: omni.graph.action_nodes-2.11.0] startup
+[4.498s] [ext: omni.graph.action-2.10.2] startup
+[4.500s] [ext: omni.graph.image.core-0.6.1] startup
+[4.501s] [ext: omni.graph.image.nodes-1.3.2] startup
+[4.501s] [ext: omni.graph.nodes_core-2.11.0] startup
+[4.507s] [ext: omni.graph.nodes-2.12.1] startup
+[4.512s] [ext: omni.kit.hotkeys.core-1.6.1] startup
+[4.513s] [ext: omni.kit.property.adapter.core-1.1.1] startup
+[4.516s] [ext: omni.kit.property.adapter.usd-1.0.6] startup
+[4.517s] [ext: omni.kit.widget.filter-1.1.9] startup
+[4.518s] [ext: omni.kit.widget.highlight_label-1.0.3] startup
+[4.519s] [ext: omni.kit.widget.searchfield-1.1.8] startup
+[4.520s] [ext: omni.kit.window.file_exporter-1.0.38] startup
+[4.521s] [ext: omni.kit.widget.stage-4.7.2] startup
+[4.529s] [ext: omni.kit.window.content_browser_registry-0.0.6] startup
+[4.530s] [ext: omni.kit.window.file-2.0.17] startup
+[4.533s] [ext: omni.kit.window.content_browser-3.1.14] startup
+[4.541s] [ext: omni.kit.window.property-1.15.2] startup
+[4.553s] [ext: omni.kit.property.usd-4.9.18] startup
+[4.563s] [ext: omni.graph.scriptnode-2.10.2] startup
+[4.571s] [ext: omni.kit.widget.searchable_combobox-1.0.7] startup
+[4.572s] [ext: omni.kit.widget.settings-2.0.1] startup
+[4.574s] [ext: omni.kit.window.preferences-1.8.5] startup
+[4.578s] [ext: omni.kit.viewport.menubar.core-110.0.4] startup
+[4.588s] [ext: omni.syntheticdata-0.6.17] startup
+[4.613s] [ext: omni.replicator.nv-1.1.7] startup
+[4.618s] [ext: omni.videoencoding-0.2.1] startup
+[4.620s] [ext: omni.replicator.core-1.13.38] startup
+2026-11-15T22:00:24Z [3,440ms] [Warning] [pxr.Semantics] pxr.Semantics is deprecated - please use Semantics instead
+Warp 1.17.0 initialized:
+   CUDA Toolkit 12.9, Driver 13.0
+   Devices:
+     "cpu"      : "x86_64"
+     "cuda:0"   : "NVIDIA GeForce RTX 5070 Laptop GPU" (8 GiB, sm_120, mempool enabled)
+   Kernel cache:
+     /home/taha/.cache/warp/1.17.0
+2026-11-15T22:00:24Z [3,491ms] [Warning] [omni.replicator.core.scripts.extension] No material configuration file, adding configuration to material settings directly.
+[4.775s] [ext: isaacsim.core.nodes-5.10.15] startup
+[4.802s] [ext: isaacsim.core.throttling-2.3.7] startup
+[4.804s] [ext: omni.kit.manipulator.viewport-107.0.1] startup
+[4.804s] [ext: omni.graph.visualization.nodes-2.1.4] startup
+[4.816s] [ext: omni.kit.window.extensions-1.7.0] startup
+[4.820s] [ext: isaacsim.gui.components-1.8.9] startup
+[4.824s] [ext: isaacsim.examples.base-1.3.4] startup
+[4.827s] [ext: omni.kit.widget.zoombar-1.0.7] startup
+[4.827s] [ext: omni.kit.browser.core-2.3.18] startup
+[4.831s] [ext: omni.kit.browser.folder.core-2.0.3] startup
+[4.834s] [ext: omni.kit.widget.stage_icons-1.0.8] startup
+[4.835s] [ext: omni.kit.window.stage-2.6.4] startup
+[4.838s] [ext: omni.kit.menu.stage-1.2.7] startup
+[4.839s] [ext: omni.kit.usd.collect-3.0.7] startup
+[4.842s] [ext: omni.kit.widget.prompt-1.0.7] startup
+[4.843s] [ext: omni.kit.tool.collect-2.3.0] startup
+[4.845s] [ext: isaacsim.examples.browser-0.3.4] startup
+[4.847s] [ext: omni.kit.search.files-1.0.4] startup
+[4.848s] [ext: omni.kit.widget.calendar-1.0.9] startup
+[4.849s] [ext: omni.kit.widget.extended_searchfield-1.0.31] startup
+[4.856s] [ext: omni.simready.content.browser-0.3.10] startup
+[4.929s] [ext: isaacsim.gui.content_browser-0.5.1] startup
+[4.931s] [ext: omni.kit.selection-0.1.6] startup
+[4.932s] [ext: isaacsim.gui.menu-2.10.12] startup
+[4.939s] [ext: isaacsim.gui.property-1.6.4] startup
+[4.945s] [ext: omni.kit.viewport.actions-110.1.1] startup
+[4.947s] [ext: omni.kit.viewport.menubar.display-110.0.0] startup
+[4.949s] [ext: isaacsim.gui.sensors.icon-2.2.4] startup
+[4.951s] [ext: omni.behavior.scripting.core-110.4.0] startup
+[4.954s] [ext: isaacsim.replicator.behavior-1.6.2] startup
+[4.957s] [ext: isaacsim.replicator.experimental.domain_randomization-1.2.12] startup
+[4.971s] [ext: isaacsim.replicator.domain_randomization-1.2.4] startup
+[5.031s] [ext: isaacsim.replicator.writers-1.5.7] startup
+[5.050s] [ext: isaacsim.robot.experimental.wheeled_robots-0.2.17] startup
+[5.069s] [ext: isaacsim.robot.surface_gripper-3.7.1] startup
+[5.080s] [ext: isaacsim.robot.manipulators-3.4.5] startup
+[5.090s] [ext: isaacsim.robot.policy.examples-7.2.3] startup
+[5.111s] [ext: isaacsim.robot.wheeled_robots-5.2.5] startup
+[5.116s] [ext: isaacsim.robot.wheeled_robots.nodes-0.1.14] startup
+[5.136s] [ext: isaacsim.robot_motion.lula-4.1.4] startup
+[5.145s] [ext: isaacsim.robot_motion.motion_generation-9.0.0] startup
+[5.152s] [ext: omni.kit.numpy.common-0.1.3] startup
+[5.153s] [ext: omni.rtx.spg-0.4.0] startup
+[5.159s] [ext: omni.sensors.nv.camera-1.4.0] startup
+[5.166s] [ext: isaacsim.sensors.camera-1.7.13] startup
+[5.191s] [ext: isaacsim.sensors.experimental.physics-4.0.0] startup
+[5.201s] [ext: omni.sensors.net-1.4.0] startup
+[5.204s] [ext: omni.sensors.nv.common-3.4.0] startup
+[5.216s] [ext: omni.sensors.nv.materials-2.4.0] startup
+[5.219s] [ext: omni.sensors.nv.acoustic-3.4.0] startup
+[5.223s] [ext: omni.sensors.nv.ids-2.4.0] startup
+[5.224s] [ext: omni.sensors.nv.lidar-3.4.0] startup
+[5.229s] [ext: omni.sensors.nv.radar-3.4.0] startup
+[5.232s] [ext: isaacsim.sensors.experimental.rtx-2.0.1] startup
+[5.425s] [ext: isaacsim.sensors.physics.nodes-1.6.2] startup
+[5.433s] [ext: isaacsim.util.debug_draw-3.2.8] startup
+[5.440s] [ext: isaacsim.sensors.physx-2.5.7] startup
+[5.450s] [ext: isaacsim.sensors.rtx-15.17.5] startup
+[5.465s] [ext: isaacsim.simulation_app-2.19.0] startup
+[5.466s] [ext: omni.anim.curve.core-1.6.1] startup
+[5.479s] [ext: omni.graph.ui_nodes-2.11.2] startup
+[5.510s] [ext: omni.kit.manipulator.camera-110.1.1] startup
+[5.514s] [ext: omni.kit.manipulator.selector-1.1.4] startup
+[5.515s] [ext: omni.kit.manipulator.transform-107.0.1] startup
+[5.520s] [ext: omni.kit.widget.toolbar-2.1.0] startup
+[5.525s] [ext: omni.kit.manipulator.tool.snap-1.5.15] startup
+[5.529s] [ext: omni.kit.viewport.manipulator.transform-107.0.4] startup
+[5.531s] [ext: omni.kit.manipulator.prim.core-108.0.2] startup
+[5.537s] [ext: omni.kit.manipulator.prim.usd-107.0.3] startup
+[5.538s] [ext: omni.kit.manipulator.prim-108.0.0] startup
+[5.538s] [ext: omni.kit.manipulator.selection-110.1.0] startup
+[5.540s] [ext: omni.kit.menu.create-2.0.2] startup
+[5.542s] [ext: omni.kit.property.audio-1.0.18] startup
+[5.545s] [ext: omni.kit.property.camera-1.0.14] startup
+[5.547s] [ext: omni.kit.property.geometry-2.1.2] startup
+[5.550s] [ext: omni.kit.property.light-1.0.16] startup
+[5.586s] [ext: omni.kit.property.material-1.15.1] startup
+[5.593s] [ext: omni.kit.property.render-1.2.2] startup
+[5.594s] [ext: omni.kit.property.transform-1.6.13] startup
+[5.598s] [ext: omni.kit.property.bundle-1.5.3] startup
+[5.599s] [ext: omni.kit.usdz_export-1.1.1] startup
+[5.602s] [ext: omni.kit.tool.asset_importer-6.0.4] startup
+[5.608s] [ext: omni.kit.ui.actions-1.0.5] startup
+[5.609s] [ext: omni.kit.viewport.menubar.camera-107.0.16] startup
+[5.614s] [ext: omni.kit.viewport.menubar.lighting-107.3.4] startup
+[5.617s] [ext: omni.kit.viewport.menubar.render-110.1.1] startup
+[5.620s] [ext: omni.kit.viewport.menubar.settings-110.0.2] startup
+[5.623s] [ext: omni.kit.window.console-1.1.12] startup
+[5.627s] [ext: omni.kit.window.status_bar-0.1.11] startup
+[5.630s] [ext: omni.kit.window.toolbar-3.0.3] startup
+[5.632s] [ext: omni.ocio-0.1.1] startup
+[5.633s] [ext: omni.physx.commands-110.4.4] startup
+[5.637s] [ext: omni.replicator.replicator_yaml-2.0.12] startup
+[5.647s] [ext: omni.rtx.window.settings-0.8.5] startup
+[5.652s] [ext: omni.rtx.settings.core-0.7.2] startup
+[5.655s] [ext: omni.usd.metrics.assembler.ui-110.1.3] startup
+[5.662s] [ext: semantics.schema.editor-2.0.2] startup
+[5.665s] [ext: semantics.schema.property-2.0.2] startup
+[5.666s] [ext: omni.kit.menu.common-2.0.2] startup
+[5.668s] [ext: isaacsim.exp.base-6.2.0] startup
+[5.668s] [ext: isaacsim.exp.base.python-6.2.0] startup
+[5.669s] Simulation App Starting
+2026-11-15T22:00:25Z [4,636ms] [Warning] [carb.omniclient.plugin]  Main: core: Core::getServerInfo: rejecting empty URL as invalid
+[7.788s] Simulation App Startup Complete
+[7.807s] app ready
+[8.244s] [ext: isaacsim.core.includes-2.9.5] startup
+[8.244s] [ext: isaacsim.sensors.rtx.nodes-0.1.7] startup
+[8.266s] [ext: isaacsim.ros2.core-1.11.2] startup
+[8.295s] Attempting to load system rclpy
+[8.387s] rclpy loaded
+[8.392s] [ext: isaacsim.ros2.control-0.1.6] startup
+[8.399s] [ext: isaacsim.ros2.nodes-1.22.9] startup
+[8.465s] [ext: isaacsim.ros2.examples-1.2.9] startup
+[8.472s] [ext: isaacsim.ros2.ui-1.9.3] startup
+[8.637s] [ext: isaacsim.ros2.bridge-5.1.4] startup
+Module newton._src.utils.mesh 92b663b load on device 'cpu' took 0.98 ms  (cached)
+Module newton._src.geometry.bvh 58a3a49 load on device 'cuda:0' took 1.20 ms  (cached)
+Module newton._src.solvers.style3d.kernels 6e609e0 load on device 'cuda:0' took 2.82 ms  (cached)
+Module newton._src.solvers.style3d.collision.bvh.kernels eed0ece load on device 'cuda:0' took 1.58 ms  (cached)
+    Module newton._src.solvers.style3d.builder eb1b915 load on device 'cpu' took 0.18 ms  (cached)
+    Module newton._src.solvers.style3d.builder 013f25b load on device 'cuda:0' took 1.41 ms  (cached)
+SolverStyle3D::precompute() took 9.20 ms
+Module capsule_cbf.newton_runtime 8379e06 load on device 'cuda:0' took 0.54 ms  (cached)
+Module newton._src.sim.collide f369c1a load on device 'cuda:0' took 0.95 ms  (cached)
+Module narrow_phase_primitive_write_contact_False_False_False 6b2fd5c load on device 'cuda:0' took 1.17 ms  (cached)
+Module newton._src.geometry.narrow_phase 3519ebf load on device 'cuda:0' took 1.39 ms  (cached)
+Module newton._src.geometry.kernels d546c9d load on device 'cuda:0' took 5.89 ms  (cached)
+Module newton._src.solvers.style3d.collision.bvh.kernels ebf1724 load on device 'cuda:0' took 1.53 ms  (cached)
+Module newton._src.solvers.style3d.collision.kernels f54ca9e load on device 'cuda:0' took 5.76 ms  (cached)
+Module newton._src.solvers.style3d.linear_solver f457b3c load on device 'cuda:0' took 2.28 ms  (cached)
+[fabric_sim] cloth 28x28 cells (841 particles), areal density 0.2 kg/m^2 -> 1.678e-04 kg/particle, center (0.000, 0.000, 1.050) m
+[fabric_sim] appearance: dry_carbon_twill, yarn pitch 2 mm; mechanical parameters UNCALIBRATED (existing Style3D baseline)
+[fabric_sim] solver: 8 substeps, 6 PD / 3 PCG iterations, CUDA graph on; gripper patches 2x2 (16 pinned particles), inset 0.000 m; initial corners (x, y) [[-0.42, -0.42], [0.42, -0.42], [-0.42, 0.42], [0.42, 0.42]]
+[fabric_sim] CBF controller=sensitivity, capsule radius 0.3111 m, top=centered_sphere (sphere radius 0.700 m, apex z 0.393 m), margin 0.05 m, tension limit 20.0 N, strain=True, warm-up 90 frames; prediction model: {'prediction_model': 'coarse', 'live_particles': 841, 'prediction_particles': 289, 'prediction_triangles': 512, 'prediction_grid_shape': [16, 16], 'model_substeps': 1, 'stride': 2, 'jacobian': 'affine'}
+[fabric_sim] arguments passed to Kit: ['--/app/hydraEngine/waitIdle=true', '--/app/updateOrder/checkForHydraRenderComplete=1000', '--/rtx/hydra/supportMultiTickRate=false', '--/rtx/rendering/perSensorTickTlas=false']
+[11.410s] [ext: omni.physx.fabric-110.4.4] startup
+[combined] cloth spawn z 1.0500 m, table half extents [0.22, 0.22, 0.16], robots on physx, cloth on raw Newton Style3D, CBF sensitivity
+2026-11-15T22:00:31Z [10,474ms] [Warning] [omni.fabric.plugin] Unsupported type encountered during VtValue extraction
+2026-11-15T22:00:31Z [10,474ms] [Warning] [omni.fabric.plugin] Attempting to set an invalid data source to array attribute
+
+2026-11-15T22:00:31Z [10,475ms] [Warning] [omni.usd] Encountered USD Warnings but USD Diagnostics are currently muted. To view USD Warnings, please set the '/persistent/app/usd/muteUsdDiagnostics' setting to false in Preferences page.
+2026-11-15T22:00:31Z [10,515ms] [Warning] [omni.fabric.plugin] Warning: attribute timeVaryingAttributes not found for bucket id 18
+
+2026-11-15T22:00:31Z [10,874ms] [Warning] [omni.rtx] DLSS increasing input dimensions: Render resolution of (320, 180) is below minimal input resolution of 300.
+[INFO] [1794780032.091323005] [fabric_newton_isaacsim]: ROS 2 I/O ready: /fabric/leader_{left,right}/cmd_vel in; /fabric/follower_{left,right}/applied_cmd_vel, /fabric/sim/{corners,state,timing}, /fabric/capsule_cbf/debug out
+blue DOFs: ['front_left_wheel_joint', 'front_right_wheel_joint', 'rear_left_wheel_joint', 'rear_right_wheel_joint', 'j2n6s300_joint_1', 'j2n6s300_joint_2', 'j2n6s300_joint_3', 'j2n6s300_joint_4', 'j2n6s300_joint_5', 'j2n6s300_joint_6', 'j2n6s300_joint_finger_1', 'j2n6s300_joint_finger_2', 'j2n6s300_joint_finger_3', 'j2n6s300_joint_finger_tip_1', 'j2n6s300_joint_finger_tip_2', 'j2n6s300_joint_finger_tip_3']
+silver DOFs: ['front_left_wheel_joint', 'front_right_wheel_joint', 'rear_left_wheel_joint', 'rear_right_wheel_joint', 'j2n6s300_joint_1', 'j2n6s300_joint_2', 'j2n6s300_joint_3', 'j2n6s300_joint_4', 'j2n6s300_joint_5', 'j2n6s300_joint_6', 'j2n6s300_joint_finger_1', 'j2n6s300_joint_finger_2', 'j2n6s300_joint_finger_3', 'j2n6s300_joint_finger_tip_1', 'j2n6s300_joint_finger_tip_2', 'j2n6s300_joint_finger_tip_3']
+[combined] cell sensors: 3 Azure cameras, joint states, raw wrench, /clock
+[combined] co-stepping 1 physics steps per cloth frame
+[fabric_sim] frame 0 robots_settling: clearance 0.6490 m, max tension nan N, correction 0.000 m/s, cbf 0.0 ms, frame 116.5 ms
+2026-11-15T22:00:33Z [12,453ms] [Warning] [carb] Plugin interface for a client: omni.hydratexture.plugin was already released.
+2026-11-15T22:00:33Z [12,454ms] [Warning] [carb] Plugin interface for a client: omni.hydratexture.plugin was already released.
+2026-11-15T22:00:33Z [12,455ms] [Warning] [carb] Plugin interface for a client: omni.hydratexture.plugin was already released.
+2026-11-15T22:00:33Z [12,491ms] [Warning] [omni.syntheticdata.plugin] SdRenderVarPtr missing valid input renderVar LdrColorSDbuff
+Module oarbot.gpu_image 3a395a3 load on device 'cuda:0' took 1.86 ms  (cached)
+[fabric_sim] frame 90 robots_settling: clearance 0.6278 m, max tension nan N, correction 0.000 m/s, cbf 0.0 ms, frame 4.5 ms
+[fabric_sim] frame 184 robots_settling: clearance 0.6279 m, max tension nan N, correction 0.000 m/s, cbf 0.0 ms, frame 4.7 ms
+[fabric_sim] frame 282 robots_settling: clearance 0.6272 m, max tension nan N, correction 0.000 m/s, cbf 0.0 ms, frame 3.8 ms
+[fabric_sim] frame 380 robots_settling: clearance 0.6266 m, max tension nan N, correction 0.000 m/s, cbf 0.0 ms, frame 4.2 ms
+[fabric_sim] frame 480 robots_settling: clearance 0.6260 m, max tension nan N, correction 0.000 m/s, cbf 0.0 ms, frame 5.5 ms
+[combined] blue settled 0.1 mm from follower_left, arm moving at 0.0008 rad/s
+[combined] silver settled 0.1 mm from follower_right, arm moving at 0.0000 rad/s
+ATTACHED blue->follower_left 0.1 mm, silver->follower_right 0.1 mm
+[combined] blue wrist camera -0.02 deg from the top of the wrist, tool pitched 30.01 deg down, heading -0.01 deg off the cloth centre
+[combined] silver wrist camera +0.03 deg from the top of the wrist, tool pitched 30.01 deg down, heading +0.01 deg off the cloth centre
+[fabric_sim] frame 570 external: clearance 0.6257 m, max tension 4.6 N, correction 0.000 m/s, cbf 0.0 ms, frame 8.6 ms
+[fabric_sim] frame 648 external: clearance 0.6257 m, max tension 4.5 N, correction 0.000 m/s, cbf 0.0 ms, frame 10.7 ms
+[fabric_sim] frame 719 external: clearance 0.5631 m, max tension 7.9 N, correction 0.000 m/s, cbf 0.0 ms, frame 8.6 ms
+[fabric_sim] frame 788 external: clearance 0.5357 m, max tension 3.3 N, correction 0.000 m/s, cbf 0.0 ms, frame 10.0 ms
+[fabric_sim] frame 859 external: clearance 0.5289 m, max tension 2.6 N, correction 0.000 m/s, cbf 0.0 ms, frame 8.6 ms
+[fabric_sim] frame 928 external: clearance 0.5261 m, max tension 2.7 N, correction 0.000 m/s, cbf 0.0 ms, frame 10.0 ms
+[fabric_sim] frame 1000 external: clearance 0.5250 m, max tension 2.5 N, correction 0.000 m/s, cbf 0.0 ms, frame 9.6 ms
+[fabric_sim] frame 1075 external: clearance 0.5241 m, max tension 2.2 N, correction 0.000 m/s, cbf 0.0 ms, frame 7.5 ms
+[fabric_sim] frame 1148 external: clearance 0.4965 m, max tension 6.1 N, correction 0.000 m/s, cbf 0.0 ms, frame 9.2 ms
+[fabric_sim] frame 1224 external: clearance 0.5064 m, max tension 1.7 N, correction 0.000 m/s, cbf 0.0 ms, frame 10.8 ms
+[fabric_sim] frame 1301 external: clearance 0.5040 m, max tension 2.2 N, correction 0.000 m/s, cbf 0.0 ms, frame 8.5 ms
+[fabric_sim] frame 1379 external: clearance 0.5040 m, max tension 2.2 N, correction 0.000 m/s, cbf 0.0 ms, frame 9.6 ms
+[fabric_sim] frame 1456 external: clearance 0.4988 m, max tension 2.2 N, correction 0.000 m/s, cbf 0.0 ms, frame 8.5 ms
+[fabric_sim] frame 1533 external: clearance 0.4861 m, max tension 2.2 N, correction 0.000 m/s, cbf 0.0 ms, frame 9.2 ms
+[fabric_sim] frame 1605 external: clearance 0.4859 m, max tension 2.3 N, correction 0.000 m/s, cbf 0.0 ms, frame 10.1 ms
+[fabric_sim] frame 1680 external: clearance 0.4863 m, max tension 2.2 N, correction 0.000 m/s, cbf 0.0 ms, frame 10.7 ms
+[fabric_sim] frame 1756 external: clearance 0.4861 m, max tension 2.3 N, correction 0.000 m/s, cbf 0.0 ms, frame 9.5 ms
+[fabric_sim] frame 1832 external: clearance 0.5167 m, max tension 4.3 N, correction 0.000 m/s, cbf 0.0 ms, frame 9.8 ms
+[fabric_sim] frame 1904 external: clearance 0.5207 m, max tension 1.7 N, correction 0.000 m/s, cbf 0.0 ms, frame 9.7 ms
+[fabric_sim] frame 1980 external: clearance 0.5219 m, max tension 1.7 N, correction 0.000 m/s, cbf 0.0 ms, frame 10.8 ms
+[fabric_sim] frame 2056 external: clearance 0.5218 m, max tension 2.1 N, correction 0.000 m/s, cbf 0.0 ms, frame 9.7 ms
+[fabric_sim] frame 2129 external: clearance 0.5219 m, max tension 2.2 N, correction 0.000 m/s, cbf 0.0 ms, frame 8.8 ms
+[fabric_sim] frame 2197 external: clearance 0.5237 m, max tension 1.8 N, correction 0.000 m/s, cbf 0.0 ms, frame 12.5 ms
+[fabric_sim] frame 2246 external: clearance 0.5226 m, max tension 4.1 N, correction 0.000 m/s, cbf 0.0 ms, frame 9.7 ms
+[fabric_sim] frame 2292 external: clearance 0.5219 m, max tension 3.0 N, correction 0.000 m/s, cbf 0.0 ms, frame 10.1 ms
+[fabric_sim] frame 2338 external: clearance 0.5226 m, max tension 2.7 N, correction 0.000 m/s, cbf 0.0 ms, frame 10.1 ms
+[fabric_sim] frame 2383 external: clearance 0.5217 m, max tension 3.2 N, correction 0.000 m/s, cbf 0.0 ms, frame 8.4 ms
+[fabric_sim] frame 2428 external: clearance 0.5223 m, max tension 2.2 N, correction 0.000 m/s, cbf 0.0 ms, frame 9.7 ms
+[fabric_sim] frame 2475 external: clearance 0.5225 m, max tension 2.9 N, correction 0.000 m/s, cbf 0.0 ms, frame 9.6 ms
+[fabric_sim] frame 2520 external: clearance 0.5224 m, max tension 3.2 N, correction 0.000 m/s, cbf 0.0 ms, frame 10.2 ms
+[fabric_sim] frame 2565 external: clearance 0.5207 m, max tension 3.3 N, correction 0.000 m/s, cbf 0.0 ms, frame 8.8 ms
+[fabric_sim] frame 2612 external: clearance 0.5214 m, max tension 2.6 N, correction 0.000 m/s, cbf 0.0 ms, frame 9.6 ms
+[fabric_sim] frame 2657 external: clearance 0.5234 m, max tension 3.0 N, correction 0.000 m/s, cbf 0.0 ms, frame 9.3 ms
+[fabric_sim] frame 2703 external: clearance 0.5261 m, max tension 2.1 N, correction 0.000 m/s, cbf 0.0 ms, frame 8.2 ms
+[fabric_sim] frame 2748 external: clearance 0.5249 m, max tension 2.9 N, correction 0.000 m/s, cbf 0.0 ms, frame 11.0 ms
+[fabric_sim] frame 2793 external: clearance 0.5232 m, max tension 3.1 N, correction 0.000 m/s, cbf 0.0 ms, frame 8.9 ms
+[fabric_sim] frame 2837 external: clearance 0.5239 m, max tension 1.9 N, correction 0.000 m/s, cbf 0.0 ms, frame 10.6 ms
+[fabric_sim] frame 2882 external: clearance 0.5217 m, max tension 4.5 N, correction 0.000 m/s, cbf 0.0 ms, frame 9.4 ms
+[fabric_sim] frame 2927 external: clearance 0.5218 m, max tension 3.3 N, correction 0.000 m/s, cbf 0.0 ms, frame 8.2 ms
+[fabric_sim] frame 2971 external: clearance 0.5209 m, max tension 2.8 N, correction 0.000 m/s, cbf 0.0 ms, frame 8.2 ms
+[fabric_sim] frame 3015 external: clearance 0.5223 m, max tension 2.0 N, correction 0.000 m/s, cbf 0.0 ms, frame 8.1 ms
+[fabric_sim] frame 3060 external: clearance 0.5223 m, max tension 3.0 N, correction 0.000 m/s, cbf 0.0 ms, frame 10.4 ms
+[fabric_sim] frame 3105 external: clearance 0.5224 m, max tension 2.5 N, correction 0.000 m/s, cbf 0.0 ms, frame 9.1 ms
+[fabric_sim] frame 3144 external: clearance 0.5228 m, max tension 2.8 N, correction 0.000 m/s, cbf 0.0 ms, frame 11.5 ms
+[fabric_sim] frame 3189 external: clearance 0.5216 m, max tension 2.9 N, correction 0.000 m/s, cbf 0.0 ms, frame 8.8 ms
+[fabric_sim] frame 3234 external: clearance 0.5226 m, max tension 2.3 N, correction 0.000 m/s, cbf 0.0 ms, frame 8.7 ms
+[fabric_sim] frame 3280 external: clearance 0.5230 m, max tension 2.1 N, correction 0.000 m/s, cbf 0.0 ms, frame 10.0 ms
+[fabric_sim] frame 3325 external: clearance 0.5224 m, max tension 2.6 N, correction 0.000 m/s, cbf 0.0 ms, frame 9.9 ms
+[fabric_sim] frame 3371 external: clearance 0.5215 m, max tension 2.2 N, correction 0.000 m/s, cbf 0.0 ms, frame 8.5 ms
+[fabric_sim] frame 3416 external: clearance 0.5219 m, max tension 2.8 N, correction 0.000 m/s, cbf 0.0 ms, frame 10.3 ms
+[fabric_sim] frame 3461 external: clearance 0.5196 m, max tension 3.5 N, correction 0.000 m/s, cbf 0.0 ms, frame 9.6 ms
+[fabric_sim] frame 3507 external: clearance 0.5224 m, max tension 2.0 N, correction 0.000 m/s, cbf 0.0 ms, frame 9.6 ms
+[fabric_sim] frame 3552 external: clearance 0.5207 m, max tension 2.4 N, correction 0.000 m/s, cbf 0.0 ms, frame 13.2 ms
+[fabric_sim] frame 3598 external: clearance 0.5242 m, max tension 3.3 N, correction 0.000 m/s, cbf 0.0 ms, frame 8.9 ms
+[fabric_sim] frame 3644 external: clearance 0.5232 m, max tension 2.0 N, correction 0.000 m/s, cbf 0.0 ms, frame 10.4 ms
+[fabric_sim] frame 3689 external: clearance 0.5224 m, max tension 2.1 N, correction 0.000 m/s, cbf 0.0 ms, frame 9.4 ms
+[fabric_sim] frame 3734 external: clearance 0.5256 m, max tension 1.3 N, correction 0.000 m/s, cbf 0.0 ms, frame 10.2 ms
+[fabric_sim] frame 3780 external: clearance 0.5235 m, max tension 1.9 N, correction 0.000 m/s, cbf 0.0 ms, frame 10.8 ms
+[fabric_sim] frame 3826 external: clearance 0.5214 m, max tension 3.5 N, correction 0.000 m/s, cbf 0.0 ms, frame 9.2 ms
+[fabric_sim] frame 3871 external: clearance 0.5252 m, max tension 3.4 N, correction 0.000 m/s, cbf 0.0 ms, frame 10.2 ms
+[fabric_sim] frame 3916 external: clearance 0.5240 m, max tension 2.6 N, correction 0.000 m/s, cbf 0.0 ms, frame 10.4 ms
+[fabric_sim] frame 3961 external: clearance 0.5203 m, max tension 4.8 N, correction 0.000 m/s, cbf 0.0 ms, frame 11.7 ms
+[fabric_sim] frame 4007 external: clearance 0.5215 m, max tension 3.4 N, correction 0.000 m/s, cbf 0.0 ms, frame 8.5 ms
+[fabric_sim] frame 4052 external: clearance 0.5217 m, max tension 2.7 N, correction 0.000 m/s, cbf 0.0 ms, frame 9.3 ms
+[fabric_sim] frame 4098 external: clearance 0.5224 m, max tension 2.9 N, correction 0.000 m/s, cbf 0.0 ms, frame 9.2 ms
+[fabric_sim] frame 4142 external: clearance 0.5220 m, max tension 2.9 N, correction 0.000 m/s, cbf 0.0 ms, frame 10.1 ms
+[fabric_sim] frame 4188 external: clearance 0.5219 m, max tension 2.1 N, correction 0.000 m/s, cbf 0.0 ms, frame 10.5 ms
+[fabric_sim] frame 4232 external: clearance 0.5244 m, max tension 3.2 N, correction 0.000 m/s, cbf 0.0 ms, frame 10.2 ms
+[fabric_sim] frame 4276 external: clearance 0.5210 m, max tension 3.0 N, correction 0.000 m/s, cbf 0.0 ms, frame 9.6 ms
+[fabric_sim] frame 4320 external: clearance 0.5214 m, max tension 2.6 N, correction 0.000 m/s, cbf 0.0 ms, frame 11.0 ms
+[fabric_sim] frame 4364 external: clearance 0.5241 m, max tension 1.8 N, correction 0.000 m/s, cbf 0.0 ms, frame 10.1 ms
+[fabric_sim] frame 4407 external: clearance 0.5217 m, max tension 2.4 N, correction 0.000 m/s, cbf 0.0 ms, frame 9.3 ms
+[fabric_sim] frame 4450 external: clearance 0.5225 m, max tension 2.0 N, correction 0.000 m/s, cbf 0.0 ms, frame 9.6 ms
+[fabric_sim] frame 4492 external: clearance 0.5236 m, max tension 1.9 N, correction 0.000 m/s, cbf 0.0 ms, frame 11.9 ms
+[fabric_sim] frame 4536 external: clearance 0.5227 m, max tension 2.3 N, correction 0.000 m/s, cbf 0.0 ms, frame 13.4 ms
+[fabric_sim] frame 4580 external: clearance 0.5234 m, max tension 1.9 N, correction 0.000 m/s, cbf 0.0 ms, frame 9.9 ms
+[fabric_sim] frame 4623 external: clearance 0.5233 m, max tension 1.9 N, correction 0.000 m/s, cbf 0.0 ms, frame 9.2 ms
+[fabric_sim] frame 4668 external: clearance 0.5229 m, max tension 2.4 N, correction 0.000 m/s, cbf 0.0 ms, frame 13.9 ms
+[fabric_sim] frame 4712 external: clearance 0.5223 m, max tension 2.2 N, correction 0.000 m/s, cbf 0.0 ms, frame 10.2 ms
+[fabric_sim] frame 4756 external: clearance 0.5236 m, max tension 1.9 N, correction 0.000 m/s, cbf 0.0 ms, frame 10.7 ms
+[fabric_sim] frame 4800 external: clearance 0.5222 m, max tension 2.6 N, correction 0.000 m/s, cbf 0.0 ms, frame 13.5 ms
+[fabric_sim] frame 4844 external: clearance 0.5213 m, max tension 3.7 N, correction 0.000 m/s, cbf 0.0 ms, frame 11.7 ms
+[fabric_sim] frame 4886 external: clearance 0.5234 m, max tension 1.6 N, correction 0.000 m/s, cbf 0.0 ms, frame 10.5 ms
+[fabric_sim] frame 4929 external: clearance 0.5222 m, max tension 2.5 N, correction 0.000 m/s, cbf 0.0 ms, frame 11.4 ms
+[fabric_sim] frame 4973 external: clearance 0.5221 m, max tension 2.5 N, correction 0.000 m/s, cbf 0.0 ms, frame 9.7 ms
+[fabric_sim] frame 5018 external: clearance 0.5234 m, max tension 2.0 N, correction 0.000 m/s, cbf 0.0 ms, frame 9.6 ms
+[fabric_sim] frame 5064 external: clearance 0.5230 m, max tension 2.8 N, correction 0.000 m/s, cbf 0.0 ms, frame 10.4 ms
+[fabric_sim] frame 5109 external: clearance 0.5211 m, max tension 4.4 N, correction 0.000 m/s, cbf 0.0 ms, frame 8.6 ms
+[fabric_sim] frame 5152 external: clearance 0.5226 m, max tension 2.2 N, correction 0.000 m/s, cbf 0.0 ms, frame 11.1 ms
+[fabric_sim] frame 5199 external: clearance 0.5218 m, max tension 2.0 N, correction 0.000 m/s, cbf 0.0 ms, frame 8.0 ms
+[fabric_sim] frame 5244 external: clearance 0.5216 m, max tension 3.0 N, correction 0.000 m/s, cbf 0.0 ms, frame 10.1 ms
+[fabric_sim] frame 5289 external: clearance 0.5219 m, max tension 2.0 N, correction 0.000 m/s, cbf 0.0 ms, frame 10.2 ms
+[fabric_sim] frame 5335 external: clearance 0.5219 m, max tension 2.6 N, correction 0.000 m/s, cbf 0.0 ms, frame 8.4 ms
+[fabric_sim] frame 5379 external: clearance 0.5208 m, max tension 2.9 N, correction 0.000 m/s, cbf 0.0 ms, frame 9.1 ms
+[fabric_sim] frame 5424 external: clearance 0.5216 m, max tension 2.7 N, correction 0.000 m/s, cbf 0.0 ms, frame 9.9 ms
+[fabric_sim] frame 5469 external: clearance 0.5205 m, max tension 2.4 N, correction 0.000 m/s, cbf 0.0 ms, frame 9.9 ms
+[fabric_sim] frame 5513 external: clearance 0.5222 m, max tension 2.2 N, correction 0.000 m/s, cbf 0.0 ms, frame 10.4 ms
+[fabric_sim] frame 5560 external: clearance 0.5219 m, max tension 2.6 N, correction 0.000 m/s, cbf 0.0 ms, frame 9.8 ms
+[fabric_sim] frame 5606 external: clearance 0.5227 m, max tension 2.2 N, correction 0.000 m/s, cbf 0.0 ms, frame 9.3 ms
+[fabric_sim] frame 5651 external: clearance 0.5237 m, max tension 1.8 N, correction 0.000 m/s, cbf 0.0 ms, frame 10.3 ms
+[fabric_sim] frame 5696 external: clearance 0.5217 m, max tension 3.2 N, correction 0.000 m/s, cbf 0.0 ms, frame 9.4 ms
+[fabric_sim] frame 5741 external: clearance 0.5225 m, max tension 2.5 N, correction 0.000 m/s, cbf 0.0 ms, frame 8.7 ms
+[fabric_sim] frame 5786 external: clearance 0.5219 m, max tension 2.0 N, correction 0.000 m/s, cbf 0.0 ms, frame 9.6 ms
+[fabric_sim] frame 5832 external: clearance 0.5213 m, max tension 4.1 N, correction 0.000 m/s, cbf 0.0 ms, frame 12.0 ms
+[fabric_sim] frame 5877 external: clearance 0.5216 m, max tension 3.7 N, correction 0.000 m/s, cbf 0.0 ms, frame 8.8 ms
+[fabric_sim] frame 5922 external: clearance 0.5231 m, max tension 1.7 N, correction 0.000 m/s, cbf 0.0 ms, frame 8.6 ms
+[fabric_sim] frame 5968 external: clearance 0.5229 m, max tension 2.1 N, correction 0.000 m/s, cbf 0.0 ms, frame 9.8 ms
+[fabric_sim] frame 6013 external: clearance 0.5215 m, max tension 3.4 N, correction 0.000 m/s, cbf 0.0 ms, frame 11.0 ms
+[fabric_sim] frame 6058 external: clearance 0.5216 m, max tension 3.0 N, correction 0.000 m/s, cbf 0.0 ms, frame 9.2 ms
+[fabric_sim] frame 6104 external: clearance 0.5222 m, max tension 3.1 N, correction 0.000 m/s, cbf 0.0 ms, frame 9.0 ms
+[fabric_sim] frame 6149 external: clearance 0.5217 m, max tension 2.0 N, correction 0.000 m/s, cbf 0.0 ms, frame 9.0 ms
+[fabric_sim] frame 6194 external: clearance 0.5220 m, max tension 2.6 N, correction 0.000 m/s, cbf 0.0 ms, frame 8.3 ms
+[fabric_sim] frame 6240 external: clearance 0.5224 m, max tension 2.5 N, correction 0.000 m/s, cbf 0.0 ms, frame 10.1 ms
+[fabric_sim] frame 6286 external: clearance 0.5237 m, max tension 2.2 N, correction 0.000 m/s, cbf 0.0 ms, frame 8.5 ms
+[fabric_sim] frame 6331 external: clearance 0.5228 m, max tension 2.3 N, correction 0.000 m/s, cbf 0.0 ms, frame 7.7 ms
+[fabric_sim] frame 6376 external: clearance 0.5226 m, max tension 2.0 N, correction 0.000 m/s, cbf 0.0 ms, frame 9.6 ms
+[fabric_sim] frame 6421 external: clearance 0.5238 m, max tension 1.7 N, correction 0.000 m/s, cbf 0.0 ms, frame 9.4 ms
+[fabric_sim] frame 6467 external: clearance 0.5224 m, max tension 2.5 N, correction 0.000 m/s, cbf 0.0 ms, frame 7.7 ms
+[fabric_sim] frame 6512 external: clearance 0.5223 m, max tension 2.6 N, correction 0.000 m/s, cbf 0.0 ms, frame 9.6 ms
+[fabric_sim] frame 6556 external: clearance 0.5234 m, max tension 2.3 N, correction 0.000 m/s, cbf 0.0 ms, frame 9.5 ms
+[fabric_sim] frame 6602 external: clearance 0.5229 m, max tension 2.0 N, correction 0.000 m/s, cbf 0.0 ms, frame 12.5 ms
+[fabric_sim] frame 6648 external: clearance 0.5218 m, max tension 3.0 N, correction 0.000 m/s, cbf 0.0 ms, frame 10.4 ms
+[fabric_sim] frame 6693 external: clearance 0.5223 m, max tension 2.5 N, correction 0.000 m/s, cbf 0.0 ms, frame 8.5 ms
+[fabric_sim] frame 6738 external: clearance 0.5232 m, max tension 2.9 N, correction 0.000 m/s, cbf 0.0 ms, frame 8.3 ms
+[fabric_sim] frame 6784 external: clearance 0.5214 m, max tension 3.1 N, correction 0.000 m/s, cbf 0.0 ms, frame 9.7 ms
+[fabric_sim] frame 6828 external: clearance 0.5224 m, max tension 2.0 N, correction 0.000 m/s, cbf 0.0 ms, frame 10.7 ms
+[fabric_sim] frame 6873 external: clearance 0.5221 m, max tension 2.8 N, correction 0.000 m/s, cbf 0.0 ms, frame 8.9 ms
+[fabric_sim] frame 6919 external: clearance 0.5219 m, max tension 2.4 N, correction 0.000 m/s, cbf 0.0 ms, frame 8.2 ms
+[fabric_sim] frame 6964 external: clearance 0.5219 m, max tension 2.8 N, correction 0.000 m/s, cbf 0.0 ms, frame 9.2 ms
+[fabric_sim] frame 7009 external: clearance 0.5226 m, max tension 2.3 N, correction 0.000 m/s, cbf 0.0 ms, frame 11.3 ms
+[fabric_sim] frame 7055 external: clearance 0.5226 m, max tension 2.8 N, correction 0.000 m/s, cbf 0.0 ms, frame 8.4 ms
+[fabric_sim] frame 7100 external: clearance 0.5222 m, max tension 2.8 N, correction 0.000 m/s, cbf 0.0 ms, frame 9.5 ms
+[fabric_sim] frame 7145 external: clearance 0.5222 m, max tension 2.2 N, correction 0.000 m/s, cbf 0.0 ms, frame 9.9 ms
+[fabric_sim] frame 7189 external: clearance 0.5206 m, max tension 3.1 N, correction 0.000 m/s, cbf 0.0 ms, frame 9.8 ms
+{
+  "frames": 7200,
+  "attached": true,
+  "attach_frame": 539,
+  "cloth_min_z": 0.9186536073684692,
+  "cloth_particles": 841,
+  "corner_target_error": 0.0,
+  "robots": {
+    "blue": {
+      "corner": "follower_left",
+      "tool": [
+        -0.3997328281402588,
+        -0.37985342741012573,
+        1.0501621961593628
+      ],
+      "corner_actual": [
+        -0.3997657895088196,
+        -0.37984737753868103,
+        1.0502418279647827
+      ],
+      "grasp_final": {
+        "camera_roll_deg": -0.19508487864718532,
+        "camera_level_deg": -0.16892372222265117,
+        "tool_pitch_deg": 30.01351753177851,
+        "tool_azimuth_deg": 44.91418074079859,
+        "finger_axis_tilt_deg": 0.1689278475234725
+      },
+      "settle_speed": 0.0007543563842773438,
+      "grasp_at_attach": {
+        "camera_roll_deg": -0.02219700605601715,
+        "camera_level_deg": -0.019241232731814505,
+        "tool_pitch_deg": 30.007509025122427,
+        "tool_azimuth_deg": 44.98638410881401,
+        "finger_axis_tilt_deg": 0.019245385119142325,
+        "tool_bearing_error_deg": -0.013615891185992268
+      },
+      "grasp_worst": {
+        "camera_roll_deg": 0.4951592862687295,
+        "pitch_drift_deg": 0.09049938054857165,
+        "heading_drift_deg": 0.24403857350881708
+      },
+      "grasp_offset": [
+        -3.2961368560791016e-05,
+        6.0498714447021484e-06,
+        7.963180541992188e-05
+      ],
+      "attach_error": 8.639604849953512e-05,
+      "grasp_drift": 0.0,
+      "corner_travel": 0.044963409046361716,
+      "commanded": [
+        -0.3997223861713825,
+        -0.37981116199932824,
+        1.0500769529714722
+      ],
+      "servo_lag": 0.00017429623751084343
+    },
+    "silver": {
+      "corner": "follower_right",
+      "tool": [
+        0.3938160240650177,
+        -0.37670987844467163,
+        1.0539129972457886
+      ],
+      "corner_actual": [
+        0.393845796585083,
+        -0.376703679561615,
+        1.0540047883987427
+      ],
+      "grasp_final": {
+        "camera_roll_deg": 0.1911895946100148,
+        "camera_level_deg": 0.16636467752672623,
+        "tool_pitch_deg": 29.527855828414683,
+        "tool_azimuth_deg": 134.97262459624002,
+        "finger_axis_tilt_deg": 0.16636725755449683
+      },
+      "settle_speed": 4.76837158203125e-07,
+      "grasp_at_attach": {
+        "camera_roll_deg": 0.025914709723559803,
+        "camera_level_deg": 0.022436272169618923,
+        "tool_pitch_deg": 30.007459510970143,
+        "tool_azimuth_deg": 135.01378799883096,
+        "finger_axis_tilt_deg": 0.022437280687890377,
+        "tool_bearing_error_deg": 0.013787998830963488
+      },
+      "grasp_worst": {
+        "camera_roll_deg": 0.5037508034281465,
+        "pitch_drift_deg": 0.4876255508251184,
+        "heading_drift_deg": 0.23952088110215186
+      },
+      "grasp_offset": [
+        2.9772520065307617e-05,
+        6.198883056640625e-06,
+        9.179115295410156e-05
+      ],
+      "attach_error": 9.669769833265071e-05,
+      "grasp_drift": 0.0,
+      "corner_travel": 0.0507399059634174,
+      "commanded": [
+        0.39450364294677026,
+        -0.3771316082642213,
+        1.0536720609185077
+      ],
+      "servo_lag": 0.0008524038867831282
+    }
+  },
+  "cloth": {
+    "frames": 7200,
+    "controller": "sensitivity",
+    "material": {
+      "appearance": "dry_carbon_twill",
+      "yarn_pitch_m": 0.002,
+      "areal_density_kg_m2": 0.2,
+      "mechanical_calibration": "uncalibrated"
+    },
+    "run_min_clearance": 0.47811699520441575,
+    "run_max_tension": 42.32242251783317,
+    "run_max_correction": 0.0,
+    "status_counts": {
+      "robots_settling": 540,
+      "external": 6660
+    },
+    "cbf_ms_p50": 0.0,
+    "cbf_ms_p95": 0.0,
+    "cbf_ms_max": 0.0,
+    "frame_ms_p50": 9.247531000255549
+  },
+  "cbf_final": {
+    "status": "external",
+    "mode": "sensitivity",
+    "min_clearance": 0.5202614953175736,
+    "h_min": 0.4702614953175736,
+    "correction": 0.0,
+    "controller_ms": 0.0,
+    "tension": [
+      1.0687255190734113,
+      0.48734161993794933,
+      1.7496448773281184,
+      2.724281971522542
+    ],
+    "strain_ks": [
+      0.1147067030234029,
+      0.12241841436058555,
+      0.12002323128926543,
+      0.1327016879945177
+    ],
+    "frame": 7199,
+    "sim_time": 119.9833333333278,
+    "warmup": false
+  },
+  "cbf_relaxed_row_kinds": {},
+  "cbf_max_strain_ks": 1.3372013886010259,
+  "frame_time_ms_mean": 39.27096651014608,
+  "frame_timing_by_mode": {
+    "attached": {
+      "frames": 6660,
+      "mean_ms": 40.73239870076003
+    },
+    "settling": {
+      "frames": 540,
+      "mean_ms": 21.24663615924065
+    }
+  },
+  "settle_steps": 450,
+  "home_settle_steps": 90,
+  "route_cbf": true,
+  "cbf_controller": "sensitivity",
+  "demo_leader": null,
+  "backend": "physx",
+  "cloth_start_z": 1.0500142574310303,
+  "follower_max_speed": 0.1,
+  "gripper_inset": 0.0,
+  "top_cap_radius_scale": 2.0,
+  "physics_steps_per_frame": {
+    "1": 7200
+  },
+  "expected_physics_steps_per_frame": 1,
+  "physics_fabric": true,
+  "renderer": "RealTimePathTracing",
+  "render_mode": "due",
+  "physics_hz": 60,
+  "cbf_period": 1,
+  "render_sync": true,
+  "require_feasible": false,
+  "cbf_prediction_cells": 14,
+  "cbf_config": "/media/taha/ExtermeLinux/oarbot_simulation/vendor/fabric_sim/capsule_cbf/config.json",
+  "wrist_camera_hz": 15.0,
+  "overhead_hz": 5.0,
+  "monitor_wrist_hz": null,
+  "monitor_overhead_hz": null,
+  "robot_collisions": "all",
+  "arm_solver_iterations": null,
+  "cloth_mesh": {
+    "cells": [
+      28,
+      28
+    ],
+    "cell_size_m": [
+      0.03,
+      0.03
+    ],
+    "gripper_side_particles": 2,
+    "grip_patch_span_m": [
+      0.03,
+      0.03
+    ],
+    "areal_density_kg_m2": 0.2
+  },
+  "cloth_solver": {
+    "substeps": 8,
+    "iterations": 6,
+    "linear_iterations": 3
+  },
+  "render_check": {
+    "attempts": 12,
+    "conclusive": 16,
+    "max_ratio": 0.0046339202965708995,
+    "renders_per_capture": 1,
+    "spatial_stride": 8,
+    "worst_sample": "/home/taha/ros2_colcon_ws/src/oarbots/experiments/material_20261115_165913/plant_camera_latency.npz"
+  }
+}
+COMBINED_VALIDATED /home/taha/ros2_colcon_ws/src/oarbots/experiments/material_20261115_165913/plant.json
+[combined] ground truth written to /home/taha/ros2_colcon_ws/src/oarbots/experiments/material_20261115_165913/truth.npz
+2026-11-15T22:05:18Z [297,751ms] [Warning] [carb] Plugin interface for a client: omni.hydratexture.plugin was already released.
+2026-11-15T22:05:18Z [297,751ms] [Warning] [carb] Plugin interface for a client: omni.hydratexture.plugin was already released.
+2026-11-15T22:05:18Z [297,751ms] [Warning] [carb] Plugin interface for a client: omni.hydratexture.plugin was already released.
+[299.013s] Simulation App Shutting Down
+plant exit 0

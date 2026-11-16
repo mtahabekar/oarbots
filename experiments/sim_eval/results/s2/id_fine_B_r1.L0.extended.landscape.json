@@ -1,0 +1,101 @@
+{
+ "run": "id_fine_B_r1",
+ "manifest": {
+  "study": "S1-identification-datasets",
+  "name": "id_fine_B_r1",
+  "structure": "fine",
+  "material": "B",
+  "true_scales": {
+   "bend": 3.0,
+   "shear": 0.4
+  },
+  "repeat": 1,
+  "exit_status": 0,
+  "started": "2026-11-16T03:24:05Z",
+  "hand_script": "/media/taha/ExtermeLinux/oarbot_simulation/logs/sim_eval/id_script.npz",
+  "twin_config": "/home/taha/ros2_colcon_ws/src/oarbots/experiments/sim_eval/config/twin_id.yaml",
+  "plant_args": "--external-followers --overhead-hz 15  --edge-ke-weft 0.006 --edge-ke-warp 0.003 --edge-ke-shear 0.0015 --tri-ke-shear 2400",
+  "launch_args": "twin:=true twin_commands:=true twin_config:=/home/taha/ros2_colcon_ws/src/oarbots/experiments/sim_eval/config/twin_id.yaml twin_record:=/media/taha/ExtermeLinux/oarbot_simulation/logs/sim_eval/id/id_fine_B_r1/twin.npz twin_record_depth:=true",
+  "warmup": {
+   "start_s": 15.0,
+   "end_s": 93.333
+  },
+  "validation_window_s": [
+   97.5,
+   140.4
+  ],
+  "oarbots_commit": "30e5a30aa881e17613167c35ba9faec562124a40",
+  "oarbots_src_dirty": true,
+  "note": "manifest written by hand: the run script was edited while running (bash read error after the run completed)"
+ },
+ "inputs": {
+  "state": "truth",
+  "grips": "truth",
+  "points": "truth"
+ },
+ "holds": "extended",
+ "holds_available": 13,
+ "cases": 13,
+ "points_per_case": [
+  2500,
+  2500,
+  2500,
+  2500,
+  2500,
+  2500,
+  2500,
+  2500,
+  2500,
+  2500,
+  2500,
+  2500,
+  2500
+ ],
+ "landscape": {
+  "values": [
+   0.25,
+   0.5,
+   1.0,
+   2.0,
+   4.0
+  ],
+  "rms_cost_m": [
+   [
+    0.0014302279907027842,
+    0.0017791273026527175,
+    0.0020943557664707168,
+    0.0023017487893956987,
+    0.0023787384924689485
+   ],
+   [
+    0.001268759212076098,
+    0.0016232579515992925,
+    0.0019621696297403785,
+    0.002192821216083469,
+    0.0022896396050915498
+   ],
+   [
+    0.0010253143529541193,
+    0.0013623285128686014,
+    0.0017424129398135244,
+    0.0020057025905525164,
+    0.0021355175042875063
+   ],
+   [
+    0.0007672559844658103,
+    0.0009567454556891191,
+    0.0013799038404377734,
+    0.0017063654573949013,
+    0.0018804084670477304
+   ],
+   [
+    0.0010426117930494704,
+    0.0006050373930345149,
+    0.000858699367880064,
+    0.001230715508058038,
+    0.001475951634479636
+   ]
+  ],
+  "seconds": 435.6521797329988
+ }
+}

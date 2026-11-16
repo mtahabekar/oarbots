@@ -1,0 +1,221 @@
+{
+  "frames": 18000,
+  "attached": true,
+  "attach_frame": 539,
+  "cloth_min_z": 0.9225457906723022,
+  "cloth_particles": 841,
+  "corner_target_error": 0.0,
+  "robots": {
+    "blue": {
+      "corner": "follower_left",
+      "tool": [
+        -0.40028512477874756,
+        -0.38027191162109375,
+        1.0502897500991821
+      ],
+      "corner_actual": [
+        -0.40031808614730835,
+        -0.38026586174964905,
+        1.050369381904602
+      ],
+      "grasp_final": {
+        "camera_roll_deg": -0.1631903455521436,
+        "camera_level_deg": -0.1411790056002565,
+        "tool_pitch_deg": 30.095040700763672,
+        "tool_azimuth_deg": 44.958784294164865,
+        "finger_axis_tilt_deg": 0.14118310779435367
+      },
+      "settle_speed": 0.0007543563842773438,
+      "grasp_at_attach": {
+        "camera_roll_deg": -0.02219700605601715,
+        "camera_level_deg": -0.019241232731814505,
+        "tool_pitch_deg": 30.007509025122427,
+        "tool_azimuth_deg": 44.98638410881401,
+        "finger_axis_tilt_deg": 0.019245385119142325,
+        "tool_bearing_error_deg": -0.013615891185992268
+      },
+      "grasp_worst": {
+        "camera_roll_deg": 0.49103511712215664,
+        "pitch_drift_deg": 0.09594185982295045,
+        "heading_drift_deg": 0.2423928214102773
+      },
+      "grasp_offset": [
+        -3.2961368560791016e-05,
+        6.0498714447021484e-06,
+        7.963180541992188e-05
+      ],
+      "attach_error": 8.639604849953512e-05,
+      "grasp_drift": 0.0,
+      "corner_travel": 0.044343044424063914,
+      "commanded": [
+        -0.40019781976243074,
+        -0.38017620058713675,
+        1.0501763415140273
+      ],
+      "servo_lag": 0.0002444743745013925
+    },
+    "silver": {
+      "corner": "follower_right",
+      "tool": [
+        0.40279102325439453,
+        -0.37731632590293884,
+        1.0466663837432861
+      ],
+      "corner_actual": [
+        0.40282079577445984,
+        -0.3773101270198822,
+        1.0467581748962402
+      ],
+      "grasp_final": {
+        "camera_roll_deg": 0.16666697010183049,
+        "camera_level_deg": 0.14661892222830467,
+        "tool_pitch_deg": 28.390468798687735,
+        "tool_azimuth_deg": 134.52412973362868,
+        "finger_axis_tilt_deg": 0.14661811127416927
+      },
+      "settle_speed": 4.76837158203125e-07,
+      "grasp_at_attach": {
+        "camera_roll_deg": 0.025914709723559803,
+        "camera_level_deg": 0.022436272169618923,
+        "tool_pitch_deg": 30.007459510970143,
+        "tool_azimuth_deg": 135.01378799883096,
+        "finger_axis_tilt_deg": 0.022437280687890377,
+        "tool_bearing_error_deg": 0.013787998830963488
+      },
+      "grasp_worst": {
+        "camera_roll_deg": 0.4873718808074601,
+        "pitch_drift_deg": 1.660460152205225,
+        "heading_drift_deg": 0.4930693500528207
+      },
+      "grasp_offset": [
+        2.9772520065307617e-05,
+        6.198883056640625e-06,
+        9.179115295410156e-05
+      ],
+      "attach_error": 9.669769833265071e-05,
+      "grasp_drift": 0.0,
+      "corner_travel": 0.04613190204570771,
+      "commanded": [
+        0.40065964183362457,
+        -0.37756736919380796,
+        1.049150163721027
+      ],
+      "servo_lag": 0.0032339403875053982
+    }
+  },
+  "cloth": {
+    "frames": 18000,
+    "controller": "sensitivity",
+    "material": {
+      "appearance": "dry_carbon_twill",
+      "yarn_pitch_m": 0.002,
+      "areal_density_kg_m2": 0.2,
+      "mechanical_calibration": "uncalibrated"
+    },
+    "run_min_clearance": 0.4797270038549229,
+    "run_max_tension": 49.65978448174253,
+    "run_max_correction": 0.0,
+    "status_counts": {
+      "robots_settling": 540,
+      "external": 17460
+    },
+    "cbf_ms_p50": 0.0,
+    "cbf_ms_p95": 0.0,
+    "cbf_ms_max": 0.0,
+    "frame_ms_p50": 9.31864550057071
+  },
+  "cbf_final": {
+    "status": "external",
+    "mode": "sensitivity",
+    "min_clearance": 0.5228464115957544,
+    "h_min": 0.4728464115957544,
+    "correction": 0.0,
+    "controller_ms": 0.0,
+    "tension": [
+      1.182403232583761,
+      2.893371444214731,
+      1.3487071490971454,
+      3.481622197915757
+    ],
+    "strain_ks": [
+      0.11185458364364803,
+      0.14699464155447264,
+      0.11461584064926707,
+      0.14930297478843
+    ],
+    "frame": 17999,
+    "sim_time": 299.98333333338917,
+    "warmup": false
+  },
+  "cbf_relaxed_row_kinds": {},
+  "cbf_max_strain_ks": 1.4002651593020847,
+  "frame_time_ms_mean": 35.41656539066824,
+  "frame_timing_by_mode": {
+    "attached": {
+      "frames": 17460,
+      "mean_ms": 35.81167945555763
+    },
+    "settling": {
+      "frames": 540,
+      "mean_ms": 22.641210625911132
+    }
+  },
+  "settle_steps": 450,
+  "home_settle_steps": 90,
+  "route_cbf": true,
+  "cbf_controller": "sensitivity",
+  "demo_leader": null,
+  "backend": "physx",
+  "cloth_start_z": 1.0500142574310303,
+  "follower_max_speed": 0.1,
+  "gripper_inset": 0.0,
+  "top_cap_radius_scale": 2.0,
+  "physics_steps_per_frame": {
+    "1": 18000
+  },
+  "expected_physics_steps_per_frame": 1,
+  "physics_fabric": true,
+  "renderer": "RealTimePathTracing",
+  "render_mode": "due",
+  "physics_hz": 60,
+  "cbf_period": 1,
+  "render_sync": true,
+  "require_feasible": false,
+  "cbf_prediction_cells": 14,
+  "cbf_config": "/media/taha/ExtermeLinux/oarbot_simulation/vendor/fabric_sim/capsule_cbf/config.json",
+  "wrist_camera_hz": 15.0,
+  "overhead_hz": 5.0,
+  "monitor_wrist_hz": null,
+  "monitor_overhead_hz": null,
+  "robot_collisions": "all",
+  "arm_solver_iterations": null,
+  "cloth_mesh": {
+    "cells": [
+      28,
+      28
+    ],
+    "cell_size_m": [
+      0.03,
+      0.03
+    ],
+    "gripper_side_particles": 2,
+    "grip_patch_span_m": [
+      0.03,
+      0.03
+    ],
+    "areal_density_kg_m2": 0.2
+  },
+  "cloth_solver": {
+    "substeps": 8,
+    "iterations": 6,
+    "linear_iterations": 3
+  },
+  "render_check": {
+    "attempts": 12,
+    "conclusive": 16,
+    "max_ratio": 0.016129032258064516,
+    "renders_per_capture": 1,
+    "spatial_stride": 8,
+    "worst_sample": "/home/taha/ros2_colcon_ws/src/oarbots/experiments/material_20261115_171017/plant_camera_latency.npz"
+  }
+}

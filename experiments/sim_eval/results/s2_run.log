@@ -1,0 +1,102 @@
+99 jobs, 8 workers
+00:21:04 ok id_fine_B_r1.L0.extended.landscape.json 443s SolverStyle3D::precompute() took 5.59 ms
+00:21:04 ok id_fine_B_r1.L3.extended.landscape.json 441s SolverStyle3D::precompute() took 5.63 ms
+00:21:04 ok id_matched_B_r1.L0.extended.landscape.json 442s SolverStyle3D::precompute() took 5.84 ms
+00:21:04 ok id_matched_B_r1.L3.extended.landscape.json 438s SolverStyle3D::precompute() took 5.71 ms
+00:21:04 ok id_matched_C_r1.L0.extended.landscape.json 439s SolverStyle3D::precompute() took 5.61 ms
+00:21:04 ok id_matched_C_r1.L3.extended.landscape.json 437s SolverStyle3D::precompute() took 5.50 ms
+00:25:41 ok id_fine_A_r1.L0.extended.json 720s id_fine_A_r1 truth/truth/truth extended: bend 1.000 shear 0.595 (true 1.000, 1.000) cost 0.75 mm, 13 cases, 713 s
+00:25:41 ok id_fine_A_r1.L3.extended.json 713s id_fine_A_r1 twin/measured/depth extended: bend 4.000 shear 1.414 (true 1.000, 1.000) cost 2.06 mm, 13 cases, 706 s
+00:32:59 ok id_fine_A_r2.L0.extended.json 721s id_fine_A_r2 truth/truth/truth extended: bend 0.841 shear 0.500 (true 1.000, 1.000) cost 0.77 mm, 13 cases, 713 s
+00:32:59 ok id_fine_A_r2.L3.extended.json 715s id_fine_A_r2 twin/measured/depth extended: bend 4.000 shear 1.414 (true 1.000, 1.000) cost 2.09 mm, 13 cases, 708 s
+00:33:02 ok id_fine_B_r1.Dp.extended.json 721s id_fine_B_r1 truth/truth/depth extended: bend 4.000 shear 0.500 (true 3.000, 0.400) cost 0.63 mm, 13 cases, 715 s
+00:33:03 ok id_fine_B_r1.Gm.extended.json 721s id_fine_B_r1 truth/measured/truth extended: bend 4.000 shear 0.500 (true 3.000, 0.400) cost 0.92 mm, 13 cases, 714 s
+00:33:03 ok id_fine_B_r1.L0.extended.json 719s id_fine_B_r1 truth/truth/truth extended: bend 4.000 shear 0.500 (true 3.000, 0.400) cost 0.61 mm, 13 cases, 712 s
+00:33:03 ok id_fine_B_r1.L3.extended.json 716s id_fine_B_r1 twin/measured/depth extended: bend 6.727 shear 0.420 (true 3.000, 0.400) cost 1.86 mm, 13 cases, 709 s
+00:37:33 ok id_fine_B_r1.St.extended.json 718s id_fine_B_r1 twin/truth/truth extended: bend 6.727 shear 0.420 (true 3.000, 0.400) cost 1.79 mm, 13 cases, 712 s
+00:37:47 ok id_fine_B_r2.L0.extended.json 726s id_fine_B_r2 truth/truth/truth extended: bend 4.000 shear 0.500 (true 3.000, 0.400) cost 0.60 mm, 13 cases, 719 s
+00:46:49 ok id_fine_B_r2.L3.extended.json 835s id_fine_B_r2 twin/measured/depth extended: bend 6.727 shear 0.420 (true 3.000, 0.400) cost 2.23 mm, 13 cases, 829 s
+00:47:03 ok id_fine_B_r3.L0.extended.json 845s id_fine_B_r3 truth/truth/truth extended: bend 4.000 shear 0.500 (true 3.000, 0.400) cost 0.59 mm, 13 cases, 836 s
+00:47:03 ok id_fine_B_r3.L3.extended.json 837s id_fine_B_r3 twin/measured/depth extended: bend 6.727 shear 0.420 (true 3.000, 0.400) cost 2.13 mm, 13 cases, 831 s
+00:47:03 ok id_matched_A_r1.L0.extended.json 837s id_matched_A_r1 truth/truth/truth extended: bend 0.595 shear 0.841 (true 1.000, 1.000) cost 0.33 mm, 13 cases, 833 s
+00:47:03 ok id_matched_A_r1.L3.extended.json 828s id_matched_A_r1 twin/measured/depth extended: bend 5.657 shear 1.682 (true 1.000, 1.000) cost 3.69 mm, 13 cases, 823 s
+00:47:05 ok id_matched_A_r2.L0.extended.json 842s id_matched_A_r2 truth/truth/truth extended: bend 0.595 shear 0.841 (true 1.000, 1.000) cost 0.34 mm, 13 cases, 837 s
+00:52:34 ok id_matched_A_r2.L3.extended.json 901s id_matched_A_r2 twin/measured/depth extended: bend 4.000 shear 2.378 (true 1.000, 1.000) cost 3.57 mm, 13 cases, 897 s
+00:53:13 ok id_matched_A_r3.L0.extended.json 925s id_matched_A_r3 truth/truth/truth extended: bend 0.595 shear 0.841 (true 1.000, 1.000) cost 0.36 mm, 13 cases, 921 s
+01:02:11 ok id_matched_A_r3.L3.extended.json 922s id_matched_A_r3 twin/measured/depth extended: bend 5.657 shear 0.841 (true 1.000, 1.000) cost 6.45 mm, 13 cases, 916 s
+01:02:19 ok id_matched_B_r1.Dp.extended.json 929s id_matched_B_r1 truth/truth/depth extended: bend 2.828 shear 0.420 (true 3.000, 0.400) cost 0.46 mm, 13 cases, 924 s
+01:02:26 ok id_matched_B_r1.Gm.extended.json 929s id_matched_B_r1 truth/measured/truth extended: bend 2.378 shear 0.354 (true 3.000, 0.400) cost 0.67 mm, 13 cases, 924 s
+01:02:27 ok id_matched_B_r1.L0.extended.json 929s id_matched_B_r1 truth/truth/truth extended: bend 2.828 shear 0.420 (true 3.000, 0.400) cost 0.18 mm, 13 cases, 923 s
+01:02:27 ok id_matched_B_r1.L3.extended.json 914s id_matched_B_r1 twin/measured/depth extended: bend 6.727 shear 0.420 (true 3.000, 0.400) cost 4.16 mm, 13 cases, 909 s
+01:02:31 ok id_matched_B_r1.St.extended.json 926s id_matched_B_r1 twin/truth/truth extended: bend 6.727 shear 0.420 (true 3.000, 0.400) cost 4.30 mm, 13 cases, 920 s
+01:08:00 ok id_matched_B_r2.L0.extended.json 926s id_matched_B_r2 truth/truth/truth extended: bend 2.828 shear 0.420 (true 3.000, 0.400) cost 0.18 mm, 13 cases, 920 s
+01:08:36 ok id_matched_B_r2.L3.extended.json 924s id_matched_B_r2 twin/measured/depth extended: bend 6.727 shear 0.420 (true 3.000, 0.400) cost 1.85 mm, 13 cases, 919 s
+01:16:57 ok id_matched_B_r3.L0.extended.json 886s id_matched_B_r3 truth/truth/truth extended: bend 2.828 shear 0.420 (true 3.000, 0.400) cost 0.18 mm, 13 cases, 880 s
+01:17:01 ok id_matched_B_r3.L3.extended.json 883s id_matched_B_r3 twin/measured/depth extended: bend 6.727 shear 0.420 (true 3.000, 0.400) cost 1.98 mm, 13 cases, 878 s
+01:17:04 ok id_matched_C_r1.Dp.extended.json 884s id_matched_C_r1 truth/truth/depth extended: bend 0.297 shear 4.000 (true 0.333, 2.500) cost 0.63 mm, 13 cases, 879 s
+01:17:06 ok id_matched_C_r1.Gm.extended.json 879s id_matched_C_r1 truth/measured/truth extended: bend 0.420 shear 6.727 (true 0.333, 2.500) cost 0.61 mm, 13 cases, 874 s
+01:17:13 ok id_matched_C_r1.L0.extended.json 886s id_matched_C_r1 truth/truth/truth extended: bend 0.297 shear 4.000 (true 0.333, 2.500) cost 0.28 mm, 13 cases, 881 s
+01:17:13 ok id_matched_C_r1.L3.extended.json 878s id_matched_C_r1 twin/measured/depth extended: bend 0.297 shear 6.727 (true 0.333, 2.500) cost 5.39 mm, 13 cases, 873 s
+01:22:23 ok id_matched_C_r1.St.extended.json 863s id_matched_C_r1 twin/truth/truth extended: bend 0.149 shear 6.727 (true 0.333, 2.500) cost 5.33 mm, 13 cases, 857 s
+01:22:51 ok id_matched_C_r2.L0.extended.json 855s id_matched_C_r2 truth/truth/truth extended: bend 0.297 shear 4.000 (true 0.333, 2.500) cost 0.42 mm, 13 cases, 848 s
+01:31:09 ok id_matched_C_r2.L3.extended.json 852s id_matched_C_r2 twin/measured/depth extended: bend 0.149 shear 6.727 (true 0.333, 2.500) cost 7.02 mm, 13 cases, 847 s
+01:31:20 ok id_matched_C_r3.L0.extended.json 859s id_matched_C_r3 truth/truth/truth extended: bend 0.297 shear 3.364 (true 0.333, 2.500) cost 0.36 mm, 13 cases, 853 s
+01:31:20 ok id_matched_C_r3.L3.extended.json 853s id_matched_C_r3 twin/measured/depth extended: bend 0.149 shear 6.727 (true 0.333, 2.500) cost 6.73 mm, 13 cases, 848 s
+01:31:20 ok id_fine_A_r1.L0.adapt.json 544s id_fine_A_r1 adapt truth/truth/truth: final bend 1.000 shear 1.000 (true 1.000, 1.000), 0 moves of 62, 538 s
+01:31:20 ok id_fine_A_r1.L0.baseline.json 276s id_fine_A_r1 truth/truth/truth baseline: bend 1.000 shear 0.595 (true 1.000, 1.000) cost 0.75 mm, 4 cases, 269 s
+01:31:20 ok id_fine_A_r1.L3.adapt.json 540s id_fine_A_r1 adapt twin/measured/depth: final bend 1.000 shear 1.000 (true 1.000, 1.000), 0 moves of 62, 534 s
+01:31:20 ok id_fine_A_r1.L3.baseline.json 272s id_fine_A_r1 twin/measured/depth baseline: bend 5.657 shear 1.682 (true 1.000, 1.000) cost 2.49 mm, 4 cases, 264 s
+01:31:23 ok id_fine_A_r2.L0.adapt.json 540s id_fine_A_r2 adapt truth/truth/truth: final bend 1.000 shear 1.000 (true 1.000, 1.000), 0 moves of 62, 533 s
+01:31:23 ok id_fine_A_r2.L0.baseline.json 274s id_fine_A_r2 truth/truth/truth baseline: bend 1.000 shear 0.595 (true 1.000, 1.000) cost 0.82 mm, 4 cases, 266 s
+01:35:01 ok id_fine_A_r2.L3.adapt.json 531s id_fine_A_r2 adapt twin/measured/depth: final bend 1.000 shear 1.000 (true 1.000, 1.000), 0 moves of 62, 525 s
+01:35:01 ok id_fine_A_r2.L3.baseline.json 271s id_fine_A_r2 twin/measured/depth baseline: bend 5.657 shear 1.682 (true 1.000, 1.000) cost 2.60 mm, 4 cases, 264 s
+01:35:16 ok id_fine_B_r1.L0.adapt.json 539s id_fine_B_r1 adapt truth/truth/truth: final bend 1.000 shear 1.000 (true 3.000, 0.400), 0 moves of 62, 533 s
+01:35:16 ok id_fine_B_r1.L0.baseline.json 272s id_fine_B_r1 truth/truth/truth baseline: bend 4.000 shear 0.595 (true 3.000, 0.400) cost 0.60 mm, 4 cases, 264 s
+01:39:30 ok id_fine_B_r1.L3.adapt.json 525s id_fine_B_r1 adapt twin/measured/depth: final bend 1.000 shear 1.000 (true 3.000, 0.400), 0 moves of 62, 519 s
+01:39:30 ok id_fine_B_r1.L3.baseline.json 268s id_fine_B_r1 twin/measured/depth baseline: bend 6.727 shear 0.420 (true 3.000, 0.400) cost 2.25 mm, 4 cases, 260 s
+01:40:12 ok id_fine_B_r2.L0.adapt.json 536s id_fine_B_r2 adapt truth/truth/truth: final bend 1.083 shear 1.000 (true 3.000, 0.400), 1 moves of 62, 528 s
+01:40:12 ok id_fine_B_r2.L0.baseline.json 270s id_fine_B_r2 truth/truth/truth baseline: bend 4.000 shear 0.500 (true 3.000, 0.400) cost 0.55 mm, 4 cases, 262 s
+01:40:13 ok id_fine_B_r2.L3.adapt.json 531s id_fine_B_r2 adapt twin/measured/depth: final bend 1.000 shear 1.000 (true 3.000, 0.400), 0 moves of 62, 524 s
+01:40:13 ok id_fine_B_r2.L3.baseline.json 269s id_fine_B_r2 twin/measured/depth baseline: bend 6.727 shear 0.420 (true 3.000, 0.400) cost 2.34 mm, 4 cases, 262 s
+01:43:55 ok id_fine_B_r3.L0.adapt.json 534s id_fine_B_r3 adapt truth/truth/truth: final bend 1.000 shear 1.000 (true 3.000, 0.400), 0 moves of 62, 528 s
+01:43:55 ok id_fine_B_r3.L0.baseline.json 272s id_fine_B_r3 truth/truth/truth baseline: bend 4.000 shear 0.595 (true 3.000, 0.400) cost 0.54 mm, 4 cases, 265 s
+01:44:27 ok id_fine_B_r3.L3.adapt.json 530s id_fine_B_r3 adapt twin/measured/depth: final bend 1.000 shear 1.000 (true 3.000, 0.400), 0 moves of 62, 524 s
+01:44:27 ok id_fine_B_r3.L3.baseline.json 267s id_fine_B_r3 twin/measured/depth baseline: bend 6.727 shear 0.420 (true 3.000, 0.400) cost 2.73 mm, 4 cases, 260 s
+01:45:15 ok id_matched_A_r1.L0.adapt.json 529s id_matched_A_r1 adapt truth/truth/truth: final bend 1.000 shear 1.000 (true 1.000, 1.000), 0 moves of 62, 524 s
+01:45:15 ok id_matched_A_r1.L0.baseline.json 269s id_matched_A_r1 truth/truth/truth baseline: bend 1.000 shear 1.682 (true 1.000, 1.000) cost 0.34 mm, 4 cases, 264 s
+01:48:35 ok id_matched_A_r1.L3.adapt.json 527s id_matched_A_r1 adapt twin/measured/depth: final bend 1.000 shear 1.000 (true 1.000, 1.000), 0 moves of 62, 522 s
+01:48:35 ok id_matched_A_r1.L3.baseline.json 263s id_matched_A_r1 twin/measured/depth baseline: bend 6.727 shear 0.841 (true 1.000, 1.000) cost 4.35 mm, 4 cases, 258 s
+01:49:01 ok id_matched_A_r2.L0.adapt.json 527s id_matched_A_r2 adapt truth/truth/truth: final bend 1.000 shear 1.000 (true 1.000, 1.000), 0 moves of 62, 523 s
+01:49:01 ok id_matched_A_r2.L0.baseline.json 271s id_matched_A_r2 truth/truth/truth baseline: bend 0.841 shear 1.000 (true 1.000, 1.000) cost 0.32 mm, 4 cases, 266 s
+01:52:36 ok id_matched_A_r2.L3.adapt.json 521s id_matched_A_r2 adapt twin/measured/depth: final bend 1.000 shear 1.000 (true 1.000, 1.000), 0 moves of 62, 517 s
+01:52:36 ok id_matched_A_r2.L3.baseline.json 266s id_matched_A_r2 twin/measured/depth baseline: bend 5.657 shear 0.841 (true 1.000, 1.000) cost 4.31 mm, 4 cases, 260 s
+01:53:20 ok id_matched_A_r3.L0.adapt.json 533s id_matched_A_r3 adapt truth/truth/truth: final bend 0.923 shear 1.083 (true 1.000, 1.000), 1 moves of 62, 529 s
+01:53:20 ok id_matched_A_r3.L0.baseline.json 265s id_matched_A_r3 truth/truth/truth baseline: bend 0.595 shear 0.841 (true 1.000, 1.000) cost 0.55 mm, 4 cases, 260 s
+01:53:36 ok id_matched_A_r3.L3.adapt.json 529s id_matched_A_r3 adapt twin/measured/depth: final bend 1.083 shear 1.000 (true 1.000, 1.000), 1 moves of 62, 524 s
+01:53:36 ok id_matched_A_r3.L3.baseline.json 268s id_matched_A_r3 twin/measured/depth baseline: bend 6.727 shear 0.420 (true 1.000, 1.000) cost 9.36 mm, 4 cases, 263 s
+01:57:16 ok id_matched_B_r1.L0.adapt.json 531s id_matched_B_r1 adapt truth/truth/truth: final bend 1.000 shear 1.000 (true 3.000, 0.400), 0 moves of 62, 527 s
+01:57:16 ok id_matched_B_r1.L0.baseline.json 270s id_matched_B_r1 truth/truth/truth baseline: bend 2.378 shear 0.354 (true 3.000, 0.400) cost 0.20 mm, 4 cases, 265 s
+01:57:41 ok id_matched_B_r1.L3.adapt.json 520s id_matched_B_r1 adapt twin/measured/depth: final bend 1.083 shear 0.923 (true 3.000, 0.400), 1 moves of 62, 516 s
+01:57:41 ok id_matched_B_r1.L3.baseline.json 262s id_matched_B_r1 twin/measured/depth baseline: bend 6.727 shear 0.210 (true 3.000, 0.400) cost 6.22 mm, 4 cases, 257 s
+01:58:41 ok id_matched_B_r2.L0.adapt.json 537s id_matched_B_r2 adapt truth/truth/truth: final bend 1.000 shear 1.000 (true 3.000, 0.400), 0 moves of 62, 532 s
+01:58:41 ok id_matched_B_r2.L0.baseline.json 266s id_matched_B_r2 truth/truth/truth baseline: bend 2.378 shear 0.354 (true 3.000, 0.400) cost 0.21 mm, 4 cases, 261 s
+02:01:58 ok id_matched_B_r2.L3.adapt.json 533s id_matched_B_r2 adapt twin/measured/depth: final bend 1.000 shear 1.000 (true 3.000, 0.400), 0 moves of 62, 529 s
+02:01:58 ok id_matched_B_r2.L3.baseline.json 270s id_matched_B_r2 twin/measured/depth baseline: bend 6.727 shear 0.420 (true 3.000, 0.400) cost 2.02 mm, 4 cases, 265 s
+02:02:11 ok id_matched_B_r3.L0.adapt.json 528s id_matched_B_r3 adapt truth/truth/truth: final bend 1.000 shear 1.000 (true 3.000, 0.400), 0 moves of 62, 524 s
+02:02:11 ok id_matched_B_r3.L0.baseline.json 271s id_matched_B_r3 truth/truth/truth baseline: bend 2.378 shear 0.354 (true 3.000, 0.400) cost 0.20 mm, 4 cases, 266 s
+02:05:45 ok id_matched_B_r3.L3.adapt.json 523s id_matched_B_r3 adapt twin/measured/depth: final bend 1.174 shear 0.923 (true 3.000, 0.400), 2 moves of 62, 519 s
+02:05:45 ok id_matched_B_r3.L3.baseline.json 270s id_matched_B_r3 twin/measured/depth baseline: bend 6.727 shear 0.420 (true 3.000, 0.400) cost 2.20 mm, 4 cases, 265 s
+02:06:25 ok id_matched_C_r1.L0.adapt.json 524s id_matched_C_r1 adapt truth/truth/truth: final bend 1.000 shear 1.000 (true 0.333, 2.500), 0 moves of 62, 520 s
+02:06:25 ok id_matched_C_r1.L0.baseline.json 268s id_matched_C_r1 truth/truth/truth baseline: bend 0.297 shear 4.000 (true 0.333, 2.500) cost 0.45 mm, 4 cases, 263 s
+02:06:55 ok id_matched_C_r1.L3.adapt.json 528s id_matched_C_r1 adapt twin/measured/depth: final bend 1.174 shear 0.923 (true 0.333, 2.500), 2 moves of 62, 524 s
+02:06:55 ok id_matched_C_r1.L3.baseline.json 267s id_matched_C_r1 twin/measured/depth baseline: bend 0.149 shear 6.727 (true 0.333, 2.500) cost 7.50 mm, 4 cases, 262 s
+02:10:13 ok id_matched_C_r2.L0.adapt.json 507s id_matched_C_r2 adapt truth/truth/truth: final bend 0.726 shear 1.000 (true 0.333, 2.500), 4 moves of 62, 501 s
+02:10:13 ok id_matched_C_r2.L0.baseline.json 270s id_matched_C_r2 truth/truth/truth baseline: bend 0.210 shear 2.828 (true 0.333, 2.500) cost 0.61 mm, 4 cases, 265 s
+02:10:25 ok id_matched_C_r2.L3.adapt.json 493s id_matched_C_r2 adapt twin/measured/depth: final bend 1.000 shear 1.000 (true 0.333, 2.500), 0 moves of 62, 489 s
+02:10:25 ok id_matched_C_r2.L3.baseline.json 267s id_matched_C_r2 twin/measured/depth baseline: bend 0.149 shear 6.727 (true 0.333, 2.500) cost 9.68 mm, 4 cases, 262 s
+02:11:11 ok id_matched_C_r3.L0.adapt.json 483s id_matched_C_r3 adapt truth/truth/truth: final bend 0.726 shear 1.000 (true 0.333, 2.500), 4 moves of 62, 479 s
+02:11:11 ok id_matched_C_r3.L0.baseline.json 245s id_matched_C_r3 truth/truth/truth baseline: bend 0.297 shear 3.364 (true 0.333, 2.500) cost 0.53 mm, 4 cases, 240 s
+02:13:16 ok id_matched_C_r3.L3.adapt.json 411s id_matched_C_r3 adapt twin/measured/depth: final bend 1.000 shear 1.000 (true 0.333, 2.500), 0 moves of 62, 407 s
+02:13:16 ok id_matched_C_r3.L3.baseline.json 237s id_matched_C_r3 twin/measured/depth baseline: bend 0.149 shear 6.727 (true 0.333, 2.500) cost 9.45 mm, 4 cases, 231 s
+OFFLINE_DONE s2
+Terminated

@@ -1,0 +1,53 @@
+{
+ "run": "id_fine_B_r1",
+ "manifest": {
+  "study": "S1-identification-datasets",
+  "name": "id_fine_B_r1",
+  "structure": "fine",
+  "material": "B",
+  "true_scales": {
+   "bend": 3.0,
+   "shear": 0.4
+  },
+  "repeat": 1,
+  "exit_status": 0,
+  "started": "2026-11-16T03:24:05Z",
+  "hand_script": "/media/taha/ExtermeLinux/oarbot_simulation/logs/sim_eval/id_script.npz",
+  "twin_config": "/home/taha/ros2_colcon_ws/src/oarbots/experiments/sim_eval/config/twin_id.yaml",
+  "plant_args": "--external-followers --overhead-hz 15  --edge-ke-weft 0.006 --edge-ke-warp 0.003 --edge-ke-shear 0.0015 --tri-ke-shear 2400",
+  "launch_args": "twin:=true twin_commands:=true twin_config:=/home/taha/ros2_colcon_ws/src/oarbots/experiments/sim_eval/config/twin_id.yaml twin_record:=/media/taha/ExtermeLinux/oarbot_simulation/logs/sim_eval/id/id_fine_B_r1/twin.npz twin_record_depth:=true",
+  "warmup": {
+   "start_s": 15.0,
+   "end_s": 93.333
+  },
+  "validation_window_s": [
+   97.5,
+   140.4
+  ],
+  "oarbots_commit": "30e5a30aa881e17613167c35ba9faec562124a40",
+  "oarbots_src_dirty": true,
+  "note": "manifest written by hand: the run script was edited while running (bash read error after the run completed)"
+ },
+ "holds": "extended",
+ "correction": "estimator",
+ "history": [
+  {
+   "iteration": 1,
+   "bend": 6.727171322029717,
+   "shear": 0.4204482076268573,
+   "cost_m": 0.0016572526980149086,
+   "log_err_bend": 0.8075424578717401,
+   "log_err_shear": 0.04985675617422335,
+   "seconds": 918.752428435997
+  },
+  {
+   "iteration": 2,
+   "bend": 2.82842712474619,
+   "shear": 0.8408964152537146,
+   "cost_m": 0.002362325673429537,
+   "log_err_bend": -0.05889151782819185,
+   "log_err_shear": 0.7430039367341686,
+   "seconds": 912.9467804560045
+  }
+ ]
+}

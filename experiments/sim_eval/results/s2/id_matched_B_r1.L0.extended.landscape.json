@@ -1,0 +1,100 @@
+{
+ "run": "id_matched_B_r1",
+ "manifest": {
+  "study": "S1-identification-datasets",
+  "name": "id_matched_B_r1",
+  "structure": "matched",
+  "material": "B",
+  "true_scales": {
+   "bend": 3.0,
+   "shear": 0.4
+  },
+  "repeat": 1,
+  "exit_status": 0,
+  "started": "2026-11-16T04:37:33Z",
+  "hand_script": "/media/taha/ExtermeLinux/oarbot_simulation/logs/sim_eval/id_script.npz",
+  "twin_config": "/home/taha/ros2_colcon_ws/src/oarbots/experiments/sim_eval/config/twin_id.yaml",
+  "plant_args": "--external-followers --overhead-hz 15 --grid-x 28 --grid-y 28 --cell-x 0.03 --cell-y 0.03 --gripper-size 2 --iterations 6 --linear-iterations 3 --edge-ke-weft 0.006 --edge-ke-warp 0.003 --edge-ke-shear 0.0015 --tri-ke-shear 2400",
+  "launch_args": "twin:=true twin_commands:=true twin_config:=/home/taha/ros2_colcon_ws/src/oarbots/experiments/sim_eval/config/twin_id.yaml twin_record:=/media/taha/ExtermeLinux/oarbot_simulation/logs/sim_eval/id/id_matched_B_r1/twin.npz twin_record_depth:=true",
+  "warmup": {
+   "start_s": 15.0,
+   "end_s": 93.333
+  },
+  "validation_window_s": [
+   97.5,
+   140.4
+  ],
+  "oarbots_commit": "30e5a30aa881e17613167c35ba9faec562124a40",
+  "oarbots_src_dirty": true
+ },
+ "inputs": {
+  "state": "truth",
+  "grips": "truth",
+  "points": "truth"
+ },
+ "holds": "extended",
+ "holds_available": 13,
+ "cases": 13,
+ "points_per_case": [
+  2500,
+  2500,
+  2500,
+  2500,
+  2500,
+  2500,
+  2500,
+  2500,
+  2500,
+  2500,
+  2500,
+  2500,
+  2500
+ ],
+ "landscape": {
+  "values": [
+   0.25,
+   0.5,
+   1.0,
+   2.0,
+   4.0
+  ],
+  "rms_cost_m": [
+   [
+    0.0011241795239698804,
+    0.0015086928148655835,
+    0.0018590254799805295,
+    0.002097551169645119,
+    0.0022102127378086454
+   ],
+   [
+    0.0009250463234676755,
+    0.0013273117971486276,
+    0.0017097303417261918,
+    0.0019757353921675273,
+    0.0021123388726667506
+   ],
+   [
+    0.0005989057326926767,
+    0.001014134339295743,
+    0.0014532765648584973,
+    0.0017683764274737748,
+    0.0019388859002648418
+   ],
+   [
+    0.000278181951174956,
+    0.0005370882335767186,
+    0.0010578697976897243,
+    0.0014371895786272277,
+    0.001661878549858364
+   ],
+   [
+    0.0009834773670433054,
+    0.0003686395004075669,
+    0.0005736161378400434,
+    0.0009680590553145556,
+    0.0012441627139074382
+   ]
+  ],
+  "seconds": 436.5635137490026
+ }
+}

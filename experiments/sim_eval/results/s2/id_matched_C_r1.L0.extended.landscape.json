@@ -1,0 +1,100 @@
+{
+ "run": "id_matched_C_r1",
+ "manifest": {
+  "study": "S1-identification-datasets",
+  "name": "id_matched_C_r1",
+  "structure": "matched",
+  "material": "C",
+  "true_scales": {
+   "bend": 0.3333333,
+   "shear": 2.5
+  },
+  "repeat": 1,
+  "exit_status": 0,
+  "started": "2026-11-16T04:01:12Z",
+  "hand_script": "/media/taha/ExtermeLinux/oarbot_simulation/logs/sim_eval/id_script.npz",
+  "twin_config": "/home/taha/ros2_colcon_ws/src/oarbots/experiments/sim_eval/config/twin_id.yaml",
+  "plant_args": "--external-followers --overhead-hz 15 --grid-x 28 --grid-y 28 --cell-x 0.03 --cell-y 0.03 --gripper-size 2 --iterations 6 --linear-iterations 3 --edge-ke-weft 0.000666667 --edge-ke-warp 0.000333333 --edge-ke-shear 0.000166667 --tri-ke-shear 15000",
+  "launch_args": "twin:=true twin_commands:=true twin_config:=/home/taha/ros2_colcon_ws/src/oarbots/experiments/sim_eval/config/twin_id.yaml twin_record:=/media/taha/ExtermeLinux/oarbot_simulation/logs/sim_eval/id/id_matched_C_r1/twin.npz twin_record_depth:=true",
+  "warmup": {
+   "start_s": 15.0,
+   "end_s": 93.333
+  },
+  "validation_window_s": [
+   97.5,
+   140.4
+  ],
+  "oarbots_commit": "30e5a30aa881e17613167c35ba9faec562124a40",
+  "oarbots_src_dirty": true
+ },
+ "inputs": {
+  "state": "truth",
+  "grips": "truth",
+  "points": "truth"
+ },
+ "holds": "extended",
+ "holds_available": 13,
+ "cases": 13,
+ "points_per_case": [
+  2500,
+  2500,
+  2500,
+  2500,
+  2500,
+  2500,
+  2500,
+  2500,
+  2500,
+  2500,
+  2500,
+  2500,
+  2500
+ ],
+ "landscape": {
+  "values": [
+   0.25,
+   0.5,
+   1.0,
+   2.0,
+   4.0
+  ],
+  "rms_cost_m": [
+   [
+    0.0020025988671122023,
+    0.0014211365114844693,
+    0.0009218685135153158,
+    0.00048646909554422526,
+    0.00031167085775663607
+   ],
+   [
+    0.002670706235091865,
+    0.0020962937693212165,
+    0.001548072780033081,
+    0.0009996696686383469,
+    0.00044914027887460174
+   ],
+   [
+    0.0036134198094169086,
+    0.0031240777456191192,
+    0.002616485105977292,
+    0.0020021032048032944,
+    0.0012708880026096948
+   ],
+   [
+    0.004674983759166348,
+    0.004246141608569418,
+    0.003809852663442389,
+    0.0032897423717919813,
+    0.002614151556889742
+   ],
+   [
+    0.006057646329267135,
+    0.00550004876079277,
+    0.005041403691939636,
+    0.004588356787710586,
+    0.004054945655863435
+   ]
+  ],
+  "seconds": 434.30142224000156
+ }
+}

@@ -1,0 +1,52 @@
+{
+ "run": "id_matched_B_r1",
+ "manifest": {
+  "study": "S1-identification-datasets",
+  "name": "id_matched_B_r1",
+  "structure": "matched",
+  "material": "B",
+  "true_scales": {
+   "bend": 3.0,
+   "shear": 0.4
+  },
+  "repeat": 1,
+  "exit_status": 0,
+  "started": "2026-11-16T04:37:33Z",
+  "hand_script": "/media/taha/ExtermeLinux/oarbot_simulation/logs/sim_eval/id_script.npz",
+  "twin_config": "/home/taha/ros2_colcon_ws/src/oarbots/experiments/sim_eval/config/twin_id.yaml",
+  "plant_args": "--external-followers --overhead-hz 15 --grid-x 28 --grid-y 28 --cell-x 0.03 --cell-y 0.03 --gripper-size 2 --iterations 6 --linear-iterations 3 --edge-ke-weft 0.006 --edge-ke-warp 0.003 --edge-ke-shear 0.0015 --tri-ke-shear 2400",
+  "launch_args": "twin:=true twin_commands:=true twin_config:=/home/taha/ros2_colcon_ws/src/oarbots/experiments/sim_eval/config/twin_id.yaml twin_record:=/media/taha/ExtermeLinux/oarbot_simulation/logs/sim_eval/id/id_matched_B_r1/twin.npz twin_record_depth:=true",
+  "warmup": {
+   "start_s": 15.0,
+   "end_s": 93.333
+  },
+  "validation_window_s": [
+   97.5,
+   140.4
+  ],
+  "oarbots_commit": "30e5a30aa881e17613167c35ba9faec562124a40",
+  "oarbots_src_dirty": true
+ },
+ "holds": "extended",
+ "correction": "estimator",
+ "history": [
+  {
+   "iteration": 1,
+   "bend": 5.656854249492381,
+   "shear": 0.4204482076268573,
+   "cost_m": 0.0015315958075195243,
+   "log_err_bend": 0.6342556627317537,
+   "log_err_shear": 0.04985675617422335,
+   "seconds": 918.2498892430012
+  },
+  {
+   "iteration": 2,
+   "bend": 1.1892071150027212,
+   "shear": 0.5946035575013605,
+   "cost_m": 0.001901590287675391,
+   "log_err_bend": -0.9253254935281232,
+   "log_err_shear": 0.396430346454196,
+   "seconds": 912.7610450950015
+  }
+ ]
+}

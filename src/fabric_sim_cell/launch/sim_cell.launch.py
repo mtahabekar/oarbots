@@ -110,7 +110,7 @@ def nodes(context):
                                          **sim}]))
         if get('twin_record'):
             out.append(Node(package='fabric_twin', executable='twin_recorder', name='twin_recorder', output='screen',
-                            parameters=[{'output': get('twin_record'), **sim}]))
+                            parameters=[{'output': get('twin_record'), 'depth': get('twin_record_depth') == 'true', **sim}]))
     if get('record'):
         out.append(Node(package='fabric_sim_cell', executable='recorder', name='sim_cell_recorder', output='screen',
                         parameters=[{'output': get('record'), 'record_forces': get('force_torque') == 'true', **sim}]))
@@ -139,6 +139,8 @@ def generate_launch_description():
         DeclareLaunchArgument('twin_bank', default_value='false', description='Run the parameter bank (calibration, adaptation)'),
         DeclareLaunchArgument('twin_adapt_period_sec', default_value='0.0', description='Online adaptation period (s); 0 = off'),
         DeclareLaunchArgument('twin_record', default_value='', description='Twin recorder output NPZ; empty = none'),
+        DeclareLaunchArgument('twin_record_depth', default_value='false',
+                              description="'true': the twin recorder also keeps the world-frame depth points (offline calibration)"),
         DeclareLaunchArgument('replay', default_value='false',
                               description='Consumers only, fed by `ros2 bag play --clock` of a recorded run'),
         OpaqueFunction(function=nodes),

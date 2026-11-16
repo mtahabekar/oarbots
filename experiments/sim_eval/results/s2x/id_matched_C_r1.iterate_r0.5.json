@@ -1,0 +1,71 @@
+{
+ "run": "id_matched_C_r1",
+ "manifest": {
+  "study": "S1-identification-datasets",
+  "name": "id_matched_C_r1",
+  "structure": "matched",
+  "material": "C",
+  "true_scales": {
+   "bend": 0.3333333,
+   "shear": 2.5
+  },
+  "repeat": 1,
+  "exit_status": 0,
+  "started": "2026-11-16T04:01:12Z",
+  "hand_script": "/media/taha/ExtermeLinux/oarbot_simulation/logs/sim_eval/id_script.npz",
+  "twin_config": "/home/taha/ros2_colcon_ws/src/oarbots/experiments/sim_eval/config/twin_id.yaml",
+  "plant_args": "--external-followers --overhead-hz 15 --grid-x 28 --grid-y 28 --cell-x 0.03 --cell-y 0.03 --gripper-size 2 --iterations 6 --linear-iterations 3 --edge-ke-weft 0.000666667 --edge-ke-warp 0.000333333 --edge-ke-shear 0.000166667 --tri-ke-shear 15000",
+  "launch_args": "twin:=true twin_commands:=true twin_config:=/home/taha/ros2_colcon_ws/src/oarbots/experiments/sim_eval/config/twin_id.yaml twin_record:=/media/taha/ExtermeLinux/oarbot_simulation/logs/sim_eval/id/id_matched_C_r1/twin.npz twin_record_depth:=true",
+  "warmup": {
+   "start_s": 15.0,
+   "end_s": 93.333
+  },
+  "validation_window_s": [
+   97.5,
+   140.4
+  ],
+  "oarbots_commit": "30e5a30aa881e17613167c35ba9faec562124a40",
+  "oarbots_src_dirty": true
+ },
+ "holds": "extended",
+ "correction": "estimator",
+ "relaxation": 0.5,
+ "history": [
+  {
+   "iteration": 1,
+   "bend": 0.3855527063519852,
+   "shear": 2.5936791093020193,
+   "fit_bend": 0.14865088937534013,
+   "fit_shear": 6.727171322029717,
+   "cost_m": 0.004434710475210305,
+   "relaxation": 0.5,
+   "log_err_bend": 0.1455350153981899,
+   "log_err_shear": 0.0367866413957698,
+   "seconds": 915.8757135609994
+  },
+  {
+   "iteration": 2,
+   "bend": 0.32420988866275247,
+   "shear": 6.168843301631763,
+   "fit_bend": 0.2726269331663144,
+   "fit_shear": 14.672064691274741,
+   "cost_m": 0.001615062490252676,
+   "relaxation": 0.5,
+   "log_err_bend": -0.02775177974179627,
+   "log_err_shear": 0.9032206170957013,
+   "seconds": 785.6076019500033
+  },
+  {
+   "iteration": 3,
+   "bend": 0.545253866332629,
+   "shear": 4.756828460010885,
+   "fit_bend": 0.9170040432046714,
+   "fit_shear": 3.6680161728186853,
+   "cost_m": 0.0016545479590717917,
+   "relaxation": 0.5,
+   "log_err_bend": 0.4921086056781627,
+   "log_err_shear": 0.643290424385722,
+   "seconds": 586.143698641994
+  }
+ ]
+}

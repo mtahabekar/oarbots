@@ -53,7 +53,7 @@ class ParameterBankNode(Node):
         self.adapt_period = float(self.declare_parameter('adapt_period_sec', 0.0).value)
         self.min_sensitivity = float(self.declare_parameter('min_sensitivity_m', 0.0015).value)
         self.tf = Buffer(); self.listener = TransformListener(self.tf, self)
-        self.states, self.corners, self.depth, self.pending = deque(maxlen=900), deque(maxlen=3600), deque(maxlen=2700), deque(maxlen=300)
+        self.states, self.corners, self.depth, self.pending = deque(maxlen=4500), deque(maxlen=18000), deque(maxlen=13500), deque(maxlen=300)
         self.bank, self.scales, self.version, self.request = None, (1., 1.), 0, None
         self.random = np.random.default_rng(0)
         self.release_pub = self.create_publisher(String, '/fabric/material_parameters', LATCHED)
@@ -154,6 +154,7 @@ class ParameterBankNode(Node):
         if len(cases) < 2:
             self.status(f'calibration skipped: only {len(cases)} of {len(request["holds"])} holds have state, grips and depth')
             return
+        self.status("calibration started", cases=len(cases))
         started = time.perf_counter()
         result = self.bank.calibrate(cases, self.scales)
         table = result.pop('table')

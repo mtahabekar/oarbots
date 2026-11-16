@@ -82,3 +82,67 @@ and strict controller-feasibility checks. `fast` keeps the fine plant and remain
 
 The fast/monitor/lean paths now use synchronized manually scheduled camera capture.
 Rebuild `fabric_perception`, `fabric_state_estimator`, and `fabric_sim_cell` before use.
+
+## Extended material-identification warm-up
+
+Use `twin_config:=/absolute/path/to/config/twin_identification.yaml` with
+`twin:=true twin_commands:=true twin_bank:=true twin_adapt_period_sec:=10.0`.
+The plant must use `--attach --route-cbf --external-followers`. Keep the two
+human-side corners stationary and the fabric clear of obstacles. This opt-in
+configuration starts at simulation time 15 s; the ordinary twin configuration
+retains the original warm-up.
+
+The sequence adds 3 cm transverse compression, alternating 5 cm robot-grip
+lifts, and lateral shifts of +/-3 cm after the original inward slack stages.
+It returns to the slack pose between lift stages and to the original pose at
+completion. Transitions use the configured speed and holds use `hold_sec`.
+The CBF and stretch guard still filter these nominal motions: identification
+uses measured grip trajectories, not an assumption that every target was reached.
+No force-loading experiment, free-corner mode, or contact identification is added.
+
+New YAML settings in `warmup` are `transverse_m`, `lift_m`, and `lateral_m`
+(each defaults to zero, range 0 to 0.1 m). The dimensions are experimental
+starting values, not validated hardware excursions. The parameter bank retains
+up to approximately five minutes at nominal topic rates and logs
+`calibration started` before its blocking candidate search. Allow the search to
+complete; increasing motion duration alone does not accelerate fitting.
+
+Compare baseline and extended runs with identical plant coefficients, initial
+conditions, solver settings and sensor settings. Record parameter releases and
+calibration cost, compare recovery of bend=2 and shear=0.5, and validate on an
+unseen motion. Repeat runs because sensor timing varies. A run without a completed
+calibration is inconclusive, and low corrected shape error is not parameter recovery.
+
+Validation: CPU trajectory tests confirm bounded commands, return to origin,
+mirrored lifts and additional lateral/vertical excursion compared with baseline.
+Improved material recovery has not yet been established by a paired plant experiment.
+
+### GPU comparison (15 November 2026)
+
+Ran on NVIDIA RTX 5070 Laptop GPU, Newton 1.6.1 / Warp 1.17.0.
+The existing calibration-recovery and baseline warm-up tests both passed;
+the four CPU extended-trajectory tests also passed.
+
+A paired synthetic experiment with a 16-cell mesh, known scales (2, 0.5),
+exact surface observations, no feedback, no CBF and a 25-candidate search gave:
+
+| Sequence | Holds | Recovered bend / shear | Total generation + fitting time |
+| --- | --- | --- | --- |
+| Baseline | 4 | 2.0 / 0.5 | 72.9 s |
+| Extended | 13 | 2.0 / 0.5 | 236.4 s |
+
+Both recovered the coefficients exactly on the search grid. The extended
+sequence did **not** improve parameter accuracy in this experiment and cost
+about 3.2 times as much. Its lower fitting residual is not a fair accuracy
+comparison because the two datasets contain different poses. Keep the extended
+sequence experimental; improvement under rendered sensor noise remains untested.
+
+Reproduce from the oarbots root on a GPU-enabled host:
+
+```bash
+PYTHONPATH=src/fabric_twin \
+FABRIC_SIM_ROOT=$HOME/ros2_colcon_ws/src/fabric_sim_isaacsim_newton \
+~/venvs/fabric_ros/bin/python src/fabric_twin/scripts/compare_warmups.py /tmp/warmup_comparison.json
+```
+
+Machine-readable results: `src/fabric_twin/test/results/warmup_gpu_comparison.json`.

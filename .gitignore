@@ -16,3 +16,10 @@ __pycache__/
 *.py[cod]
 *.egg-info/
 .pytest_cache/
+
+# Raw Isaac run recordings (hundreds of MB, over GitHub's 100 MB file limit).
+# Full copies live on the external drive:
+#   /media/taha/ExtermeLinux/oarbot_simulation/logs/material_runs/
+experiments/material_*/estimate.npz
+experiments/material_*/truth.npz
+experiments/material_*/twin.npz

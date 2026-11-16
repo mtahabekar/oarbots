@@ -33,6 +33,9 @@ class FeedbackSpec:
     accel_limit_mps2: float = 20.
     trusted_sigma_m: float = .02      # an estimate this uncertain gets half weight
     max_error_m: float = .25          # beyond this the twin is re-placed, not nudged
+    # False: the twin is driven by the measured grips alone (an ablation baseline). The estimator
+    # still runs and is still monitored for staleness; its analyses are just not applied.
+    enabled: bool = True
 
 
 class Nudger:

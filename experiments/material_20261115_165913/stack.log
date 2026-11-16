@@ -1,0 +1,285 @@
+[INFO] [launch]: All log files can be found below /home/taha/.ros/log/2026-11-15-16-59-56-610912-taha-Legion-7-16IAX10-103148
+[INFO] [launch]: Default logging verbosity is set to INFO
+[INFO] [robot_state_publisher-1]: process started with pid [103170]
+[INFO] [joint_state_renamer-2]: process started with pid [103171]
+[INFO] [joint_state_renamer-3]: process started with pid [103172]
+[INFO] [robot_state_publisher-4]: process started with pid [103173]
+[INFO] [joint_state_renamer-5]: process started with pid [103174]
+[INFO] [joint_state_renamer-6]: process started with pid [103175]
+[INFO] [calibration_publisher-7]: process started with pid [103176]
+[INFO] [camera-8]: process started with pid [103177]
+[INFO] [camera-9]: process started with pid [103178]
+[INFO] [camera-10]: process started with pid [103179]
+[INFO] [fusion-11]: process started with pid [103180]
+[INFO] [grasp_gate-12]: process started with pid [103181]
+[INFO] [observer-13]: process started with pid [103182]
+[INFO] [demo_markers-14]: process started with pid [103185]
+[INFO] [rviz2-15]: process started with pid [103186]
+[INFO] [twin-16]: process started with pid [103197]
+[INFO] [parameter_bank-17]: process started with pid [103198]
+[INFO] [twin_recorder-18]: process started with pid [103199]
+[INFO] [recorder-19]: process started with pid [103202]
+[robot_state_publisher-1] [INFO] [1794779996.807990421] [oarbot_blue.robot_state_publisher]: Robot initialized
+[robot_state_publisher-4] [INFO] [1794779996.808118080] [oarbot_silver.robot_state_publisher]: Robot initialized
+[rviz2-15] [INFO] [1794779997.146769465] [rviz2]: Stereo is NOT SUPPORTED
+[rviz2-15] [INFO] [1794779997.146899486] [rviz2]: OpenGl version: 4.6 (GLSL 4.6)
+[rviz2-15] [INFO] [1794779997.185085407] [rviz2]: Stereo is NOT SUPPORTED
+[calibration_publisher-7] [INFO] [1794779997.288571100] [sim_cell_calibration]: published 6 calibration transforms from /home/taha/ros2_colcon_ws/install/fabric_sim_cell/share/fabric_sim_cell/config/calibration_exact.yaml
+[rviz2-15] [INFO] [1794779997.395355942] [rviz2]: Stereo is NOT SUPPORTED
+[rviz2-15] [INFO] [1794779997.417241644] [rviz2]: Stereo is NOT SUPPORTED
+[twin-16] [INFO] [1794779998.837638950] [fabric_twin]: fabric twin waiting for four grips; cloth library at /home/taha/ros2_colcon_ws/src/fabric_sim_isaacsim_newton
+[observer-13] [INFO] [1794779998.848327816] [fabric_state_estimator]: Preparing physics backend before accepting live captures
+[parameter_bank-17] [INFO] [1794779998.920433453] [fabric_parameter_bank]: parameter bank ready; depth from 3 cameras
+[grasp_gate-12] [INFO] [1794780045.956549112] [grasp_gate]: oarbot_silver gripper closed at 9.950000000 s
+[grasp_gate-12] [INFO] [1794780045.957746827] [grasp_gate]: oarbot_blue gripper closed at 9.983333333 s
+[grasp_gate-12] [INFO] [1794780046.099008630] [grasp_gate]: both grippers closed: hand states now reach the estimator
+[twin-16] [INFO] [1794780047.789366133] [fabric_twin]: twin started from a surface between the grips in 1.3 s: 841 particles, obstacle clearance 0.692 m
+[twin-16] [INFO] [1794780055.120428918] [fabric_twin]: warm-up excitation started: insets [0.02, 0.04] m at 0.03 m/s, 21 s, started at 15.00 s
+[WARNING] [launch]: user interrupted with ctrl-c (SIGINT)
+[INFO] [recorder-19]: sending signal 'SIGINT' to process[recorder-19]
+[INFO] [twin_recorder-18]: sending signal 'SIGINT' to process[twin_recorder-18]
+[INFO] [parameter_bank-17]: sending signal 'SIGINT' to process[parameter_bank-17]
+[INFO] [twin-16]: sending signal 'SIGINT' to process[twin-16]
+[INFO] [rviz2-15]: sending signal 'SIGINT' to process[rviz2-15]
+[INFO] [demo_markers-14]: sending signal 'SIGINT' to process[demo_markers-14]
+[INFO] [observer-13]: sending signal 'SIGINT' to process[observer-13]
+[INFO] [grasp_gate-12]: sending signal 'SIGINT' to process[grasp_gate-12]
+[INFO] [fusion-11]: sending signal 'SIGINT' to process[fusion-11]
+[INFO] [camera-10]: sending signal 'SIGINT' to process[camera-10]
+[INFO] [camera-9]: sending signal 'SIGINT' to process[camera-9]
+[INFO] [camera-8]: sending signal 'SIGINT' to process[camera-8]
+[INFO] [calibration_publisher-7]: sending signal 'SIGINT' to process[calibration_publisher-7]
+[INFO] [joint_state_renamer-6]: sending signal 'SIGINT' to process[joint_state_renamer-6]
+[INFO] [joint_state_renamer-5]: sending signal 'SIGINT' to process[joint_state_renamer-5]
+[INFO] [robot_state_publisher-4]: sending signal 'SIGINT' to process[robot_state_publisher-4]
+[INFO] [joint_state_renamer-3]: sending signal 'SIGINT' to process[joint_state_renamer-3]
+[INFO] [joint_state_renamer-2]: sending signal 'SIGINT' to process[joint_state_renamer-2]
+[INFO] [robot_state_publisher-1]: sending signal 'SIGINT' to process[robot_state_publisher-1]
+[rviz2-15] [INFO] [1794780323.503017565] [rclcpp]: signal_handler(SIGINT/SIGTERM)
+[joint_state_renamer-6] [INFO] [1794780323.518045815] [rclcpp]: signal_handler(SIGINT/SIGTERM)
+[twin-16] Warp 1.17.0 initialized:
+[twin-16]    CUDA Toolkit 12.9, Driver 13.0
+[twin-16]    Devices:
+[twin-16]      "cpu"      : "x86_64"
+[twin-16]      "cuda:0"   : "NVIDIA GeForce RTX 5070 Laptop GPU" (8 GiB, sm_120, mempool enabled)
+[twin-16]    Kernel cache:
+[twin-16]      /home/taha/.cache/warp/1.17.0
+[twin-16] Module newton._src.utils.mesh 92b663b load on device 'cpu' took 1.25 ms  (cached)
+[twin-16] Module newton._src.geometry.bvh 58a3a49 load on device 'cuda:0' took 1.90 ms  (cached)
+[twin-16] Module newton._src.solvers.style3d.kernels 6e609e0 load on device 'cuda:0' took 2.73 ms  (cached)
+[twin-16] Module newton._src.solvers.style3d.collision.bvh.kernels eed0ece load on device 'cuda:0' took 1.61 ms  (cached)
+[twin-16]     Module newton._src.solvers.style3d.builder eb1b915 load on device 'cpu' took 0.28 ms  (cached)
+[twin-16]     Module newton._src.solvers.style3d.builder 013f25b load on device 'cuda:0' took 4.41 ms  (cached)
+[twin-16] SolverStyle3D::precompute() took 13.75 ms
+[twin-16] Module fabric_twin.cloth 2b29def load on device 'cuda:0' took 0.86 ms  (cached)
+[twin-16] Module capsule_cbf.newton_runtime 8379e06 load on device 'cuda:0' took 0.91 ms  (cached)
+[twin-16] Module newton._src.sim.collide f369c1a load on device 'cuda:0' took 1.12 ms  (cached)
+[twin-16] Module narrow_phase_primitive_write_contact_False_False_False 6b2fd5c load on device 'cuda:0' took 2.45 ms  (cached)
+[twin-16] Module newton._src.geometry.narrow_phase 3519ebf load on device 'cuda:0' took 1.58 ms  (cached)
+[twin-16] Module newton._src.geometry.kernels d546c9d load on device 'cuda:0' took 5.32 ms  (cached)
+[twin-16] Module newton._src.solvers.style3d.collision.bvh.kernels ebf1724 load on device 'cuda:0' took 2.66 ms  (cached)
+[twin-16] Module newton._src.solvers.style3d.collision.kernels f54ca9e load on device 'cuda:0' took 2.31 ms  (cached)
+[twin-16] Module newton._src.solvers.style3d.linear_solver f457b3c load on device 'cuda:0' took 2.20 ms  (cached)
+[joint_state_renamer-5] [INFO] [1794780323.520318001] [rclcpp]: signal_handler(SIGINT/SIGTERM)
+[robot_state_publisher-4] [INFO] [1794780323.522578605] [rclcpp]: signal_handler(SIGINT/SIGTERM)
+[joint_state_renamer-3] [INFO] [1794780323.524345082] [rclcpp]: signal_handler(SIGINT/SIGTERM)
+[joint_state_renamer-2] [INFO] [1794780323.526019887] [rclcpp]: signal_handler(SIGINT/SIGTERM)
+[robot_state_publisher-1] [INFO] [1794780323.527486798] [rclcpp]: signal_handler(SIGINT/SIGTERM)
+[observer-13] Warp 1.17.0 initialized:
+[observer-13]    CUDA Toolkit 12.9, Driver 13.0
+[observer-13]    Devices:
+[observer-13]      "cpu"      : "x86_64"
+[observer-13]      "cuda:0"   : "NVIDIA GeForce RTX 5070 Laptop GPU" (8 GiB, sm_120, mempool enabled)
+[observer-13]    Kernel cache:
+[observer-13]      /home/taha/.cache/warp/1.17.0
+[observer-13] Module newton._src.utils.mesh 92b663b load on device 'cpu' took 0.74 ms  (cached)
+[observer-13] Module newton._src.geometry.bvh 58a3a49 load on device 'cuda:0' took 0.80 ms  (cached)
+[observer-13] Module newton._src.solvers.style3d.kernels 6e609e0 load on device 'cuda:0' took 3.89 ms  (cached)
+[observer-13] Module newton._src.solvers.style3d.collision.bvh.kernels eed0ece load on device 'cuda:0' took 0.93 ms  (cached)
+[observer-13]     Module newton._src.solvers.style3d.builder eb1b915 load on device 'cpu' took 0.13 ms  (cached)
+[observer-13]     Module newton._src.solvers.style3d.builder 013f25b load on device 'cuda:0' took 1.79 ms  (cached)
+[observer-13] SolverStyle3D::precompute() took 6.82 ms
+[observer-13] Module fabric_state_estimator.newton_backend ac93137 load on device 'cuda:0' took 0.43 ms  (cached)
+[observer-13] Module newton._src.solvers.style3d.linear_solver f457b3c load on device 'cuda:0' took 1.42 ms  (cached)
+[observer-13] Traceback (most recent call last):
+[observer-13]   File "/home/taha/ros2_colcon_ws/install/fabric_state_estimator/lib/fabric_state_estimator/observer", line 33, in <module>
+[observer-13]     sys.exit(load_entry_point('fabric-state-estimator==0.1.0', 'console_scripts', 'observer')())
+[observer-13]              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[observer-13]   File "/home/taha/ros2_colcon_ws/install/fabric_state_estimator/lib/python3.12/site-packages/fabric_state_estimator/node.py", line 325, in main
+[observer-13]     rclpy.spin(node)
+[observer-13]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/__init__.py", line 247, in spin
+[observer-13]     executor.spin_once()
+[observer-13]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 926, in spin_once
+[observer-13]     self._spin_once_impl(timeout_sec)
+[observer-13]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 907, in _spin_once_impl
+[observer-13]     handler, entity, node = self.wait_for_ready_callbacks(
+[observer-13]                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[observer-13]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 877, in wait_for_ready_callbacks
+[observer-13]     return next(self._cb_iter)
+[observer-13]            ^^^^^^^^^^^^^^^^^^^
+[observer-13]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 781, in _wait_for_ready_callbacks
+[observer-13]     wait_set.wait(timeout_nsec)
+[observer-13] KeyboardInterrupt
+[camera-9] Traceback (most recent call last):
+[camera-9]   File "/home/taha/ros2_colcon_ws/install/fabric_perception/lib/fabric_perception/camera", line 33, in <module>
+[camera-8] Traceback (most recent call last):
+[camera-8]   File "/home/taha/ros2_colcon_ws/install/fabric_perception/lib/fabric_perception/camera", line 33, in <module>
+[camera-8]     sys.exit(load_entry_point('fabric-perception==0.1.0', 'console_scripts', 'camera')())
+[camera-9]     sys.exit(load_entry_point('fabric-perception==0.1.0', 'console_scripts', 'camera')())
+[camera-8]              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[camera-8]   File "/home/taha/ros2_colcon_ws/install/fabric_perception/lib/python3.12/site-packages/fabric_perception/node.py", line 277, in main
+[camera-9]              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[camera-9]   File "/home/taha/ros2_colcon_ws/install/fabric_perception/lib/python3.12/site-packages/fabric_perception/node.py", line 277, in main
+[camera-9]     rclpy.spin(node)
+[camera-8]     rclpy.spin(node)
+[camera-9]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/__init__.py", line 247, in spin
+[camera-9]     executor.spin_once()
+[camera-9]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 926, in spin_once
+[camera-9]     self._spin_once_impl(timeout_sec)
+[camera-8]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/__init__.py", line 247, in spin
+[camera-8]     executor.spin_once()
+[camera-8]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 926, in spin_once
+[camera-9]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 907, in _spin_once_impl
+[camera-8]     self._spin_once_impl(timeout_sec)
+[camera-8]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 907, in _spin_once_impl
+[camera-9]     handler, entity, node = self.wait_for_ready_callbacks(
+[camera-9]                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[camera-9]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 877, in wait_for_ready_callbacks
+[camera-9]     return next(self._cb_iter)
+[camera-8]     handler, entity, node = self.wait_for_ready_callbacks(
+[camera-8]                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[camera-8]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 877, in wait_for_ready_callbacks
+[camera-8]     return next(self._cb_iter)
+[camera-8]            ^^^^^^^^^^^^^^^^^^^
+[camera-8]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 781, in _wait_for_ready_callbacks
+[camera-8]     wait_set.wait(timeout_nsec)
+[camera-8] KeyboardInterrupt
+[camera-9]            ^^^^^^^^^^^^^^^^^^^
+[camera-9]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 781, in _wait_for_ready_callbacks
+[camera-9]     wait_set.wait(timeout_nsec)
+[camera-9] KeyboardInterrupt
+[camera-10] Traceback (most recent call last):
+[camera-10]   File "/home/taha/ros2_colcon_ws/install/fabric_perception/lib/fabric_perception/camera", line 33, in <module>
+[camera-10]     sys.exit(load_entry_point('fabric-perception==0.1.0', 'console_scripts', 'camera')())
+[camera-10]              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[camera-10]   File "/home/taha/ros2_colcon_ws/install/fabric_perception/lib/python3.12/site-packages/fabric_perception/node.py", line 277, in main
+[camera-10]     rclpy.spin(node)
+[camera-10]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/__init__.py", line 247, in spin
+[camera-10]     executor.spin_once()
+[camera-10]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 926, in spin_once
+[camera-10]     self._spin_once_impl(timeout_sec)
+[camera-10]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 907, in _spin_once_impl
+[camera-10]     handler, entity, node = self.wait_for_ready_callbacks(
+[camera-10]                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[camera-10]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 877, in wait_for_ready_callbacks
+[camera-10]     return next(self._cb_iter)
+[camera-10]            ^^^^^^^^^^^^^^^^^^^
+[camera-10]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 781, in _wait_for_ready_callbacks
+[camera-10]     wait_set.wait(timeout_nsec)
+[camera-10] KeyboardInterrupt
+[rviz2-15] terminate called after throwing an instance of 'std::system_error'
+[rviz2-15]   what():  Invalid argument
+[fusion-11] Traceback (most recent call last):
+[fusion-11]   File "/home/taha/ros2_colcon_ws/install/human_hand_tracking/lib/human_hand_tracking/fusion", line 33, in <module>
+[fusion-11]     sys.exit(load_entry_point('human-hand-tracking==0.1.0', 'console_scripts', 'fusion')())
+[fusion-11]              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[fusion-11]   File "/home/taha/ros2_colcon_ws/install/human_hand_tracking/lib/python3.12/site-packages/human_hand_tracking/node.py", line 191, in main
+[fusion-11]     rclpy.spin(node)
+[fusion-11]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/__init__.py", line 247, in spin
+[fusion-11]     executor.spin_once()
+[fusion-11]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 926, in spin_once
+[fusion-11]     self._spin_once_impl(timeout_sec)
+[fusion-11]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 907, in _spin_once_impl
+[fusion-11]     handler, entity, node = self.wait_for_ready_callbacks(
+[fusion-11]                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[fusion-11]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 877, in wait_for_ready_callbacks
+[fusion-11]     return next(self._cb_iter)
+[fusion-11]            ^^^^^^^^^^^^^^^^^^^
+[fusion-11]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 781, in _wait_for_ready_callbacks
+[fusion-11]     wait_set.wait(timeout_nsec)
+[fusion-11] KeyboardInterrupt
+[ERROR] [camera-8]: process has died [pid 103177, exit code -2, cmd '/home/taha/ros2_colcon_ws/install/fabric_perception/lib/fabric_perception/camera --ros-args -r __node:=fabric_perception -r __ns:=/oarbot_blue/azure_kinect --params-file /home/taha/ros2_colcon_ws/install/fabric_sim_cell/share/fabric_sim_cell/config/perception_blue_wrist_fast.yaml --params-file /tmp/launch_params_ymobmzhz'].
+[ERROR] [camera-9]: process has died [pid 103178, exit code -2, cmd '/home/taha/ros2_colcon_ws/install/fabric_perception/lib/fabric_perception/camera --ros-args -r __node:=fabric_perception -r __ns:=/oarbot_silver/azure_kinect --params-file /home/taha/ros2_colcon_ws/install/fabric_sim_cell/share/fabric_sim_cell/config/perception_silver_wrist_fast.yaml --params-file /tmp/launch_params_0gn71pm8'].
+[parameter_bank-17] Warp 1.17.0 initialized:
+[parameter_bank-17]    CUDA Toolkit 12.9, Driver 13.0
+[parameter_bank-17]    Devices:
+[parameter_bank-17]      "cpu"      : "x86_64"
+[parameter_bank-17]      "cuda:0"   : "NVIDIA GeForce RTX 5070 Laptop GPU" (8 GiB, sm_120, mempool enabled)
+[parameter_bank-17]    Kernel cache:
+[parameter_bank-17]      /home/taha/.cache/warp/1.17.0
+[parameter_bank-17] Module newton._src.utils.mesh 92b663b load on device 'cpu' took 1.11 ms  (cached)
+[parameter_bank-17] Module newton._src.geometry.bvh 58a3a49 load on device 'cuda:0' took 1.61 ms  (cached)
+[parameter_bank-17] Module newton._src.solvers.style3d.kernels 6e609e0 load on device 'cuda:0' took 2.49 ms  (cached)
+[parameter_bank-17] Module newton._src.solvers.style3d.collision.bvh.kernels eed0ece load on device 'cuda:0' took 3.26 ms  (cached)
+[parameter_bank-17]     Module newton._src.solvers.style3d.builder eb1b915 load on device 'cpu' took 0.46 ms  (cached)
+[parameter_bank-17]     Module newton._src.solvers.style3d.builder 013f25b load on device 'cuda:0' took 3.42 ms  (cached)
+[parameter_bank-17] SolverStyle3D::precompute() took 189.15 ms
+[parameter_bank-17] Module fabric_twin.cloth 2b29def load on device 'cuda:0' took 2.53 ms  (cached)
+[parameter_bank-17] Module capsule_cbf.newton_runtime 8379e06 load on device 'cuda:0' took 1.85 ms  (cached)
+[parameter_bank-17] Module newton._src.sim.collide f369c1a load on device 'cuda:0' took 0.67 ms  (cached)
+[parameter_bank-17] Module narrow_phase_primitive_write_contact_False_False_False 6b2fd5c load on device 'cuda:0' took 0.89 ms  (cached)
+[parameter_bank-17] Module newton._src.geometry.narrow_phase 3519ebf load on device 'cuda:0' took 1.64 ms  (cached)
+[parameter_bank-17] Module newton._src.geometry.kernels d546c9d load on device 'cuda:0' took 7.75 ms  (cached)
+[parameter_bank-17] Module newton._src.solvers.style3d.collision.bvh.kernels ebf1724 load on device 'cuda:0' took 2.24 ms  (cached)
+[parameter_bank-17] Module newton._src.solvers.style3d.collision.kernels f54ca9e load on device 'cuda:0' took 2.44 ms  (cached)
+[parameter_bank-17] Module newton._src.solvers.style3d.linear_solver f457b3c load on device 'cuda:0' took 3.79 ms  (cached)
+[parameter_bank-17] SolverStyle3D::precompute() took 7.46 ms
+[parameter_bank-17] SolverStyle3D::precompute() took 5.00 ms
+[parameter_bank-17] SolverStyle3D::precompute() took 5.05 ms
+[parameter_bank-17] SolverStyle3D::precompute() took 4.96 ms
+[parameter_bank-17] SolverStyle3D::precompute() took 5.07 ms
+[parameter_bank-17] SolverStyle3D::precompute() took 5.36 ms
+[parameter_bank-17] SolverStyle3D::precompute() took 5.50 ms
+[parameter_bank-17] SolverStyle3D::precompute() took 5.33 ms
+[parameter_bank-17] SolverStyle3D::precompute() took 9.65 ms
+[parameter_bank-17] SolverStyle3D::precompute() took 5.43 ms
+[parameter_bank-17] SolverStyle3D::precompute() took 5.19 ms
+[parameter_bank-17] SolverStyle3D::precompute() took 4.86 ms
+[parameter_bank-17] SolverStyle3D::precompute() took 5.52 ms
+[parameter_bank-17] SolverStyle3D::precompute() took 5.01 ms
+[parameter_bank-17] SolverStyle3D::precompute() took 4.95 ms
+[parameter_bank-17] SolverStyle3D::precompute() took 5.02 ms
+[parameter_bank-17] SolverStyle3D::precompute() took 5.04 ms
+[parameter_bank-17] SolverStyle3D::precompute() took 4.58 ms
+[parameter_bank-17] SolverStyle3D::precompute() took 5.57 ms
+[parameter_bank-17] SolverStyle3D::precompute() took 5.13 ms
+[parameter_bank-17] SolverStyle3D::precompute() took 5.64 ms
+[parameter_bank-17] SolverStyle3D::precompute() took 5.42 ms
+[parameter_bank-17] SolverStyle3D::precompute() took 5.73 ms
+[parameter_bank-17] SolverStyle3D::precompute() took 5.83 ms
+[parameter_bank-17] SolverStyle3D::precompute() took 5.54 ms
+[parameter_bank-17] SolverStyle3D::precompute() took 5.83 ms
+[parameter_bank-17] SolverStyle3D::precompute() took 160.84 ms
+[parameter_bank-17] SolverStyle3D::precompute() took 5.58 ms
+[parameter_bank-17] SolverStyle3D::precompute() took 5.68 ms
+[parameter_bank-17] SolverStyle3D::precompute() took 5.26 ms
+[parameter_bank-17] SolverStyle3D::precompute() took 5.52 ms
+[parameter_bank-17] SolverStyle3D::precompute() took 5.21 ms
+[parameter_bank-17] SolverStyle3D::precompute() took 8.03 ms
+[parameter_bank-17] SolverStyle3D::precompute() took 4.84 ms
+[parameter_bank-17] SolverStyle3D::precompute() took 5.49 ms
+[parameter_bank-17] SolverStyle3D::precompute() took 5.23 ms
+[parameter_bank-17] SolverStyle3D::precompute() took 5.53 ms
+[parameter_bank-17] SolverStyle3D::precompute() took 5.92 ms
+[parameter_bank-17] SolverStyle3D::precompute() took 5.83 ms
+[parameter_bank-17] SolverStyle3D::precompute() took 4.56 ms
+[parameter_bank-17] SolverStyle3D::precompute() took 3.90 ms
+[ERROR] [camera-10]: process has died [pid 103179, exit code -2, cmd '/home/taha/ros2_colcon_ws/install/fabric_perception/lib/fabric_perception/camera --ros-args -r __node:=fabric_perception -r __ns:=/nuc --params-file /home/taha/ros2_colcon_ws/install/fabric_sim_cell/share/fabric_sim_cell/config/perception_overhead_fast.yaml --params-file /tmp/launch_params_p74avd01'].
+[INFO] [joint_state_renamer-6]: process has finished cleanly [pid 103175]
+[INFO] [joint_state_renamer-5]: process has finished cleanly [pid 103174]
+[INFO] [joint_state_renamer-2]: process has finished cleanly [pid 103171]
+[INFO] [joint_state_renamer-3]: process has finished cleanly [pid 103172]
+[INFO] [robot_state_publisher-1]: process has finished cleanly [pid 103170]
+[INFO] [robot_state_publisher-4]: process has finished cleanly [pid 103173]
+[ERROR] [fusion-11]: process has died [pid 103180, exit code -2, cmd '/home/taha/ros2_colcon_ws/install/human_hand_tracking/lib/human_hand_tracking/fusion --ros-args -r __node:=hand_fusion --params-file /home/taha/ros2_colcon_ws/install/fabric_sim_cell/share/fabric_sim_cell/config/fusion.yaml --params-file /tmp/launch_params_8lpq8jxp -r /fabric/hand_states:=/fabric/hand_states_ungated'].
+[INFO] [recorder-19]: process has finished cleanly [pid 103202]
+[INFO] [grasp_gate-12]: process has finished cleanly [pid 103181]
+[INFO] [demo_markers-14]: process has finished cleanly [pid 103185]
+[INFO] [calibration_publisher-7]: process has finished cleanly [pid 103176]
+[INFO] [twin_recorder-18]: process has finished cleanly [pid 103199]
+[ERROR] [observer-13]: process has died [pid 103182, exit code -2, cmd '/home/taha/ros2_colcon_ws/install/fabric_state_estimator/lib/fabric_state_estimator/observer --ros-args -r __node:=fabric_state_estimator --params-file /tmp/launch_params_0bfs978o'].
+[INFO] [twin-16]: process has finished cleanly [pid 103197]
+[INFO] [parameter_bank-17]: process has finished cleanly [pid 103198]
+[ERROR] [rviz2-15]: process[rviz2-15] failed to terminate '5' seconds after receiving 'SIGINT', escalating to 'SIGTERM'
+[INFO] [rviz2-15]: sending signal 'SIGTERM' to process[rviz2-15]
+[ERROR] [rviz2-15]: process has died [pid 103186, exit code -6, cmd '/opt/ros/jazzy/lib/rviz2/rviz2 -d /home/taha/ros2_colcon_ws/install/fabric_sim_cell/share/fabric_sim_cell/config/sim_cell_demo.rviz --ros-args -r __node:=sim_cell_rviz --params-file /tmp/launch_params_dgw6kbwe'].

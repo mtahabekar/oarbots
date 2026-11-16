@@ -1,0 +1,100 @@
+{
+ "run": "id_matched_B_r1",
+ "manifest": {
+  "study": "S1-identification-datasets",
+  "name": "id_matched_B_r1",
+  "structure": "matched",
+  "material": "B",
+  "true_scales": {
+   "bend": 3.0,
+   "shear": 0.4
+  },
+  "repeat": 1,
+  "exit_status": 0,
+  "started": "2026-11-16T04:37:33Z",
+  "hand_script": "/media/taha/ExtermeLinux/oarbot_simulation/logs/sim_eval/id_script.npz",
+  "twin_config": "/home/taha/ros2_colcon_ws/src/oarbots/experiments/sim_eval/config/twin_id.yaml",
+  "plant_args": "--external-followers --overhead-hz 15 --grid-x 28 --grid-y 28 --cell-x 0.03 --cell-y 0.03 --gripper-size 2 --iterations 6 --linear-iterations 3 --edge-ke-weft 0.006 --edge-ke-warp 0.003 --edge-ke-shear 0.0015 --tri-ke-shear 2400",
+  "launch_args": "twin:=true twin_commands:=true twin_config:=/home/taha/ros2_colcon_ws/src/oarbots/experiments/sim_eval/config/twin_id.yaml twin_record:=/media/taha/ExtermeLinux/oarbot_simulation/logs/sim_eval/id/id_matched_B_r1/twin.npz twin_record_depth:=true",
+  "warmup": {
+   "start_s": 15.0,
+   "end_s": 93.333
+  },
+  "validation_window_s": [
+   97.5,
+   140.4
+  ],
+  "oarbots_commit": "30e5a30aa881e17613167c35ba9faec562124a40",
+  "oarbots_src_dirty": true
+ },
+ "inputs": {
+  "state": "twin",
+  "grips": "measured",
+  "points": "depth"
+ },
+ "holds": "extended",
+ "holds_available": 13,
+ "cases": 13,
+ "points_per_case": [
+  2500,
+  2500,
+  2500,
+  2500,
+  2500,
+  2500,
+  2500,
+  2500,
+  2500,
+  2500,
+  2500,
+  2500,
+  2500
+ ],
+ "landscape": {
+  "values": [
+   0.25,
+   0.5,
+   1.0,
+   2.0,
+   4.0
+  ],
+  "rms_cost_m": [
+   [
+    0.006422032933669077,
+    0.006571053517475207,
+    0.006714730260682901,
+    0.006852950484464646,
+    0.006989516381836258
+   ],
+   [
+    0.0062670243948606714,
+    0.0064349186928488395,
+    0.006599655040839688,
+    0.0067595063984947565,
+    0.006907432578697671
+   ],
+   [
+    0.005997712419946456,
+    0.006194653211973252,
+    0.006388344888787616,
+    0.006577702140336269,
+    0.006759792140821826
+   ],
+   [
+    0.0055114876434944554,
+    0.005758029380917794,
+    0.006007844107183393,
+    0.00625021069048587,
+    0.006485062062706409
+   ],
+   [
+    0.004775605696065326,
+    0.004911714093693369,
+    0.00525529919890746,
+    0.0057020957004959025,
+    0.006030385335887022
+   ]
+  ],
+  "seconds": 432.62123249799333
+ }
+}

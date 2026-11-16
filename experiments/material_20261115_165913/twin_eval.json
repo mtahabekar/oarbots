@@ -1,0 +1,53 @@
+{
+  "states": 1616,
+  "window_s": [
+    12.0,
+    119.683335512
+  ],
+  "surface_error_m": {
+    "p50": 0.0014001669351197455,
+    "p95": 0.006146568135824791,
+    "max": 0.048901526759042996
+  },
+  "per_state_p95_m": {
+    "median": 0.004154615128865563,
+    "worst": 0.041386948849156835
+  },
+  "lowest_5_percent_height_error_m": {
+    "mean": 0.0018470808927844083,
+    "p95_abs": 0.009927408946510488
+  },
+  "plant_true_box_clearance_m": {
+    "min": 0.549057671546936,
+    "p5": 0.5615208239555358
+  },
+  "twin_box_clearance_m": 0.5516067237854003,
+  "state_lag_s": {
+    "p50": 0.3166655915
+  },
+  "cbf": {
+    "updates": 1616,
+    "status": {
+      "feasible": 1616
+    },
+    "min_capsule_clearance_m": 0.48083926615226585,
+    "controller_ms_p95": 7.507262999752129,
+    "max_tension_n": 13.599080732926408,
+    "faults": {
+      "a grip measurement is missing": 6
+    },
+    "max_follower_speed_mps": 0.04832210851596832
+  },
+  "twin": {
+    "frame_ms_p95": 33.286338199559395,
+    "frame_ms_p50": 24.651865000123507,
+    "lag_sec": 0.316664488,
+    "skipped_frames": 45,
+    "stale_grip_frames": 24,
+    "replaced": 0,
+    "correction_force_n_p95": 0.5580371353725648,
+    "residual_force_n_last": 0.316023141395866,
+    "material": "{\"version\": 0, \"bend\": 1.0, \"shear\": 1.0}"
+  },
+  "material_releases": []
+}

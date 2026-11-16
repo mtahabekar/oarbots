@@ -1,0 +1,24 @@
+{
+  "baseline": {
+    "bend": 2.0,
+    "shear": 0.5,
+    "cost_m": 2.0240945804274946e-06,
+    "start_cost_m": 0.0026536471059737474,
+    "sensitivity_m": 0.014799593504828136,
+    "evaluations": 25,
+    "cases": 4,
+    "elapsed_sec": 72.86477521800043,
+    "log_parameter_error": 0.0
+  },
+  "extended": {
+    "bend": 2.0,
+    "shear": 0.5,
+    "cost_m": 1.2239921353839617e-06,
+    "start_cost_m": 0.0015221770982033005,
+    "sensitivity_m": 0.014794338821091588,
+    "evaluations": 25,
+    "cases": 13,
+    "elapsed_sec": 236.39560344200072,
+    "log_parameter_error": 0.0
+  }
+}

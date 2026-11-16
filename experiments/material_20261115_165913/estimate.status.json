@@ -1,0 +1,3202 @@
+[
+ {
+  "stamp": 20500000000,
+  "level": 1,
+  "message": "Lookup would require extrapolation into the future.  Requested time 20.466667 but the latest data is at time 20.450000, when looking up transform from frame [oarbot_blue/rgb_camera_link] to frame [world]",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "20400000000",
+   "prior_depth_p95_m": "0.00880434096710168",
+   "marginal_innovation_score": "1.7144374771231548",
+   "capture_to_analysis_ms": "33.333333",
+   "hand_age_sec": "[0.2, 0.2]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 21000000000,
+  "level": 0,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "20933333333",
+   "prior_depth_p95_m": "0.008109765548874392",
+   "marginal_innovation_score": "0.6104297232162534",
+   "capture_to_analysis_ms": "50.0",
+   "hand_age_sec": "[0.133333333, 0.133333333]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 21500000000,
+  "level": 1,
+  "message": "Lookup would require extrapolation into the future.  Requested time 21.466667 but the latest data is at time 21.450000, when looking up transform from frame [oarbot_blue/rgb_camera_link] to frame [world]",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "21400000000",
+   "prior_depth_p95_m": "0.00909474535964241",
+   "marginal_innovation_score": "0.8656970885902788",
+   "capture_to_analysis_ms": "33.333333",
+   "hand_age_sec": "[0.2, 0.4]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 22033333333,
+  "level": 0,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "21933333333",
+   "prior_depth_p95_m": "0.008692007991004532",
+   "marginal_innovation_score": "1.4520933128087188",
+   "capture_to_analysis_ms": "66.666667",
+   "hand_age_sec": "[0.133333333, 0.133333333]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 22516666667,
+  "level": 0,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "22400000000",
+   "prior_depth_p95_m": "0.007586087331755119",
+   "marginal_innovation_score": "0.9122563854708684",
+   "capture_to_analysis_ms": "66.666667",
+   "hand_age_sec": "[0.0, 0.0]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 23016666667,
+  "level": 0,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "22933333333",
+   "prior_depth_p95_m": "0.008272237668913936",
+   "marginal_innovation_score": "0.5590344365288935",
+   "capture_to_analysis_ms": "66.666667",
+   "hand_age_sec": "[0.133333333, 0.133333333]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 23500000000,
+  "level": 0,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "23400000000",
+   "prior_depth_p95_m": "0.007328189546521234",
+   "marginal_innovation_score": "0.9104567255841663",
+   "capture_to_analysis_ms": "66.666667",
+   "hand_age_sec": "[0.0, 0.0]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 24016666667,
+  "level": 0,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "23933333333",
+   "prior_depth_p95_m": "0.006869257455681032",
+   "marginal_innovation_score": "0.6080569093519882",
+   "capture_to_analysis_ms": "66.666667",
+   "hand_age_sec": "[0.133333333, 0.133333333]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 24500000000,
+  "level": 0,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "24400000000",
+   "prior_depth_p95_m": "0.013372524332819359",
+   "marginal_innovation_score": "1.7663359166139365",
+   "capture_to_analysis_ms": "66.666667",
+   "hand_age_sec": "[0.0, 0.0]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 25016666667,
+  "level": 0,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "24933333333",
+   "prior_depth_p95_m": "0.01217649465029058",
+   "marginal_innovation_score": "1.8477367672200424",
+   "capture_to_analysis_ms": "66.666667",
+   "hand_age_sec": "[0.133333333, 0.133333333]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 25516666667,
+  "level": 0,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "25400000000",
+   "prior_depth_p95_m": "0.011354096806004877",
+   "marginal_innovation_score": "2.070240463417526",
+   "capture_to_analysis_ms": "66.666667",
+   "hand_age_sec": "[0.0, 0.0]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 26033333333,
+  "level": 0,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "25933333333",
+   "prior_depth_p95_m": "0.009714391818424373",
+   "marginal_innovation_score": "2.4311819949409426",
+   "capture_to_analysis_ms": "66.666667",
+   "hand_age_sec": "[0.133333333, 0.133333333]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 26500000000,
+  "level": 1,
+  "message": "Lookup would require extrapolation into the future.  Requested time 26.466667 but the latest data is at time 26.450000, when looking up transform from frame [oarbot_blue/rgb_camera_link] to frame [world]",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "26400000000",
+   "prior_depth_p95_m": "0.009154707387190463",
+   "marginal_innovation_score": "2.5802998769720045",
+   "capture_to_analysis_ms": "50.0",
+   "hand_age_sec": "[0.0, 0.0]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 27000000000,
+  "level": 0,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "26933333333",
+   "prior_depth_p95_m": "0.010603454910128771",
+   "marginal_innovation_score": "1.4178684002580655",
+   "capture_to_analysis_ms": "50.0",
+   "hand_age_sec": "[0.133333333, 0.133333333]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 27500000000,
+  "level": 1,
+  "message": "Lookup would require extrapolation into the future.  Requested time 27.466667 but the latest data is at time 27.450000, when looking up transform from frame [oarbot_blue/rgb_camera_link] to frame [world]",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "27400000000",
+   "prior_depth_p95_m": "0.01102425281517739",
+   "marginal_innovation_score": "2.7490432035034487",
+   "capture_to_analysis_ms": "33.333333",
+   "hand_age_sec": "[0.2, 0.2]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 28000000000,
+  "level": 0,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "27933333333",
+   "prior_depth_p95_m": "0.008960153763662604",
+   "marginal_innovation_score": "2.5246748367299663",
+   "capture_to_analysis_ms": "50.0",
+   "hand_age_sec": "[0.133333333, 0.133333333]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 28500000000,
+  "level": 1,
+  "message": "Lookup would require extrapolation into the future.  Requested time 28.466667 but the latest data is at time 28.450000, when looking up transform from frame [oarbot_blue/rgb_camera_link] to frame [world]",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "28400000000",
+   "prior_depth_p95_m": "0.009806578919976517",
+   "marginal_innovation_score": "2.162541975659109",
+   "capture_to_analysis_ms": "33.333333",
+   "hand_age_sec": "[0.2, 0.2]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 29000000000,
+  "level": 0,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "28933333333",
+   "prior_depth_p95_m": "0.008641423566221135",
+   "marginal_innovation_score": "2.6804495151040078",
+   "capture_to_analysis_ms": "50.0",
+   "hand_age_sec": "[0.133333333, 0.133333333]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 29500000000,
+  "level": 1,
+  "message": "Lookup would require extrapolation into the future.  Requested time 29.466667 but the latest data is at time 29.450000, when looking up transform from frame [oarbot_blue/rgb_camera_link] to frame [world]",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "29400000000",
+   "prior_depth_p95_m": "0.01102842635054228",
+   "marginal_innovation_score": "1.9792385385218059",
+   "capture_to_analysis_ms": "33.333333",
+   "hand_age_sec": "[0.2, 0.2]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 30000000000,
+  "level": 0,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "29933333333",
+   "prior_depth_p95_m": "0.009661135742823155",
+   "marginal_innovation_score": "1.6730423855695065",
+   "capture_to_analysis_ms": "50.0",
+   "hand_age_sec": "[0.133333333, 0.133333333]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 30500000000,
+  "level": 1,
+  "message": "Lookup would require extrapolation into the future.  Requested time 30.466667 but the latest data is at time 30.450000, when looking up transform from frame [oarbot_blue/rgb_camera_link] to frame [world]",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "30400000000",
+   "prior_depth_p95_m": "0.009001794853909763",
+   "marginal_innovation_score": "1.662494900619194",
+   "capture_to_analysis_ms": "33.333333",
+   "hand_age_sec": "[0.2, 0.2]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 31000000000,
+  "level": 0,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "30933333333",
+   "prior_depth_p95_m": "0.006939802083961541",
+   "marginal_innovation_score": "2.6528896688706833",
+   "capture_to_analysis_ms": "50.0",
+   "hand_age_sec": "[0.133333333, 0.133333333]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 31500000000,
+  "level": 1,
+  "message": "Lookup would require extrapolation into the future.  Requested time 31.466667 but the latest data is at time 31.450000, when looking up transform from frame [oarbot_blue/rgb_camera_link] to frame [world]",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "31400000000",
+   "prior_depth_p95_m": "0.007577198217891667",
+   "marginal_innovation_score": "2.5367253760600232",
+   "capture_to_analysis_ms": "33.333333",
+   "hand_age_sec": "[0.2, 0.2]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 32000000000,
+  "level": 0,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "31933333333",
+   "prior_depth_p95_m": "0.007583246317643714",
+   "marginal_innovation_score": "2.0747565459502817",
+   "capture_to_analysis_ms": "50.0",
+   "hand_age_sec": "[0.133333333, 0.133333333]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 32500000000,
+  "level": 1,
+  "message": "Lookup would require extrapolation into the future.  Requested time 32.466667 but the latest data is at time 32.450000, when looking up transform from frame [oarbot_blue/rgb_camera_link] to frame [world]",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "32400000000",
+   "prior_depth_p95_m": "0.005987667036924266",
+   "marginal_innovation_score": "2.1207957004888334",
+   "capture_to_analysis_ms": "33.333333",
+   "hand_age_sec": "[0.2, 0.2]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 33000000000,
+  "level": 0,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "32933333333",
+   "prior_depth_p95_m": "0.006902755175136998",
+   "marginal_innovation_score": "1.4135963150644724",
+   "capture_to_analysis_ms": "50.0",
+   "hand_age_sec": "[0.133333333, 0.133333333]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 33500000000,
+  "level": 1,
+  "message": "Lookup would require extrapolation into the future.  Requested time 33.466667 but the latest data is at time 33.450000, when looking up transform from frame [oarbot_blue/rgb_camera_link] to frame [world]",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "33400000000",
+   "prior_depth_p95_m": "0.006267403009670325",
+   "marginal_innovation_score": "2.3174941609665964",
+   "capture_to_analysis_ms": "33.333333",
+   "hand_age_sec": "[0.2, 0.2]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 34000000000,
+  "level": 0,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "33933333333",
+   "prior_depth_p95_m": "0.0062614594909671676",
+   "marginal_innovation_score": "0.8565806542152514",
+   "capture_to_analysis_ms": "50.0",
+   "hand_age_sec": "[0.133333333, 0.133333333]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 34500000000,
+  "level": 1,
+  "message": "Lookup would require extrapolation into the future.  Requested time 34.466667 but the latest data is at time 34.450000, when looking up transform from frame [oarbot_blue/rgb_camera_link] to frame [world]",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "34400000000",
+   "prior_depth_p95_m": "0.00674176505260928",
+   "marginal_innovation_score": "2.2980343229702256",
+   "capture_to_analysis_ms": "33.333333",
+   "hand_age_sec": "[0.2, 0.2]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 35000000000,
+  "level": 0,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "34933333333",
+   "prior_depth_p95_m": "0.004329920516897978",
+   "marginal_innovation_score": "0.9864188878803589",
+   "capture_to_analysis_ms": "50.0",
+   "hand_age_sec": "[0.133333333, 0.133333333]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 35500000000,
+  "level": 1,
+  "message": "Lookup would require extrapolation into the future.  Requested time 35.466667 but the latest data is at time 35.450000, when looking up transform from frame [oarbot_blue/rgb_camera_link] to frame [world]",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "35400000000",
+   "prior_depth_p95_m": "0.0051825312125209355",
+   "marginal_innovation_score": "2.0710806118195415",
+   "capture_to_analysis_ms": "33.333333",
+   "hand_age_sec": "[0.2, 0.2]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 36000000000,
+  "level": 0,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "35933333333",
+   "prior_depth_p95_m": "0.00579902270602339",
+   "marginal_innovation_score": "1.0252181304024321",
+   "capture_to_analysis_ms": "50.0",
+   "hand_age_sec": "[0.133333333, 0.333333333]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 36500000000,
+  "level": 1,
+  "message": "Lookup would require extrapolation into the future.  Requested time 36.466667 but the latest data is at time 36.450000, when looking up transform from frame [oarbot_blue/rgb_camera_link] to frame [world]",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "36400000000",
+   "prior_depth_p95_m": "0.0067901268628294004",
+   "marginal_innovation_score": "2.0273827483141966",
+   "capture_to_analysis_ms": "33.333333",
+   "hand_age_sec": "[0.2, 0.2]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 37000000000,
+  "level": 0,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "36933333333",
+   "prior_depth_p95_m": "0.008991438305526038",
+   "marginal_innovation_score": "0.8790643722517225",
+   "capture_to_analysis_ms": "50.0",
+   "hand_age_sec": "[0.133333333, 0.133333333]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 37500000000,
+  "level": 1,
+  "message": "Lookup would require extrapolation into the future.  Requested time 37.466667 but the latest data is at time 37.450000, when looking up transform from frame [oarbot_blue/rgb_camera_link] to frame [world]",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "37400000000",
+   "prior_depth_p95_m": "0.006091974058799069",
+   "marginal_innovation_score": "2.9694659775725234",
+   "capture_to_analysis_ms": "33.333333",
+   "hand_age_sec": "[0.2, 0.2]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 38000000000,
+  "level": 0,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "37933333333",
+   "prior_depth_p95_m": "0.005086994524779003",
+   "marginal_innovation_score": "1.5458150415670358",
+   "capture_to_analysis_ms": "50.0",
+   "hand_age_sec": "[0.133333333, 0.133333333]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 38500000000,
+  "level": 1,
+  "message": "Lookup would require extrapolation into the future.  Requested time 38.466667 but the latest data is at time 38.450000, when looking up transform from frame [oarbot_blue/rgb_camera_link] to frame [world]",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "38400000000",
+   "prior_depth_p95_m": "0.007598763506382908",
+   "marginal_innovation_score": "2.1280053541174797",
+   "capture_to_analysis_ms": "33.333333",
+   "hand_age_sec": "[0.2, 0.2]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 39000000000,
+  "level": 0,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "38933333333",
+   "prior_depth_p95_m": "0.006152865094399189",
+   "marginal_innovation_score": "1.4140509263180558",
+   "capture_to_analysis_ms": "50.0",
+   "hand_age_sec": "[0.133333333, 0.133333333]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 39500000000,
+  "level": 1,
+  "message": "Lookup would require extrapolation into the future.  Requested time 39.466667 but the latest data is at time 39.450000, when looking up transform from frame [oarbot_blue/rgb_camera_link] to frame [world]",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "39400000000",
+   "prior_depth_p95_m": "0.012267262118067328",
+   "marginal_innovation_score": "2.8512459896818196",
+   "capture_to_analysis_ms": "16.666667",
+   "hand_age_sec": "[0.2, 0.2]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 40000000000,
+  "level": 0,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "39933333333",
+   "prior_depth_p95_m": "0.006912016497988921",
+   "marginal_innovation_score": "1.9304961452595641",
+   "capture_to_analysis_ms": "50.0",
+   "hand_age_sec": "[0.133333333, 0.133333333]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 40500000000,
+  "level": 1,
+  "message": "Lookup would require extrapolation into the future.  Requested time 40.466667 but the latest data is at time 40.450000, when looking up transform from frame [oarbot_blue/rgb_camera_link] to frame [world]",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "40400000000",
+   "prior_depth_p95_m": "0.007188099393441068",
+   "marginal_innovation_score": "3.004070795838208",
+   "capture_to_analysis_ms": "33.333333",
+   "hand_age_sec": "[0.2, 0.2]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 41000000000,
+  "level": 0,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "40933333333",
+   "prior_depth_p95_m": "0.004902767203743023",
+   "marginal_innovation_score": "1.7788587697393135",
+   "capture_to_analysis_ms": "50.0",
+   "hand_age_sec": "[0.133333333, 0.133333333]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 41500000000,
+  "level": 1,
+  "message": "Lookup would require extrapolation into the future.  Requested time 41.466667 but the latest data is at time 41.450000, when looking up transform from frame [oarbot_blue/rgb_camera_link] to frame [world]",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "41400000000",
+   "prior_depth_p95_m": "0.007848383840198647",
+   "marginal_innovation_score": "2.8360328144318094",
+   "capture_to_analysis_ms": "33.333333",
+   "hand_age_sec": "[0.2, 0.2]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 42000000000,
+  "level": 0,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "41933333333",
+   "prior_depth_p95_m": "0.005944969015325152",
+   "marginal_innovation_score": "1.9601159031356876",
+   "capture_to_analysis_ms": "50.0",
+   "hand_age_sec": "[0.133333333, 0.133333333]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 42500000000,
+  "level": 1,
+  "message": "Lookup would require extrapolation into the future.  Requested time 42.466667 but the latest data is at time 42.450000, when looking up transform from frame [oarbot_blue/rgb_camera_link] to frame [world]",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "42400000000",
+   "prior_depth_p95_m": "0.008035928256141633",
+   "marginal_innovation_score": "2.0787498957291404",
+   "capture_to_analysis_ms": "33.333333",
+   "hand_age_sec": "[0.2, 0.2]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 43000000000,
+  "level": 0,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "42933333333",
+   "prior_depth_p95_m": "0.005088116588009628",
+   "marginal_innovation_score": "1.7753438170112346",
+   "capture_to_analysis_ms": "50.0",
+   "hand_age_sec": "[0.133333333, 0.133333333]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 43500000000,
+  "level": 1,
+  "message": "Lookup would require extrapolation into the future.  Requested time 43.466667 but the latest data is at time 43.450000, when looking up transform from frame [oarbot_blue/rgb_camera_link] to frame [world]",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "43400000000",
+   "prior_depth_p95_m": "0.005828633857695613",
+   "marginal_innovation_score": "2.3888944952579947",
+   "capture_to_analysis_ms": "33.333333",
+   "hand_age_sec": "[0.2, 0.2]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 44000000000,
+  "level": 0,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "43933333333",
+   "prior_depth_p95_m": "0.005283526835637286",
+   "marginal_innovation_score": "0.9060498697376473",
+   "capture_to_analysis_ms": "50.0",
+   "hand_age_sec": "[0.133333333, 0.133333333]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 44500000000,
+  "level": 1,
+  "message": "Lookup would require extrapolation into the future.  Requested time 44.466667 but the latest data is at time 44.450000, when looking up transform from frame [oarbot_blue/rgb_camera_link] to frame [world]",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "44400000000",
+   "prior_depth_p95_m": "0.006254661188990377",
+   "marginal_innovation_score": "2.0717595132365147",
+   "capture_to_analysis_ms": "33.333333",
+   "hand_age_sec": "[0.2, 0.6]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 45000000000,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "44933333333",
+   "prior_depth_p95_m": "0.005717499532790913",
+   "marginal_innovation_score": "1.699031266877645",
+   "capture_to_analysis_ms": "50.0",
+   "hand_age_sec": "[0.133333333, null]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 45500000000,
+  "level": 1,
+  "message": "Lookup would require extrapolation into the future.  Requested time 45.466667 but the latest data is at time 45.450000, when looking up transform from frame [oarbot_blue/rgb_camera_link] to frame [world]",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "45400000000",
+   "prior_depth_p95_m": "0.007115308716321711",
+   "marginal_innovation_score": "1.9532290380280806",
+   "capture_to_analysis_ms": "16.666667",
+   "hand_age_sec": "[0.2, 0.2]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 46000000000,
+  "level": 0,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "45933333333",
+   "prior_depth_p95_m": "0.0064630077029942164",
+   "marginal_innovation_score": "1.452781739892454",
+   "capture_to_analysis_ms": "50.0",
+   "hand_age_sec": "[0.133333333, 0.133333333]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 46500000000,
+  "level": 1,
+  "message": "Lookup would require extrapolation into the future.  Requested time 46.466667 but the latest data is at time 46.450000, when looking up transform from frame [oarbot_blue/rgb_camera_link] to frame [world]",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "46400000000",
+   "prior_depth_p95_m": "0.006998180050427942",
+   "marginal_innovation_score": "1.4939633786829432",
+   "capture_to_analysis_ms": "33.333333",
+   "hand_age_sec": "[0.2, 0.2]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 47000000000,
+  "level": 0,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "46933333333",
+   "prior_depth_p95_m": "0.007236882035591938",
+   "marginal_innovation_score": "1.9357478492043745",
+   "capture_to_analysis_ms": "50.0",
+   "hand_age_sec": "[0.133333333, 0.133333333]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 47500000000,
+  "level": 1,
+  "message": "Lookup would require extrapolation into the future.  Requested time 47.466667 but the latest data is at time 47.450000, when looking up transform from frame [oarbot_blue/rgb_camera_link] to frame [world]",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "47400000000",
+   "prior_depth_p95_m": "0.006396381926061634",
+   "marginal_innovation_score": "2.362557406920725",
+   "capture_to_analysis_ms": "33.333333",
+   "hand_age_sec": "[0.2, 0.2]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 48000000000,
+  "level": 0,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "47933333333",
+   "prior_depth_p95_m": "0.006422408715678729",
+   "marginal_innovation_score": "0.8459873749004976",
+   "capture_to_analysis_ms": "50.0",
+   "hand_age_sec": "[0.133333333, 0.133333333]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 48500000000,
+  "level": 1,
+  "message": "Lookup would require extrapolation into the future.  Requested time 48.466667 but the latest data is at time 48.450000, when looking up transform from frame [oarbot_blue/rgb_camera_link] to frame [world]",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "48400000000",
+   "prior_depth_p95_m": "0.007323021460015421",
+   "marginal_innovation_score": "2.8136129462536057",
+   "capture_to_analysis_ms": "33.333333",
+   "hand_age_sec": "[0.2, 0.2]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 49000000000,
+  "level": 0,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "48933333333",
+   "prior_depth_p95_m": "0.007649380829150787",
+   "marginal_innovation_score": "1.2210910585230332",
+   "capture_to_analysis_ms": "50.0",
+   "hand_age_sec": "[0.133333333, 0.533333333]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 49500000000,
+  "level": 1,
+  "message": "Lookup would require extrapolation into the future.  Requested time 49.466667 but the latest data is at time 49.450000, when looking up transform from frame [oarbot_blue/rgb_camera_link] to frame [world]",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "49400000000",
+   "prior_depth_p95_m": "0.007902708416839458",
+   "marginal_innovation_score": "2.39169194273093",
+   "capture_to_analysis_ms": "33.333333",
+   "hand_age_sec": "[0.2, 1.0]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 50016666667,
+  "level": 0,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "49933333333",
+   "prior_depth_p95_m": "0.005359283825641325",
+   "marginal_innovation_score": "1.2833587024872934",
+   "capture_to_analysis_ms": "50.0",
+   "hand_age_sec": "[0.133333333, 0.133333333]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 50516666667,
+  "level": 0,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "50466666667",
+   "prior_depth_p95_m": "0.005293381425299892",
+   "marginal_innovation_score": "1.0396487958152991",
+   "capture_to_analysis_ms": "33.333333",
+   "hand_age_sec": "[0.066666667, 0.066666667]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 51000000000,
+  "level": 0,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "50933333333",
+   "prior_depth_p95_m": "0.00644812720812879",
+   "marginal_innovation_score": "0.9349657791746733",
+   "capture_to_analysis_ms": "50.0",
+   "hand_age_sec": "[0.133333333, 0.133333333]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 51500000000,
+  "level": 1,
+  "message": "Lookup would require extrapolation into the future.  Requested time 51.466667 but the latest data is at time 51.450000, when looking up transform from frame [oarbot_blue/rgb_camera_link] to frame [world]",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "51400000000",
+   "prior_depth_p95_m": "0.00805138498296208",
+   "marginal_innovation_score": "2.6959815870139954",
+   "capture_to_analysis_ms": "16.666667",
+   "hand_age_sec": "[0.2, 0.2]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 52000000000,
+  "level": 0,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "51933333333",
+   "prior_depth_p95_m": "0.005946445908677455",
+   "marginal_innovation_score": "1.9271851893950813",
+   "capture_to_analysis_ms": "50.0",
+   "hand_age_sec": "[0.133333333, 0.133333333]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 52500000000,
+  "level": 1,
+  "message": "Lookup would require extrapolation into the future.  Requested time 52.466667 but the latest data is at time 52.450000, when looking up transform from frame [oarbot_blue/rgb_camera_link] to frame [world]",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "52400000000",
+   "prior_depth_p95_m": "0.006139432000386464",
+   "marginal_innovation_score": "2.2746732327539396",
+   "capture_to_analysis_ms": "33.333333",
+   "hand_age_sec": "[0.2, 0.2]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 53000000000,
+  "level": 0,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "52933333333",
+   "prior_depth_p95_m": "0.0051729999651873755",
+   "marginal_innovation_score": "1.2221774447237688",
+   "capture_to_analysis_ms": "50.0",
+   "hand_age_sec": "[0.133333333, 0.133333333]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 53500000000,
+  "level": 1,
+  "message": "Lookup would require extrapolation into the future.  Requested time 53.466667 but the latest data is at time 53.450000, when looking up transform from frame [oarbot_blue/rgb_camera_link] to frame [world]",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "53400000000",
+   "prior_depth_p95_m": "0.005832383642916667",
+   "marginal_innovation_score": "2.2012271245337436",
+   "capture_to_analysis_ms": "33.333333",
+   "hand_age_sec": "[0.2, 0.2]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 54000000000,
+  "level": 0,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "53933333333",
+   "prior_depth_p95_m": "0.005878982558050982",
+   "marginal_innovation_score": "0.9820935630493866",
+   "capture_to_analysis_ms": "50.0",
+   "hand_age_sec": "[0.133333333, 0.133333333]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 54500000000,
+  "level": 1,
+  "message": "Lookup would require extrapolation into the future.  Requested time 54.466667 but the latest data is at time 54.450000, when looking up transform from frame [oarbot_blue/rgb_camera_link] to frame [world]",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "54400000000",
+   "prior_depth_p95_m": "0.006020884966264292",
+   "marginal_innovation_score": "2.241252881873601",
+   "capture_to_analysis_ms": "33.333333",
+   "hand_age_sec": "[0.2, 0.4]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 55016666667,
+  "level": 0,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "54933333333",
+   "prior_depth_p95_m": "0.004824634452267285",
+   "marginal_innovation_score": "1.5117142350541561",
+   "capture_to_analysis_ms": "50.0",
+   "hand_age_sec": "[0.133333333, 0.133333333]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 55500000000,
+  "level": 1,
+  "message": "Lookup would require extrapolation into the future.  Requested time 55.466667 but the latest data is at time 55.450000, when looking up transform from frame [oarbot_blue/rgb_camera_link] to frame [world]",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "55400000000",
+   "prior_depth_p95_m": "0.009248308800018479",
+   "marginal_innovation_score": "2.176789618687201",
+   "capture_to_analysis_ms": "33.333333",
+   "hand_age_sec": "[0.2, 0.2]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 56000000000,
+  "level": 0,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "55933333333",
+   "prior_depth_p95_m": "0.0056544699477559125",
+   "marginal_innovation_score": "1.0464697495466393",
+   "capture_to_analysis_ms": "50.0",
+   "hand_age_sec": "[0.133333333, 0.333333333]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 56500000000,
+  "level": 1,
+  "message": "Lookup would require extrapolation into the future.  Requested time 56.466667 but the latest data is at time 56.450000, when looking up transform from frame [oarbot_blue/rgb_camera_link] to frame [world]",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "56400000000",
+   "prior_depth_p95_m": "0.006523136387238816",
+   "marginal_innovation_score": "2.3523412153560908",
+   "capture_to_analysis_ms": "33.333333",
+   "hand_age_sec": "[0.2, 0.2]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 57000000000,
+  "level": 0,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "56933333333",
+   "prior_depth_p95_m": "0.004056625133228331",
+   "marginal_innovation_score": "1.1358338882677654",
+   "capture_to_analysis_ms": "50.0",
+   "hand_age_sec": "[0.133333333, 0.133333333]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 57500000000,
+  "level": 1,
+  "message": "Lookup would require extrapolation into the future.  Requested time 57.466667 but the latest data is at time 57.450000, when looking up transform from frame [oarbot_blue/rgb_camera_link] to frame [world]",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "57400000000",
+   "prior_depth_p95_m": "0.009465544532743413",
+   "marginal_innovation_score": "2.3238172348964725",
+   "capture_to_analysis_ms": "16.666667",
+   "hand_age_sec": "[0.2, 0.4]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 58000000000,
+  "level": 0,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "57933333333",
+   "prior_depth_p95_m": "0.009589862873333549",
+   "marginal_innovation_score": "1.188832112277723",
+   "capture_to_analysis_ms": "50.0",
+   "hand_age_sec": "[0.133333333, 0.133333333]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 58500000000,
+  "level": 1,
+  "message": "Lookup would require extrapolation into the future.  Requested time 58.466667 but the latest data is at time 58.450000, when looking up transform from frame [oarbot_blue/rgb_camera_link] to frame [world]",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "58400000000",
+   "prior_depth_p95_m": "0.007244750131602261",
+   "marginal_innovation_score": "2.4982804832974685",
+   "capture_to_analysis_ms": "33.333333",
+   "hand_age_sec": "[0.2, 0.4]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 59000000000,
+  "level": 0,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "58933333333",
+   "prior_depth_p95_m": "0.00519074197210781",
+   "marginal_innovation_score": "1.1384727364561509",
+   "capture_to_analysis_ms": "50.0",
+   "hand_age_sec": "[0.133333333, 0.333333333]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 59500000000,
+  "level": 1,
+  "message": "Lookup would require extrapolation into the future.  Requested time 59.466667 but the latest data is at time 59.450000, when looking up transform from frame [oarbot_blue/rgb_camera_link] to frame [world]",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "59400000000",
+   "prior_depth_p95_m": "0.007590304901807399",
+   "marginal_innovation_score": "2.345035375927266",
+   "capture_to_analysis_ms": "33.333333",
+   "hand_age_sec": "[0.2, 0.2]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 60016666667,
+  "level": 0,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "59933333333",
+   "prior_depth_p95_m": "0.006180593703893999",
+   "marginal_innovation_score": "1.045542396312973",
+   "capture_to_analysis_ms": "50.0",
+   "hand_age_sec": "[0.133333333, 0.533333333]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 60500000000,
+  "level": 1,
+  "message": "Lookup would require extrapolation into the future.  Requested time 60.466667 but the latest data is at time 60.450000, when looking up transform from frame [oarbot_blue/rgb_camera_link] to frame [world]",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "60400000000",
+   "prior_depth_p95_m": "0.006677785274888656",
+   "marginal_innovation_score": "2.2021747155782174",
+   "capture_to_analysis_ms": "33.333333",
+   "hand_age_sec": "[0.2, 0.4]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 61000000000,
+  "level": 0,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "60933333333",
+   "prior_depth_p95_m": "0.0065644862092778256",
+   "marginal_innovation_score": "0.8975422323097817",
+   "capture_to_analysis_ms": "50.0",
+   "hand_age_sec": "[0.133333333, 0.133333333]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 61500000000,
+  "level": 1,
+  "message": "Lookup would require extrapolation into the future.  Requested time 61.466667 but the latest data is at time 61.450000, when looking up transform from frame [oarbot_blue/rgb_camera_link] to frame [world]",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "61400000000",
+   "prior_depth_p95_m": "0.00661238633754938",
+   "marginal_innovation_score": "2.307840880475678",
+   "capture_to_analysis_ms": "33.333333",
+   "hand_age_sec": "[0.2, 0.2]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 62000000000,
+  "level": 0,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "61933333333",
+   "prior_depth_p95_m": "0.006036077007680153",
+   "marginal_innovation_score": "0.845575439096199",
+   "capture_to_analysis_ms": "50.0",
+   "hand_age_sec": "[0.133333333, 0.133333333]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 62500000000,
+  "level": 1,
+  "message": "Lookup would require extrapolation into the future.  Requested time 62.466667 but the latest data is at time 62.450000, when looking up transform from frame [oarbot_blue/rgb_camera_link] to frame [world]",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "62400000000",
+   "prior_depth_p95_m": "0.0066645928642493765",
+   "marginal_innovation_score": "1.8931508399833212",
+   "capture_to_analysis_ms": "33.333333",
+   "hand_age_sec": "[0.2, 0.2]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 63000000000,
+  "level": 0,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "62933333333",
+   "prior_depth_p95_m": "0.005983694013917962",
+   "marginal_innovation_score": "2.033770203034057",
+   "capture_to_analysis_ms": "50.0",
+   "hand_age_sec": "[0.133333333, 0.133333333]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 63500000000,
+  "level": 1,
+  "message": "Lookup would require extrapolation into the future.  Requested time 63.466667 but the latest data is at time 63.450000, when looking up transform from frame [oarbot_blue/rgb_camera_link] to frame [world]",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "63400000000",
+   "prior_depth_p95_m": "0.006400018197227506",
+   "marginal_innovation_score": "2.3269327197793053",
+   "capture_to_analysis_ms": "33.333333",
+   "hand_age_sec": "[0.2, 0.2]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 64000000000,
+  "level": 0,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "63933333333",
+   "prior_depth_p95_m": "0.006006307447106035",
+   "marginal_innovation_score": "0.9120660688881447",
+   "capture_to_analysis_ms": "50.0",
+   "hand_age_sec": "[0.133333333, 0.133333333]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 64500000000,
+  "level": 1,
+  "message": "Lookup would require extrapolation into the future.  Requested time 64.466667 but the latest data is at time 64.450000, when looking up transform from frame [oarbot_blue/rgb_camera_link] to frame [world]",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "64400000000",
+   "prior_depth_p95_m": "0.005859789192917242",
+   "marginal_innovation_score": "2.0576615648294907",
+   "capture_to_analysis_ms": "33.333333",
+   "hand_age_sec": "[0.2, 0.2]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 65050000000,
+  "level": 0,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "64933333333",
+   "prior_depth_p95_m": "0.006291913662378523",
+   "marginal_innovation_score": "1.082549401128482",
+   "capture_to_analysis_ms": "50.0",
+   "hand_age_sec": "[0.133333333, 0.133333333]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 65500000000,
+  "level": 1,
+  "message": "Lookup would require extrapolation into the future.  Requested time 65.466667 but the latest data is at time 65.450000, when looking up transform from frame [oarbot_blue/rgb_camera_link] to frame [world]",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "65400000000",
+   "prior_depth_p95_m": "0.006013027542379617",
+   "marginal_innovation_score": "2.024188326859309",
+   "capture_to_analysis_ms": "33.333333",
+   "hand_age_sec": "[0.2, 0.2]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 66000000000,
+  "level": 0,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "65933333333",
+   "prior_depth_p95_m": "0.0057079289222631835",
+   "marginal_innovation_score": "0.8490854957669265",
+   "capture_to_analysis_ms": "50.0",
+   "hand_age_sec": "[0.133333333, 0.133333333]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 66500000000,
+  "level": 1,
+  "message": "Lookup would require extrapolation into the future.  Requested time 66.466667 but the latest data is at time 66.450000, when looking up transform from frame [oarbot_blue/rgb_camera_link] to frame [world]",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "66400000000",
+   "prior_depth_p95_m": "0.007707163188632578",
+   "marginal_innovation_score": "3.108999307787058",
+   "capture_to_analysis_ms": "16.666667",
+   "hand_age_sec": "[0.2, 0.2]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 67000000000,
+  "level": 0,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "66933333333",
+   "prior_depth_p95_m": "0.006147790675002621",
+   "marginal_innovation_score": "0.8423589530250905",
+   "capture_to_analysis_ms": "50.0",
+   "hand_age_sec": "[0.133333333, 0.133333333]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 67500000000,
+  "level": 1,
+  "message": "Lookup would require extrapolation into the future.  Requested time 67.466667 but the latest data is at time 67.450000, when looking up transform from frame [oarbot_blue/rgb_camera_link] to frame [world]",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "67400000000",
+   "prior_depth_p95_m": "0.006134225717405072",
+   "marginal_innovation_score": "2.4519078022318634",
+   "capture_to_analysis_ms": "33.333333",
+   "hand_age_sec": "[0.2, 0.2]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 68000000000,
+  "level": 0,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "67933333333",
+   "prior_depth_p95_m": "0.007020890368895666",
+   "marginal_innovation_score": "0.814588384930454",
+   "capture_to_analysis_ms": "50.0",
+   "hand_age_sec": "[0.133333333, 0.133333333]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 68500000000,
+  "level": 1,
+  "message": "Lookup would require extrapolation into the future.  Requested time 68.466667 but the latest data is at time 68.450000, when looking up transform from frame [oarbot_blue/rgb_camera_link] to frame [world]",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "68400000000",
+   "prior_depth_p95_m": "0.006307558390156397",
+   "marginal_innovation_score": "2.421991761427012",
+   "capture_to_analysis_ms": "16.666667",
+   "hand_age_sec": "[0.2, 0.2]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 69000000000,
+  "level": 0,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "68933333333",
+   "prior_depth_p95_m": "0.005803229051087183",
+   "marginal_innovation_score": "1.1971902805576757",
+   "capture_to_analysis_ms": "50.0",
+   "hand_age_sec": "[0.133333333, 0.133333333]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 69500000000,
+  "level": 1,
+  "message": "Lookup would require extrapolation into the future.  Requested time 69.466667 but the latest data is at time 69.450000, when looking up transform from frame [oarbot_blue/rgb_camera_link] to frame [world]",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "69400000000",
+   "prior_depth_p95_m": "0.00592894889719725",
+   "marginal_innovation_score": "2.260574412136714",
+   "capture_to_analysis_ms": "33.333333",
+   "hand_age_sec": "[0.2, 0.2]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 70050000000,
+  "level": 0,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "69933333333",
+   "prior_depth_p95_m": "0.00610458026954781",
+   "marginal_innovation_score": "0.8692539864640587",
+   "capture_to_analysis_ms": "50.0",
+   "hand_age_sec": "[0.133333333, 0.133333333]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 70500000000,
+  "level": 1,
+  "message": "Lookup would require extrapolation into the future.  Requested time 70.466667 but the latest data is at time 70.450000, when looking up transform from frame [oarbot_blue/rgb_camera_link] to frame [world]",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "70400000000",
+   "prior_depth_p95_m": "0.00635232371946004",
+   "marginal_innovation_score": "1.7408050100637296",
+   "capture_to_analysis_ms": "33.333333",
+   "hand_age_sec": "[0.2, 0.2]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 71000000000,
+  "level": 0,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "70933333333",
+   "prior_depth_p95_m": "0.005128488092179001",
+   "marginal_innovation_score": "1.0644256034769592",
+   "capture_to_analysis_ms": "50.0",
+   "hand_age_sec": "[0.133333333, 0.133333333]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 71500000000,
+  "level": 1,
+  "message": "Lookup would require extrapolation into the future.  Requested time 71.466667 but the latest data is at time 71.450000, when looking up transform from frame [oarbot_blue/rgb_camera_link] to frame [world]",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "71400000000",
+   "prior_depth_p95_m": "0.005660231354415245",
+   "marginal_innovation_score": "2.152047693020028",
+   "capture_to_analysis_ms": "16.666667",
+   "hand_age_sec": "[0.2, 0.2]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 72000000000,
+  "level": 0,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "71933333333",
+   "prior_depth_p95_m": "0.006304997419153245",
+   "marginal_innovation_score": "0.8149128851400865",
+   "capture_to_analysis_ms": "50.0",
+   "hand_age_sec": "[0.133333333, 0.133333333]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 72500000000,
+  "level": 1,
+  "message": "Lookup would require extrapolation into the future.  Requested time 72.466667 but the latest data is at time 72.450000, when looking up transform from frame [oarbot_blue/rgb_camera_link] to frame [world]",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "72400000000",
+   "prior_depth_p95_m": "0.006773077478436555",
+   "marginal_innovation_score": "2.6235301878900996",
+   "capture_to_analysis_ms": "33.333333",
+   "hand_age_sec": "[0.2, 0.2]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 73000000000,
+  "level": 0,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "72933333333",
+   "prior_depth_p95_m": "0.005626030896027562",
+   "marginal_innovation_score": "0.91003207887002",
+   "capture_to_analysis_ms": "50.0",
+   "hand_age_sec": "[0.133333333, 0.333333333]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 73500000000,
+  "level": 1,
+  "message": "Lookup would require extrapolation into the future.  Requested time 73.466667 but the latest data is at time 73.450000, when looking up transform from frame [oarbot_blue/rgb_camera_link] to frame [world]",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "73400000000",
+   "prior_depth_p95_m": "0.0065491636819749975",
+   "marginal_innovation_score": "2.255080612098484",
+   "capture_to_analysis_ms": "33.333333",
+   "hand_age_sec": "[0.2, 0.2]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 74000000000,
+  "level": 0,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "73933333333",
+   "prior_depth_p95_m": "0.007034798521820999",
+   "marginal_innovation_score": "0.9055834667396557",
+   "capture_to_analysis_ms": "50.0",
+   "hand_age_sec": "[0.133333333, 0.133333333]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 74500000000,
+  "level": 1,
+  "message": "Lookup would require extrapolation into the future.  Requested time 74.466667 but the latest data is at time 74.450000, when looking up transform from frame [oarbot_blue/rgb_camera_link] to frame [world]",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "74400000000",
+   "prior_depth_p95_m": "0.008244031103388312",
+   "marginal_innovation_score": "2.336016222946706",
+   "capture_to_analysis_ms": "33.333333",
+   "hand_age_sec": "[0.2, 0.2]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 75116666667,
+  "level": 0,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "74933333333",
+   "prior_depth_p95_m": "0.005899346197090732",
+   "marginal_innovation_score": "0.9675258134383313",
+   "capture_to_analysis_ms": "50.0",
+   "hand_age_sec": "[0.133333333, 0.133333333]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 75500000000,
+  "level": 1,
+  "message": "Lookup would require extrapolation into the future.  Requested time 75.466667 but the latest data is at time 75.450000, when looking up transform from frame [oarbot_blue/rgb_camera_link] to frame [world]",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "75400000000",
+   "prior_depth_p95_m": "0.006806624001774987",
+   "marginal_innovation_score": "2.444593387180134",
+   "capture_to_analysis_ms": "33.333333",
+   "hand_age_sec": "[0.2, 0.2]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 76000000000,
+  "level": 0,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "75933333333",
+   "prior_depth_p95_m": "0.005032837221235631",
+   "marginal_innovation_score": "1.1552314651879032",
+   "capture_to_analysis_ms": "50.0",
+   "hand_age_sec": "[0.133333333, 0.133333333]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 76500000000,
+  "level": 1,
+  "message": "Lookup would require extrapolation into the future.  Requested time 76.466667 but the latest data is at time 76.450000, when looking up transform from frame [oarbot_blue/rgb_camera_link] to frame [world]",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "76400000000",
+   "prior_depth_p95_m": "0.006134839278466053",
+   "marginal_innovation_score": "2.544138618283937",
+   "capture_to_analysis_ms": "33.333333",
+   "hand_age_sec": "[0.2, 0.2]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 77000000000,
+  "level": 0,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "76933333333",
+   "prior_depth_p95_m": "0.006194277122404335",
+   "marginal_innovation_score": "1.3170183769827508",
+   "capture_to_analysis_ms": "50.0",
+   "hand_age_sec": "[0.133333333, 0.133333333]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 77500000000,
+  "level": 1,
+  "message": "Lookup would require extrapolation into the future.  Requested time 77.466667 but the latest data is at time 77.450000, when looking up transform from frame [oarbot_blue/rgb_camera_link] to frame [world]",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "77400000000",
+   "prior_depth_p95_m": "0.008461527612987851",
+   "marginal_innovation_score": "2.337198903264706",
+   "capture_to_analysis_ms": "33.333333",
+   "hand_age_sec": "[0.2, 0.2]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 78000000000,
+  "level": 0,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "77933333333",
+   "prior_depth_p95_m": "0.005776932246469091",
+   "marginal_innovation_score": "1.100319789733086",
+   "capture_to_analysis_ms": "50.0",
+   "hand_age_sec": "[0.133333333, 0.133333333]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 78500000000,
+  "level": 1,
+  "message": "Lookup would require extrapolation into the future.  Requested time 78.466667 but the latest data is at time 78.450000, when looking up transform from frame [oarbot_blue/rgb_camera_link] to frame [world]",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "78400000000",
+   "prior_depth_p95_m": "0.007714138528357563",
+   "marginal_innovation_score": "2.27864109224982",
+   "capture_to_analysis_ms": "33.333333",
+   "hand_age_sec": "[0.2, 0.2]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 79000000000,
+  "level": 0,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "78933333333",
+   "prior_depth_p95_m": "0.005759482799140764",
+   "marginal_innovation_score": "1.2901359528648444",
+   "capture_to_analysis_ms": "50.0",
+   "hand_age_sec": "[0.133333333, 0.133333333]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 79500000000,
+  "level": 1,
+  "message": "Lookup would require extrapolation into the future.  Requested time 79.466667 but the latest data is at time 79.450000, when looking up transform from frame [oarbot_blue/rgb_camera_link] to frame [world]",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "79400000000",
+   "prior_depth_p95_m": "0.007907461057343418",
+   "marginal_innovation_score": "2.3962083585719296",
+   "capture_to_analysis_ms": "16.666667",
+   "hand_age_sec": "[0.2, 0.2]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 80050000000,
+  "level": 0,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "79933333333",
+   "prior_depth_p95_m": "0.005942166005267091",
+   "marginal_innovation_score": "1.182016682820401",
+   "capture_to_analysis_ms": "50.0",
+   "hand_age_sec": "[0.133333333, 0.133333333]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 80500000000,
+  "level": 1,
+  "message": "Lookup would require extrapolation into the future.  Requested time 80.466667 but the latest data is at time 80.450000, when looking up transform from frame [oarbot_blue/rgb_camera_link] to frame [world]",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "80400000000",
+   "prior_depth_p95_m": "0.007101483469784896",
+   "marginal_innovation_score": "2.2632039069900225",
+   "capture_to_analysis_ms": "33.333333",
+   "hand_age_sec": "[0.2, 0.2]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 81000000000,
+  "level": 0,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "80933333333",
+   "prior_depth_p95_m": "0.010289716700947693",
+   "marginal_innovation_score": "0.8505183817097817",
+   "capture_to_analysis_ms": "50.0",
+   "hand_age_sec": "[0.133333333, 0.533333333]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 81500000000,
+  "level": 1,
+  "message": "Lookup would require extrapolation into the future.  Requested time 81.466667 but the latest data is at time 81.450000, when looking up transform from frame [oarbot_blue/rgb_camera_link] to frame [world]",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "81400000000",
+   "prior_depth_p95_m": "0.007935925649221796",
+   "marginal_innovation_score": "3.1005163374745863",
+   "capture_to_analysis_ms": "33.333333",
+   "hand_age_sec": "[0.2, 0.2]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 82000000000,
+  "level": 0,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "81933333333",
+   "prior_depth_p95_m": "0.0045556846488184425",
+   "marginal_innovation_score": "0.964993825518074",
+   "capture_to_analysis_ms": "50.0",
+   "hand_age_sec": "[0.133333333, 0.133333333]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 82500000000,
+  "level": 1,
+  "message": "Lookup would require extrapolation into the future.  Requested time 82.466667 but the latest data is at time 82.450000, when looking up transform from frame [oarbot_blue/rgb_camera_link] to frame [world]",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "82400000000",
+   "prior_depth_p95_m": "0.0063041745184228",
+   "marginal_innovation_score": "2.1921591298651624",
+   "capture_to_analysis_ms": "33.333333",
+   "hand_age_sec": "[0.2, 0.2]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 83000000000,
+  "level": 0,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "82933333333",
+   "prior_depth_p95_m": "0.0062076308171122585",
+   "marginal_innovation_score": "1.9153710256023073",
+   "capture_to_analysis_ms": "50.0",
+   "hand_age_sec": "[0.133333333, 0.133333333]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 83500000000,
+  "level": 1,
+  "message": "Lookup would require extrapolation into the future.  Requested time 83.466667 but the latest data is at time 83.450000, when looking up transform from frame [oarbot_blue/rgb_camera_link] to frame [world]",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "83400000000",
+   "prior_depth_p95_m": "0.005828180102429559",
+   "marginal_innovation_score": "2.3698372271683716",
+   "capture_to_analysis_ms": "33.333333",
+   "hand_age_sec": "[0.2, 0.2]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 84000000000,
+  "level": 0,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "83933333333",
+   "prior_depth_p95_m": "0.006250368555887917",
+   "marginal_innovation_score": "0.8332274814650238",
+   "capture_to_analysis_ms": "50.0",
+   "hand_age_sec": "[0.133333333, 0.133333333]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 84500000000,
+  "level": 1,
+  "message": "Lookup would require extrapolation into the future.  Requested time 84.466667 but the latest data is at time 84.450000, when looking up transform from frame [oarbot_blue/rgb_camera_link] to frame [world]",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "84400000000",
+   "prior_depth_p95_m": "0.0065118021827766034",
+   "marginal_innovation_score": "2.2317146049873107",
+   "capture_to_analysis_ms": "16.666667",
+   "hand_age_sec": "[0.2, 0.2]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 85083333333,
+  "level": 0,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "84933333333",
+   "prior_depth_p95_m": "0.007859564160394295",
+   "marginal_innovation_score": "0.83162401846056",
+   "capture_to_analysis_ms": "50.0",
+   "hand_age_sec": "[0.133333333, 0.133333333]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 85500000000,
+  "level": 1,
+  "message": "Lookup would require extrapolation into the future.  Requested time 85.466667 but the latest data is at time 85.450000, when looking up transform from frame [oarbot_blue/rgb_camera_link] to frame [world]",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "85400000000",
+   "prior_depth_p95_m": "0.008598170270429919",
+   "marginal_innovation_score": "2.144282565032888",
+   "capture_to_analysis_ms": "33.333333",
+   "hand_age_sec": "[0.2, 0.6]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 86000000000,
+  "level": 0,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "85933333333",
+   "prior_depth_p95_m": "0.00806796917863316",
+   "marginal_innovation_score": "0.9036264213824733",
+   "capture_to_analysis_ms": "50.0",
+   "hand_age_sec": "[0.133333333, 0.133333333]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 86500000000,
+  "level": 1,
+  "message": "Lookup would require extrapolation into the future.  Requested time 86.466667 but the latest data is at time 86.450000, when looking up transform from frame [oarbot_blue/rgb_camera_link] to frame [world]",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "86400000000",
+   "prior_depth_p95_m": "0.007416316228098059",
+   "marginal_innovation_score": "2.2567133214993516",
+   "capture_to_analysis_ms": "33.333333",
+   "hand_age_sec": "[0.2, 0.2]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 87000000000,
+  "level": 0,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "86933333333",
+   "prior_depth_p95_m": "0.006462315995441281",
+   "marginal_innovation_score": "0.8099149582976137",
+   "capture_to_analysis_ms": "50.0",
+   "hand_age_sec": "[0.133333333, 0.133333333]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 87500000000,
+  "level": 1,
+  "message": "Lookup would require extrapolation into the future.  Requested time 87.466667 but the latest data is at time 87.450000, when looking up transform from frame [oarbot_blue/rgb_camera_link] to frame [world]",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "87400000000",
+   "prior_depth_p95_m": "0.007648375517424033",
+   "marginal_innovation_score": "2.267127887147937",
+   "capture_to_analysis_ms": "33.333333",
+   "hand_age_sec": "[0.2, 0.6]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 88000000000,
+  "level": 0,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "87933333333",
+   "prior_depth_p95_m": "0.0061292903498965726",
+   "marginal_innovation_score": "1.3435832721168486",
+   "capture_to_analysis_ms": "50.0",
+   "hand_age_sec": "[0.133333333, 0.333333333]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 88516666667,
+  "level": 0,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "88466666667",
+   "prior_depth_p95_m": "0.0056340525778734996",
+   "marginal_innovation_score": "1.3126721713380902",
+   "capture_to_analysis_ms": "33.333333",
+   "hand_age_sec": "[0.066666667, 0.066666667]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 89000000000,
+  "level": 0,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "88933333333",
+   "prior_depth_p95_m": "0.007743048406807729",
+   "marginal_innovation_score": "0.9949465389126111",
+   "capture_to_analysis_ms": "50.0",
+   "hand_age_sec": "[0.133333333, 0.133333333]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 89500000000,
+  "level": 1,
+  "message": "Lookup would require extrapolation into the future.  Requested time 89.466667 but the latest data is at time 89.450000, when looking up transform from frame [oarbot_blue/rgb_camera_link] to frame [world]",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "89400000000",
+   "prior_depth_p95_m": "0.01004061484187726",
+   "marginal_innovation_score": "2.0254768755572474",
+   "capture_to_analysis_ms": "33.333333",
+   "hand_age_sec": "[0.2, 0.4]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 90050000000,
+  "level": 0,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "89933333333",
+   "prior_depth_p95_m": "0.004767878512156038",
+   "marginal_innovation_score": "0.9077005396553619",
+   "capture_to_analysis_ms": "50.0",
+   "hand_age_sec": "[0.133333333, 0.133333333]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 90500000000,
+  "level": 1,
+  "message": "Lookup would require extrapolation into the future.  Requested time 90.466667 but the latest data is at time 90.450000, when looking up transform from frame [oarbot_blue/rgb_camera_link] to frame [world]",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "90400000000",
+   "prior_depth_p95_m": "0.0072980776660807045",
+   "marginal_innovation_score": "2.4483577750643413",
+   "capture_to_analysis_ms": "33.333333",
+   "hand_age_sec": "[0.2, 0.4]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 91000000000,
+  "level": 0,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "90933333333",
+   "prior_depth_p95_m": "0.005722829228313419",
+   "marginal_innovation_score": "1.1005711945183676",
+   "capture_to_analysis_ms": "50.0",
+   "hand_age_sec": "[0.133333333, 0.333333333]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 91500000000,
+  "level": 1,
+  "message": "Lookup would require extrapolation into the future.  Requested time 91.466667 but the latest data is at time 91.450000, when looking up transform from frame [oarbot_blue/rgb_camera_link] to frame [world]",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "91400000000",
+   "prior_depth_p95_m": "0.0074265794467945345",
+   "marginal_innovation_score": "2.2278831286123104",
+   "capture_to_analysis_ms": "16.666667",
+   "hand_age_sec": "[0.2, 0.2]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 92000000000,
+  "level": 0,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "91933333333",
+   "prior_depth_p95_m": "0.006877485004115024",
+   "marginal_innovation_score": "2.1508385704306514",
+   "capture_to_analysis_ms": "50.0",
+   "hand_age_sec": "[0.133333333, 0.533333333]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 92500000000,
+  "level": 1,
+  "message": "Lookup would require extrapolation into the future.  Requested time 92.466667 but the latest data is at time 92.450000, when looking up transform from frame [oarbot_blue/rgb_camera_link] to frame [world]",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "92400000000",
+   "prior_depth_p95_m": "0.007475162404431474",
+   "marginal_innovation_score": "2.273654729227867",
+   "capture_to_analysis_ms": "33.333333",
+   "hand_age_sec": "[0.2, 0.2]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 93000000000,
+  "level": 0,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "92933333333",
+   "prior_depth_p95_m": "0.004758415876530054",
+   "marginal_innovation_score": "0.7462521808039512",
+   "capture_to_analysis_ms": "50.0",
+   "hand_age_sec": "[0.133333333, 0.133333333]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 93500000000,
+  "level": 1,
+  "message": "Lookup would require extrapolation into the future.  Requested time 93.466667 but the latest data is at time 93.450000, when looking up transform from frame [oarbot_blue/rgb_camera_link] to frame [world]",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "93400000000",
+   "prior_depth_p95_m": "0.006651471766342478",
+   "marginal_innovation_score": "2.3439261302409458",
+   "capture_to_analysis_ms": "33.333333",
+   "hand_age_sec": "[0.2, 0.2]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 94000000000,
+  "level": 0,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "93933333333",
+   "prior_depth_p95_m": "0.0047486943555252285",
+   "marginal_innovation_score": "1.0186256078218472",
+   "capture_to_analysis_ms": "50.0",
+   "hand_age_sec": "[0.133333333, 0.133333333]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 94500000000,
+  "level": 1,
+  "message": "Lookup would require extrapolation into the future.  Requested time 94.466667 but the latest data is at time 94.450000, when looking up transform from frame [oarbot_blue/rgb_camera_link] to frame [world]",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "94400000000",
+   "prior_depth_p95_m": "0.006356376316704659",
+   "marginal_innovation_score": "2.3562815593723028",
+   "capture_to_analysis_ms": "33.333333",
+   "hand_age_sec": "[0.2, 0.2]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 95083333333,
+  "level": 0,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "94933333333",
+   "prior_depth_p95_m": "0.006330183475878881",
+   "marginal_innovation_score": "1.1305960679333982",
+   "capture_to_analysis_ms": "50.0",
+   "hand_age_sec": "[0.133333333, 0.133333333]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 95500000000,
+  "level": 1,
+  "message": "Lookup would require extrapolation into the future.  Requested time 95.466667 but the latest data is at time 95.450000, when looking up transform from frame [oarbot_blue/rgb_camera_link] to frame [world]",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "95400000000",
+   "prior_depth_p95_m": "0.008764872889542405",
+   "marginal_innovation_score": "2.4126297072761926",
+   "capture_to_analysis_ms": "16.666667",
+   "hand_age_sec": "[0.2, 0.2]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 96000000000,
+  "level": 0,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "95933333333",
+   "prior_depth_p95_m": "0.006524155008421406",
+   "marginal_innovation_score": "0.9325670768250852",
+   "capture_to_analysis_ms": "50.0",
+   "hand_age_sec": "[0.133333333, 0.533333333]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 96500000000,
+  "level": 1,
+  "message": "Lookup would require extrapolation into the future.  Requested time 96.466667 but the latest data is at time 96.450000, when looking up transform from frame [oarbot_blue/rgb_camera_link] to frame [world]",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "96400000000",
+   "prior_depth_p95_m": "0.00658164958814339",
+   "marginal_innovation_score": "1.9388297516472273",
+   "capture_to_analysis_ms": "33.333333",
+   "hand_age_sec": "[0.0, 0.0]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 97000000000,
+  "level": 0,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "96933333333",
+   "prior_depth_p95_m": "0.005741851245986279",
+   "marginal_innovation_score": "1.4233437379962113",
+   "capture_to_analysis_ms": "50.0",
+   "hand_age_sec": "[0.133333333, 0.133333333]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 97500000000,
+  "level": 1,
+  "message": "Lookup would require extrapolation into the future.  Requested time 97.466667 but the latest data is at time 97.450000, when looking up transform from frame [oarbot_blue/rgb_camera_link] to frame [world]",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "97400000000",
+   "prior_depth_p95_m": "0.008323107086015974",
+   "marginal_innovation_score": "2.255938180622512",
+   "capture_to_analysis_ms": "33.333333",
+   "hand_age_sec": "[0.2, 0.2]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 98000000000,
+  "level": 0,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "97933333333",
+   "prior_depth_p95_m": "0.0062176377548836415",
+   "marginal_innovation_score": "0.901124908118823",
+   "capture_to_analysis_ms": "50.0",
+   "hand_age_sec": "[0.133333333, 0.133333333]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 98500000000,
+  "level": 1,
+  "message": "Lookup would require extrapolation into the future.  Requested time 98.466667 but the latest data is at time 98.450000, when looking up transform from frame [oarbot_blue/rgb_camera_link] to frame [world]",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "98400000000",
+   "prior_depth_p95_m": "0.006643804637308002",
+   "marginal_innovation_score": "1.9055892593132202",
+   "capture_to_analysis_ms": "33.333333",
+   "hand_age_sec": "[0.2, 0.2]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 99000000000,
+  "level": 0,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "98933333333",
+   "prior_depth_p95_m": "0.006337242758528904",
+   "marginal_innovation_score": "1.9524914451752886",
+   "capture_to_analysis_ms": "50.0",
+   "hand_age_sec": "[0.133333333, 0.133333333]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 99500000000,
+  "level": 1,
+  "message": "Lookup would require extrapolation into the future.  Requested time 99.466667 but the latest data is at time 99.450000, when looking up transform from frame [oarbot_blue/rgb_camera_link] to frame [world]",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "99400000000",
+   "prior_depth_p95_m": "0.006882815645749274",
+   "marginal_innovation_score": "2.2703277493910345",
+   "capture_to_analysis_ms": "33.333333",
+   "hand_age_sec": "[0.2, 0.2]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 100066666667,
+  "level": 0,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "99933333333",
+   "prior_depth_p95_m": "0.0061200973993486675",
+   "marginal_innovation_score": "0.7617456497517394",
+   "capture_to_analysis_ms": "50.0",
+   "hand_age_sec": "[0.133333333, 0.133333333]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 100500000000,
+  "level": 1,
+  "message": "Lookup would require extrapolation into the future.  Requested time 100.466667 but the latest data is at time 100.450000, when looking up transform from frame [oarbot_blue/rgb_camera_link] to frame [world]",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "100400000000",
+   "prior_depth_p95_m": "0.006753605624455206",
+   "marginal_innovation_score": "3.0989246751224058",
+   "capture_to_analysis_ms": "33.333333",
+   "hand_age_sec": "[0.2, 0.2]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 101000000000,
+  "level": 0,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "100933333333",
+   "prior_depth_p95_m": "0.005881151453847954",
+   "marginal_innovation_score": "1.1552243093528438",
+   "capture_to_analysis_ms": "50.0",
+   "hand_age_sec": "[0.133333333, 0.133333333]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 101500000000,
+  "level": 1,
+  "message": "Lookup would require extrapolation into the future.  Requested time 101.466667 but the latest data is at time 101.450000, when looking up transform from frame [oarbot_blue/rgb_camera_link] to frame [world]",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "101400000000",
+   "prior_depth_p95_m": "0.0075028476277979855",
+   "marginal_innovation_score": "1.398926554204769",
+   "capture_to_analysis_ms": "16.666667",
+   "hand_age_sec": "[0.2, 0.2]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 102000000000,
+  "level": 0,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "101933333333",
+   "prior_depth_p95_m": "0.007277290184058146",
+   "marginal_innovation_score": "0.9275446624951089",
+   "capture_to_analysis_ms": "50.0",
+   "hand_age_sec": "[0.133333333, 0.133333333]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 102500000000,
+  "level": 1,
+  "message": "Lookup would require extrapolation into the future.  Requested time 102.466667 but the latest data is at time 102.450000, when looking up transform from frame [oarbot_blue/rgb_camera_link] to frame [world]",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "102400000000",
+   "prior_depth_p95_m": "0.008293849217192001",
+   "marginal_innovation_score": "2.9331592445953563",
+   "capture_to_analysis_ms": "33.333333",
+   "hand_age_sec": "[0.2, 0.2]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 103000000000,
+  "level": 0,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "102933333333",
+   "prior_depth_p95_m": "0.005256490257510315",
+   "marginal_innovation_score": "1.9103012207618817",
+   "capture_to_analysis_ms": "50.0",
+   "hand_age_sec": "[0.133333333, 0.133333333]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 103500000000,
+  "level": 1,
+  "message": "Lookup would require extrapolation into the future.  Requested time 103.466667 but the latest data is at time 103.450000, when looking up transform from frame [oarbot_blue/rgb_camera_link] to frame [world]",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "103400000000",
+   "prior_depth_p95_m": "0.0066772161414737395",
+   "marginal_innovation_score": "2.146363965334393",
+   "capture_to_analysis_ms": "33.333333",
+   "hand_age_sec": "[0.2, 0.2]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 104000000000,
+  "level": 0,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "103933333333",
+   "prior_depth_p95_m": "0.006736762449289045",
+   "marginal_innovation_score": "1.0342994379409713",
+   "capture_to_analysis_ms": "50.0",
+   "hand_age_sec": "[0.133333333, 0.133333333]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 104500000000,
+  "level": 1,
+  "message": "Lookup would require extrapolation into the future.  Requested time 104.466667 but the latest data is at time 104.450000, when looking up transform from frame [oarbot_blue/rgb_camera_link] to frame [world]",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "104400000000",
+   "prior_depth_p95_m": "0.006783140081242105",
+   "marginal_innovation_score": "2.521497279453549",
+   "capture_to_analysis_ms": "33.333333",
+   "hand_age_sec": "[0.2, 0.2]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 105116666667,
+  "level": 0,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "104933333333",
+   "prior_depth_p95_m": "0.007027812281376619",
+   "marginal_innovation_score": "1.2828793515275105",
+   "capture_to_analysis_ms": "50.0",
+   "hand_age_sec": "[0.133333333, 0.333333333]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 105500000000,
+  "level": 1,
+  "message": "Lookup would require extrapolation into the future.  Requested time 105.466667 but the latest data is at time 105.450000, when looking up transform from frame [oarbot_blue/rgb_camera_link] to frame [world]",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "105400000000",
+   "prior_depth_p95_m": "0.006275577378215824",
+   "marginal_innovation_score": "2.198263456173477",
+   "capture_to_analysis_ms": "16.666667",
+   "hand_age_sec": "[0.2, 0.2]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 106000000000,
+  "level": 0,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "105933333333",
+   "prior_depth_p95_m": "0.007521009372348416",
+   "marginal_innovation_score": "1.2693164972952744",
+   "capture_to_analysis_ms": "50.0",
+   "hand_age_sec": "[0.133333333, 0.133333333]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 106500000000,
+  "level": 1,
+  "message": "Lookup would require extrapolation into the future.  Requested time 106.466667 but the latest data is at time 106.450000, when looking up transform from frame [oarbot_blue/rgb_camera_link] to frame [world]",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "106400000000",
+   "prior_depth_p95_m": "0.008322421855238073",
+   "marginal_innovation_score": "2.366574241214875",
+   "capture_to_analysis_ms": "16.666667",
+   "hand_age_sec": "[0.2, 0.4]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 107000000000,
+  "level": 0,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "106933333333",
+   "prior_depth_p95_m": "0.005393003046625761",
+   "marginal_innovation_score": "1.8370862843776052",
+   "capture_to_analysis_ms": "50.0",
+   "hand_age_sec": "[0.133333333, 0.133333333]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 107500000000,
+  "level": 1,
+  "message": "Lookup would require extrapolation into the future.  Requested time 107.466667 but the latest data is at time 107.450000, when looking up transform from frame [oarbot_blue/rgb_camera_link] to frame [world]",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "107400000000",
+   "prior_depth_p95_m": "0.007155666324020981",
+   "marginal_innovation_score": "2.352758088033869",
+   "capture_to_analysis_ms": "33.333333",
+   "hand_age_sec": "[0.2, 0.2]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 108000000000,
+  "level": 0,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "107933333333",
+   "prior_depth_p95_m": "0.006506060747274466",
+   "marginal_innovation_score": "1.021210468911863",
+   "capture_to_analysis_ms": "50.0",
+   "hand_age_sec": "[0.133333333, 0.133333333]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 108500000000,
+  "level": 1,
+  "message": "Lookup would require extrapolation into the future.  Requested time 108.466667 but the latest data is at time 108.450000, when looking up transform from frame [oarbot_blue/rgb_camera_link] to frame [world]",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "108400000000",
+   "prior_depth_p95_m": "0.006594345745018734",
+   "marginal_innovation_score": "2.28119624319626",
+   "capture_to_analysis_ms": "33.333333",
+   "hand_age_sec": "[0.2, 0.2]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 109000000000,
+  "level": 0,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "108933333333",
+   "prior_depth_p95_m": "0.004532088974205656",
+   "marginal_innovation_score": "1.076219443840653",
+   "capture_to_analysis_ms": "50.0",
+   "hand_age_sec": "[0.133333333, 0.133333333]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 109500000000,
+  "level": 1,
+  "message": "Lookup would require extrapolation into the future.  Requested time 109.466667 but the latest data is at time 109.450000, when looking up transform from frame [oarbot_blue/rgb_camera_link] to frame [world]",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "109400000000",
+   "prior_depth_p95_m": "0.006603311038820614",
+   "marginal_innovation_score": "2.107858313039916",
+   "capture_to_analysis_ms": "33.333333",
+   "hand_age_sec": "[0.2, 0.2]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 110066666667,
+  "level": 0,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "109933333333",
+   "prior_depth_p95_m": "0.005446820145397166",
+   "marginal_innovation_score": "0.9648674169712295",
+   "capture_to_analysis_ms": "50.0",
+   "hand_age_sec": "[0.133333333, 0.133333333]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 110500000000,
+  "level": 1,
+  "message": "Lookup would require extrapolation into the future.  Requested time 110.466667 but the latest data is at time 110.450000, when looking up transform from frame [oarbot_blue/rgb_camera_link] to frame [world]",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "110400000000",
+   "prior_depth_p95_m": "0.006775644366681554",
+   "marginal_innovation_score": "2.2786608549446394",
+   "capture_to_analysis_ms": "33.333333",
+   "hand_age_sec": "[0.2, 0.2]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 111000000000,
+  "level": 0,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "110933333333",
+   "prior_depth_p95_m": "0.007399217430536552",
+   "marginal_innovation_score": "2.265841581126164",
+   "capture_to_analysis_ms": "50.0",
+   "hand_age_sec": "[0.133333333, 0.133333333]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 111500000000,
+  "level": 1,
+  "message": "Lookup would require extrapolation into the future.  Requested time 111.466667 but the latest data is at time 111.450000, when looking up transform from frame [oarbot_blue/rgb_camera_link] to frame [world]",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "111400000000",
+   "prior_depth_p95_m": "0.00701858240742516",
+   "marginal_innovation_score": "2.821084099565303",
+   "capture_to_analysis_ms": "33.333333",
+   "hand_age_sec": "[0.2, 0.4]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 112000000000,
+  "level": 0,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "111933333333",
+   "prior_depth_p95_m": "0.0056716217396695955",
+   "marginal_innovation_score": "0.8625010390394328",
+   "capture_to_analysis_ms": "50.0",
+   "hand_age_sec": "[0.133333333, 0.133333333]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 112500000000,
+  "level": 1,
+  "message": "Lookup would require extrapolation into the future.  Requested time 112.466667 but the latest data is at time 112.450000, when looking up transform from frame [oarbot_blue/rgb_camera_link] to frame [world]",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "112400000000",
+   "prior_depth_p95_m": "0.00613444466926949",
+   "marginal_innovation_score": "2.2154523090284894",
+   "capture_to_analysis_ms": "16.666667",
+   "hand_age_sec": "[0.2, 0.2]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 113000000000,
+  "level": 0,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "112933333333",
+   "prior_depth_p95_m": "0.005751796147949656",
+   "marginal_innovation_score": "0.930429147914784",
+   "capture_to_analysis_ms": "50.0",
+   "hand_age_sec": "[0.133333333, 0.533333333]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 113500000000,
+  "level": 1,
+  "message": "Lookup would require extrapolation into the future.  Requested time 113.466667 but the latest data is at time 113.450000, when looking up transform from frame [oarbot_blue/rgb_camera_link] to frame [world]",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "113400000000",
+   "prior_depth_p95_m": "0.009153234681274658",
+   "marginal_innovation_score": "2.19291915668769",
+   "capture_to_analysis_ms": "33.333333",
+   "hand_age_sec": "[0.2, 0.2]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 114000000000,
+  "level": 0,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "113933333333",
+   "prior_depth_p95_m": "0.005913985680509798",
+   "marginal_innovation_score": "0.939148349241429",
+   "capture_to_analysis_ms": "50.0",
+   "hand_age_sec": "[0.133333333, 0.133333333]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 114500000000,
+  "level": 1,
+  "message": "Lookup would require extrapolation into the future.  Requested time 114.466667 but the latest data is at time 114.450000, when looking up transform from frame [oarbot_blue/rgb_camera_link] to frame [world]",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "114400000000",
+   "prior_depth_p95_m": "0.006981231027227974",
+   "marginal_innovation_score": "2.4145827860678857",
+   "capture_to_analysis_ms": "33.333333",
+   "hand_age_sec": "[0.2, 0.2]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 115116666667,
+  "level": 0,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "114933333333",
+   "prior_depth_p95_m": "0.007157492723470327",
+   "marginal_innovation_score": "1.1616774074257077",
+   "capture_to_analysis_ms": "50.0",
+   "hand_age_sec": "[0.133333333, 0.133333333]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 115500000000,
+  "level": 1,
+  "message": "Lookup would require extrapolation into the future.  Requested time 115.466667 but the latest data is at time 115.450000, when looking up transform from frame [oarbot_blue/rgb_camera_link] to frame [world]",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "115400000000",
+   "prior_depth_p95_m": "0.006504622282915595",
+   "marginal_innovation_score": "2.508865737495032",
+   "capture_to_analysis_ms": "33.333333",
+   "hand_age_sec": "[0.2, 0.2]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 116000000000,
+  "level": 0,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "115933333333",
+   "prior_depth_p95_m": "0.0065486096378917225",
+   "marginal_innovation_score": "1.3909894109934051",
+   "capture_to_analysis_ms": "50.0",
+   "hand_age_sec": "[0.133333333, 0.133333333]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 116500000000,
+  "level": 1,
+  "message": "Lookup would require extrapolation into the future.  Requested time 116.466667 but the latest data is at time 116.450000, when looking up transform from frame [oarbot_blue/rgb_camera_link] to frame [world]",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "116400000000",
+   "prior_depth_p95_m": "0.00601332127575005",
+   "marginal_innovation_score": "2.2140902722096287",
+   "capture_to_analysis_ms": "33.333333",
+   "hand_age_sec": "[0.2, 0.2]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 117000000000,
+  "level": 0,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "116933333333",
+   "prior_depth_p95_m": "0.007523075077123919",
+   "marginal_innovation_score": "0.9982893646585694",
+   "capture_to_analysis_ms": "50.0",
+   "hand_age_sec": "[0.133333333, 0.133333333]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 117500000000,
+  "level": 1,
+  "message": "Lookup would require extrapolation into the future.  Requested time 117.466667 but the latest data is at time 117.450000, when looking up transform from frame [oarbot_blue/rgb_camera_link] to frame [world]",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "117400000000",
+   "prior_depth_p95_m": "0.007290735678194982",
+   "marginal_innovation_score": "2.3380977858256204",
+   "capture_to_analysis_ms": "33.333333",
+   "hand_age_sec": "[0.2, 0.2]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 118000000000,
+  "level": 0,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "117933333333",
+   "prior_depth_p95_m": "0.006622879089225764",
+   "marginal_innovation_score": "1.0927308671276226",
+   "capture_to_analysis_ms": "50.0",
+   "hand_age_sec": "[0.133333333, 0.333333333]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 118500000000,
+  "level": 1,
+  "message": "Lookup would require extrapolation into the future.  Requested time 118.466667 but the latest data is at time 118.450000, when looking up transform from frame [oarbot_blue/rgb_camera_link] to frame [world]",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "118400000000",
+   "prior_depth_p95_m": "0.006262421030175602",
+   "marginal_innovation_score": "2.2049961638222606",
+   "capture_to_analysis_ms": "33.333333",
+   "hand_age_sec": "[0.2, 0.4]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 119000000000,
+  "level": 0,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "118933333333",
+   "prior_depth_p95_m": "0.00633288979856636",
+   "marginal_innovation_score": "0.9324321428852774",
+   "capture_to_analysis_ms": "50.0",
+   "hand_age_sec": "[0.133333333, 0.133333333]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 119500000000,
+  "level": 1,
+  "message": "Lookup would require extrapolation into the future.  Requested time 119.466667 but the latest data is at time 119.450000, when looking up transform from frame [oarbot_blue/rgb_camera_link] to frame [world]",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "119400000000",
+   "prior_depth_p95_m": "0.006230815217170302",
+   "marginal_innovation_score": "2.0324211012664035",
+   "capture_to_analysis_ms": "33.333333",
+   "hand_age_sec": "[0.2, 0.4]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 120000000000,
+  "level": 0,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "119933333333",
+   "prior_depth_p95_m": "0.006603621353728962",
+   "marginal_innovation_score": "1.043491139949746",
+   "capture_to_analysis_ms": "50.0",
+   "hand_age_sec": "[0.133333333, 0.133333333]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 344}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ }
+]

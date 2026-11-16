@@ -1,0 +1,71 @@
+{
+ "run": "id_matched_B_r1",
+ "manifest": {
+  "study": "S1-identification-datasets",
+  "name": "id_matched_B_r1",
+  "structure": "matched",
+  "material": "B",
+  "true_scales": {
+   "bend": 3.0,
+   "shear": 0.4
+  },
+  "repeat": 1,
+  "exit_status": 0,
+  "started": "2026-11-16T04:37:33Z",
+  "hand_script": "/media/taha/ExtermeLinux/oarbot_simulation/logs/sim_eval/id_script.npz",
+  "twin_config": "/home/taha/ros2_colcon_ws/src/oarbots/experiments/sim_eval/config/twin_id.yaml",
+  "plant_args": "--external-followers --overhead-hz 15 --grid-x 28 --grid-y 28 --cell-x 0.03 --cell-y 0.03 --gripper-size 2 --iterations 6 --linear-iterations 3 --edge-ke-weft 0.006 --edge-ke-warp 0.003 --edge-ke-shear 0.0015 --tri-ke-shear 2400",
+  "launch_args": "twin:=true twin_commands:=true twin_config:=/home/taha/ros2_colcon_ws/src/oarbots/experiments/sim_eval/config/twin_id.yaml twin_record:=/media/taha/ExtermeLinux/oarbot_simulation/logs/sim_eval/id/id_matched_B_r1/twin.npz twin_record_depth:=true",
+  "warmup": {
+   "start_s": 15.0,
+   "end_s": 93.333
+  },
+  "validation_window_s": [
+   97.5,
+   140.4
+  ],
+  "oarbots_commit": "30e5a30aa881e17613167c35ba9faec562124a40",
+  "oarbots_src_dirty": true
+ },
+ "holds": "extended",
+ "correction": "estimator",
+ "relaxation": 0.5,
+ "history": [
+  {
+   "iteration": 1,
+   "bend": 2.378414230005442,
+   "shear": 0.6484197773255048,
+   "fit_bend": 5.656854249492381,
+   "fit_shear": 0.4204482076268573,
+   "cost_m": 0.001531531123496748,
+   "relaxation": 0.5,
+   "log_err_bend": -0.23217831296817804,
+   "log_err_shear": 0.4830737440241891,
+   "seconds": 918.5389161349958
+  },
+  {
+   "iteration": 2,
+   "bend": 2.82842712474619,
+   "shear": 0.5452538663326287,
+   "fit_bend": 3.3635856610148576,
+   "fit_shear": 0.45850202160233555,
+   "cost_m": 0.0009825895302900236,
+   "relaxation": 0.5,
+   "log_err_bend": -0.05889151782819185,
+   "log_err_shear": 0.30978694888420266,
+   "seconds": 787.3261562190019
+  },
+  {
+   "iteration": 3,
+   "bend": 2.82842712474619,
+   "shear": 0.4999999999999999,
+   "fit_bend": 2.82842712474619,
+   "fit_shear": 0.4585020216023355,
+   "cost_m": 0.0013605484581201116,
+   "relaxation": 0.5,
+   "log_err_bend": -0.05889151782819185,
+   "log_err_shear": 0.2231435513142094,
+   "seconds": 586.886841642001
+  }
+ ]
+}

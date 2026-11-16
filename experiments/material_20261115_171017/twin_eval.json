@@ -1,0 +1,70 @@
+{
+  "states": 4316,
+  "window_s": [
+    12.0,
+    299.666672449
+  ],
+  "surface_error_m": {
+    "p50": 0.0019804231751932534,
+    "p95": 0.005178472540867198,
+    "max": 0.04973162366385286
+  },
+  "per_state_p95_m": {
+    "median": 0.004642853072782229,
+    "worst": 0.03912797712924372
+  },
+  "lowest_5_percent_height_error_m": {
+    "mean": -0.0012073167213708163,
+    "p95_abs": 0.004109350139129567
+  },
+  "plant_true_box_clearance_m": {
+    "min": 0.5514289827346801,
+    "p5": 0.5896032543182372
+  },
+  "twin_box_clearance_m": 0.5542613358497619,
+  "state_lag_s": {
+    "p50": 0.31666379850000004
+  },
+  "cbf": {
+    "updates": 4316,
+    "status": {
+      "feasible": 4316
+    },
+    "min_capsule_clearance_m": 0.48246413207071465,
+    "controller_ms_p95": 7.3662427489580296,
+    "max_tension_n": 14.867766310731975,
+    "faults": {},
+    "max_follower_speed_mps": 0.05574720319599958
+  },
+  "twin": {
+    "frame_ms_p95": 31.632230000104745,
+    "frame_ms_p50": 16.47619649884291,
+    "lag_sec": 0.316660884,
+    "skipped_frames": 32,
+    "stale_grip_frames": 0,
+    "replaced": 0,
+    "correction_force_n_p95": 0.48037549364879456,
+    "residual_force_n_last": 0.3407898613255781,
+    "material": "{\"version\": 1, \"bend\": 6.727171322029717, \"shear\": 0.4204482076268573}"
+  },
+  "material_releases": [
+    {
+      "version": 1,
+      "bend": 6.727171322029717,
+      "shear": 0.4204482076268573,
+      "source": "warmup",
+      "stamp_ns": 36000000000,
+      "mesh": [
+        28,
+        28
+      ],
+      "substeps": 8,
+      "cost_m": 0.002022351938198829,
+      "start_cost_m": 0.0039048697978001567,
+      "sensitivity_m": 0.006874280837991852,
+      "cases": 4,
+      "seconds": 241.8,
+      "evaluations": 41
+    }
+  ]
+}
