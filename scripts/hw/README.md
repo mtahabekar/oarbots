@@ -103,6 +103,18 @@ and each robot's bridge, guard and the tablet deadman, the real robots too. You 
    `ros2 topic pub --once /oarbot_<robot>/fabric_cbf/arm std_msgs/Bool "{data: true}"`.
 5. On the tablet, Fabric Follow on for both robots (Arm off), deadman held. Jog the gloves.
 
+Before arming, make sure each arm driver accepts commands (needed after any pause in the command
+stream, see below); it answers `start_result='Arm started'`:
+`lab.sh session <robot> exec ros2 service call /oarbot_<robot>/kinova/j2n6s300_driver/in/start kinova_msgs/srv/Start`.
+To re-run `start-bridge` (for example after re-homing), stop the old bridge first with
+`lab.sh session <robot> exec systemctl --user stop fabric-bridge`.
+
+The patched Kinova driver stops the arm API when its 100 Hz command stream pauses for more than 0.2 s
+(the helper froze, or heavy CPU load) and stays stopped until the start service is called. It only
+logs this (`Velocity stream timed out`); the guard and bridge keep reporting normally. If the arms stop
+responding while commands flow, call the start service. Do not rebuild on the helpers while the arms
+are live.
+
 The relay scales velocities by the simulation's real-time factor (~0.45), so the real arms move as
 far per second as their simulated copies. The arms ignore commands below ~2.5 cm/s, so jog with
 `--speed 0.1`. A bridge stop (workspace box, force, stale data) latches until you arm it again.
