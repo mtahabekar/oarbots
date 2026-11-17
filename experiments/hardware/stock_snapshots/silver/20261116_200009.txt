@@ -1,0 +1,27 @@
+host oarbot-silver-P15 user oarbot_silver
+ros2_ws head a6eb6fabcc6d63b56416999d9d7e2b7f53b0d9cf branch main
+ros2_ws worktree e1794a9c6ec86bce (3 entries)
+ros2_ws dep Azure_Kinect_ROS_Driver 0eaaa56 modified=0
+ros2_ws dep kinova-ros2 3c4a77a modified=0
+ros2_ws dep ros2-aruco-pose-estimation e43ea7a modified=0
+unit oarbot_silver_helper_laptop_cd.service enabled=enabled active=inactive definition=6c105f4c1aea4071
+unit oarbot_silver_helper_laptop_launch.service enabled=enabled active=active definition=5fcc5826f1a17b8f
+unit xorg-headless.service enabled=enabled active=active definition=9a3c3a436120d174
+user units enabled: ubuntu-report.path filter-chain.service gcr-ssh-agent.service gnome-keyring-daemon.service obex.service org.freedesktop.IBus.session.GNOME.service pipewire-pulse.service pipewire.service session-migration.service snap.snapd-desktop-integration.snapd-desktop-integration.service tracker-miner-fs-3.service wireplumber.service xdg-desktop-portal-rewrite-launchers.service dirmngr.socket gcr-ssh-agent.socket gnome-keyring-daemon.socket gpg-agent-browser.socket gpg-agent-extra.socket gpg-agent-ssh.socket gpg-agent.socket keyboxd.socket pipewire-pulse.socket pipewire.socket pk-debconf-helper.socket speech-dispatcher.socket launchpadlib-cache-clean.timer snap.firmware-updater.firmware-notifier.timer 
+file fa78bd527bd9d859 /usr/local/bin/oarbot_silver_helper_laptop_cd.sh
+file 15b07c6891448df2 /usr/local/bin/oarbot_silver_helper_laptop_launch.sh
+file f75f2c242a65891b /etc/udev/rules.d/70-snap.firefox.rules
+file a9d291dc55620b16 /etc/udev/rules.d/70-snap.firmware-updater.rules
+file b463abb7fb5c51d7 /etc/udev/rules.d/70-snap.snapd-desktop-integration.rules
+file 76ba34b32931fa5a /etc/udev/rules.d/70-snap.snapd.rules
+file f24a09d9d18e88da /etc/udev/rules.d/70-snap.snap-store.rules
+file be647ffb97017036 /etc/udev/rules.d/99-k4a.rules
+file 34e1d1dc310cdc61 /etc/udev/rules.d/99-kinova-usb.rules
+netplan -rw-r--r-- 104 1770683560 01-network-manager-all.yaml
+netplan -rw------- 644 1782826348 50-cloud-init.yaml
+netplan -rw------- 713 1782825415 90-NM-a81a983b-b9d8-486f-a5b5-533cbe4dc88a.yaml
+packages 2852 fbab0342af4f51c3
+sysctl rmem_max=4194304 wmem_max=4194304
+file feb1e019fbb4ff9f /home/oarbot_silver/.bashrc
+file 28b4a453b68dde64 /home/oarbot_silver/.profile
+crontab e3b0c44298fc1c14
