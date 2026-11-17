@@ -3,6 +3,7 @@
 #   fabric_session.sh start [launch args...]   helper: drivers, guard, bridges; tablet: GUI
 #   fabric_session.sh start-cell <cell_dir>    helper only: wrist perception and CBF bridge
 #   fabric_session.sh stop | status | logs [cell]
+#   fabric_session.sh exec <command...>        run a command in the foreground with the session's ROS settings
 # From the laptop: scripts/hw/lab.sh session <blue|silver|tablet> <command> [args...]
 #
 # The stack runs as transient user services (fabric-stack, fabric-cell): nothing is installed,
@@ -99,6 +100,15 @@ case "$cmd" in
         echo "rmem_max: $(cat /proc/sys/net/core/rmem_max)" ;;
     logs)
         tail -n 200 "$run/fabric-${1:-stack}.log" ;;
+    exec)
+        [ $# -ge 1 ] || { echo "usage: exec <command...>" >&2; exit 2; }
+        unit_active fabric-stack || { echo "Start the stack first" >&2; exit 1; }
+        record exec "$@"
+        source /opt/ros/jazzy/setup.bash
+        source "$ws/install/setup.bash"
+        fabric_export_ros_env "$run/cyclonedds.xml"
+        export ROS_LOG_DIR="$run/ros_log"
+        exec "$@" ;;
     *)
         sed -n '2,9p' "$0"; exit 2 ;;
 esac

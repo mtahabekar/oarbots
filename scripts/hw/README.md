@@ -52,6 +52,25 @@ scripts/hw/lab.sh snapshot blue                 # must report "unchanged"
 The tablet has no stock service: close the stock GUI, then `lab.sh session tablet start` opens the
 fabric GUI on the tablet screen. Only one GUI can hold the deadman Arduino at a time.
 
+On the tablet itself, open the file manager, go to `fabric_ws/scripts/hw`, right-click
+`tablet_gui.sh` and choose *Run as a Program*. Closing the GUI window ends it.
+
+## First arm motion (gate H3, translation)
+
+`first_motion.py` moves one arm 1.5 cm along one Kinova command axis and back at 1 cm/s, with zero
+rotation, through the command guard's `fabric_cbf` input. Before sending anything it checks that
+the arm is at the SRDF Home state, that the guard is the only publisher to the driver, and that
+MoveIt finds the 3 cm neighbourhood of the hand reachable without collision or configuration
+change. It aborts on excess displacement, joint change, speed, stale data or (with a wrist sensor)
+a force change that suggests contact.
+
+1. Start the robot's stack and the tablet GUI. Do not start `fabric-cell`.
+2. `lab.sh session silver exec python3 ~/fabric_ws/scripts/hw/first_motion.py --robot silver --check-only`
+3. On the tablet, turn on **Fabric Follow (CBF)** for that robot only; leave Arm and Admittance off.
+   Release and press the deadman once, then hold it. Releasing it stops the arm at any time.
+4. Same command with `--axes z`, then `--axes xy` once z looks right. Reports and samples are saved
+   under `~/fabric_ws/run/first_motion/` on the helper.
+
 Per-robot defaults, such as unplugged devices and the F/T serial port, are in `hosts/<robot>.args`.
 Arguments after `start` override them, for example `lab.sh session blue start camera:=true`.
 `status` and `logs` show the session state and the last 200 log lines.
