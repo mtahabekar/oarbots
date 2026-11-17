@@ -64,6 +64,8 @@ def main():
     parser.add_argument('--robot', choices=('blue', 'silver'), required=True)
     parser.add_argument('--box', type=float, nargs=3, default=(0.15, 0.15, 0.12), metavar=('X', 'Y', 'Z'),
                         help='half extents in metres of the workspace box around the Home tool position (world frame)')
+    parser.add_argument('--box-min', type=float, nargs=3, metavar=('X', 'Y', 'Z'),
+                        help='negative-side extents (positive numbers) if the box is not symmetric; --box is then the positive side')
     parser.add_argument('--max-speed', type=float, default=0.08)
     parser.add_argument('--out', default=str(Path.home() / 'fabric_ws' / 'run' / 'sim_bridge.yaml'))
     args = parser.parse_args()
@@ -127,13 +129,15 @@ def main():
     req.robot_state, req.group_name = RobotState(joint_state=js), 'arm'
     if not call(validity, req).valid:
         sys.exit('MoveIt reports the current state in collision')
-    box = args.box
+    high = list(args.box)
+    low = list(args.box_min) if args.box_min else list(args.box)
+    failures = []
     for i in (-1, 0, 1):
         for j in (-1, 0, 1):
             for k in (-1, 0, 1):
                 if (i, j, k) == (0, 0, 0):
                     continue
-                offset_world = [i * box[0], j * box[1], k * box[2]]
+                offset_world = [(high if s > 0 else low)[n] * s for n, s in enumerate((i, j, k))]
                 target_base = apply(r_bw, [tool_world[n] + offset_world[n] - t_wb[n] for n in range(3)])
                 req = GetPositionIK.Request()
                 r = req.ik_request
@@ -148,23 +152,26 @@ def main():
                 res = call(ik, req)
                 where = [round(v * 100, 1) for v in offset_world]
                 if res.error_code.val != 1:
-                    sys.exit(f'Box point {where} cm (world) has no collision-free IK; use a smaller --box')
+                    failures.append(f'{where} cm: no collision-free IK')
+                    continue
                 sol = dict(zip(res.solution.joint_state.name, res.solution.joint_state.position))
                 change = max(abs(wrap(sol[n] - pos[n])) for n in joints)
                 if change > 0.3 + 10 * math.dist((0, 0, 0), offset_world):
-                    sys.exit(f'Box point {where} cm needs a configuration flip ({change:.2f} rad)')
+                    failures.append(f'{where} cm: configuration flip ({change:.2f} rad)')
+    if failures:
+        sys.exit('Workspace box (world frame) has unreachable points; shrink those sides:\n  ' + '\n  '.join(failures))
 
     params = {'/**': {'ros__parameters': {
         'world_frame': 'world', 'command_frame': prefix + 'j2n6s300_link_base', 'tool_frame': prefix + 'fabric_grip',
         'max_speed_mps': args.max_speed, 'command_timeout_sec': 0.15, 'force_limit_n': FORCE_LIMIT_N,
         'force_timeout_sec': 0.25, 'pose_timeout_sec': 0.25, 'require_force': has_force,
-        'workspace_min': [tool_world[n] - box[n] for n in range(3)],
-        'workspace_max': [tool_world[n] + box[n] for n in range(3)]}}}
+        'workspace_min': [tool_world[n] - low[n] for n in range(3)],
+        'workspace_max': [tool_world[n] + high[n] for n in range(3)]}}}
     out = Path(args.out)
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(yaml.safe_dump(params, sort_keys=False))
     print(f'{robot}: Home offset {offset:.3f} rad, 26 box points reachable, tool at {[round(v, 3) for v in tool_world]} m '
-          f'(sim world), box +/-{[b * 100 for b in box]} cm, wrist force check {"on" if has_force else "off (no sensor)"}. '
+          f'(sim world), box -{[round(b * 100) for b in low]} / +{[round(b * 100) for b in high]} cm, wrist force check {"on" if has_force else "off (no sensor)"}. '
           f'Parameters: {out}', flush=True)
     node.destroy_node()
     rclpy.try_shutdown()
