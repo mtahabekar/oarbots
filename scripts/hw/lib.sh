@@ -1,7 +1,7 @@
 # Shared settings for fabric hardware sessions. Sourced by the other scripts in this directory.
 
 FABRIC_REPO_URL="${FABRIC_REPO_URL:-https://github.com/mtahabekar/oarbots.git}"
-FABRIC_REF="${FABRIC_REF:-hw-tests}"
+FABRIC_REF="${FABRIC_REF:-jazzy-platform-hardening}"
 FABRIC_WS="${FABRIC_WS:-$HOME/fabric_ws}"
 # The stock system uses domain 0 and the Dingos use 1 (Silver) and 2 (Blue).
 # A separate domain keeps other people's tools and our session from seeing each other.

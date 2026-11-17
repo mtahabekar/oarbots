@@ -6,7 +6,7 @@
 #   On the machine:   bash setup_fabric_ws.sh <helper|tablet> [git ref]
 set -eo pipefail
 role="${1:?usage: setup_fabric_ws.sh <helper|tablet> [ref]}"
-ref="${2:-${FABRIC_REF:-hw-tests}}"
+ref="${2:-${FABRIC_REF:-jazzy-platform-hardening}}"
 repo="${FABRIC_REPO_URL:-https://github.com/mtahabekar/oarbots.git}"
 ws="${FABRIC_WS:-$HOME/fabric_ws}"
 pyside_version="${FABRIC_PYSIDE_VERSION:-6.11.1}"   # same as the stock tablet GUI's venv
@@ -21,7 +21,7 @@ if ! git diff --quiet || ! git diff --cached --quiet; then
     echo "$ws has uncommitted changes; leaving it as it is" >&2
     exit 1
 fi
-git fetch --quiet --tags --force origin
+git fetch --quiet --tags --force --prune origin
 if git rev-parse --verify --quiet "origin/$ref^{commit}" > /dev/null; then target="origin/$ref"; else target="$ref"; fi
 git checkout --quiet --detach "$target"
 

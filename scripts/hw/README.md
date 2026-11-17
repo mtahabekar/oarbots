@@ -30,7 +30,7 @@ its next reboot.
 
 ```bash
 scripts/hw/lab.sh snapshot blue      # baseline of the stock system (also silver, tablet)
-scripts/hw/lab.sh setup blue         # clone and build ~/fabric_ws at hw-tests (also silver, tablet)
+scripts/hw/lab.sh setup blue         # clone and build ~/fabric_ws at jazzy-platform-hardening (also silver, tablet)
 ```
 
 Re-run `setup` to deploy a newer commit, or pass a tag: `scripts/hw/lab.sh setup blue hw-session-01`.
@@ -60,8 +60,8 @@ Arguments after `start` override them, for example `lab.sh session blue start ca
 
 - `sim-eval-2026-11-16` (in this repository and both simulation repositories) marks the code behind
   the simulation evaluation.
-- `hw-tests` is the branch for this hardware campaign. Hardware-only files (cell measurements,
-  these scripts, session records) live here. Fixes to the shared algorithm also go to the main
-  development branch, so the simulation runs the same code; `hw-tests` is merged back at the end.
+- Hardware and simulation work share one branch, `jazzy-platform-hardening`, so both always run the
+  same algorithm code. Hardware-only files (cell measurements, these scripts, session records) stay
+  in their own directories: `scripts/hw`, `experiments/hardware` and the cell configuration.
 - Tag the commit each session runs (`hw-session-NN`). `~/fabric_ws/DEPLOYED` and
   `~/fabric_ws/run/sessions.log` on each machine record what ran and when.
