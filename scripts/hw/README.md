@@ -94,7 +94,7 @@ and each robot's bridge, guard and the tablet deadman, the real robots too. You 
 
 1. Arms at Home; the session stack running on both helpers and the tablet GUI open.
 2. `lab.sh session blue start-bridge` and `lab.sh session silver start-bridge`. Each checks Home and a
-   workspace box (default +/-15, 15, 12 cm around the Home tool position) with MoveIt, then starts the
+   per-robot workspace box around the Home tool position (`BOXES` in `sim_bridge.py`, measured with MoveIt) again, then starts the
    bridge with the sim layout as its world frame (a mirror for directions, not a lab calibration).
    Blue has no wrist sensor, so its bridge runs without the force stop.
 3. `scripts/hw/run_sim_twin.sh [SIM_SECONDS] [oracle|gloves]` opens Isaac Sim and RViz and starts the

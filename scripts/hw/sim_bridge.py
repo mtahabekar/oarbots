@@ -38,6 +38,12 @@ from first_motion import HOME_TOL_RAD, srdf_home, wrap  # noqa: E402
 # wrist force swings +/-4 N (peak 10 N) when the arm jerks into motion (measured 2026-11-16), and the
 # bridge does not filter, so the cell's 6 N placeholder would stop it on vibration alone.
 FORCE_LIMIT_N = 15.7
+# Workspace box per robot (world frame of the sim layout; negative-side and positive-side extents in m),
+# the largest that MoveIt found reachable at all 26 points from Home on 2026-11-16. Each robot's outward
+# side (Silver +x, Blue -x) is short: the forearm and wrist camera approach the UWB wing there, and
+# going outward and back at once flips the wrist.
+BOXES = {'silver': ((0.12, 0.05, 0.10), (0.04, 0.12, 0.08)),
+         'blue': ((0.04, 0.05, 0.10), (0.12, 0.12, 0.08))}
 
 
 def sim_layout(robot):
@@ -62,8 +68,9 @@ def apply(r, v):
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument('--robot', choices=('blue', 'silver'), required=True)
-    parser.add_argument('--box', type=float, nargs=3, default=(0.15, 0.15, 0.12), metavar=('X', 'Y', 'Z'),
-                        help='half extents in metres of the workspace box around the Home tool position (world frame)')
+    parser.add_argument('--box', type=float, nargs=3, metavar=('X', 'Y', 'Z'),
+                        help='extents in metres of the workspace box around the Home tool position (world frame); '
+                             'default: the measured per-robot box (BOXES)')
     parser.add_argument('--box-min', type=float, nargs=3, metavar=('X', 'Y', 'Z'),
                         help='negative-side extents (positive numbers) if the box is not symmetric; --box is then the positive side')
     parser.add_argument('--max-speed', type=float, default=0.08)
@@ -129,8 +136,11 @@ def main():
     req.robot_state, req.group_name = RobotState(joint_state=js), 'arm'
     if not call(validity, req).valid:
         sys.exit('MoveIt reports the current state in collision')
-    high = list(args.box)
-    low = list(args.box_min) if args.box_min else list(args.box)
+    if args.box:
+        high = list(args.box)
+        low = list(args.box_min) if args.box_min else list(args.box)
+    else:
+        low, high = (list(v) for v in BOXES[robot])
     failures = []
     for i in (-1, 0, 1):
         for j in (-1, 0, 1):
