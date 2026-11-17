@@ -1,0 +1,103 @@
+{
+  "robot": "silver",
+  "step_m": 0.05,
+  "speeds_mps": [
+    0.03
+  ],
+  "axes": [
+    "x",
+    "y"
+  ],
+  "preflight": {
+    "home_offset_rad": 0.00713993488250253,
+    "ik_targets_checked": 52,
+    "ik_max_joint_change_rad": 0.47849931348727365,
+    "joint_bound_rad": 0.7177489702309104,
+    "axis_travel_checked_cm": 6.000000000000001,
+    "hand_in_arm_base_m": [
+      -0.28519553351883165,
+      -0.2858578829478413,
+      0.5018696096374509
+    ]
+  },
+  "wrist_force_check": true,
+  "legs": [
+    {
+      "axis": "x",
+      "sign": 1.0,
+      "speed_cmd_mps": 0.03,
+      "forwarded_m": 0.050700867486771536,
+      "moved_m": 0.03535155802147843,
+      "steady_speed_mps": 0.011832168971729047,
+      "direction_arm_base": [
+        0.999,
+        0.005,
+        -0.035
+      ],
+      "direction_robot_base": [
+        -0.999,
+        -0.005,
+        -0.035
+      ],
+      "lag_s": 0.32551236800100014
+    },
+    {
+      "axis": "x",
+      "sign": -1.0,
+      "speed_cmd_mps": 0.03,
+      "forwarded_m": -0.05070103188672092,
+      "moved_m": 0.034902569554487416,
+      "steady_speed_mps": 0.023219574317912335,
+      "direction_arm_base": [
+        -1.0,
+        0.006,
+        -0.001
+      ],
+      "direction_robot_base": [
+        1.0,
+        -0.006,
+        -0.001
+      ],
+      "lag_s": 0.32061139500001445
+    },
+    {
+      "axis": "y",
+      "sign": 1.0,
+      "speed_cmd_mps": 0.03,
+      "forwarded_m": 0.050404827343346316,
+      "moved_m": 0.035770674612753225,
+      "steady_speed_mps": 0.02434389029277877,
+      "direction_arm_base": [
+        -0.01,
+        1.0,
+        0.008
+      ],
+      "direction_robot_base": [
+        0.01,
+        -1.0,
+        0.008
+      ],
+      "lag_s": 0.3072588779996295
+    },
+    {
+      "axis": "y",
+      "sign": -1.0,
+      "speed_cmd_mps": 0.03,
+      "forwarded_m": -0.05100057189008106,
+      "moved_m": 0.03197912509791667,
+      "steady_speed_mps": 0.02046374547222816,
+      "direction_arm_base": [
+        0.011,
+        -1.0,
+        0.002
+      ],
+      "direction_robot_base": [
+        -0.011,
+        1.0,
+        0.002
+      ],
+      "lag_s": 0.4167104850002943
+    }
+  ],
+  "return_error_m": 0.004297344092245741
+}

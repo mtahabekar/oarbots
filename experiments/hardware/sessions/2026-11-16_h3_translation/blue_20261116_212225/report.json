@@ -1,0 +1,142 @@
+{
+  "robot": "blue",
+  "step_m": 0.05,
+  "speeds_mps": [
+    0.03
+  ],
+  "axes": [
+    "z",
+    "x",
+    "y"
+  ],
+  "preflight": {
+    "home_offset_rad": 0.013474995904555809,
+    "ik_targets_checked": 64,
+    "ik_max_joint_change_rad": 0.4760893438547975,
+    "joint_bound_rad": 0.7141340157821963,
+    "axis_travel_checked_cm": 6.000000000000001,
+    "hand_in_arm_base_m": [
+      0.2802601706933494,
+      -0.29252352792923814,
+      0.5077054602608035
+    ]
+  },
+  "wrist_force_check": false,
+  "legs": [
+    {
+      "axis": "z",
+      "sign": 1.0,
+      "speed_cmd_mps": 0.03,
+      "forwarded_m": 0.050697741246806156,
+      "moved_m": 0.0277974497292402,
+      "steady_speed_mps": 0.02053663691009366,
+      "direction_arm_base": [
+        0.03,
+        0.061,
+        0.998
+      ],
+      "direction_robot_base": [
+        0.03,
+        0.061,
+        0.998
+      ],
+      "lag_s": 0.4999355279996962
+    },
+    {
+      "axis": "z",
+      "sign": -1.0,
+      "speed_cmd_mps": 0.03,
+      "forwarded_m": -0.05069971287677057,
+      "moved_m": 0.028864953144327864,
+      "steady_speed_mps": 0.019583522607035154,
+      "direction_arm_base": [
+        0.017,
+        0.013,
+        -1.0
+      ],
+      "direction_robot_base": [
+        0.017,
+        0.013,
+        -1.0
+      ],
+      "lag_s": 0.5841448440000931
+    },
+    {
+      "axis": "x",
+      "sign": 1.0,
+      "speed_cmd_mps": 0.03,
+      "forwarded_m": 0.0504011418134419,
+      "moved_m": 0.030323194150065635,
+      "steady_speed_mps": 0.019663597865259414,
+      "direction_arm_base": [
+        0.997,
+        0.045,
+        -0.069
+      ],
+      "direction_robot_base": [
+        0.997,
+        0.045,
+        -0.069
+      ],
+      "lag_s": 0.4501044240000738
+    },
+    {
+      "axis": "x",
+      "sign": -1.0,
+      "speed_cmd_mps": 0.03,
+      "forwarded_m": -0.050685114847099234,
+      "moved_m": 0.03105194754585137,
+      "steady_speed_mps": 0.02002088773172819,
+      "direction_arm_base": [
+        -0.992,
+        -0.101,
+        0.075
+      ],
+      "direction_robot_base": [
+        -0.992,
+        -0.101,
+        0.075
+      ],
+      "lag_s": 0.385341857000185
+    },
+    {
+      "axis": "y",
+      "sign": 1.0,
+      "speed_cmd_mps": 0.03,
+      "forwarded_m": 0.05100145755002647,
+      "moved_m": 0.03348265759262639,
+      "steady_speed_mps": 0.021877406916828546,
+      "direction_arm_base": [
+        0.012,
+        0.998,
+        0.066
+      ],
+      "direction_robot_base": [
+        0.012,
+        0.998,
+        0.066
+      ],
+      "lag_s": 0.30996980200006874
+    },
+    {
+      "axis": "y",
+      "sign": -1.0,
+      "speed_cmd_mps": 0.03,
+      "forwarded_m": -0.050398869313500974,
+      "moved_m": 0.029837071457152094,
+      "steady_speed_mps": 0.018254158037432355,
+      "direction_arm_base": [
+        -0.021,
+        -0.989,
+        -0.145
+      ],
+      "direction_robot_base": [
+        -0.021,
+        -0.989,
+        -0.145
+      ],
+      "lag_s": 0.350025297999764
+    }
+  ],
+  "return_error_m": 0.005198468595993633
+}

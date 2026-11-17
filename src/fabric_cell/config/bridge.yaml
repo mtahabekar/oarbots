@@ -16,8 +16,9 @@ common:
   workspace_min: [-10.0, -10.0, -10.0]
   workspace_max: [10.0, 10.0, 10.0]
 blue:
-  # The frame the Kinova driver interprets Cartesian velocities in. Verify for each robot with
-  # a 2 cm/s command along each world axis before any closed-loop run (gate H3).
+  # The frame the Kinova driver interprets Cartesian velocities in. Measured 2026-11-16 (gate H3,
+  # translation): Kinova x/y/z = j2n6s300_link_base x/y/z on both robots, 0.99+ along the axis.
+  # Rotation axes are not verified yet. experiments/hardware/sessions/2026-11-16_h3_translation
   command_frame: oarbot_blue/j2n6s300_link_base
   tool_frame: oarbot_blue/fabric_grip
 silver:

@@ -1,0 +1,21 @@
+{
+  "robot": "blue",
+  "step_m": 0.015,
+  "speed_mps": 0.01,
+  "axes": [
+    "z",
+    "x",
+    "y"
+  ],
+  "preflight": {
+    "home_offset_rad": 0.013474995904555809,
+    "ik_max_joint_change_rad": 0.2312062086536657,
+    "joint_bound_rad": 0.34680931298049855,
+    "neighbourhood_cm": 3.0,
+    "hand_in_arm_base_m": [
+      0.2802601706933494,
+      -0.29252352792923814,
+      0.5077054602608035
+    ]
+  }
+}
