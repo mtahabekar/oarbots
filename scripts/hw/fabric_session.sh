@@ -2,6 +2,7 @@
 # Start, stop and inspect the fabric test stack on a lab machine, from the deployed ~/fabric_ws.
 #   fabric_session.sh start [launch args...]   helper: drivers, guard, bridges; tablet: GUI
 #   fabric_session.sh start-cell <cell_dir>    helper only: wrist perception and CBF bridge
+#   fabric_session.sh start-bridge [--box X Y Z] helper only: CBF bridge executing the simulated cell's twin
 #   fabric_session.sh stop | status | logs [cell]
 #   fabric_session.sh exec <command...>        run a command in the foreground with the session's ROS settings
 # From the laptop: scripts/hw/lab.sh session <blue|silver|tablet> <command> [args...]
@@ -84,8 +85,20 @@ case "$cmd" in
         unit_active fabric-cell && { echo "fabric-cell is already running" >&2; exit 1; }
         launch_unit fabric-cell ros2 launch fabric_cell robot_host.launch.py "robot:=$robot" "cell_dir:=$cell_dir"
         record start-cell "$cell_dir" ;;
+    start-bridge)
+        [ "$role" = helper ] || { echo "start-bridge runs on the helper laptops" >&2; exit 2; }
+        unit_active fabric-stack || { echo "Start the stack first" >&2; exit 1; }
+        for unit in fabric-bridge fabric-cell; do
+            unit_active "$unit" && { echo "$unit is already running" >&2; exit 1; }
+        done
+        params="$run/sim_bridge.yaml"
+        ( source /opt/ros/jazzy/setup.bash && source "$ws/install/setup.bash" \
+          && fabric_export_ros_env "$run/cyclonedds.xml" && export ROS_LOG_DIR="$run/ros_log" \
+          && python3 "$here/sim_bridge.py" --robot "$robot" --out "$params" "$@" ) || exit 1
+        launch_unit fabric-bridge ros2 launch "$here/sim_bridge.launch.py" "robot:=$robot" "params_file:=$params"
+        record start-bridge "$@" ;;
     stop)
-        for unit in fabric-cell fabric-stack; do
+        for unit in fabric-bridge fabric-cell fabric-stack; do
             unit_active "$unit" && systemctl --user stop "$unit" && echo "$unit stopped"
         done
         record stop
@@ -94,7 +107,7 @@ case "$cmd" in
     status)
         echo "deployed: $(tr '\n' ' ' < "$ws/DEPLOYED" 2>/dev/null || echo 'not built')"
         echo "checkout: $(git -C "$ws" describe --tags --always --dirty)"
-        for unit in fabric-stack fabric-cell; do echo "$unit: $(systemctl --user is-active "$unit" 2>/dev/null || true)"; done
+        for unit in fabric-stack fabric-cell fabric-bridge; do echo "$unit: $(systemctl --user is-active "$unit" 2>/dev/null || true)"; done
         if [ "$role" = helper ]; then echo "stock $stock_unit: $(systemctl is-active "$stock_unit" 2>/dev/null || true)"; fi
         echo "lab address: $(fabric_pick_address || true)"
         echo "rmem_max: $(cat /proc/sys/net/core/rmem_max)" ;;

@@ -15,7 +15,8 @@ def norm(v):
 
 class CbfBridge:
     def __init__(self, max_speed=.1, command_timeout=.1, force_limit_n=6., force_timeout=.25,
-                 workspace_min=(-1e9, -1e9, -1e9), workspace_max=(1e9, 1e9, 1e9), pose_timeout=.25):
+                 workspace_min=(-1e9, -1e9, -1e9), workspace_max=(1e9, 1e9, 1e9), pose_timeout=.25,
+                 require_force=True):
         values = [max_speed, command_timeout, force_limit_n, force_timeout, pose_timeout, *workspace_min, *workspace_max]
         if (not all(isfinite(v) for v in values) or min(max_speed, command_timeout, force_limit_n, force_timeout, pose_timeout) <= 0
                 or any(a >= b for a, b in zip(workspace_min, workspace_max))):
@@ -23,6 +24,9 @@ class CbfBridge:
         self.max_speed, self.command_timeout = max_speed, command_timeout
         self.force_limit, self.force_timeout, self.pose_timeout = force_limit_n, force_timeout, pose_timeout
         self.workspace = tuple(workspace_min), tuple(workspace_max)
+        # False only for an arm without a wrist sensor: it then arms and runs on pose alone, and the
+        # force stop applies only if a fresh force exists at arming.
+        self.require_force = bool(require_force)
         self.command = self.force = self.baseline = self.pose = None
         self.tripped = 'not armed'
 
@@ -60,7 +64,8 @@ class CbfBridge:
 
     def rearm(self, now):
         """Arm, taking the current wrist force as the baseline. Refused without fresh inputs."""
-        if self.force is None or now-self.force[1] > self.force_timeout:
+        force_fresh = self.force is not None and now-self.force[1] <= self.force_timeout
+        if self.require_force and not force_fresh:
             self.tripped = 'cannot arm: no fresh wrist force'
         elif self.pose is None or now-self.pose[2] > self.pose_timeout:
             self.tripped = 'cannot arm: no fresh tool pose'
@@ -69,7 +74,7 @@ class CbfBridge:
             if not all(a <= x <= b for x, a, b in zip(self.pose[0], low, high)):
                 self.tripped = 'cannot arm: tool outside the workspace box'
             else:
-                self.baseline, self.tripped = self.force[0], ''
+                self.baseline, self.tripped = (self.force[0] if force_fresh else None), ''
         return not self.tripped
 
     def disarm(self):
@@ -81,7 +86,7 @@ class CbfBridge:
         zero = (0.,)*6
         if self.tripped:
             return zero
-        if self.force is None or now-self.force[1] > self.force_timeout:
+        if self.require_force and (self.force is None or now-self.force[1] > self.force_timeout):
             self.trip('wrist force went stale')
             return zero
         if self.pose is None or now-self.pose[2] > self.pose_timeout:

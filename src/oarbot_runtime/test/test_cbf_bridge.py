@@ -81,3 +81,19 @@ def test_guard_forwards_the_fabric_cbf_source_only_in_its_mode():
     assert not any(guard.output(1.05)[0])
     guard.mode_update('nonsense', 1.06)
     assert guard.mode == 'disabled'
+
+
+def test_arm_without_wrist_sensor_runs_on_pose_alone_when_force_is_not_required():
+    bridge = CbfBridge(require_force=False, workspace_min=(-1, -1, -1), workspace_max=(1, 1, 1))
+    identity = [[1, 0, 0], [0, 1, 0], [0, 0, 1]]
+    bridge.pose_update((0, 0, 0), identity, 0.0)
+    assert bridge.rearm(0.0)
+    bridge.command_update((0.05, 0, 0), 0.0, 0.0)
+    assert bridge.output(0.05)[:3] == (0.05, 0, 0)
+    bridge.pose_update((2, 0, 0), identity, 0.06)
+    assert bridge.tripped == 'tool left the workspace box'
+    assert bridge.output(0.07) == (0.,)*6
+    # The default still refuses to arm without a wrist force.
+    strict = CbfBridge()
+    strict.pose_update((0, 0, 0), identity, 0.0)
+    assert not strict.rearm(0.0) and strict.tripped == 'cannot arm: no fresh wrist force'

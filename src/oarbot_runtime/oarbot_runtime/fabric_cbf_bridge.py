@@ -45,7 +45,8 @@ class FabricCbfBridge(Node):
         self.tool_frame = param('tool_frame', prefix+'/fabric_grip')
         self.bridge = CbfBridge(param('max_speed_mps', .1), param('command_timeout_sec', .1), param('force_limit_n', 6.),
                                 param('force_timeout_sec', .25), param('workspace_min', [-10., -10., -10.]),
-                                param('workspace_max', [10., 10., 10.]), param('pose_timeout_sec', .25))
+                                param('workspace_max', [10., 10., 10.]), param('pose_timeout_sec', .25),
+                                param('require_force', True))
         self.tf = Buffer(); self.listener = TransformListener(self.tf, self)
         qos = QoSProfile(depth=1, lifespan=Duration(seconds=self.bridge.command_timeout))
         self.publisher = self.create_publisher(PoseVelocity, 'commands/fabric_cbf/arm', qos)
@@ -90,7 +91,8 @@ class FabricCbfBridge(Node):
                              name=self.get_namespace()+'/fabric_cbf_bridge', hardware_id=self.get_namespace(),
                              message=tripped or 'Following the fabric twin',
                              values=[KeyValue(key='command_frame', value=self.command_frame),
-                                     KeyValue(key='force_limit_n', value=str(self.bridge.force_limit))])]))
+                                     KeyValue(key='force_limit_n', value=str(self.bridge.force_limit)),
+                                     KeyValue(key='require_force', value=str(self.bridge.require_force))])]))
 
 
 def main(args=None):

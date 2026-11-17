@@ -84,3 +84,25 @@ Arguments after `start` override them, for example `lab.sh session blue start ca
   in their own directories: `scripts/hw`, `experiments/hardware` and the cell configuration.
 - Tag the commit each session runs (`hw-session-NN`). `~/fabric_ws/DEPLOYED` and
   `~/fabric_ws/run/sessions.log` on each machine record what ran and when.
+
+## Real robots executing the simulated cell's twin
+
+The simulated cell (`oarbot_simulation` plant, this repository's estimator, and `fabric_twin` with the
+sensitivity CBF from `fabric_sim_isaacsim_newton`) runs on this laptop on domain 42. Its twin's safe
+follower velocities drive the simulated robots (`--external-followers`) and, through `cmd_relay.py`
+and each robot's bridge, guard and the tablet deadman, the real robots too. You jog the gloves.
+
+1. Arms at Home; the session stack running on both helpers and the tablet GUI open.
+2. `lab.sh session blue start-bridge` and `lab.sh session silver start-bridge`. Each checks Home and a
+   workspace box (default +/-15, 15, 12 cm around the Home tool position) with MoveIt, then starts the
+   bridge with the sim layout as its world frame (a mirror for directions, not a lab calibration).
+   Blue has no wrist sensor, so its bridge runs without the force stop.
+3. `scripts/hw/run_sim_twin.sh [SIM_SECONDS] [oracle|gloves]` opens Isaac Sim and RViz and starts the
+   relay; it prints the glove-key command for a second terminal.
+4. After the robots grasp in the sim: `source scripts/hw/laptop_env.sh`, then arm each bridge with
+   `ros2 topic pub --once /oarbot_<robot>/fabric_cbf/arm std_msgs/Bool "{data: true}"`.
+5. On the tablet, Fabric Follow on for both robots (Arm off), deadman held. Jog the gloves.
+
+The relay scales velocities by the simulation's real-time factor (~0.45), so the real arms move as
+far per second as their simulated copies. The arms ignore commands below ~2.5 cm/s, so jog with
+`--speed 0.1`. A bridge stop (workspace box, force, stale data) latches until you arm it again.
