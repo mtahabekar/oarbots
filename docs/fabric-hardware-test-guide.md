@@ -192,12 +192,109 @@ The obstacle is the `obstacle` section of `twin.yaml` (centre, half extents, yaw
 
 ## 6. What is left for you, in order
 
-1. **On this laptop (needs `sudo`):** install `ros-jazzy-rmw-cyclonedds-cpp` and `chrony`; attach a USB Ethernet adapter and put its interface name in a copy of `config/cyclonedds_wired.xml`.
-2. **On the helpers:** build `oarbot_runtime` and `tablet_gui` with the new guard mode, bridge and GUI toggle. Neither could be built or run here (no `kinova_msgs`, no PySide6). Rebuild `fabric_state_msgs` everywhere: `HandState` changed.
+1. ~~**On this laptop (needs `sudo`):** install `ros-jazzy-rmw-cyclonedds-cpp` and `chrony`; attach a USB Ethernet adapter.~~ Done 2026-11-16; `scripts/hw/laptop_env.sh` writes the CycloneDDS profile (§8.1).
+2. ~~**On the helpers:** build `oarbot_runtime` and `tablet_gui`.~~ Done 2026-11-16, in a separate `~/fabric_ws` on Blue, Silver and the tablet (§8.1). The NUC is not set up yet.
 3. **Fill the `fabric_cell` templates:** sheet size and mass, tag size and tag-to-pinch offset, colour thresholds, `calibration.yaml` (the launch refuses to start while it says `measured: false`), workspace box and force limit in `bridge.yaml`, obstacle in `twin.yaml`.
-4. **Hardware gates** from the plan (§5): carbon depth first, then H1–H3, H5, H7, H9, H12, H15. For H3, run the bridge with a 2 cm/s command along each world axis and confirm the arm moves that way; the Kinova command frame in `bridge.yaml` is an assumption.
+4. **Hardware gates** from the plan (§5): carbon depth first, then H1–H3, H5, H7, H9, H12, H15. H3 translation passed on both robots on 2026-11-16 and confirmed the command frame in `bridge.yaml` (§8.2); H3 rotation is still open.
 5. **Shadow sessions before any closed loop:** estimator alone, then twin with `commands:=false`, then warm-up, then closed loop without an obstacle.
 
 ## 7. Changes outside this repository
 
 `/media/taha/ExtermeLinux/oarbot_simulation/scripts/run_oarbot_fabric.py` gained `--external-followers` and `--external-timeout` (the plant's robots take grip velocities from `/oarbot_{blue,silver}/fabric_cbf/cmd_world`). That checkout already had uncommitted changes of yours; mine are additive. Rehearsal outputs are under `logs/sim_cell/hwprep/` there (about 2 GB).
+
+## 8. Lab sessions on the shared robots
+
+Other people use the same robots, so fabric sessions run beside the lab's own system without
+changing it. `scripts/hw/README.md` is the runbook for every command below.
+
+### 8.1 Network and isolation
+
+- **Network.** This laptop's USB Ethernet (`enx3c8cf8eb0ec5`) is on the switch bridged to the
+  `CII8218-oarbots` router. Its saved profile is `192.168.131.100`; the robots are on `192.168.1.0/24`,
+  so add `192.168.1.200` after each boot or replug:
+  `nmcli device modify enx3c8cf8eb0ec5 +ipv4.addresses 192.168.1.200/24`. The helpers are wired too
+  (DHCP, Blue `.71`, Silver `.110`) and keep their Wi-Fi addresses `.102`/`.104`.
+- **Isolation.** Each machine has a separate clone, `~/fabric_ws`, built by the lab account without
+  sudo. A session stops the stock helper service (never disables it) and runs the fabric stack as
+  transient user services on ROS domain 17 with CycloneDDS bound to the lab address; the stock system
+  uses domain 0. A reboot always returns a machine to the stock system. `lab.sh snapshot` records the
+  stock state; after every session so far it reported "unchanged"
+  (`experiments/hardware/stock_snapshots/`).
+- **The stock deploy service** (`*_cd.service`) pulls upstream `main` into `~/ros2_ws` and rebuilds at
+  every boot. Keep fabric work on the fork.
+
+### 8.2 Gate H3, translation (2026-11-16)
+
+`scripts/hw/first_motion.py` moved each arm from Home along each Kinova command axis and back,
+through the guard and the tablet deadman. Results and 50 Hz samples:
+`experiments/hardware/sessions/2026-11-16_h3_translation/`.
+
+- **Command frame.** Kinova Cartesian x/y/z equals each arm's `j2n6s300_link_base` x/y/z (0.99 or
+  better along the axis). Silver's base is turned 180 degrees on its chassis, so its x/y point the
+  other way in the robot frame. `command_frame` in `bridge.yaml` is right.
+- **Velocity response.** No motion at 1 cm/s and almost none at 2 cm/s; at 3-4 cm/s the arm delivers
+  65-75 % of the command after 0.3-0.6 s. The twin's slow corrections fall in that deadband, and its
+  actuator model should include the lag before closed loop.
+
+### 8.3 Real robots executing the simulated cell's twin
+
+The simulated cell stands in for the sheet and the people; the real arms execute the same safe
+commands as the simulated ones:
+
+```text
+glove keys -> Isaac plant (oarbot_simulation) -> estimator -> fabric_twin + CBF + stretch guard
+           -> /oarbot_{blue,silver}/fabric_cbf/cmd_world -> simulated robots (--external-followers)
+                                                  \-> cmd_relay.py -> each helper's fabric_cbf_bridge
+                                                     -> command_guard (tablet deadman) -> Kinova arm
+```
+
+- The simulation runs on domain 42 with Fast DDS and uses the same names as the robots, so only the
+  two `cmd_world` topics cross, through `cmd_relay.py`. It restamps them with wall time (the twin
+  stamps simulated time) and scales them by the real-time factor (about 0.46), so a real arm covers
+  the same distance per second as its simulated copy.
+- Each bridge uses the sim layout (`calibration_exact.yaml` of `fabric_sim_cell`) as its world frame.
+  This makes a world-frame command move the real arm the way it moves the simulated one, relative to
+  its own base; it is not a calibration of the lab. The real arms start from Home and the simulated
+  ones from their grasp pose, so the motions match, not the positions.
+- Each bridge stops (and latches) when its tool leaves a box around Home, measured with MoveIt
+  (`BOXES` in `scripts/hw/sim_bridge.py`): 10 cm down, 8 cm up, 12 cm forward and inward, 5 cm back,
+  4 cm outward. The outward side is short because the forearm and wrist camera approach the UWB wing.
+  Silver's force stop is 15.7 N (payload rating); Blue has no wrist sensor and runs without one.
+
+Procedure, from the repository root on this laptop (each `lab.sh` call asks for the lab password):
+
+1. Arms at Home (each arm's joystick home button, with no driver running).
+2. `scripts/hw/lab.sh stock blue stop`, the same for silver; then `lab.sh session blue start`, the same
+   for silver, and `lab.sh session tablet start` (close the stock tablet GUI first).
+3. `lab.sh session blue start-bridge` and the same for silver.
+4. Make sure both drivers accept commands; each answers `start_result='Arm started'`:
+   `lab.sh session blue exec ros2 service call /oarbot_blue/kinova/j2n6s300_driver/in/start kinova_msgs/srv/Start`,
+   the same for silver.
+5. Terminal 1: `scripts/hw/run_sim_twin.sh 600 oracle`. Isaac Sim and RViz open in about 30 s; the
+   simulated robots grasp about 20 s later.
+6. Terminal 2, the glove keys (keep it focused): the command `run_sim_twin.sh` prints, with
+   `--speed 0.1` so the real commands clear the deadband. Left glove W/S, D/A, E/Q; right glove
+   I/K, L/J, O/U; Space stops both.
+7. Terminal 3, after the grasp: `source scripts/hw/laptop_env.sh`, then
+   `ros2 topic pub --once /oarbot_blue/fabric_cbf/arm std_msgs/msg/Bool "{data: true}"` and the same
+   for silver. Each bridge's diagnostics then say "Following the fabric twin".
+8. Tablet: Fabric Follow (CBF) on for both robots, Arm off; release the deadman once, then hold it.
+
+If the real arms stop following: call the driver start service again (step 4), and check
+`ros2 topic echo --once /oarbot_<robot>/diagnostics` for the bridge's message. After "tool left the
+workspace box", home that arm and repeat steps 3 and 7 for it; after any other stop, repeat step 7.
+
+To finish: Ctrl-C in terminals 1 and 2; `lab.sh session <robot> stop` for blue, silver and tablet;
+home both arms; `lab.sh stock blue start` and the same for silver; `lab.sh snapshot` for each machine.
+
+### 8.4 Problems found in the lab
+
+| Problem | Effect | Status |
+| --- | --- | --- |
+| The patched Kinova driver stops the arm API after any gap over 0.2 s in its 100 Hz command stream, and only logs it | On 2026-11-16 both arms ignored commands for about 20 minutes while guard and bridge reported normally (Blue's helper froze at 21:31; Silver's cause unknown, 21:42) | Workaround: the start service (§8.3 step 4). To do: report the driver state in the guard diagnostics and the tablet GUI |
+| Blue's helper laptop dropped off the network twice (both interfaces at once, no reboot) | Blue's guard and driver stall | To investigate: power and suspend settings |
+| Calibrated wrist force on Silver runs at about 81 Hz with gaps up to 70 ms (raw 97 Hz) | The compensator waits for TF at each sample's exact time and drops samples older than 0.1 s | Not a blocker (the bridge's force timeout is 0.25 s); fix with a lag tolerance derived from the gravity error |
+| Raw wrist force swings +/-4 N (peak 10 N) when the arm jerks into motion | An unfiltered contact threshold trips on vibration | Filter before thresholding |
+| The plant's joint targets are not wrapped (`oarbot/robot.py`, `oarbot_simulation`) | After long runs PhysX rejects targets beyond +/-2 pi and a simulated arm stops following | To fix in the plant |
+| Blue's Dingo computer does not boot (panel: power blue, battery red, rest off) | No Blue base data; the arm and laptop are unaffected | Bases are not needed for the fabric tests |
+| Silver's 1080p colour frames (about 8 MB) did not reach local subscribers with default DDS buffers | Wrist perception would get no images | The session profile asks for 64 MB receive buffers; frames arrive at 15 Hz |
