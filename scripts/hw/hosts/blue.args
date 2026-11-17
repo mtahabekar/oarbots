@@ -1,0 +1,6 @@
+# Default launch arguments for OARBot Blue's fabric session. Command-line arguments override these.
+# On 2026-11-16 Blue's wrist camera, Rokubi and gripper were unplugged. Remove these two lines
+# when they are reconnected, and add ft_serial_port:=/dev/serial/by-id/... for its Rokubi.
+camera:=false
+ft:=false
+body_tracking:=false

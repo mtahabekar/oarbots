@@ -18,6 +18,11 @@ def generate_launch_description() -> LaunchDescription:
         DeclareLaunchArgument("color_exposure_usec", default_value="0"),
         DeclareLaunchArgument("body_id", default_value="-1"),
         DeclareLaunchArgument("ft_serial_port", default_value="/dev/sensor_bota_rokubi_ft_0"),
+        # Hardware switches. Defaults keep the full stack; turn a part off when its device is unplugged.
+        DeclareLaunchArgument("camera", default_value="true", description="Start the wrist Azure Kinect driver"),
+        DeclareLaunchArgument("body_tracking", default_value="true", description="Azure body tracking (uses the GPU)"),
+        DeclareLaunchArgument("color_resolution", default_value="1080P"),
+        DeclareLaunchArgument("ft", default_value="true", description="Start the Rokubi force-torque driver"),
 
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource(
@@ -51,12 +56,13 @@ def generate_launch_description() -> LaunchDescription:
                     "azure_kinect_bringup.launch.py"
                 ])
             ),
+            condition=IfCondition(LaunchConfiguration("camera")),
             launch_arguments={
                 "azure_kinect_namespace": "oarbot_silver/azure_kinect",
                 "frame_prefix": "oarbot_silver/",
                 "fps": LaunchConfiguration("camera_fps"),
-                "color_resolution": "1080P",
-                "body_tracking_enabled": "true",
+                "color_resolution": LaunchConfiguration("color_resolution"),
+                "body_tracking_enabled": LaunchConfiguration("body_tracking"),
                 "sensor_sn": LaunchConfiguration("sensor_sn"),
                 "wired_sync_mode": LaunchConfiguration("wired_sync_mode"),
                 "subordinate_delay_off_master_usec": LaunchConfiguration("subordinate_delay_off_master_usec"),
@@ -109,6 +115,7 @@ def generate_launch_description() -> LaunchDescription:
             package="rokubi_force_torque_publisher",
             name="rokubi_force_torque_publisher",
             namespace="oarbot_silver",
+            condition=IfCondition(LaunchConfiguration("ft")),
             parameters=[
                 PathJoinSubstitution([FindPackageShare("oarbot_launch"), "config", "oarbot_silver_ft.yaml"]),
                 {"tf_prefix": "oarbot_silver/", "serial_port": ParameterValue(LaunchConfiguration("ft_serial_port"), value_type=str)}

@@ -1,0 +1,5 @@
+# Default launch arguments for OARBot Silver's fabric session. Command-line arguments override these.
+# The Rokubi has no /dev/sensor_bota_rokubi_ft_0 alias on this laptop (checked 2026-11-16).
+ft_serial_port:=/dev/serial/by-id/usb-FTDI_FT232R_USB_UART_AK7GN0G1-if00-port0
+# Body tracking is not used by the fabric cell and costs GPU time.
+body_tracking:=false
