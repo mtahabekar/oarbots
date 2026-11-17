@@ -50,7 +50,9 @@ steps() {
             nice -n 10 colcon build --parallel-workers 4 --event-handlers console_cohesion+ || return ;;
         tablet)
             nice -n 10 colcon build --parallel-workers 2 --event-handlers console_cohesion+ \
-                --packages-select kinova_msgs tablet_arduino_publisher tablet_gui oarbot_launch || return
+                --packages-select kinova_msgs tablet_arduino_publisher tablet_gui || return
+            # oarbot_launch is not built here: colcon would require every robot driver it lists as a
+            # run dependency. fabric_session.sh launches its tablet_gui.launch.py by path instead.
             [ -x .venv/bin/python3 ] || python3 -m venv --system-site-packages .venv || return
             .venv/bin/pip install --quiet --disable-pip-version-check "PySide6==$pyside_version" || return ;;
         *) echo "unknown role $role"; return 2 ;;

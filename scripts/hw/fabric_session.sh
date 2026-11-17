@@ -73,7 +73,7 @@ case "$cmd" in
             # Later arguments win, so command-line arguments override the host defaults.
             launch_unit fabric-stack ros2 launch oarbot_launch "oarbot_${robot}_helper_laptop.launch.py" "${defaults[@]}" "$@"
         else
-            launch_unit fabric-stack ros2 launch oarbot_launch tablet_gui.launch.py "gui_python:=$ws/.venv/bin/python3" "$@"
+            launch_unit fabric-stack ros2 launch "$ws/src/oarbot_launch/launch/tablet_gui.launch.py" "gui_python:=$ws/.venv/bin/python3" "$@"
         fi
         record start "$@" ;;
     start-cell)
