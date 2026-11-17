@@ -46,15 +46,22 @@ def test_late_or_missing_command_gives_zero_but_stays_armed():
 def test_force_change_workspace_and_stale_inputs_latch_until_rearmed():
     bridge = armed(force_limit_n=15.)
     bridge.command_update((.05, 0., 0.), 0., 1.)
-    bridge.force_update((0., 0., -17.), 1.01)  # 14 N change: allowed
-    assert bridge.output(1.02)[0] > 0
-    bridge.force_update((10., 0., -17.), 1.03)
-    assert 'wrist force' in bridge.tripped and not any(bridge.output(1.04))
-    bridge.force_update((0., 0., -3.), 1.05)  # the load going away does not re-arm
-    bridge.command_update((.05, 0., 0.), 0., 1.05)
-    assert not any(bridge.output(1.06))
-    bridge.pose_update((0., 0., 1.), IDENTITY, 1.06)
-    assert bridge.rearm(1.06) and bridge.output(1.07)[0] > 0
+    for i in range(30):  # a sustained 14 N change: allowed
+        bridge.force_update((0., 0., -17.), 1.01 + i*.01)
+        bridge.pose_update((0., 0., 1.), IDENTITY, 1.01 + i*.01)
+    bridge.command_update((.05, 0., 0.), 0., 1.3)
+    assert bridge.output(1.3)[0] > 0
+    for i in range(30):  # the 0.25 s mean moves past 15 N
+        bridge.force_update((10., 0., -17.), 1.31 + i*.01)
+        bridge.pose_update((0., 0., 1.), IDENTITY, 1.31 + i*.01)
+    assert 'wrist force' in bridge.tripped and not any(bridge.output(1.61))
+    for i in range(30):  # the load going away does not re-arm
+        bridge.force_update((0., 0., -3.), 1.62 + i*.01)
+        bridge.pose_update((0., 0., 1.), IDENTITY, 1.62 + i*.01)
+    bridge.command_update((.05, 0., 0.), 0., 1.91)
+    assert not any(bridge.output(1.92))
+    bridge.pose_update((0., 0., 1.), IDENTITY, 1.92)
+    assert bridge.rearm(1.92) and bridge.output(1.93)[0] > 0
 
     bridge = armed(workspace_min=(-.5, -.5, .4), workspace_max=(.5, .5, 1.5))
     bridge.pose_update((0., 0., .3), IDENTITY, 1.01)
@@ -97,3 +104,24 @@ def test_arm_without_wrist_sensor_runs_on_pose_alone_when_force_is_not_required(
     strict = CbfBridge()
     strict.pose_update((0, 0, 0), identity, 0.0)
     assert not strict.rearm(0.0) and strict.tripped == 'cannot arm: no fresh wrist force'
+
+
+def test_force_spike_shorter_than_the_window_does_not_stop_the_arm():
+    bridge = armed(force_limit_n=15.)
+    for i in range(1, 25):
+        bridge.force_update((0., 0., -3.), 1. + i*.01)
+        bridge.pose_update((0., 0., 1.), IDENTITY, 1. + i*.01)
+    bridge.force_update((0., 0., -23.), 1.25)  # one 20 N sample as the arm jerks into motion
+    assert not bridge.tripped
+
+
+def test_soft_workspace_edge_holds_outward_motion_and_stops_beyond_the_margin():
+    bridge = armed(workspace_min=(-.5, -.5, .5), workspace_max=(.5, .5, 1.), workspace_margin=.02)
+    bridge.command_update((.05, 0., .05), 0., 1.)
+    assert bridge.output(1.01)[:3] == pytest.approx((.05, 0., 0.))   # on the top face: up is held
+    bridge.command_update((0., 0., -.05), 0., 1.02)
+    assert bridge.output(1.02)[2] == pytest.approx(-.05)            # back in is allowed
+    bridge.pose_update((0., 0., 1.015), IDENTITY, 1.03)               # past the face, inside the margin
+    assert not bridge.tripped
+    bridge.pose_update((0., 0., 1.03), IDENTITY, 1.04)                # beyond the margin
+    assert 'workspace' in bridge.tripped and not any(bridge.output(1.05))

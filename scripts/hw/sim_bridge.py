@@ -38,6 +38,7 @@ from first_motion import HOME_TOL_RAD, srdf_home, wrap  # noqa: E402
 # wrist force swings +/-4 N (peak 10 N) when the arm jerks into motion (measured 2026-11-16), and the
 # bridge does not filter, so the cell's 6 N placeholder would stop it on vibration alone.
 FORCE_LIMIT_N = 15.7
+# The bridge holds motion that would leave this box and stops (latched) 2 cm beyond it.
 # Workspace box per robot (world frame of the sim layout; negative-side and positive-side extents in m),
 # the largest that MoveIt found reachable at all 26 points from Home on 2026-11-16. Each robot's outward
 # side (Silver +x, Blue -x) is short: the forearm and wrist camera approach the UWB wing there, and
@@ -174,7 +175,8 @@ def main():
     params = {'/**': {'ros__parameters': {
         'world_frame': 'world', 'command_frame': prefix + 'j2n6s300_link_base', 'tool_frame': prefix + 'fabric_grip',
         'max_speed_mps': args.max_speed, 'command_timeout_sec': 0.15, 'force_limit_n': FORCE_LIMIT_N,
-        'force_timeout_sec': 0.25, 'pose_timeout_sec': 0.25, 'require_force': has_force,
+        'force_timeout_sec': 0.25, 'force_window_sec': 0.25, 'pose_timeout_sec': 0.25, 'require_force': has_force,
+        'workspace_margin_m': 0.02,
         'workspace_min': [tool_world[n] - low[n] for n in range(3)],
         'workspace_max': [tool_world[n] + high[n] for n in range(3)]}}}
     out = Path(args.out)

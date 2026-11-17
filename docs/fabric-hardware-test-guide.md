@@ -256,10 +256,12 @@ glove keys -> Isaac plant (oarbot_simulation) -> estimator -> fabric_twin + CBF 
   This makes a world-frame command move the real arm the way it moves the simulated one, relative to
   its own base; it is not a calibration of the lab. The real arms start from Home and the simulated
   ones from their grasp pose, so the motions match, not the positions.
-- Each bridge stops (and latches) when its tool leaves a box around Home, measured with MoveIt
-  (`BOXES` in `scripts/hw/sim_bridge.py`): 10 cm down, 8 cm up, 12 cm forward and inward, 5 cm back,
-  4 cm outward. The outward side is short because the forearm and wrist camera approach the UWB wing.
-  Silver's force stop is 15.7 N (payload rating); Blue has no wrist sensor and runs without one.
+- Each bridge keeps its tool in a box around Home, measured with MoveIt (`BOXES` in
+  `scripts/hw/sim_bridge.py`): 10 cm down, 8 cm up, 12 cm forward and inward, 5 cm back, 4 cm outward.
+  The outward side is short because the forearm and wrist camera approach the UWB wing. At a face of
+  the box the bridge holds the motion that would go further out and keeps following the rest; it
+  stops (latched) only 2 cm beyond the box. Silver's force stop is 15.7 N (payload rating) on the
+  0.25 s mean, so start-up jolts do not trip it; Blue has no wrist sensor and runs without one.
 
 Procedure, from the repository root on this laptop (each `lab.sh` call asks for the lab password):
 
@@ -297,4 +299,5 @@ home both arms; `lab.sh stock blue start` and the same for silver; `lab.sh snaps
 | Raw wrist force swings +/-4 N (peak 10 N) when the arm jerks into motion | An unfiltered contact threshold trips on vibration | Filter before thresholding |
 | The plant's joint targets are not wrapped (`oarbot/robot.py`, `oarbot_simulation`) | After long runs PhysX rejects targets beyond +/-2 pi and a simulated arm stops following | To fix in the plant |
 | Blue's Dingo computer does not boot (panel: power blue, battery red, rest off) | No Blue base data; the arm and laptop are unaffected | Bases are not needed for the fabric tests |
+| The bridge latched a stop at the box face and on single force samples (first twin run, 22:22) | Blue stopped after 12.9 cm inward, Silver after 1 s on a start-up force spike | Fixed: soft box edge with a 2 cm hard margin, force stop on the 0.25 s mean |
 | Silver's 1080p colour frames (about 8 MB) did not reach local subscribers with default DDS buffers | Wrist perception would get no images | The session profile asks for 64 MB receive buffers; frames arrive at 15 Hz |

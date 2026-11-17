@@ -46,7 +46,7 @@ class FabricCbfBridge(Node):
         self.bridge = CbfBridge(param('max_speed_mps', .1), param('command_timeout_sec', .1), param('force_limit_n', 6.),
                                 param('force_timeout_sec', .25), param('workspace_min', [-10., -10., -10.]),
                                 param('workspace_max', [10., 10., 10.]), param('pose_timeout_sec', .25),
-                                param('require_force', True))
+                                param('require_force', True), param('force_window_sec', .25), param('workspace_margin_m', .02))
         self.tf = Buffer(); self.listener = TransformListener(self.tf, self)
         qos = QoSProfile(depth=1, lifespan=Duration(seconds=self.bridge.command_timeout))
         self.publisher = self.create_publisher(PoseVelocity, 'commands/fabric_cbf/arm', qos)
