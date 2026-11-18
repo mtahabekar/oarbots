@@ -81,6 +81,33 @@ class Guard:
         except ValueError:
             self.trip()
 
+    def joint_command(self, values, now, limit):
+        """Joint velocities (6, the driver's units) for supervised joint-space moves such as the grasp
+        approach. Accepted only while permitted; scaled so no joint exceeds `limit`; lapses like any command."""
+        if not self.permitted(now):
+            return
+        if len(values) != 6 or not all(isfinite(v) for v in values):
+            self.trip()
+            return
+        peak = max(abs(v) for v in values)
+        scale = min(1.0, limit / peak) if peak else 1.0
+        self.commands['joint'] = (tuple(v * scale for v in values), now)
+
+    def joint_output(self, now):
+        """Joint velocities to send this tick instead of a Cartesian command, or None. Only in the fabric_cbf
+        mode (the tablet's Fabric Follow), with the deadman held and a fresh joint command. A fresh nonzero
+        Cartesian fabric_cbf command at the same time is a controller conflict: trip."""
+        if not self.permitted(now) or self.mode != 'fabric_cbf' or not 0 <= now-self.mode_time <= self.timeout:
+            return None
+        values, stamp = self.commands.get('joint', (None, float('-inf')))
+        if values is None or not 0 <= now-stamp <= self.command_timeout:
+            return None
+        cart, cstamp = self.commands.get('fabric_cbf', ((0.,)*6, float('-inf')))
+        if 0 <= now-cstamp <= self.command_timeout and any(cart):
+            self.trip()
+            return None
+        return values
+
     def finger_output(self, now):
         """Finger closure (percent) to send with this tick's arm command, or None to leave the fingers as they
         are. With hold_fingers set, the fingers are driven to it only while the deadman is held: releasing it

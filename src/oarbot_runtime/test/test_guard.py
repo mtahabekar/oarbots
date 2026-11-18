@@ -98,3 +98,40 @@ def test_hold_fingers_must_be_a_percentage():
     for bad in (-1., 101., math.nan):
         with pytest.raises(ValueError):
             Guard(hold_fingers=bad)
+
+
+def enable_cbf(g, time=1.0):
+    enable(g, time)
+    g.mode_update('fabric_cbf', time + .01)
+
+
+def test_joint_moves_need_fabric_mode_deadman_and_fresh_commands():
+    g = Guard()
+    enable(g)                                            # teleop mode
+    g.joint_command((10.,0.,0.,0.,0.,0.), 1.02, 15.)
+    assert g.joint_output(1.02) is None
+    enable_cbf(g, 1.1)
+    g.joint_command((30.,-15.,0.,0.,0.,0.), 1.12, 15.)
+    assert g.joint_output(1.12) == pytest.approx((15., -7.5, 0., 0., 0., 0.))   # scaled, direction kept
+    assert g.joint_output(1.3) is None                  # lapses
+    g.joint_command((5.,0.,0.,0.,0.,0.), 1.3, 15.)
+    g.deadman_update(False, 1.31)
+    assert g.joint_output(1.31) is None                 # released: stops, does not resume by itself
+    g.deadman_update(True, 1.32)
+    assert g.joint_output(1.32) is None
+
+
+def test_joint_and_cartesian_commands_together_trip():
+    g = Guard()
+    enable_cbf(g)
+    g.command('fabric_cbf', (.02,0.,0.,0.,0.,0.), 1.02, .1, .3)
+    g.joint_command((5.,0.,0.,0.,0.,0.), 1.02, 15.)
+    assert g.joint_output(1.03) is None
+    assert not g.permitted(1.03)
+
+
+def test_invalid_joint_command_trips():
+    g = Guard()
+    enable_cbf(g)
+    g.joint_command((math.nan,0.,0.,0.,0.,0.), 1.02, 15.)
+    assert not g.permitted(1.03)

@@ -7,7 +7,7 @@ from rclpy.qos import QoSProfile
 from rclpy.duration import Duration
 from rclpy.clock import Clock, ClockType
 from geometry_msgs.msg import TwistStamped
-from kinova_msgs.msg import PoseVelocity, PoseVelocityWithFingers
+from kinova_msgs.msg import JointVelocity, PoseVelocity, PoseVelocityWithFingers
 from std_msgs.msg import Bool, String
 from diagnostic_msgs.msg import DiagnosticArray, DiagnosticStatus, KeyValue
 from oarbot_runtime.guard import Guard
@@ -30,7 +30,9 @@ class CommandGuard(Node):
         self.limits = [self.declare_parameter(name, value).value for name, value in (
             ('max_arm_linear_mps', 0.1), ('max_arm_angular_rps', 0.3),
             ('max_base_linear_mps', 0.15), ('max_base_angular_rps', 0.3))]
-        if not all(isfinite(v) and v > 0 for v in self.limits):
+        # Joint-space moves (grasp approach), in the driver's units (deg/s): every joint at most this fast.
+        self.joint_limit = float(self.declare_parameter('max_arm_joint_dps', 15.0).value)
+        if not all(isfinite(v) and v > 0 for v in self.limits + [self.joint_limit]):
             raise ValueError('Speed limits must be finite and positive')
         qos = QoSProfile(depth=1, lifespan=Duration(seconds=self.guard.command_timeout))
         self.arm_pub = self.create_publisher(PoseVelocity, 'kinova/j2n6s300_driver/in/cartesian_velocity', qos)
@@ -39,6 +41,8 @@ class CommandGuard(Node):
         # gets a second source); otherwise the plain command leaves the fingers as they are (HAND_NOMOVEMENT).
         self.arm_fingers_pub = self.create_publisher(
             PoseVelocityWithFingers, 'kinova/j2n6s300_driver/in/cartesian_velocity_with_fingers', qos)
+        # Joint commands replace that tick's Cartesian command (still one stream to the arm's FIFO).
+        self.arm_joint_pub = self.create_publisher(JointVelocity, 'kinova/j2n6s300_driver/in/joint_velocity', qos)
         self.base_pub = self.create_publisher(TwistStamped, 'dingo/cmd_vel', qos)
         self.diagnostics_pub = self.create_publisher(DiagnosticArray, 'diagnostics', 10)
         self.create_subscription(Bool, '/tablet_gui/deadman', lambda m: self.guard.deadman_update(m.data, monotonic()), 1)
@@ -49,6 +53,8 @@ class CommandGuard(Node):
             self.create_subscription(PoseVelocity, f'commands/{source}/arm',
                 lambda m, source=source: self.guard.command(source, tuple(getattr(m, f) for f in FIELDS), monotonic(), *self.limits[:2]), qos)
         self.create_subscription(TwistStamped, 'commands/teleop/base', self.base_command, qos)
+        self.create_subscription(JointVelocity, 'commands/joint/arm', lambda m: self.guard.joint_command(
+            tuple(getattr(m, f'joint{i}') for i in range(1, 7)), monotonic(), self.joint_limit), qos)
         self.steady_clock = Clock(clock_type=ClockType.STEADY_TIME)
         self.create_timer(0.01, self.tick, clock=self.steady_clock)
         self.create_timer(0.5, self.diagnostics, clock=self.steady_clock)
@@ -74,8 +80,11 @@ class CommandGuard(Node):
             self.guard.trip()
         now = monotonic()
         arm, base = self.guard.output(now)
+        joints = self.guard.joint_output(now)
         fingers = self.guard.finger_output(now)
-        if fingers is None:
+        if joints is not None:
+            self.arm_joint_pub.publish(JointVelocity(**{f'joint{i}': v for i, v in enumerate(joints, 1)}))
+        elif fingers is None:
             self.arm_pub.publish(PoseVelocity(**dict(zip(FIELDS, arm))))
         else:
             self.arm_fingers_pub.publish(PoseVelocityWithFingers(**dict(zip(FIELDS, arm)),
@@ -92,7 +101,7 @@ class CommandGuard(Node):
         msg.header.stamp = self.get_clock().now().to_msg()
         # Multiple controllers on a selected input are a configuration fault, not last-writer-wins.
         inputs = ('control_mode', 'base_enable', 'commands/teleop/arm', 'commands/admittance/arm', 'commands/fabric_cbf/arm',
-                  'commands/teleop/base')
+                  'commands/teleop/base', 'commands/joint/arm')
         self.ambiguous = any(self.count_publishers(topic) > 1 for topic in inputs)
         if self.ambiguous:
             self.guard.trip()
