@@ -4,6 +4,7 @@ domain: the glove messages are small), and summarise it.
 
     source scripts/hw/laptop_env.sh
     python3 scripts/hw/glove_record.py --camera overhead --seconds 90 --out experiments/hardware/sessions/.../live.jsonl
+    python3 scripts/hw/glove_record.py --score live.jsonl        # score a recording (no ROS needed)
 
 Per message: capture stamp, arrival age, and each hand's id, tag, grip position (camera frame; world
 frame for the overhead camera, 2026-11-17 world) and position sd. The summary splits the run into
@@ -16,11 +17,15 @@ import json
 import time
 
 import numpy as np
-import rclpy
-from diagnostic_msgs.msg import DiagnosticArray
-from fabric_state_msgs.msg import GloveObservations
-from rclpy.node import Node
-from rclpy.qos import qos_profile_sensor_data
+
+try:  # recording needs ROS and the fabric workspace; scoring a recording (--score) does not
+    import rclpy
+    from diagnostic_msgs.msg import DiagnosticArray
+    from fabric_state_msgs.msg import GloveObservations
+    from rclpy.node import Node
+    from rclpy.qos import qos_profile_sensor_data
+except ImportError:
+    rclpy, Node = None, object
 
 NAMESPACES = {'blue_wrist': '/oarbot_blue/azure_kinect', 'silver_wrist': '/oarbot_silver/azure_kinect', 'overhead': '/nuc'}
 OVERHEAD_WORLD = {'translation': [1.7049, -0.6535, 2.5971], 'rotation_xyzw': [0.666265, 0.66164, -0.249466, -0.236837]}
@@ -110,12 +115,57 @@ def summarise(rows, diag):
     return out
 
 
+def score(path):
+    """Score a recording over the seconds in which any glove was seen (the person may walk between
+    cameras): per hand, detection share, gaps over 0.5 s, range, jitter about a 1 s running median (it
+    also contains the hands' own motion) and the reported sd; and the share with both hands."""
+    rows = [json.loads(line) for line in open(path)]
+    key = 'world_m' if any('world_m' in h for r in rows for h in r['hands']) else 'camera_m'
+    t = np.array([r['stamp'] for r in rows])
+    t0 = t[0]
+    sec = np.floor(t - t0).astype(int)
+    seen = np.array([bool(r['hands']) for r in rows])
+    view = np.isin(sec, sorted(set(sec[seen])))
+    ages = [r['age_s'] for r in rows]
+    out = {'messages': len(rows), 'rate_hz': round(len(rows) / max(1e-6, t[-1] - t0), 1),
+           'age_s_median_p95': [round(float(np.median(ages)), 3), round(float(np.percentile(ages, 95)), 3)],
+           'in_view_s': len(set(sec[seen])), 'in_view_messages': int(view.sum())}
+    if not view.any():
+        return out
+    for hand in ('human_left', 'human_right'):
+        has = np.array([any(h['hand'] == hand for h in r['hands']) for r in rows])
+        pts = [(r['stamp'], np.array(next(h[key] for h in r['hands'] if h['hand'] == hand)),
+                next(h['sd_m'] for h in r['hands'] if h['hand'] == hand)) for r in rows
+               if any(h['hand'] == hand for h in r['hands'])]
+        info = {'detected': f'{int(has[view].sum())}/{int(view.sum())} ({100 * has[view].mean():.0f} %)'}
+        if pts:
+            ts = np.array([p[0] for p in pts]); ps = np.array([p[1] for p in pts]); sds = np.array([p[2] for p in pts])
+            gaps = np.diff(np.r_[t0 + sec[view].min(), ts, t0 + sec[view].max() + 1])
+            med = np.array([np.median(ps[(ts >= s - 0.5) & (ts <= s + 0.5)], axis=0) for s in ts])
+            info.update({'gaps_over_0.5s': int((gaps > 0.5).sum()), 'longest_gap_s': round(float(gaps.max()), 2),
+                         'mean_position_m': ps.mean(0).round(3).tolist(),
+                         'jitter_mm': (1000 * (ps - med).std(0)).round(1).tolist(),
+                         'reported_sd_mm_median': (1000 * np.median(sds, 0)).round(1).tolist()})
+        out[hand] = info
+    both = np.array([len(r['hands']) == 2 for r in rows])
+    out['both_hands'] = f'{100 * both[view].mean():.0f} %'
+    return out
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument('--camera', choices=sorted(NAMESPACES), required=True)
+    parser.add_argument('--camera', choices=sorted(NAMESPACES))
+    parser.add_argument('--score', metavar='JSONL', help='score an existing recording and exit')
     parser.add_argument('--seconds', type=float, default=60.0)
     parser.add_argument('--out', help='JSONL of every glove message')
     args = parser.parse_args()
+    if args.score:
+        print(json.dumps(score(args.score), indent=1))
+        return
+    if not args.camera:
+        parser.error('--camera is required to record')
+    if rclpy is None:
+        parser.error('recording needs ROS and the fabric workspace sourced')
     rclpy.init()
     node = Recorder(args.camera, args.out)
     end = time.monotonic() + args.seconds

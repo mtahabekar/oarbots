@@ -333,8 +333,17 @@ real teal gloves they detected nothing; after calibration, on recorded frames:
 | Blue wrist, 43-178 px at 0.4-1.0 m | 42 | 0 | 40 |
 | Silver wrist, 45-191 px at 0.4-1.0 m | 45 | 0 | 39 |
 
-Live (overhead node, 13:01, person in view 37 s): left hand in 98 % and right in 77 % of the 15 Hz glove
-messages, 0.115 s old; every miss was a tag not visible. The live check of all three cameras is open.
+Live, final settings, each node alone, 40 s per camera with the person at it (16:12-16:21):
+
+| Camera | Rate, age (p95) | Left hand | Right hand |
+| --- | --- | --- | --- |
+| Overhead, hands steady at waist height | 14.4 Hz, 0.213 s | 96 % | 89 % |
+| Blue wrist, 0.6-1.3 m | 15.0 Hz, 0.170 s | 98 % | 46 % (at the image edge or tilted up close) |
+| Silver wrist, 0.5-0.9 m | 15.0 Hz, 0.227 s | 100 % | 100 % |
+
+Every miss checked was a tag out of sight, at the image edge or tilted; visible tags were detected.
+The nodes keep up with little margin (Silver's wrist at 0.227 s against the 0.25 s limit); do not run
+`glove_check` beside a node on the NUC (it dropped the overhead node to 6.5 Hz).
 
 | Setting | Was | Now | Measured reason |
 | --- | --- | --- | --- |
@@ -359,6 +368,6 @@ were sheet sides (`human_left` was Blue's side, tag 20); results recorded before
 simulation evaluations and `sim-eval-2026-11-16`) use the old names.
 
 Tag size: 8 cm (the gloves' tags, `docs/fabric-hardware-demo-plan.md`); the wrist cameras' depth agrees
-with it within 2-4 %. Open: the live check of all three cameras with the person in view, the
+with it within 2-4 %. Open: the
 tag-to-pinch offsets (pivot calibration), a check at a grasp pose for the wrist cameras, the wrist
 cameras' gripper mask and the sheet thresholds once the sheet is in view.

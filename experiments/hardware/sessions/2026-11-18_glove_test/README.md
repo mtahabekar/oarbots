@@ -18,9 +18,9 @@ Result on recorded frames, shipped settings -> calibrated settings (`experiments
 What had to change: the glove colour (per camera), the depth gate that settles the pose ambiguity of
 small tags, the tag search size (new fallback option), where depth is sampled on a tag (new grid option:
 the wrist cameras' depth has holes on the tags), and the perception nodes' sheet-processing rate (they
-could not keep up at 15 fps). **Live**, the overhead node detected the left hand in 98 % and the right in
-77 % of its 15 Hz messages while the person was in view (13:01; every miss was a tag not visible). The
-live check of all three cameras with the final settings is still to do (16:01 ran with nobody in view).
+could not keep up at 15 fps). **Live** (16:12-16:21, final settings, 15 Hz nodes): overhead 96 % / 89 % (left / right hand, hands
+steady at waist height), Blue wrist 98 % / 46 %, Silver wrist 100 % / 100 %; every miss checked was a tag out
+of sight, at the image edge or tilted, not a detection failure.
 
 ## How the detector decides
 
@@ -306,12 +306,45 @@ which also confirms the 8 cm tag size. On the overhead camera the grid changes n
 the helpers; the template sheet thresholds take ~830 000 pixels of a wrist image as sheet) and published
 no gloves at all. With `fabric_rate_hz: 5`: gloves at 15.1 Hz on both, full frames 147 and 163 ms old.
 
-## Live check of all three cameras (16:01): not yet valid
+## Live check of all three cameras (16:12-16:21)
 
-After the power cycle and the redeployment (`6fc4c70`), all three perception nodes ran with the final
-settings (the wrist nodes with `fabric_rate_hz: 5` from a trial copy of the cell folder) and their glove
-output was recorded on their own computers for 150 s (`live/live_*_160148.jsonl`): 15.0 Hz each, 0.10-0.11 s
-old, but no glove in any camera; frames taken right after showed empty scenes, so nobody was in view.
+After the power cycle and the redeployment, with the final settings on every camera (NUC `6fc4c70`,
+helpers `c24b943`). Each camera's perception node ran alone and `glove_record.py` recorded its glove
+output on the camera's own computer, 40 s per camera, while the person stood at that camera and said
+"ready" (`live/final_*.jsonl`; scored over the seconds a glove was in view, jitter about a 1 s running
+median, which also contains the hands' own motion).
+
+| Camera (time) | Node rate, age (median, p95) | Left hand (tag 21) | Right hand (tag 20) | Both | Jitter left / right (x, y, z) |
+| --- | --- | --- | --- | --- | --- |
+| Overhead, hands steady at waist height (16:15) | 14.4 Hz, 0.144 / 0.213 s | **96 %**, longest gap 1.5 s | **89 %**, longest gap 1.0 s | 88 % | 3.6, 1.6, 2.1 / 7.9, 4.0, 2.7 mm |
+| Blue wrist, 0.6-1.3 m (16:17) | 15.0 Hz, 0.132 / 0.170 s | **98 %** | **46 %**, 11 gaps up to 2.3 s | 46 % | 2.2, 1.3, 2.8 / 2.8, 1.5, 10.9 mm |
+| Silver wrist, 0.5-0.9 m (16:20) | 15.0 Hz, 0.183 / 0.227 s | **100 %** | **100 %** (598 of 600) | 100 % | 1.2, 1.0, 0.9 / 0.6, 0.8, 0.9 mm |
+
+- **Misses are visibility, not detection.** A first overhead run (16:12) with the hands moving freely
+  found the right hand in 24 %: it was raised and tilted, its tag out of sight (image 18); `glove_check`
+  beside it detected every tag that was in the image. On Blue's wrist camera the right hand was often at
+  the image edge or tilted up close (image 17, t = 9 s); `glove_check` over 20 s detected 22 of 22 and 17 of
+  17 visible tags. Kept at about 1 m, flat, both tags were seen (image 17, t = 13 and 17 s).
+- **The reported uncertainty is conservative:** the nodes report a position sd of ~10 mm across and
+  12-58 mm along the line of sight; the observed jitter is a few millimetres.
+- **Timing margin:** the overhead node ran at 14.4 Hz with two gloves in view (data up to 0.213 s old), and
+  Silver's wrist node reached 0.227 s at p95 against the 0.25 s limit (its full frames take ~115 ms): the
+  nodes keep up, but with little margin. A diagnostic run beside the overhead node (`glove_check`, saving
+  frames) dropped it to 6.5 Hz: do not run both on the NUC during a test.
+- The positions confirm the hand names: the left hand on Silver's side (overhead x +0.27), the right on
+  Blue's (x -0.27).
+
+![Blue's wrist camera live: misses at the edge, detections at ~1 m](images/17_blue_wrist_live_diagnostic_frames.jpg)
+
+*17: Blue's wrist camera during the live check (`glove_check`, 20 s): at 9 s the right glove is tilted at
+the image edge (only tag 21 detected); at 13 and 17 s both are detected.*
+
+![Overhead live: right hand raised](images/18_overhead_live_right_hand_raised.jpg)
+
+*18: overhead, 16:12: both tags detected with the hands at waist height (left), the right hand raised and
+its tag out of sight (right).*
+
+A first attempt at 16:01 recorded nothing useful: nobody was in view of any camera.
 
 ## Found on the way
 
@@ -331,8 +364,8 @@ old, but no glove in any camera; frames taken right after showed empty scenes, s
 
 ## Not done yet
 
-1. **Live check of all three cameras** with the final settings and the person in view (the 12:08 and
-   16:01 runs had nobody in view). Coordinate: the person says "ready" at each camera.
+1. ~~Live check of all three cameras~~: done 16:12-16:21 (above). For the demo: hands flat at waist
+   height, within ~1 m of a wrist camera; timing margin of the nodes is small (above).
 2. ~~Which hand has which tag~~: settled (above): tag 20 on the right hand, Blue's side; names renamed.
 3. ~~Tag size~~: 8 cm, from the user's documentation (`docs/fabric-hardware-demo-plan.md`); the wrist
    cameras' depth agrees with the tags' apparent size within 2-4 %.
@@ -362,6 +395,7 @@ python3 scripts/hw/glove_tune.py colour RUN --reach 2 --margin 1.6
 scripts/hw/lab.sh session nuc start-cell /home/nuc/fabric_ws/experiments/hardware/cell
 source scripts/hw/laptop_env.sh
 python3 scripts/hw/glove_record.py --camera overhead --seconds 90 --out live.jsonl
+python3 scripts/hw/glove_record.py --score live.jsonl     # scores over the seconds a glove was in view
 ```
 
 Raw frames of every run (colour PNG, 16-bit depth PNG, `frames.jsonl`) are on the compute laptop in
