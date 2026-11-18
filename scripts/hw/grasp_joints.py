@@ -193,10 +193,21 @@ class GraspJoints(Node):
         raise Abort('--to is grasp, home or six joint angles')
 
     def preflight(self, q0, q1):
-        for topic in (self.driver_topic, self.ns + '/kinova/j2n6s300_driver/in/cartesian_velocity'):
-            pubs = [p.node_name for p in self.get_publishers_info_by_topic(topic)]
-            if pubs != ['command_guard']:
-                raise Abort(f'{topic} must have only command_guard as publisher (a guard with the joint input), found {pubs}')
+        cart = self.ns + '/kinova/j2n6s300_driver/in/cartesian_velocity'
+        pubs = [p.node_name for p in self.get_publishers_info_by_topic(cart)]
+        if pubs != ['command_guard']:
+            raise Abort(f'{cart} must have only command_guard as publisher, found {pubs}')
+        # The driver's own trajectory controller (node kinova_arm) also has a publisher on the joint input;
+        # it sends only while executing a FollowJointTrajectory goal, which nothing in the session sends.
+        # The guard sends joint commands only when given some: so the input must be silent now.
+        pubs = sorted(p.node_name for p in self.get_publishers_info_by_topic(self.driver_topic))
+        if pubs != ['command_guard', 'kinova_arm']:
+            raise Abort(f'{self.driver_topic}: expected command_guard (with the joint input) and the driver\'s idle '
+                        f'trajectory controller as publishers, found {pubs}')
+        self.forwarded_time = None
+        self.spin_for(1.0)
+        if self.forwarded_time is not None:
+            raise Abort(f'{self.driver_topic} is not silent before the move: another source is commanding joints')
         if self.count_publishers(self.command_topic):
             raise Abort(f'{self.command_topic} already has a publisher')
         d = delta(q0, q1)
