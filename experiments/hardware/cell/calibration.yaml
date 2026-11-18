@@ -1,0 +1,37 @@
+# Static calibration of the real cell, measured 2026-11-17/18 (lab log 2026-11-17, "World frame from the
+# overhead camera"). `measured` stays false until the two fabric_grip transforms are measured (gate H15):
+# the compute launch refuses placeholder calibrations.
+#
+# world: z up = the floor normal fitted to the overhead depth; y = the overhead image's left-to-right
+# direction on the floor; x = y cross z (toward the overhead camera); origin chosen so the twin layout fits
+# the open floor (definition: experiments/hardware/sessions/2026-11-17_world/overhead_world.json).
+measured: false
+world_frame: world
+transforms:
+# Overhead camera: world -> rgb_camera_link from the floor plane and the world convention, composed with
+# the camera's factory camera_base -> depth -> rgb transforms (overhead_extrinsics.json). Measured.
+- parent: world
+  child: nuc/camera_base
+  translation: [1.702, -0.6855, 2.5951]
+  rotation_xyzw: [-0.408645, 0.008332, 0.912642, -0.004896]
+# Parked bases: base_link from the roof markers (IDs 0, 4), 10 s mean of 51 overhead frames at 00:31,
+# sd below 1.5 mm and 0.2 deg. x, y and yaw measured. z PROVISIONAL: depth puts the marker tops
+# 0.570-0.594 m above the floor (base_link -> marker mount is +0.572 m), i.e. base_link at 0.00-0.02 m;
+# replace with a tape measurement of each marker top above the floor minus 0.572.
+- parent: world
+  child: oarbot_blue/base_link
+  translation: [-0.4246, -1.0671, 0.009]
+  rotation_xyzw: [0.0, 0.0, 0.714289, 0.69985]
+- parent: world
+  child: oarbot_silver/base_link
+  translation: [0.4165, -1.0708, 0.009]
+  rotation_xyzw: [0.0, 0.0, 0.710554, 0.703643]
+# PLACEHOLDERS (gate H15): the corner tip held in the fingers, in the tool frame.
+- parent: oarbot_blue/j2n6s300_end_effector
+  child: oarbot_blue/fabric_grip
+  translation: [0.0, 0.0, 0.0]
+  rotation_xyzw: [0.0, 0.0, 0.0, 1.0]
+- parent: oarbot_silver/j2n6s300_end_effector
+  child: oarbot_silver/fabric_grip
+  translation: [0.0, 0.0, 0.0]
+  rotation_xyzw: [0.0, 0.0, 0.0, 1.0]

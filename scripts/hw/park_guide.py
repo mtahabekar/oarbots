@@ -12,6 +12,7 @@ Green: target footprint and heading. Red: where the base is now. Text: the move 
 frame (forward, left, turn) and OK when within 2 cm and 2 degrees.
 
     NUC:    python3 park_guide.py serve overhead_world.json        (domain 0, stock camera)
+    NUC:    python3 park_guide.py relay -                          (session domain: poses for park_drive)
     laptop: python3 scripts/hw/park_guide.py view nuc@192.168.1.90
 """
 import json
@@ -118,11 +119,35 @@ def serve(world_path):
         pass
 
 
+def relay(_):
+    """Publish /dev/shm/park.json on /park/poses (std_msgs/String, 10 Hz) for park_drive elsewhere."""
+    import rclpy
+    from std_msgs.msg import String
+    rclpy.init()
+    node = rclpy.create_node('park_pose_relay')
+    pub = node.create_publisher(String, '/park/poses', 10)
+
+    def tick():
+        try:
+            with open('/dev/shm/park.json') as fh:
+                pub.publish(String(data=fh.read()))
+        except OSError:
+            pass
+    node.create_timer(0.1, tick)
+    try:
+        rclpy.spin(node)
+    except KeyboardInterrupt:
+        pass
+
+
 def view(host):
     ssh = os.environ.get('LAB_SSH', 'ssh').split()
     cv2.namedWindow('park guide', cv2.WINDOW_NORMAL)
     while True:
-        data = subprocess.run(ssh + [host, 'cat /dev/shm/park.jpg'], capture_output=True, timeout=10).stdout
+        try:
+            data = subprocess.run(ssh + [host, 'cat /dev/shm/park.jpg'], capture_output=True, timeout=10).stdout
+        except subprocess.TimeoutExpired:
+            data = b''                                     # a slow fetch (busy NUC or network): keep the last view
         if data:
             img = cv2.imdecode(np.frombuffer(data, np.uint8), cv2.IMREAD_COLOR)
             if img is not None:
@@ -132,6 +157,7 @@ def view(host):
 
 
 if __name__ == '__main__':
-    if len(sys.argv) < 3 or sys.argv[1] not in ('serve', 'view'):
+    modes = {'serve': serve, 'view': view, 'relay': relay}
+    if len(sys.argv) < 3 or sys.argv[1] not in modes:
         sys.exit(__doc__)
-    (serve if sys.argv[1] == 'serve' else view)(sys.argv[2])
+    modes[sys.argv[1]](sys.argv[2])

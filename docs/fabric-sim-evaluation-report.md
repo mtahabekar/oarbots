@@ -30,7 +30,7 @@ in [experiments/sim_eval/](../experiments/sim_eval/), and the figures (PDF for t
    p = 0.72–0.78 with true inputs).
 6. **In closed loop the CBF keeps the sheet off the obstacle, and the stretch guard keeps the pull
    bounded.** Without the CBF the sheet touched the box in every run; with it, the closest approach was
-   7–8 cm. Without the guard the pull reached 59–1146 N p95; with it, 4–10 N. The fitted twin cut the time
+   7–8 cm. Without the guard the pull reached 59–1146 N p95; with it, 4–7 N. The fitted twin cut the time
    inside the 4 cm margin from 7.3 s to 2.8–3.1 s, but no condition held the full margin (true minimum
    2–3 cm).
 7. **The full live loop works end to end** (2 runs). The live bank released exactly the offline fit
@@ -231,7 +231,7 @@ Mean ± SD over 3 runs. No CBF update needed a hard relaxation in any condition.
   this plant the biased production fit happens to suit the coarse twin (it was also the best grip-only
   replay in S3). On matched A and C, S3 shows the same fit makes the twin worse.
 - **The stretch guard is essential.** Without it the true pull reached 59, 75 and 1146 N p95 (the last
-  run stretched the sheet until the twin could not follow). With it, every run stayed at 4–10 N p95 (one P0 run reached 9.6 N; the rest 4–7 N).
+  run stretched the sheet until the twin could not follow). With it, every condition stayed at 4–7 N p95.
   The guard costs pull relative to no CBF (4.1 N) only because clearance needs the robots to move.
 - The robots stopped on 5–10 % of updates because a glove was unseen for more than 1 s (S1).
 
@@ -296,7 +296,7 @@ through the estimator three ways:
   29 × 29 grip-only twin itself** (S3: 1–5 mm mean on held-out motion). That is why correcting the twin
   from it gains so little, and why perfect values at the same 64 vertices gain no more.
 
-The replays mark 8–21 % of analyses "degraded", against under 1 % live. All three conditions are
+The replays mark 10–20 % of analyses "degraded", against under 1 % live. All three conditions are
 replays, so they are compared only with each other.
 
 ## What this means for the paper

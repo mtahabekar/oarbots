@@ -17,16 +17,30 @@ At most 0.05 m/s and 0.10 rad/s (guard limits 0.15 / 0.3); zero whenever the pos
 1.7 s (the overhead frames arrive 1.15 s late) or the marker is not seen.
 
     python3 park_drive.py overhead_world.json oarbot_silver oarbot_blue@-0.42,-0.30
+
+Where it runs. The guard rejects commands stamped in its future, so run it on the machine whose
+clock is furthest behind among the helpers (2026-11-17: Silver, 46 ms behind the laptop, Blue 20 ms):
+commands then reach every guard with an age of zero or more. Away from the NUC it reads the poses
+from `/park/poses` (std_msgs/String with the guide's JSON), relayed by `park_guide.py relay`.
+
+Dingo E-stop. Each Dingo's own platform driver reports its E-stop on `dingo/platform/emergency_stop`
+and twist_mux locks on it. The stock tablet GUI forwards the tablet's E-stop button there (false
+when clear); with the GUI closed this does the same, and sends true when the tablet's E-stop
+message is older than 0.25 s.
 """
 import json
 import math
+import os
 import sys
 import time
 
 import rclpy
 from rclpy.node import Node
 from geometry_msgs.msg import TwistStamped
-from std_msgs.msg import Bool
+from std_msgs.msg import Bool, String
+
+ESTOP_STALE_SEC = 0.25
+POSES = {'stamp': None, 'poses': {}}
 
 # The stock overhead camera (5 fps) delivers frames 1.15 s after capture (measured 2026-11-17 against
 # the camera's own IMU stream on the same device clock), so the loop is slow: gain 0.3 /s keeps the
@@ -38,12 +52,22 @@ STALE_SEC, SETTLE_SEC, RATE_HZ = 1.7, 1.5, 20.0
 
 
 def read_poses():
+    if not os.path.exists('/dev/shm/park.json'):
+        return POSES['stamp'], POSES['poses']               # from /park/poses
     try:
         with open('/dev/shm/park.json') as fh:
             d = json.load(fh)
         return d['stamp'], d['poses']
     except (OSError, ValueError, KeyError):
         return None, {}
+
+
+def on_poses(msg):
+    try:
+        d = json.loads(msg.data)
+        POSES['stamp'], POSES['poses'] = d['stamp'], d['poses']
+    except (ValueError, KeyError):
+        pass
 
 
 class ParkDrive(Node):
@@ -61,13 +85,29 @@ class ParkDrive(Node):
             self.goals.append((robot, tx, ty, tyaw, True))
         self.enable = {r: self.create_publisher(Bool, f'/{r}/base_enable', 1) for r in self.order}
         self.cmd = {r: self.create_publisher(TwistStamped, f'/{r}/commands/teleop/base', 1) for r in self.order}
+        self.dingo_estop = {r: self.create_publisher(Bool, f'/{r}/dingo/platform/emergency_stop', 10) for r in self.order}
+        self.estop_time = float('-inf')
+        self.create_subscription(Bool, '/tablet_gui/e_stop', self.on_estop, 10)
+        self.create_subscription(String, '/park/poses', on_poses, 10)
         self.active, self.settled_since, self.phase = 0, None, 'turn'
         self.create_timer(1.0 / RATE_HZ, self.tick)
+        self.create_timer(0.1, self.estop_watchdog)
         self.last_log = 0.0
         self.log(f'goals {[(g[0], g[1], g[2], g[3]) for g in self.goals]}; hold the tablet deadman to move (release stops)')
 
     def log(self, text):
         print(time.strftime('%H:%M:%S'), text, flush=True)
+
+    def on_estop(self, msg):
+        # Forward the tablet's E-stop to each Dingo, as the stock GUI does.
+        self.estop_time = time.monotonic()
+        for pub in self.dingo_estop.values():
+            pub.publish(Bool(data=msg.data))
+
+    def estop_watchdog(self):
+        if time.monotonic() - self.estop_time > ESTOP_STALE_SEC:
+            for pub in self.dingo_estop.values():
+                pub.publish(Bool(data=True))
 
     def send(self, robot, vx=0.0, vy=0.0, wz=0.0, enable=True):
         msg = TwistStamped()
@@ -135,6 +175,7 @@ class ParkDrive(Node):
         for _ in range(5):
             for r in self.order:
                 self.send(r, enable=False)
+                self.dingo_estop[r].publish(Bool(data=True))
             time.sleep(0.05)
 
 
