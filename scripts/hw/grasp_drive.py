@@ -112,6 +112,14 @@ class GraspDrive(FirstMotion):
         p_base = tuple(sum(R[c][r] * d[c] for c in range(3)) for r in range(3))
         return self.base_to_arm(p_base), f'world {self.args.to}'
 
+    def open_fingers(self, msg):
+        """The joint state with the fingers open: MoveIt counts closed fingertips touching each other (Silver's
+        are held closed) as a collision, and the fingers do not move during a translation."""
+        js = type(msg)()
+        js.header, js.name = msg.header, list(msg.name)
+        js.position = [0.0 if 'finger' in n else v for n, v in zip(msg.name, msg.position)]
+        return js
+
     def preflight_path(self, target):
         for topic in (self.guard_topic, self.fingers_topic):
             pubs = [p.node_name for p in self.get_publishers_info_by_topic(topic)]
@@ -122,7 +130,7 @@ class GraspDrive(FirstMotion):
         if self.count_publishers(self.command_topic):
             raise Abort(f'{self.command_topic} already has a publisher (is a bridge or fabric-cell running?)')
         req = GetStateValidity.Request()
-        req.robot_state = RobotState(joint_state=self.joint_msg)
+        req.robot_state = RobotState(joint_state=self.open_fingers(self.joint_msg))
         req.group_name = 'arm'
         res = self.call(self.validity, req)
         if not res.valid:
@@ -130,7 +138,7 @@ class GraspDrive(FirstMotion):
         p, rot, _ = self.hand()
         dist = math.dist(p, target)
         n = max(1, int(math.ceil(dist / 0.01)))
-        seed = self.joint_msg
+        seed = self.open_fingers(self.joint_msg)
         names = list(self.arm_joints)
         prev = self.joints()
         largest = 0.0
@@ -157,7 +165,7 @@ class GraspDrive(FirstMotion):
                 raise Abort(f'The path needs a {step:.2f} rad joint change at {k} cm: configuration flip')
             largest = max(largest, step)
             prev = q
-            seed = res.solution.joint_state
+            seed = self.open_fingers(res.solution.joint_state)
         return dict(path_cm=round(dist * 100, 1), ik_points=n, largest_step_rad=round(largest, 3),
                     end_joints=[round(v, 3) for v in prev])
 
@@ -211,7 +219,7 @@ class GraspDrive(FirstMotion):
             e = [target[i] - p[i] for i in range(3)]
             d = math.sqrt(sum(v * v for v in e))
             measured = math.dist(p, self.recent[0][1]) / max(1e-3, tick - self.recent[0][0]) if self.recent else 0.
-            if d < TOL_M + LAG_SEC * measured:
+            if d < self.args.tol + LAG_SEC * measured:
                 break
             speed = max(MIN_SPEED_MPS, min(SPEED_MPS, d))
             self.send([e[i] / d * speed for i in range(3)] + [0.0] * 3)
@@ -249,7 +257,7 @@ class GraspDrive(FirstMotion):
                   'Fabric Follow (CBF) on for this robot, release and press the deadman, then hold it', flush=True)
             p, turn = self.move(start, target, q0)
             for _ in range(CORRECTIONS):
-                if math.dist(p, target) <= 2 * TOL_M:
+                if math.dist(p, target) <= 2 * self.args.tol:
                     break
                 print(f'    {math.dist(p, target)*100:.1f} cm off: correcting', flush=True)
                 p, turn = self.move(p, target, q0)
@@ -272,6 +280,7 @@ def main():
     where = parser.add_mutually_exclusive_group(required=True)
     where.add_argument('--to', type=float, nargs=3, metavar=('X', 'Y', 'Z'), help='tool position in the world (m)')
     where.add_argument('--home', action='store_true', help='back to the tool position at the SRDF Home joints')
+    parser.add_argument('--tol', type=float, default=TOL_M, help='stop within this distance of the target (m)')
     parser.add_argument('--check-only', action='store_true', help='run the preflight checks and send nothing')
     args = parser.parse_args()
     if args.to and not (-1.5 < args.to[0] < 1.5 and -2.0 < args.to[1] < 1.0 and 0.6 < args.to[2] < 1.5):
