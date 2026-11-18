@@ -228,8 +228,8 @@ class GraspDrive(FirstMotion):
             elif tick - waiting_note > 5.0:
                 print(f'    waiting for the deadman ({d*100:.1f} cm to go)', flush=True)
                 waiting_note = tick
-            if tick - begin > WAIT_SEC:
-                raise Abort(f'No deadman for {WAIT_SEC:.0f} s')
+            if tick - begin > self.args.wait:
+                raise Abort(f'No deadman for {self.args.wait:.0f} s')
             self.spin_for(max(0.0, period - (time.monotonic() - tick)))
         end = time.monotonic() + 1.5
         while time.monotonic() < end:
@@ -280,6 +280,7 @@ def main():
     where = parser.add_mutually_exclusive_group(required=True)
     where.add_argument('--to', type=float, nargs=3, metavar=('X', 'Y', 'Z'), help='tool position in the world (m)')
     where.add_argument('--home', action='store_true', help='back to the tool position at the SRDF Home joints')
+    parser.add_argument('--wait', type=float, default=WAIT_SEC, help='seconds to wait for the deadman')
     parser.add_argument('--tol', type=float, default=TOL_M, help='stop within this distance of the target (m)')
     parser.add_argument('--check-only', action='store_true', help='run the preflight checks and send nothing')
     args = parser.parse_args()
