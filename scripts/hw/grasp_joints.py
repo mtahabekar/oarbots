@@ -224,9 +224,11 @@ class GraspJoints(Node):
             req.robot_state = self.state(q)
             req.group_name = 'arm'
             res = self.call(self.validity, req)
-            if not res.valid:
-                raise Abort(f'MoveIt: collision at {100*k/steps:.0f} % of the path: '
-                            f'{sorted({(c.contact_body_1, c.contact_body_2) for c in res.contacts})}')
+            # Closed fingers touch each other (Silver's are held closed): not a collision of the arm.
+            pairs = sorted({(c.contact_body_1, c.contact_body_2) for c in res.contacts
+                            if not ('finger' in c.contact_body_1 and 'finger' in c.contact_body_2)})
+            if not res.valid and (pairs or not res.contacts):
+                raise Abort(f'MoveIt: collision at {100*k/steps:.0f} % of the path: {pairs}')
             if k % 5 == 0 or k == steps:
                 pts = self.points(q, W)
                 tool_path.append(pts[0])
