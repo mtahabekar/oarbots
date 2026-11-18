@@ -1,0 +1,142 @@
+Bus 003 Device 009: ID 22cd:0000 Kinova Robotics Inc. Kinova Robotic Platform
+Bus 003 Device 010: ID 22cd:0000 Kinova Robotics Inc. Kinova Robotic Platform
+crw-rw-rw- 1 root root 189, 264 Nov 17 22:28 /dev/bus/usb/003/009
+crw-rw-rw- 1 root root 189, 265 Nov 17 22:30 /dev/bus/usb/003/010
+InitAPI 1 (1 = ok)
+devices 2
+
+================ device 0: model 'Jaco V2 Service    ' serial 'PJ00900006151270001' version 6.2.17 type 3 id 1
+
+QuickStatus rc 1: fingers 1 1 1, RetractType 5, RetractComplexity 0, ControlEnableStatus 1, ControlActiveModule 1, ControlFrameType 1, CartesianFaultState 0, ForceControlStatus 0, CurrentLimitationStatus 1, RobotType 3, RobotEdition 0, TorqueSensorsStatus 0
+
+GeneralInformations rc 1: code 393745 rev 0, Status 0, Controller 0, ControlMode 2, HandMode 5, ConnectedActuatorCount 9, PositionType 2, supply 23.44 V, current 0.112 A, power 2.63 W
+  SystemStatus: JoystickActive 1, RetractStatus 5, DrinkingMode 0, ArmLaterality 1, TranslationActive 0, RotationActive 0, FingersActive 0, WarnForce 0, WarnFingers 0, WarnLowVoltage 0, MajorErrorOccured 0
+  SPI errors main 0 ext 0, CAN errors main 5839 ext 0
+  actuator temps 26.8 26.8 28.8 40.5 28.9 28.4 0.0; finger temps 32.0 31.8 33.1
+  actuator comm errors 0 0 0 0 0 0 0; finger comm errors 0 0 0
+  peripherals connected 0x1 0x0 0x0 0x0, device ids 0x30 0x0 0x0 0x0
+
+ClientConfigurations rc 1: ClientID 'Number Not Set     ' ClientName 'Name Not Set       ' Organization 'Org. Not Set       ' Serial 'PJ00900006151270001' Model 'Jaco V2 Service    '
+  Laterality 1, MaxTransVel 0.150, MaxOrientVel 0.460, MaxTransAcc 0.640, MaxOrientAcc 2.750, MaxForce 0.00, Sensibility 100.00, ComplexRetractActive 0, RetractedPositionAngle 60.00, RetractedPositionCount 0, Fingers2and3Inverted 1, DeletePreProgrammedPositionsAtRetract 0, EnableFlashErrorLog 0, EnableFlashPositionLog 0, RobotConfigSelect 1, TorqueSensorsEnable 0, FrameType 1
+
+ControlMapping rc 1: NumOfConfiguredMapping 0, ActualControlMapping 0
+  mapping 0: modesA 1 modesB 2 actualA -1 actualB 0 mode 2, assigned functions 55
+    modeA0 button  0 click    -> 1 Disable_EnableJoystick
+    modeA0 button  0 hold2s   -> 3 Change_TwoAxis_ThreeAxis
+    modeA0 button  1 holddown -> 2 Retract_ReadyToUse
+    modeA0 button  2 click    -> 4 Change_DrinkingMode
+    modeA0 button  3 hold2s   -> 14 
+    modeA0 button  4 holddown -> 9 
+    modeA0 button  5 click    -> 5 Cycle_ModeA
+    modeA0 button  5 hold2s   -> 7 DecreaseSpeed
+    modeA0 button  6 click    -> 6 Cycle_ModeB
+    modeA0 button  6 hold2s   -> 8 IncreaseSpeed
+    modeA0 button  7 click    -> 5 Cycle_ModeA
+    modeA0 button  9 holddown -> 2 Retract_ReadyToUse
+    modeA0 button 10 click    -> 4 Change_DrinkingMode
+  mapping 1: modesA 2 modesB 2 actualA -1 actualB 0 mode 2, assigned functions 64
+  mapping 2: modesA 2 modesB 0 actualA 0 actualB -1 mode 2, assigned functions 46
+  mapping 3: modesA -1 modesB -1 actualA -1 actualB -1 mode -1, assigned functions 2294
+  mapping 4: modesA 2 modesB 4 actualA -1 actualB 0 mode 2, assigned functions 66
+  mapping 5: modesA 2 modesB 0 actualA 0 actualB -1 mode 2, assigned functions 48
+
+GetCodeVersion rc 1: 6 2 17 1 5 1 2 3 0 1 5 1 1 5 1 1 5 1 1 5 1 1 1 4 1 1 4 1 1 4 0 0 0 1 0 17 0 0 0 0 0 0
+PeripheralInventory rc 1:
+  handle 100 type 400 port 2 address 0 code 0x10011
+  handle 101 type 101 port 6 address 16 code 0x10501
+  handle 102 type 105 port 6 address 17 code 0x20300
+  handle 103 type 101 port 6 address 18 code 0x10501
+  handle 104 type 103 port 6 address 19 code 0x10501
+  handle 105 type 103 port 6 address 20 code 0x10501
+  handle 106 type 103 port 6 address 21 code 0x10501
+  handle 107 type 201 port 6 address 22 code 0x10104
+  handle 108 type 201 port 6 address 23 code 0x10104
+  handle 109 type 201 port 6 address 24 code 0x10104
+  handle 110 type 302 port 2 address 48 code 0x20005
+System errors: 202
+  [172] type 16 time 1 life 64 data 1024 4096 4352 4608 4864 0 0 0
+  [173] type 16 time 1 life 64 data 1280 4096 4352 4608 4864 5120 0 0
+  [174] type 16 time 1 life 64 data 1280 4096 4352 4608 4864 5120 0 0
+  [175] type 16 time 1 life 17 data 1280 4096 4352 4608 4864 5120 0 0
+  [176] type 16 time 1 life 17 data 1280 4096 4352 4608 4864 5120 0 0
+  [177] type 9 time 6 life 0 data 2022507776 65 0 0 0 0 0 0
+  [178] type 10 time 10 life 17 data 2209622272 577 768 0 0 0 0 0
+  [179] type 9 time 15 life 64 data 1345505792 65 0 0 0 0 0 0
+  [180] type 10 time 35 life 64 data 2768272384 577 768 0 0 0 0 0
+  [181] type 9 time 40 life 64 data 1457616640 65 0 0 0 0 0 0
+  [182] type 10 time 60 life 64 data 2165157376 577 768 0 0 0 0 0
+  [183] type 9 time 65 life 189 data 1634436608 65 0 0 0 0 0 0
+  [184] type 10 time 70 life 0 data 2979810304 577 768 0 0 0 0 0
+  [185] type 9 time 80 life 17 data 1469174528 65 0 0 0 0 0 0
+  [186] type 10 time 85 life 17 data 2675971584 577 768 0 0 0 0 0
+  [187] type 9 time 95 life 17 data 1512198912 65 0 0 0 0 0 0
+  [188] type 10 time 110 life 17 data 2567929088 577 768 0 0 0 0 0
+  [189] type 9 time 115 life 17 data 2083994112 65 0 0 0 0 0 0
+  [190] type 10 time 130 life 0 data 2289357824 577 768 0 0 0 0 0
+  [191] type 9 time 160 life 0 data 2094324480 65 0 0 0 0 0 0
+  [192] type 10 time 200 life 64 data 2214038784 577 768 0 0 0 0 0
+  [193] type 9 time 20 life 17 data 1484504832 65 0 0 0 0 0 0
+  [194] type 10 time 40 life 64 data 2759043328 577 768 0 0 0 0 0
+  [195] type 9 time 10 life 64 data 1460325632 65 0 0 0 0 0 0
+  [196] type 10 time 15 life 17 data 2840822016 577 768 0 0 0 0 0
+  [197] type 9 time 10 life 17 data 1514168320 65 0 0 0 0 0 0
+  [198] type 10 time 240 life 0 data 2662859776 577 768 0 0 0 0 0
+  [199] type 16 time 1 life 17 data 512 4096 4608 0 0 0 0 0
+  [200] type 5 time 1141 life 17 data 0 0 1536 0 0 0 0 0
+  [201] type 6 time 1147 life 17 data 2147483648 831 1536 0 0 0 0 0
+Angles (deg) 85.42 192.44 302.81 118.91 277.09 285.41; fingers 0.0 6.0 0.0
+Saved PJ00900006151270001_mapping.bin (14816 bytes) and PJ00900006151270001_client.bin (2480 bytes)
+
+================ device 1: model 'Jaco V2 Service' serial 'PJ00900006151260001' version 6.2.17 type 3 id 3
+
+QuickStatus rc 1: fingers 1 1 1, RetractType 2, RetractComplexity 0, ControlEnableStatus 0, ControlActiveModule 0, ControlFrameType 0, CartesianFaultState 0, ForceControlStatus 0, CurrentLimitationStatus 1, RobotType 3, RobotEdition 0, TorqueSensorsStatus 0
+
+GeneralInformations rc 1: code 393745 rev 0, Status 0, Controller 0, ControlMode 1, HandMode 5, ConnectedActuatorCount 9, PositionType 0, supply 23.84 V, current 0.000 A, power 0.00 W
+  SystemStatus: JoystickActive 1, RetractStatus 2, DrinkingMode 0, ArmLaterality 0, TranslationActive 0, RotationActive 0, FingersActive 0, WarnForce 0, WarnFingers 0, WarnLowVoltage 0, MajorErrorOccured 0
+  SPI errors main 0 ext 0, CAN errors main 0 ext 0
+  actuator temps 0.0 0.0 0.0 0.0 0.0 0.0 0.0; finger temps 0.0 0.0 0.0
+  actuator comm errors 0 0 0 0 0 0 0; finger comm errors 0 0 0
+  peripherals connected 0x1 0x0 0x0 0x0, device ids 0x30 0x0 0x0 0x0
+
+ClientConfigurations rc 1: ClientID 'Number Not Set     ' ClientName 'Name Not Set' Organization 'Org. Not Set' Serial 'PJ00900006151260001' Model 'Jaco V2 Service'
+  Laterality 0, MaxTransVel 0.200, MaxOrientVel 1.070, MaxTransAcc 0.640, MaxOrientAcc 2.750, MaxForce 0.00, Sensibility 100.00, ComplexRetractActive 0, RetractedPositionAngle 60.00, RetractedPositionCount 0, Fingers2and3Inverted 0, DeletePreProgrammedPositionsAtRetract 0, EnableFlashErrorLog 0, EnableFlashPositionLog 0, RobotConfigSelect 1, TorqueSensorsEnable 0, FrameType 0
+
+ControlMapping rc 1: NumOfConfiguredMapping 0, ActualControlMapping 0
+  mapping 0: modesA 1 modesB 2 actualA -1 actualB 0 mode 2, assigned functions 55
+    modeA0 button  0 click    -> 1 Disable_EnableJoystick
+    modeA0 button  0 hold2s   -> 3 Change_TwoAxis_ThreeAxis
+    modeA0 button  1 holddown -> 2 Retract_ReadyToUse
+    modeA0 button  2 click    -> 4 Change_DrinkingMode
+    modeA0 button  3 hold2s   -> 14 
+    modeA0 button  4 holddown -> 9 
+    modeA0 button  5 click    -> 5 Cycle_ModeA
+    modeA0 button  5 hold2s   -> 7 DecreaseSpeed
+    modeA0 button  6 click    -> 6 Cycle_ModeB
+    modeA0 button  6 hold2s   -> 8 IncreaseSpeed
+    modeA0 button  7 click    -> 5 Cycle_ModeA
+    modeA0 button  9 holddown -> 2 Retract_ReadyToUse
+    modeA0 button 10 click    -> 4 Change_DrinkingMode
+  mapping 1: modesA 2 modesB 2 actualA -1 actualB 0 mode 2, assigned functions 64
+  mapping 2: modesA 2 modesB 0 actualA 0 actualB -1 mode 2, assigned functions 46
+  mapping 3: modesA -1 modesB -1 actualA -1 actualB -1 mode -1, assigned functions 2294
+  mapping 4: modesA 2 modesB 4 actualA -1 actualB 0 mode 2, assigned functions 66
+  mapping 5: modesA 2 modesB 0 actualA 0 actualB -1 mode 2, assigned functions 48
+
+GetCodeVersion rc 1: 6 2 17 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 7 0 0 0 0 0 0
+PeripheralInventory rc 1:
+  handle 100 type 400 port 2 address 0 code 0x10007
+  handle 101 type 101 port 9 address 16 code 0x0
+  handle 102 type 102 port 9 address 17 code 0x0
+  handle 103 type 101 port 9 address 18 code 0x0
+  handle 104 type 103 port 9 address 19 code 0x0
+  handle 105 type 103 port 9 address 20 code 0x0
+  handle 106 type 103 port 9 address 21 code 0x0
+  handle 107 type 201 port 9 address 22 code 0x0
+  handle 108 type 201 port 9 address 23 code 0x0
+  handle 109 type 201 port 9 address 24 code 0x0
+  handle 110 type 302 port 2 address 48 code 0x20005
+System errors: 1
+  [0] type 16 time 1 life 0 data 256 4096 0 0 0 0 0 0
+Angles (deg) 272.88 159.13 42.91 253.68 44.21 87.22; fingers 262764000.0 262764000.0 262764000.0
+Saved PJ00900006151260001_mapping.bin (14816 bytes) and PJ00900006151260001_client.bin (2480 bytes)
+

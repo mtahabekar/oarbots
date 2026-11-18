@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 # Start, stop and inspect the fabric test stack on a lab machine, from the deployed ~/fabric_ws.
-#   fabric_session.sh start [launch args...]   helper: drivers, guard, bridges; tablet: GUI
-#   fabric_session.sh start-cell <cell_dir>    helper only: wrist perception and CBF bridge
+#   fabric_session.sh start [launch args...]   helper: drivers, guard, bridges; tablet: GUI; nuc: overhead camera
+#   fabric_session.sh start-cell <cell_dir>    helper: wrist perception and CBF bridge; nuc: overhead perception
 #   fabric_session.sh start-bridge [--box X Y Z] helper only: CBF bridge executing the simulated cell's twin
 #   fabric_session.sh stop | status | logs [cell]
 #   fabric_session.sh exec <command...>        run a command in the foreground with the session's ROS settings
-# From the laptop: scripts/hw/lab.sh session <blue|silver|tablet> <command> [args...]
+# From the laptop: scripts/hw/lab.sh session <blue|silver|tablet|nuc> <command> [args...]
 #
 # The stack runs as transient user services (fabric-stack, fabric-cell): nothing is installed,
 # nothing starts at boot, and a reboot always returns the machine to the stock system.
@@ -20,6 +20,7 @@ account="$(whoami)"
 case "$account" in
     oarbot_blue|oarbot_silver) role=helper; robot="${account#oarbot_}"; stock_unit="${account}_helper_laptop_launch.service" ;;
     tablet) role=tablet ;;
+    nuc) role=camera; stock_unit=nuc_launch.service ;;
     *) echo "No fabric session role for account $account" >&2; exit 2 ;;
 esac
 
@@ -27,7 +28,7 @@ record() { echo "$(date -Is) $* commit=$(git -C "$ws" rev-parse --short HEAD)" >
 unit_active() { systemctl --user is-active --quiet "$1"; }
 
 stock_running() {
-    if [ "$role" = helper ]; then
+    if [ -n "$stock_unit" ]; then
         systemctl is-active --quiet "$stock_unit"
     else
         pgrep -f "$HOME/ros2_ws/install/tablet_gui" > /dev/null
@@ -47,6 +48,9 @@ launch_unit() {
         # Same display and GPU settings as the stock helper launch script (Azure Kinect needs them).
         env+=(--setenv=DISPLAY=:2 --setenv=__GLX_VENDOR_LIBRARY_NAME=nvidia
               --setenv=__NV_PRIME_RENDER_OFFLOAD=1 --setenv=__VK_LAYER_NV_optimus=NVIDIA_only)
+    elif [ "$role" = camera ]; then
+        # The Azure Kinect depth engine needs the desktop's OpenGL context, as in the stock NUC unit.
+        env+=(--setenv=DISPLAY=:0 --setenv=XAUTHORITY="/run/user/$(id -u)/gdm/Xauthority")
     fi
     systemd-run --user --quiet --collect --unit="$unit" \
         -p KillMode=control-group -p TimeoutStopSec=15 \
@@ -60,9 +64,9 @@ cmd="${1:-status}"; shift || true
 case "$cmd" in
     start)
         if stock_running; then
-            if [ "$role" = helper ]; then
+            if [ -n "$stock_unit" ]; then
                 echo "The stock stack is running. Stop it first (from the laptop):" >&2
-                echo "  scripts/hw/lab.sh stock $robot stop" >&2
+                echo "  scripts/hw/lab.sh stock ${robot:-nuc} stop" >&2
             else
                 echo "The stock tablet GUI is running. Close it first." >&2
             fi
@@ -74,16 +78,24 @@ case "$cmd" in
             [ -f "$here/hosts/$robot.args" ] && mapfile -t defaults < <(grep -vE '^\s*(#|$)' "$here/hosts/$robot.args")
             # Later arguments win, so command-line arguments override the host defaults.
             launch_unit fabric-stack ros2 launch oarbot_launch "oarbot_${robot}_helper_laptop.launch.py" "${defaults[@]}" "$@"
+        elif [ "$role" = camera ]; then
+            launch_unit fabric-stack ros2 launch "$here/nuc_camera.launch.py" "$@"
         else
             launch_unit fabric-stack ros2 launch "$ws/src/oarbot_launch/launch/tablet_gui.launch.py" "gui_python:=$ws/.venv/bin/python3" "$@"
         fi
         record start "$@" ;;
     start-cell)
-        [ "$role" = helper ] || { echo "start-cell runs on the helper laptops" >&2; exit 2; }
+        [ "$role" = helper ] || [ "$role" = camera ] || { echo "start-cell runs on the helpers and the NUC" >&2; exit 2; }
         cell_dir="${1:?usage: start-cell <absolute cell_dir>}"
         unit_active fabric-stack || { echo "Start the stack first" >&2; exit 1; }
         unit_active fabric-cell && { echo "fabric-cell is already running" >&2; exit 1; }
-        launch_unit fabric-cell ros2 launch fabric_cell robot_host.launch.py "robot:=$robot" "cell_dir:=$cell_dir"
+        if [ "$role" = camera ]; then
+            # fabric_cell is not built on the NUC (it depends on the estimator and twin); its camera
+            # launch needs only fabric_perception and the cell directory, so it runs by path.
+            launch_unit fabric-cell ros2 launch "$ws/src/fabric_cell/launch/camera_host.launch.py" camera:=overhead "cell_dir:=$cell_dir"
+        else
+            launch_unit fabric-cell ros2 launch fabric_cell robot_host.launch.py "robot:=$robot" "cell_dir:=$cell_dir"
+        fi
         record start-cell "$cell_dir" ;;
     start-bridge)
         [ "$role" = helper ] || { echo "start-bridge runs on the helper laptops" >&2; exit 2; }
@@ -102,13 +114,13 @@ case "$cmd" in
             unit_active "$unit" && systemctl --user stop "$unit" && echo "$unit stopped"
         done
         record stop
-        [ "$role" = helper ] && echo "To give the robot back: scripts/hw/lab.sh stock $robot start (or reboot it)"
+        [ -n "$stock_unit" ] && echo "To give the machine back: scripts/hw/lab.sh stock ${robot:-nuc} start (or reboot it)"
         true ;;
     status)
         echo "deployed: $(tr '\n' ' ' < "$ws/DEPLOYED" 2>/dev/null || echo 'not built')"
         echo "checkout: $(git -C "$ws" describe --tags --always --dirty)"
         for unit in fabric-stack fabric-cell fabric-bridge; do echo "$unit: $(systemctl --user is-active "$unit" 2>/dev/null || true)"; done
-        if [ "$role" = helper ]; then echo "stock $stock_unit: $(systemctl is-active "$stock_unit" 2>/dev/null || true)"; fi
+        if [ -n "$stock_unit" ]; then echo "stock $stock_unit: $(systemctl is-active "$stock_unit" 2>/dev/null || true)"; fi
         echo "lab address: $(fabric_pick_address || true)"
         echo "rmem_max: $(cat /proc/sys/net/core/rmem_max)" ;;
     logs)

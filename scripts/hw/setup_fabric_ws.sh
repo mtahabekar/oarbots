@@ -2,10 +2,10 @@
 # Create or update the fabric test workspace (~/fabric_ws) on a lab machine and build it.
 # Runs as the lab account without sudo. Never reads from or writes to the stock ~/ros2_ws,
 # its services, /usr/local/bin, udev rules or system packages.
-#   From the laptop: scripts/hw/lab.sh setup <blue|silver|tablet> [git ref]
-#   On the machine:   bash setup_fabric_ws.sh <helper|tablet> [git ref]
+#   From the laptop: scripts/hw/lab.sh setup <blue|silver|tablet|nuc> [git ref]
+#   On the machine:   bash setup_fabric_ws.sh <helper|tablet|camera> [git ref]
 set -eo pipefail
-role="${1:?usage: setup_fabric_ws.sh <helper|tablet> [ref]}"
+role="${1:?usage: setup_fabric_ws.sh <helper|tablet|camera> [ref]}"
 ref="${2:-${FABRIC_REF:-jazzy-platform-hardening}}"
 repo="${FABRIC_REPO_URL:-https://github.com/mtahabekar/oarbots.git}"
 ws="${FABRIC_WS:-$HOME/fabric_ws}"
@@ -55,6 +55,11 @@ steps() {
             # run dependency. fabric_session.sh launches its tablet_gui.launch.py by path instead.
             [ -x .venv/bin/python3 ] || python3 -m venv --system-site-packages .venv || return
             .venv/bin/pip install --quiet --disable-pip-version-check "PySide6==$pyside_version" || return ;;
+        camera)
+            # The NUC: the overhead camera driver and the camera-side perception only (the estimator,
+            # twin and simulator stay on the compute laptop). Launch files run by path.
+            nice -n 10 colcon build --parallel-workers 4 --event-handlers console_cohesion+ \
+                --packages-up-to azure_kinect_ros_driver fabric_perception || return ;;
         *) echo "unknown role $role"; return 2 ;;
     esac
 }

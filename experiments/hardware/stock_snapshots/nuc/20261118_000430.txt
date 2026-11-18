@@ -1,0 +1,25 @@
+host nuc-18 user nuc
+ros2_ws head caa025e51a06f7a69cda44fc58c8d15313ab5c34 branch main
+ros2_ws worktree 9a6320f02b41b5a3 (4 entries)
+ros2_ws dep Azure_Kinect_ROS_Driver 0eaaa56 modified=0
+ros2_ws dep kinova-ros2 71c891d modified=0
+ros2_ws dep ros2-aruco-pose-estimation e43ea7a modified=0
+ros2_ws venv a7f5c8261c443c43
+unit nuc_cd.service enabled=enabled active=inactive definition=031fa5a6d3d6393e
+unit nuc_launch.service enabled=enabled active=active definition=e578f3b0b1955007
+user units enabled: ubuntu-report.path filter-chain.service gcr-ssh-agent.service gnome-keyring-daemon.service obex.service org.freedesktop.IBus.session.GNOME.service pipewire-pulse.service pipewire.service session-migration.service snap.snapd-desktop-integration.snapd-desktop-integration.service tracker-miner-fs-3.service wireplumber.service xdg-desktop-portal-rewrite-launchers.service dirmngr.socket gcr-ssh-agent.socket gnome-keyring-daemon.socket gpg-agent-browser.socket gpg-agent-extra.socket gpg-agent-ssh.socket gpg-agent.socket keyboxd.socket pipewire-pulse.socket pipewire.socket pk-debconf-helper.socket speech-dispatcher.socket launchpadlib-cache-clean.timer snap.firmware-updater.firmware-notifier.timer 
+file 6b23dc47dd67c44b /usr/local/bin/nuc_cd.sh
+file 02f4ecd0452496b9 /usr/local/bin/nuc_launch.sh
+file 3a25b62ec7249bd5 /etc/udev/rules.d/70-snap.firefox.rules
+file a9d291dc55620b16 /etc/udev/rules.d/70-snap.firmware-updater.rules
+file b463abb7fb5c51d7 /etc/udev/rules.d/70-snap.snapd-desktop-integration.rules
+file 76ba34b32931fa5a /etc/udev/rules.d/70-snap.snapd.rules
+file f24a09d9d18e88da /etc/udev/rules.d/70-snap.snap-store.rules
+file be647ffb97017036 /etc/udev/rules.d/99-k4a.rules
+netplan -rw-r--r-- 104 1770683560 01-network-manager-all.yaml
+netplan -rw------- 63 1785859560 50-cloud-init.yaml
+packages 2790 5baba8c4959647d1
+sysctl rmem_max=4194304 wmem_max=4194304
+file feb1e019fbb4ff9f /home/nuc/.bashrc
+file 28b4a453b68dde64 /home/nuc/.profile
+crontab e3b0c44298fc1c14

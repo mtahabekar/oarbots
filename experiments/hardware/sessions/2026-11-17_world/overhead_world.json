@@ -1,0 +1,83 @@
+{
+ "description": "Real-cell world frame defined from the fixed overhead camera (2026-11-17). z up = floor normal fitted to the overhead depth; y = the image x axis (left to right) projected on the floor; x = y cross z (toward the camera). Origin chosen so the twin layout (bases at x = -/+0.42, y = -1.065, facing +y; person at +y) fits the open floor in view. All vectors are in the overhead colour camera frame nuc/rgb_camera_link (OpenCV optical axes), metres. Origin moved 0.25 m along +y at 23:47 for clearance from the barrier posts.",
+ "camera_frame": "nuc/rgb_camera_link",
+ "image_size": [
+  1920,
+  1080
+ ],
+ "K": [
+  [
+   914.415283203125,
+   0.0,
+   959.109375
+  ],
+  [
+   0.0,
+   913.86669921875,
+   549.9963989257812
+  ],
+  [
+   0.0,
+   0.0,
+   1.0
+  ]
+ ],
+ "D": [
+  0.5005762577056885,
+  -2.6037991046905518,
+  0.0010786004131659865,
+  -0.00028792134253308177,
+  1.468410611152649,
+  0.3787611722946167,
+  -2.4273149967193604,
+  1.3968878984451294
+ ],
+ "distortion_model": "rational_polynomial",
+ "floor_normal_up": [
+  -0.01901944876263455,
+  -0.6457042411646391,
+  -0.7633507015197949
+ ],
+ "camera_height_m": 2.5970981671164153,
+ "origin_in_camera": [
+  0.7027830382355872,
+  0.36723215402311005,
+  3.074089349905242
+ ],
+ "axes_in_camera_columns_xyz": [
+  [
+   0.0,
+   0.9998191139244966,
+   -0.01901944876263455
+  ],
+  [
+   0.7634888060136055,
+   -0.01228316058335938,
+   -0.6457042411646391
+  ],
+  [
+   -0.6458210612018773,
+   -0.0145211362268208,
+   -0.7633507015197949
+  ]
+ ],
+ "marker_top_height_m": 0.575,
+ "marker_to_base_link_forward_m": 0.25,
+ "robot_marker_ids": {
+  "oarbot_blue": 0,
+  "oarbot_silver": 4
+ },
+ "targets": {
+  "oarbot_blue": [
+   -0.42,
+   -1.065,
+   90.0
+  ],
+  "oarbot_silver": [
+   0.42,
+   -1.065,
+   90.0
+  ]
+ },
+ "source": "one frame at 23:36, stock NUC (1080P, NFOV_2X2BINNED, 5 fps); plane fit 10749 pts, residual sd 6.1 mm"
+}

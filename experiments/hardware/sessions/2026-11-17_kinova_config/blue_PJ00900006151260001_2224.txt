@@ -1,0 +1,54 @@
+InitAPI 1 (1 = ok)
+devices 1
+  model 'Jaco V2 Service' serial 'PJ00900006151260001' version 6.2.17 type 3 id 1
+
+QuickStatus rc 1: fingers 1 1 1, RetractType 2, RetractComplexity 0, ControlEnableStatus 0, ControlActiveModule 0, ControlFrameType 0, CartesianFaultState 0, ForceControlStatus 0, CurrentLimitationStatus 1, RobotType 3, RobotEdition 0, TorqueSensorsStatus 0
+
+GeneralInformations rc 1: code 393745 rev 0, Status 0, Controller 0, ControlMode 1, HandMode 5, ConnectedActuatorCount 9, PositionType 0, supply 23.84 V, current 0.000 A, power 0.00 W
+  SystemStatus: JoystickActive 1, RetractStatus 2, DrinkingMode 0, ArmLaterality 0, TranslationActive 0, RotationActive 0, FingersActive 0, WarnForce 0, WarnFingers 0, WarnLowVoltage 0, MajorErrorOccured 0
+  SPI errors main 0 ext 0, CAN errors main 0 ext 0
+  actuator temps 0.0 0.0 0.0 0.0 0.0 0.0 0.0; finger temps 0.0 0.0 0.0
+  actuator comm errors 0 0 0 0 0 0 0; finger comm errors 0 0 0
+  peripherals connected 0x1 0x0 0x0 0x0, device ids 0x30 0x0 0x0 0x0
+
+ClientConfigurations rc 1: ClientID 'Number Not Set     ' ClientName 'Name Not Set' Organization 'Org. Not Set' Serial 'PJ00900006151260001' Model 'Jaco V2 Service'
+  Laterality 0, MaxTransVel 0.200, MaxOrientVel 1.070, MaxTransAcc 0.640, MaxOrientAcc 2.750, MaxForce 0.00, Sensibility 100.00, ComplexRetractActive 0, RetractedPositionAngle 60.00, RetractedPositionCount 0, Fingers2and3Inverted 0, DeletePreProgrammedPositionsAtRetract 0, EnableFlashErrorLog 0, EnableFlashPositionLog 0, RobotConfigSelect 1, TorqueSensorsEnable 0, FrameType 0
+
+ControlMapping rc 1: NumOfConfiguredMapping 0, ActualControlMapping 0
+  mapping 0: modesA 1 modesB 2 actualA -1 actualB 0 mode 2, assigned functions 55
+    modeA0 button  0 click    -> 1 Disable_EnableJoystick
+    modeA0 button  0 hold2s   -> 3 Change_TwoAxis_ThreeAxis
+    modeA0 button  1 holddown -> 2 Retract_ReadyToUse
+    modeA0 button  2 click    -> 4 Change_DrinkingMode
+    modeA0 button  3 hold2s   -> 14 
+    modeA0 button  4 holddown -> 9 
+    modeA0 button  5 click    -> 5 Cycle_ModeA
+    modeA0 button  5 hold2s   -> 7 DecreaseSpeed
+    modeA0 button  6 click    -> 6 Cycle_ModeB
+    modeA0 button  6 hold2s   -> 8 IncreaseSpeed
+    modeA0 button  7 click    -> 5 Cycle_ModeA
+    modeA0 button  9 holddown -> 2 Retract_ReadyToUse
+    modeA0 button 10 click    -> 4 Change_DrinkingMode
+  mapping 1: modesA 2 modesB 2 actualA -1 actualB 0 mode 2, assigned functions 64
+  mapping 2: modesA 2 modesB 0 actualA 0 actualB -1 mode 2, assigned functions 46
+  mapping 3: modesA -1 modesB -1 actualA -1 actualB -1 mode -1, assigned functions 2294
+  mapping 4: modesA 2 modesB 4 actualA -1 actualB 0 mode 2, assigned functions 66
+  mapping 5: modesA 2 modesB 0 actualA 0 actualB -1 mode 2, assigned functions 48
+
+GetCodeVersion rc 1: 6 2 17 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 7 0 0 0 0 0 0
+PeripheralInventory rc 1:
+  handle 100 type 400 port 2 address 0 code 0x10007
+  handle 101 type 101 port 9 address 16 code 0x0
+  handle 102 type 102 port 9 address 17 code 0x0
+  handle 103 type 101 port 9 address 18 code 0x0
+  handle 104 type 103 port 9 address 19 code 0x0
+  handle 105 type 103 port 9 address 20 code 0x0
+  handle 106 type 103 port 9 address 21 code 0x0
+  handle 107 type 201 port 9 address 22 code 0x0
+  handle 108 type 201 port 9 address 23 code 0x0
+  handle 109 type 201 port 9 address 24 code 0x0
+  handle 110 type 302 port 2 address 48 code 0x20005
+System errors: 1
+  [0] type 16 time 1 life 0 data 256 4096 0 0 0 0 0 0
+Angles (deg) 272.88 159.13 42.91 253.68 44.21 87.22; fingers 213948000.0 213948000.0 213948000.0
+CloseAPI 1

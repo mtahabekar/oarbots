@@ -2,7 +2,7 @@
 # Print the stock OARBot system's state on this machine in a stable form, for diffing.
 # Read-only and needs no sudo. Take one before the first fabric session (the baseline) and one
 # after every session; outside a session the two must be identical.
-#   From the laptop: scripts/hw/lab.sh snapshot <blue|silver|tablet>
+#   From the laptop: scripts/hw/lab.sh snapshot <blue|silver|tablet|nuc>
 set -o pipefail
 short() { sha256sum | cut -c1-16; }
 hashfiles() { for f in "$@"; do [ -f "$f" ] && echo "$(sha256sum < "$f" | cut -c1-16) $f"; done; }
