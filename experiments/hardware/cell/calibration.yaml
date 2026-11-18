@@ -15,16 +15,19 @@ transforms:
   translation: [1.702, -0.6855, 2.5951]
   rotation_xyzw: [-0.408645, 0.008332, 0.912642, -0.004896]
 # Parked bases: base_link from the roof markers (IDs 0, 4), 10 s mean of 51 overhead frames at 00:31,
-# sd below 1.5 mm and 0.2 deg. x, y and yaw measured. z PROVISIONAL: depth puts the marker tops
-# 0.570-0.594 m above the floor (base_link -> marker mount is +0.572 m), i.e. base_link at 0.00-0.02 m;
-# replace with a tape measurement of each marker top above the floor minus 0.572.
+# sd below 1.5 mm and 0.2 deg. x, y and yaw measured. z: tape measurement of each roof marker's top above
+# the floor at its right and left edges (Blue 57.2 / 58.4 cm, Silver 58.3 / 58.5 cm, 2026-11-18), centre
+# minus base_link -> marker mount (+0.572 m). Blue's marker plate is 1.2 cm lower on its right edge: the
+# plate's mount only (base and arm level, checked by the user), so roll 0. A roll about the robot's
+# forward axis leaves the heading (from the front-back edges) and the corner-mean centre unaffected to
+# first order.
 - parent: world
   child: oarbot_blue/base_link
-  translation: [-0.4246, -1.0671, 0.009]
+  translation: [-0.4246, -1.0671, 0.006]
   rotation_xyzw: [0.0, 0.0, 0.714289, 0.69985]
 - parent: world
   child: oarbot_silver/base_link
-  translation: [0.4165, -1.0708, 0.009]
+  translation: [0.4165, -1.0708, 0.012]
   rotation_xyzw: [0.0, 0.0, 0.710554, 0.703643]
 # PLACEHOLDERS (gate H15): the corner tip held in the fingers, in the tool frame.
 - parent: oarbot_blue/j2n6s300_end_effector
