@@ -339,6 +339,9 @@ cell is unchanged). Tools: `scripts/hw/glove_check.py` (on a camera host: what t
 a tag is missed, saves frames) and `scripts/hw/glove_tune.py` (offline on saved frames: colour
 measurement, look-alikes, any parameter set with annotated images).
 
-Open: the live check with these settings (needs the code on the NUC), which hand carries which tag (tag
-20 measured on the right hand, configured as `human_left`), the tag size by ruler, the tag-to-pinch
-offsets (pivot calibration), and the same calibration for both wrist cameras.
+Hand identities: `human_left`/`human_right` name sheet corners, not the person's hands. `human_left` is
+corner (0, 1) on Blue's side (-x), which a person facing the robots holds with their **right** hand; tag
+20 is worn on that hand (measured at x = -0.14). Keep the IDs `[20, 21]`.
+
+Open: the live check with these settings, the tag size by ruler, the tag-to-pinch offsets (pivot
+calibration), and the same calibration for both wrist cameras.

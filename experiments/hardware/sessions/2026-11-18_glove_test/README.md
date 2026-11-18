@@ -191,10 +191,14 @@ the two grips were 0.39-0.51 m apart (17 frames with both); grip height 1.02-1.0
 
 ## Found on the way
 
-- **Tag 20 is on the right hand.** Facing the robots (-y), tag 20's grip is at world x = -0.14 and tag
-  21's at +0.25 (frame 021), so tag 20 is on the person's right hand. The configuration maps the first ID,
-  20, to `human_left`. Either the gloves are worn swapped or `glove_tag_ids` should read `[21, 20]` in all
-  three perception files; to confirm before anything uses the hand identities.
+- **Tag 20 is worn on the person's right hand, and that is correct.** Facing the robots (-y), tag 20's
+  grip is at world x = -0.14 and tag 21's at +0.25 (frame 021). In this code `human_left` and
+  `human_right` name sheet corners, not the person's hands: `human_left` is corner (u, v) = (0, 1), on
+  Blue's side (-x), next to Blue's corner (0, 0) (`fabric_twin/cloth.py`, `human_corner_uv` in
+  `fusion.yaml`). A person facing the robots has their right hand on Blue's side, so tag 20 on the right
+  hand is assigned to the corner next to Blue, as it should be. (A first reading of this test took
+  `human_left` for the person's left hand and suggested swapping the IDs; that would have crossed the
+  sheet. The IDs stay `[20, 21]`.)
 - The wrist cameras at Home cannot see the person; their glove calibration needs the arms at a grasp
   pose or the gloves held up in front of them.
 - Colour regions away from the gloves remain (5 per frame) at the room's edges; restricting the glove
@@ -206,7 +210,7 @@ the two grips were 0.39-0.51 m apart (17 frames with both); grip height 1.02-1.0
 1. **Live check** with the calibrated settings. A 60 s run at 12:08 (`runs/overhead_20261118_120823/`)
    happened while nobody was in view: no glove tags in 253 frames, so it confirms nothing. Needs the
    code change deployed to the NUC first (`lab.sh setup nuc`).
-2. **Which hand has which tag** (above).
+2. ~~Which hand has which tag~~: settled (above): tag 20 on the hand on Blue's side.
 3. **Tag size** with a ruler (black square edge).
 4. **Tag-to-pinch offsets** (`tag_to_grip_offsets_m`, still a template): pivot calibration.
 5. **Wrist cameras:** the same steps per camera.

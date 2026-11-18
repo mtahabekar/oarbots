@@ -1,4 +1,8 @@
 # Tagged-glove hand fusion on the real cell. human_corner_uv: left hand (0,1), right hand (1,1).
+# Hand names are sheet sides, not the person's hands: human_left holds corner (u, v) = (0, 1) on Blue's
+# side (-x), next to Blue's corner (0, 0); a person facing the robots holds it with their RIGHT hand.
+# glove_tag_ids lists [human_left, human_right]: tag 20 is worn on the hand on Blue's side
+# (measured 2026-11-18, experiments/hardware/sessions/2026-11-18_glove_test).
 /**:
   ros__parameters:
     world_frame: world
