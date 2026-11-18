@@ -2,54 +2,55 @@
 
 **Date:** 12 November 2026.
 
-> **Status, 13 November 2026:** work items 4.1–4.7 have been implemented and rehearsed in simulation. The results, what changed from this plan, and the remaining on-site steps are in the [test guide](fabric-hardware-test-guide.md).
->
-> **Status, 18 November 2026:** three lab days done (test guide §8). The plan for the remaining gates and sessions S2–S6, starting from that state, is in [test guide §9](fabric-hardware-test-guide.md#9-the-rest-of-the-hardware-tests-plan-18-november-2026). Two changes to §5 here: the grasp pose and closing the fingers need a procedure, either the joystick or gate H4, which this plan had marked as not needed; and H15 covers both robots.
+> **Status, 18 November 2026.** The simulated loop was rehearsed and two real arms reached the
+> simulation-derived grasp targets. Initial recordings show the stand-in fabric in all three cameras,
+> with incomplete glove coverage at grasp and an uncalibrated sheet mask. The arms did not respond to
+> short Cartesian commands from that pose. The real-sensor demo proceeds through stationary
+> calibration, S2 estimator shadow and S3 twin/CBF shadow. See the [hardware test guide](fabric-hardware-test-guide.md#9-the-rest-of-the-hardware-tests-plan-18-november-2026).
 
-**Based on:** the [research proposal](fabric-state-estimation-research.md), the [progress report](fabric-state-estimation-progress-report.md), the [learning-methods report](fabric-learning-methods-report.md), the [platform audit](platform-audit.md), and the simulator documents (`SIM_CELL.md`, `FABRIC_INTEGRATION.md`, `PERFORMANCE_REVIEW.md` in `/media/taha/ExtermeLinux/oarbot_simulation`; `capsule_cbf/` in `~/ros2_colcon_ws/src/fabric_sim_isaacsim_newton`).
-
-**Code read for this plan:** `oarbots` `2697eb0` (estimator code unchanged since the progress report's `b7821ac`), `oarbot_simulation` `a196775` plus its uncommitted changes, `fabric_sim_isaacsim_newton` `d068555`.
-
-**Evidence boundary:** this plan comes from the reports and from reading source. Nothing was run, built, or changed. Runtime figures quoted from earlier measurements are labelled as such. Effort figures, gains, and thresholds are proposals to be confirmed in the simulated-cell rehearsal ([§4.7](#47-closed-loop-rehearsal-in-the-simulated-cell)).
+**Based on** the [research proposal](fabric-state-estimation-research.md), the
+[progress report](fabric-state-estimation-progress-report.md), and the [platform audit](platform-audit.md).
+Section 4 records the original implementation plan. The [test guide](fabric-hardware-test-guide.md)
+records the subsequent rehearsal and lab evidence.
 
 ## 1. Summary
 
-The demonstration has four parts. Two of them have working pieces that need fixing and deploying. Two have nothing implemented yet.
-
-| Demo item | What exists | What is missing |
+| Demo item | Available implementation | Evidence still needed |
 | --- | --- | --- |
-| **D1. Camera state estimation** on the real sheet | Perception, tagged-glove fusion, and the ensemble observer run in the simulated cell. Scripted runs reach 24–36 mm p95; teleoperated runs reach 54–80 mm p95 with 55–75% coverage. | The human-grip input path is the measured cause of the teleoperation failure and is not fixed. No real-cell launch, configuration, or calibration exists. Depth on real carbon has never been measured. |
-| **D2. Simulated fabric running beside the real robots**, with collisions and the CBF active | Newton Style3D cloth with obstacle collision and the sensitivity CBF, validated inside the Isaac plant. | The cloth there *is* the truth and takes no measured input. There is no twin whose four grips follow the real robots and hands. |
-| **D3. Warm-up calibration, then continuous adaptation** from the camera estimate | Nothing. Material coefficients are fixed in the estimator, the plant, and the CBF model. Only three uniform residual-force coefficients are estimated online. | The feedback from estimate to twin, the calibration procedure, and the online parameter update. |
-| **D4. A-to-B transfer of the real sheet around a simulated obstacle** | The CBF computes follower velocities and has avoided obstacles in simulation at 0.1 m/s. | It has only ever run on plant truth. No path carries its commands to the real arms: the command guard accepts only `teleop` and `admittance`. |
+| **D1. Camera state estimation** | Real-cell camera launches, tagged-glove fusion, and the ensemble estimator tested against simulation and replay. The real glove and sheet captures are saved. | Measured grip geometry, sheet masks, real fused coverage and latency, withheld depth and independent marker error in S2. |
+| **D2. Live fabric twin and virtual obstacle** | Headless Newton twin, estimate feedback, and the shared sensitivity CBF run with the simulated cell. | Twin and CBF from measured grips and estimates in S3, including sustained timing and grip error. |
+| **D3. Warm-up and adaptation** | Existing warm-up trajectory and parameter bank, with a simulation rehearsal and headless update tests. | Held-out improvement and parameter sensitivity for the real material in S4. |
+| **D4. A-to-B transfer** | The guarded bridge ran on real arms with commands derived from the simulated cell. | Qualified Cartesian response at grasp, verified force and stopping limits, followed by measured-sheet transport in S5/S6. |
 
-**Order of work.** Each step is detailed in [§4](#4-work-before-the-hardware-tests).
+### Software reused from simulation
 
-1. Fix the estimator's grip handling and re-run the three recorded teleoperation failures ([§4.1](#41-estimator-fixes)).
-2. Create the real-cell deployment: launch, configuration, calibration publisher ([§4.2](#42-real-cell-deployment)).
-3. Build the twin node: Newton cloth with its grips slaved to measured robot and hand positions, a simulated obstacle, and the CBF ([§4.3](#43-twin-node)).
-4. Add the feedback from estimate to twin ([§4.4](#44-feedback-from-the-estimate-to-the-twin)).
-5. Add warm-up calibration and online adaptation ([§4.5](#45-warm-up-calibration-and-online-adaptation)).
-6. Add the CBF command path to the real arms, with independent stops ([§4.6](#46-cbf-command-path-to-the-real-arms)).
-7. Rehearse the whole loop against the simulated cell, with the Isaac plant standing in for the real world ([§4.7](#47-closed-loop-rehearsal-in-the-simulated-cell)).
-8. Pass the hardware gates this demo needs ([§5](#5-hardware-preparation)), then run the test sessions in [§6](#6-test-sessions-on-hardware).
+| Checkout inspected on 18 November | Role in the demo |
+| --- | --- |
+| `/home/taha/ros2_colcon_ws/src/oarbots` (`a1748cc` before this review) | The same perception, hand fusion, observer, twin, parameter bank, bridge, guard and recorders run through the existing `fabric_cell` deployment. Real camera and robot topics replace the rehearsal inputs. |
+| `/home/taha/ros2_colcon_ws/src/fabric_sim_isaacsim_newton` (`d068555`) | The headless twin loads the existing Newton cloth and sensitivity CBF code from `capsule_cbf` via `FABRIC_SIM_ROOT` or the sibling checkout. |
+| `/media/taha/ExtermeLinux/oarbot_simulation` (`38d3a98`) | Isaac is the plant for repeatable baselines and on/off comparisons. Its `config/fabric_layout.json` supplies the grasp targets. Simulated truth stays with rehearsal scoring. |
+
+Keep the software and ROS interfaces that ran in rehearsal. Measure real camera geometry, depth noise,
+missing observations, grip error, observing and command delays, force bias, and sheet properties.
+Apply those measurements to the hardware configuration and evaluate it on a held-out sequence.
+The headless twin runs from measured inputs on the compute laptop for the live demo.
 
 **Scope decisions.** The first two were confirmed on 13 November; the other two are my recommendations. They keep the demo inside what the current code can support.
 
 - **Arms only, bases parked (confirmed).** Moving bases need odometry fusion that does not exist (gate H8). Parked bases also let the base poses be published as static transforms and let the robot computers be wired ([§3.1](#31-which-machine-runs-what)).
-- **The twin is a headless ROS node shown in RViz, not the Isaac plant (RViz confirmed as the display).** Kit must not sit in a loop that commands real arms: a rendering stall would become a command dropout. The headless node also fits the real-time budget and an 8 GB GPU.
-- **Adapt two coefficients, a bending scale and a shear scale.** Mass is weighed, not fitted. Stretch stiffness stays nominal because shape does not constrain it. A sensitivity study in simulation must confirm the choice before any hardware claim ([§4.5](#45-warm-up-calibration-and-online-adaptation)).
+- **Headless twin in ROS, displayed in RViz (confirmed).** The compute laptop runs the twin directly for the hardware demo.
+- **Use measured mass and evaluate shear first on the stand-in.** Stretch stiffness stays nominal. Fit bending only when the data resolve its effect at the twin mesh spacing ([§4.5](#45-warm-up-calibration-and-online-adaptation)).
 - **Tagged gloves, hanging sheet, no real contact.** The obstacle exists only in the twin. Release, slip, folds, and table contact stay outside the declared envelope.
 
 **Work the reports describe that this demo does not need:** a scalable offline smoother, learned segmentation, UV, depth, or completion models, MANO hands, contact-mode estimation, force fusion inside the estimator, learned dynamics, and moving bases. Leave them until after the demo.
 
 ## 2. What the demonstration is
 
-**Confirmed setup (13 November).** There is no keyboard or tablet teleoperation during the tests. A person holds two corners with green gloves that carry ArUco tags, and the two arms hold the other two. The simulated sheet runs alongside the real one: its robot grips follow TF and its human grips follow the tracked gloves. The pinch point is a fixed, measured offset from each tag, so the grip point is computed, not estimated. The obstacle's shape, size, and position, and the points A and B, are set in the lab on the day; the transfer is a short pass from one side of the obstacle to the other, within arm reach.
+**Confirmed setup (13 November).** There is no keyboard or tablet teleoperation during the tests. A person holds two corners with teal gloves that carry ArUco tags, and the two arms hold the other two. The simulated sheet runs alongside the real one: its robot grips follow TF and its human grips follow the tracked gloves. The pinch point is a fixed, measured offset from each tag, so the grip point is computed, not estimated. The obstacle's shape, size, and position, and the points A and B, are set in the lab on the day; the transfer is a short pass from one side of the obstacle to the other, within arm reach.
 
 | Item | What an observer sees | Proposed acceptance |
 | --- | --- | --- |
-| D1 | The estimated mesh drawn in RViz and over each camera image while the human and robots move the sheet. | Analyses delivered at 10 Hz or more with capture-to-state age p95 at most 100 ms. Depth residual on a camera withheld from the estimator at most 30 mm p95. Error at 4–6 temporary markers on a sacrificial ply at most 50 mm p95. No gap longer than 0.5 s. |
+| D1 | The estimated mesh drawn in RViz and over each camera image while the human and robots move the sheet. | Research targets are ≥10 Hz analysis and ≤100 ms p95 capture-to-state age. Measure S2 latency and qualify the operating speed from the measured result. Depth residual on a camera withheld from the estimator at most 30 mm p95. Error at 4–6 temporary markers on a sacrificial ply at most 50 mm p95. No gap longer than 0.5 s. |
 | D2 | The twin sheet moving with the real one, the simulated obstacle, and live CBF diagnostics. | Twin frame time p95 under 16.7 ms at 60 Hz. Twin grips within 10 mm of the measured grips. CBF update under 20 ms. No obstacle penetration in the twin. |
 | D3 | A 60–90 s warm-up, then a plot of free-running twin error before and after, and the adapted coefficients over time. | After warm-up, the free-running twin's error against camera depth drops by a stated factor on a held-out motion. Adaptation pauses by itself when the sheet is taut or sensing is degraded. |
 | D4 | The human walks the sheet from A to B. The arms follow, and the sheet clears the simulated obstacle. | Minimum twin clearance stays at or above the configured margin. Measured wrist force stays under the stop threshold. CBF status is `feasible` in at least 95% of frames. The same path with the filter off enters the margin. |
@@ -273,40 +274,44 @@ Run, in this order:
 
 ## 5. Hardware preparation
 
-**First, before anything else on site: carbon observability (H11).** Record the real ply with the overhead and one wrist camera at working distance, flat and sagging. Measure the valid-depth fraction and whether the HSV mask separates the sheet. If depth is mostly invalid, the estimator falls back to boundaries and grips, D1's accuracy claim weakens, and warm-up must use boundary factors. Find this out on the first day.
+Use the [current gate status and test order](fabric-hardware-test-guide.md#91-where-each-gate-and-session-stands).
+This first pass uses the measured stand-in and the existing binder clips. Repeat the RGB-D
+observability and material tests for carbon (H11) when the ply is available. Decide from that recording
+which depth, boundary and grip inputs support a carbon accuracy claim.
 
-| Needed for this demo | Gate | Notes |
+| Needed for the demo | Gate | Evidence |
 | --- | --- | --- |
-| Physical E-stop, command loss, restart | H1, H2 | Include Wi-Fi loss with the new mode active. |
-| Command axes and units | H3 | Run through the new bridge and mode at 2 cm/s, each world axis, each arm, in free air. |
-| F/T sign, axes, unloaded residual | H5 | Needed for the force stop. Calibrate bias before attaching the sheet; do not tare under load. |
-| Camera intrinsics and extrinsics | H7 | Overhead pose into [`nuc_extrinsics.yaml`](../src/oarbot_launch/config/nuc_extrinsics.yaml) (currently `publish_camera_tf: false` with zeros). Wrist hand–eye checked by cross-view alignment, target 1–2 cm. |
-| Clocks and camera sync | H9 | Host clock error under 5 ms. Three ToF cameras on one sheet can interfere; use wired sync with emitter offsets if cables are available, otherwise measure the interference. |
-| Sustained load | H12 | 30 minutes with all cameras, perception, estimator, twin, and CBF. Confirm the NUC holds 15 Hz perception at 1080p, or drop the colour resolution. |
-| Grip frames | H15 | Measured end-effector to `fabric_grip` transform per robot. |
+| Physical E-stop, command loss, restart | H1, H2 | Stop scope, stopping distance and deliberate re-arm in supervised tests. |
+| Command axes and units | H3 | Earlier free-air translation passed. Verify a repeatable Cartesian envelope at grasp. |
+| F/T sign, axes and unloaded residual | H5 | Calibrated force response, acceptable residual at grasp, clip slip and stop limits. |
+| Camera intrinsics and extrinsics | H7 | Validate wrist hand–eye against the measured overhead calibration and measure tag-to-pinch offsets. |
+| Clocks and camera sync | H9 | Measure host offsets, cross-camera capture skew and depth with one versus all emitters. |
+| Sustained load | H12 | Run perception, estimator, twin and CBF in shadow for 30 minutes. |
+| Grip frames | H15 | Measure each tool-to-clip contact point and repeatability. |
 
-Not needed for this demo: H4 (position actions), H6 dynamics (motion stays slow), H8 (bases parked), H10 (body tracking off).
+The setup approach uses the guarded joint-velocity procedure. H4 position actions remain untested.
+Bases remain parked and body tracking is off.
 
 Physical items to prepare:
 
 - **The sheet:** rest width and height, mass, weave direction, and which corner is `(0,0)`. A second, sacrificial ply with 4–6 small ArUco markers at known material positions for D1 scoring.
-- **Gloves:** bright green, with rigid 8 cm `DICT_4X4_50` tags (ID 21 on the left hand, 20 on the right) facing up. The pinch point is a fixed offset from the tag, measured once in tag coordinates and entered in `tag_to_grip_offsets_m`; nothing estimates it at run time. That is only true if the tag cannot move relative to the pinch. A tag on the back of the hand shifts by centimetres when the wrist or fingers flex, so a small hand-held clip with the tag plate fixed to it is the more reliable fixture. In simulation the wrist cameras never saw the tags, so the overhead camera is the only glove view. If dropouts are frequent on hardware, add a static camera facing the human.
+- **Gloves.** Teal, with nominally 8 cm `DICT_4X4_50` tags (ID 21 on the left hand, 20 on the right) facing up. The pinch point is a fixed offset from the tag, measured once in tag coordinates and entered in `tag_to_grip_offsets_m`; nothing estimates it at run time. That is only true if the tag cannot move relative to the pinch. A tag on the back of the hand shifts by centimetres when the wrist or fingers flex, so a small hand-held clip with the tag plate fixed to it is the more reliable fixture. Measure the printed tag size and check the fused dropout gaps under real handling. At the recorded grasp, each wrist returned only the far hand.
 - **Scene:** a light, matte floor covering under the workspace and light sleeves for the human. The HSV baseline selects dark, low-saturation pixels and cannot tell dark carbon from a dark floor or sleeve.
 - **Obstacle and path:** decided on site. Measure the lab object's bounding box and its centre in the `world` frame, enter them in the twin's obstacle file, and confirm the drawn envelope in RViz. The real object can stay in place only if the sheet cannot touch it and it does not confuse the dark-pixel mask; otherwise mark its footprint with floor tape and remove it. Pick A and B on opposite sides, a short pass within arm reach of the parked bases (the simulated descent used 0.5 m of travel), and low enough that the unfiltered sag would enter the margin, so the filter has something to do.
 
 ## 6. Test sessions on hardware
 
-Each session records a bag and ends with a go or no-go. Do not start a session until the one before it passes.
+Use the [test guide sequence](fabric-hardware-test-guide.md#94-lab-blocks-and-demo-sessions) for dependencies and recording. S2/S3 use stationary arms after grip calibration. Close the applicable motion, force and stop gates before S4–S6.
 
 | Session | Arms | What runs | Go when |
 | --- | --- | --- | --- |
 | S0. Bench | Off | Sheet measurements, cantilever strips, carbon depth recording | Depth and mask are usable, or the boundary-only fallback is chosen |
-| S1. Platform | One at a time | Gates in §5; bridge axis test | All listed gates pass |
+| S1. Platform | Stationary calibration and supervised one-arm tests | Gates in §5 | Use each completed gate to qualify the corresponding shadow or commanded test |
 | S2. Estimation (D1) | Holding still, then human moves | Perception, fusion, observer in shadow | D1 acceptance on the marker ply and the withheld camera |
 | S3. Twin in shadow (D2) | Holding still while the human moves their corners | Twin, obstacle, CBF computing but not commanding | Frame time, grip tracking, and CBF timing meet D2; CBF commands look sane against the motion |
 | S4. Warm-up (D3) | Scripted insets through the guard | Parameter bank | Free-running twin error drops on a held-out motion; adaptation pauses when taut |
 | S5. Closed loop, no obstacle | CBF mode | Human leads slowly, arms follow | Stable following, force under threshold, every stop tested once |
-| S6. Transfer (D4) | CBF mode | Obstacle far from the path, then on it; then filter off for contrast | D4 acceptance |
+| S6. Transfer (D4) | CBF mode | Guarded transfer past the virtual obstacle, with a saved on/off comparison from replay or simulation | D4 acceptance |
 
 ## 7. Risks and fallbacks
 
@@ -317,7 +322,7 @@ Each session records a bag and ends with a go or no-go. Do not start a session u
 | Grip fix does not close the gap on replay | Full grip-as-state formulation ([§4.1](#41-estimator-fixes)). |
 | Twin misses 60 Hz on the laptop | Fewer solver iterations, CBF at 10 Hz, estimator in monitor profile, or a second machine for the estimator. |
 | Coefficients not identifiable from shape | Adapt the single most sensitive coefficient and state the limit; the corrective force still keeps the twin on the real sheet. |
-| Kinova velocity response too slow or has a deadband | Lower CBF speed cap and leader speed; model the lag in the twin delay. |
+| Kinova Cartesian response at the grasp | Qualify unloaded response and workspace first. Use its measured deadband, speed and lag to set the demo motion envelope. |
 | Network latency trips the guard | Wire all hosts to one switch ([§3.1](#31-which-machine-runs-what)); otherwise run the CBF nearer the helpers. |
 | Prediction from an uncalibrated twin is wrong near the obstacle | Larger margin from measured twin error; obstacle placed with generous clearance first. |
 

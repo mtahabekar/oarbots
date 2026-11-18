@@ -1,0 +1,27 @@
+{
+ "robot": "blue",
+ "target": "world [-0.407, -0.421, 1.046]",
+ "target_arm_base": [
+  0.4796,
+  -0.0185,
+  0.3915
+ ],
+ "start_arm_base": [
+  0.4803,
+  -0.0036,
+  0.3916
+ ],
+ "preflight": {
+  "path_cm": 1.5,
+  "ik_points": 2,
+  "largest_step_rad": 0.023,
+  "end_joints": [
+   -0.474,
+   2.945,
+   4.775,
+   1.5,
+   -1.39,
+   1.861
+  ]
+ }
+}

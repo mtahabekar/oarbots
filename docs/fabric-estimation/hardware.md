@@ -131,7 +131,11 @@ The observer reports capture-to-analysis age. More than 100 ms triggers degraded
 
 ## 9. Recording, offline reconstruction and acceptance
 
-Record the raw RGB/registered depth/IR, camera calibration, TF/TF-static, per-view glove observations, per-camera factors and calibrated wrenches, plus online output/status for comparison. The recorder script includes these and uses transient-local QoS for `/fabric/model` and `/tf_static`.
+Use [`record_fabric_baseline.sh`](../../scripts/record_fabric_baseline.sh) to record raw
+RGB/registered depth/IR, camera calibration, TF/TF-static, per-view glove observations, per-camera
+factors and calibrated wrenches, plus online output/status for comparison. The recorder uses
+transient-local QoS for `/fabric/model` and `/tf_static`. Check the bag's actual stream coverage and
+keep the calibration, cell configuration and repository revisions with the recording.
 
 Use short calibration clips. Export with `import_bag`, inspect all dropped-capture reasons, run deterministic online replay, then run Tier A independently on the measured factors. Check convergence and normalized residuals before using a reference candidate. Neither low fitting residual nor agreement between two estimators validates the physical state by itself.
 

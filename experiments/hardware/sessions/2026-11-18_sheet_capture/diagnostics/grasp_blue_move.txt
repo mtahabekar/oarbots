@@ -1,0 +1,4 @@
+Preflight passed: {"robot": "blue", "target": "grasp (grasp.yaml)", "start_joints": [-1.4745, 2.9264, 0.9991, -2.0789, 1.4447, 1.3221], "target_joints": [-0.5157, 2.9269, 4.738, 1.5188, 4.8584, 1.8635], "speed_deg_s": 10.0, "preflight": {"joint_change_deg": [54.9, 0.0, 214.2, -153.9, -164.4, 31.0], "checks": 216, "seconds_at_speed": 23.4, "closest_to_other_arm_m": 0.198, "closest_where": "j2n6s300_end_effector at 7 %", "tool_start_world": [-0.133, -0.619, 1.157], "tool_end_world": [-0.426, -0.413, 1.053], "tool_lowest_z": 1.053, "tool_x_range": [-0.613, -0.015]}}
+Moving blue to grasp (grasp.yaml): Fabric Follow (CBF) on for blue, release and press the deadman, then hold it
+ABORT: Compensated wrist force (0.25 s mean) changed by 16.1 N: contact or snag
+Saved /home/oarbot_blue/fabric_ws/run/grasp_joints/blue_20261118_170835.json

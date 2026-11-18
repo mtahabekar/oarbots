@@ -1,6 +1,6 @@
 # Estimator on the real cell: TEMPLATE. Start from the simulated cell's real-time profile
-# (8 x 8 mesh, 16 members, no image tracks). Before use, replace:
-#   mesh.width_m, height_m, areal_density_kg_m2  - the measured sheet (weigh it; do not fit mass)
+# (8 x 8 mesh, 16 members, no image tracks). The mesh dimensions and density are
+# for the stand-in sheet measured on 2026-11-17. Before use, measure or check:
 #   physics.newton_stretch / newton_bend         - nominal Style3D values; the twin adapts its own
 #   runtime.robot_position_std_m                 - held-out error of the fabric_grip calibration
 # All four corners are prescribed: robot grips from TF, human grips from the tagged-glove filter.
@@ -9,7 +9,7 @@ mesh:
   height_m: 0.84
   rows: 8
   columns: 8
-  areal_density_kg_m2: 0.2
+  areal_density_kg_m2: 0.215  # 152 g / (0.84 m × 0.84 m), sheet only
 physics:
   backend: newton_style3d
   device: cuda:0

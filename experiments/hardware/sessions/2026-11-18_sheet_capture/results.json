@@ -1,0 +1,280 @@
+{
+  "cameras": {
+    "overhead": {
+      "diagnostic_frames": 169,
+      "saved_rgbd_pairs": 43,
+      "tag_detections": {
+        "20": 88,
+        "21": 112
+      },
+      "both_detected_frames": 87,
+      "tag_misses_in_full_frame_search": {
+        "20": {
+          "other": 1
+        },
+        "21": {}
+      },
+      "overhead_candidate_settings": {
+        "roi_only": {
+          "roi": [
+            0.48,
+            0.25,
+            0.8,
+            0.65
+          ],
+          "max_saturation": 40,
+          "max_value": 130
+        },
+        "roi_and_hsv": {
+          "roi": [
+            0.48,
+            0.25,
+            0.8,
+            0.65
+          ],
+          "max_saturation": 60,
+          "max_value": 90
+        }
+      },
+      "baseline_frames": {
+        "5": {
+          "elapsed_s": 10.96,
+          "baseline_sheet_pixels": 137461,
+          "baseline_depth_fraction": 0.2813,
+          "baseline_depth_samples": 256,
+          "baseline_weighted_boundary_samples": 234,
+          "probe_xyxy_px": [
+            1100,
+            360,
+            1340,
+            500
+          ],
+          "probe_nonzero_depth_fraction": 1.0,
+          "probe_range_m_p01_p50_p99": [
+            2.201,
+            2.42,
+            2.532
+          ],
+          "probe_baseline_mask_fraction": 0.0,
+          "roi_only_mask_pixels": 82403,
+          "roi_only_probe_mask_fraction": 0.8701,
+          "roi_and_hsv_mask_pixels": 94097,
+          "roi_and_hsv_probe_mask_fraction": 0.9999
+        },
+        "22": {
+          "elapsed_s": 47.24,
+          "baseline_sheet_pixels": 139864,
+          "baseline_depth_fraction": 0.2998,
+          "baseline_depth_samples": 256,
+          "baseline_weighted_boundary_samples": 232,
+          "probe_xyxy_px": [
+            1100,
+            440,
+            1230,
+            580
+          ],
+          "probe_nonzero_depth_fraction": 0.9226,
+          "probe_range_m_p01_p50_p99": [
+            2.328,
+            2.512,
+            2.705
+          ],
+          "probe_baseline_mask_fraction": 0.0,
+          "roi_only_mask_pixels": 49635,
+          "roi_only_probe_mask_fraction": 0.682,
+          "roi_and_hsv_mask_pixels": 64420,
+          "roi_and_hsv_probe_mask_fraction": 0.9976
+        },
+        "38": {
+          "elapsed_s": 81.39,
+          "baseline_sheet_pixels": 173056,
+          "baseline_depth_fraction": 0.3154,
+          "baseline_depth_samples": 256,
+          "baseline_weighted_boundary_samples": 233,
+          "roi_only_mask_pixels": 24254,
+          "roi_and_hsv_mask_pixels": 13537
+        }
+      }
+    },
+    "blue_wrist": {
+      "diagnostic_frames": 169,
+      "saved_rgbd_pairs": 43,
+      "tag_detections": {
+        "20": 0,
+        "21": 20
+      },
+      "both_detected_frames": 0,
+      "tag_misses_in_full_frame_search": {
+        "20": {
+          "pose rejected (reprojection, ambiguity or depth)": 4
+        },
+        "21": {
+          "pose rejected (reprojection, ambiguity or depth)": 22
+        }
+      },
+      "baseline_frames": {
+        "5": {
+          "elapsed_s": 10.78,
+          "baseline_sheet_pixels": 1099805,
+          "baseline_depth_fraction": 0.5519,
+          "baseline_depth_samples": 256,
+          "baseline_weighted_boundary_samples": 237,
+          "probe_xyxy_px": [
+            300,
+            480,
+            1600,
+            1020
+          ],
+          "probe_nonzero_depth_fraction": 0.8609,
+          "probe_range_m_p01_p50_p99": [
+            0.184,
+            0.309,
+            0.708
+          ],
+          "probe_baseline_mask_fraction": 0.9086
+        },
+        "22": {
+          "elapsed_s": 47.06,
+          "baseline_sheet_pixels": 399929,
+          "baseline_depth_fraction": 0.1846,
+          "baseline_depth_samples": 256,
+          "baseline_weighted_boundary_samples": 233,
+          "probe_xyxy_px": [
+            450,
+            700,
+            1350,
+            1020
+          ],
+          "probe_nonzero_depth_fraction": 0.9826,
+          "probe_range_m_p01_p50_p99": [
+            0.194,
+            0.587,
+            0.839
+          ],
+          "probe_baseline_mask_fraction": 0.1799
+        },
+        "38": {
+          "elapsed_s": 81.21,
+          "baseline_sheet_pixels": 415839,
+          "baseline_depth_fraction": 0.048,
+          "baseline_depth_samples": 256,
+          "baseline_weighted_boundary_samples": 238
+        }
+      }
+    },
+    "silver_wrist": {
+      "diagnostic_frames": 169,
+      "saved_rgbd_pairs": 43,
+      "tag_detections": {
+        "20": 13,
+        "21": 0
+      },
+      "both_detected_frames": 0,
+      "tag_misses_in_full_frame_search": {
+        "20": {},
+        "21": {
+          "pose rejected (reprojection, ambiguity or depth)": 30
+        }
+      },
+      "baseline_frames": {
+        "5": {
+          "elapsed_s": 10.76,
+          "baseline_sheet_pixels": 1153982,
+          "baseline_depth_fraction": 0.5697,
+          "baseline_depth_samples": 256,
+          "baseline_weighted_boundary_samples": 228,
+          "probe_xyxy_px": [
+            150,
+            480,
+            1500,
+            1020
+          ],
+          "probe_nonzero_depth_fraction": 0.8879,
+          "probe_range_m_p01_p50_p99": [
+            0.19,
+            0.339,
+            0.755
+          ],
+          "probe_baseline_mask_fraction": 0.9517
+        },
+        "22": {
+          "elapsed_s": 47.04,
+          "baseline_sheet_pixels": 205894,
+          "baseline_depth_fraction": 0.0181,
+          "baseline_depth_samples": 50,
+          "baseline_weighted_boundary_samples": 224,
+          "probe_xyxy_px": [
+            200,
+            760,
+            1100,
+            1060
+          ],
+          "probe_nonzero_depth_fraction": 0.7904,
+          "probe_range_m_p01_p50_p99": [
+            0.531,
+            0.64,
+            0.814
+          ],
+          "probe_baseline_mask_fraction": 0.0114
+        },
+        "38": {
+          "elapsed_s": 81.19,
+          "baseline_sheet_pixels": 457216,
+          "baseline_depth_fraction": 0.0191,
+          "baseline_depth_samples": 128,
+          "baseline_weighted_boundary_samples": 228
+        }
+      }
+    }
+  },
+  "cartesian_attempts": {
+    "blue_20261118_171937": {
+      "samples": 4685,
+      "elapsed_s": 101.917,
+      "nonzero_guard_samples": 2850,
+      "maximum_guard_speed_mps": 0.03,
+      "maximum_tool_displacement_mm": 0.0,
+      "maximum_joint_delta_rad": 0.0
+    },
+    "blue_20261118_172435": {
+      "samples": 16560,
+      "elapsed_s": 359.843,
+      "nonzero_guard_samples": 1478,
+      "maximum_guard_speed_mps": 0.03,
+      "maximum_tool_displacement_mm": 0.0,
+      "maximum_joint_delta_rad": 0.0
+    },
+    "blue_20261118_173141": {
+      "samples": 11508,
+      "elapsed_s": 248.466,
+      "nonzero_guard_samples": 8456,
+      "maximum_guard_speed_mps": 0.03,
+      "maximum_tool_displacement_mm": 0.0,
+      "maximum_joint_delta_rad": 0.0
+    },
+    "silver_20261118_171937": {
+      "samples": 4825,
+      "elapsed_s": 104.143,
+      "nonzero_guard_samples": 2874,
+      "maximum_guard_speed_mps": 0.03,
+      "maximum_tool_displacement_mm": 0.001,
+      "maximum_joint_delta_rad": 2e-06
+    },
+    "silver_20261118_172435": {
+      "samples": 16780,
+      "elapsed_s": 362.103,
+      "nonzero_guard_samples": 1487,
+      "maximum_guard_speed_mps": 0.03,
+      "maximum_tool_displacement_mm": 0.0,
+      "maximum_joint_delta_rad": 0.0
+    },
+    "silver_20261118_173141": {
+      "samples": 11698,
+      "elapsed_s": 253.788,
+      "nonzero_guard_samples": 8417,
+      "maximum_guard_speed_mps": 0.03,
+      "maximum_tool_displacement_mm": 0.001,
+      "maximum_joint_delta_rad": 2e-06
+    }
+  }
+}

@@ -1,11 +1,12 @@
 # Fabric twin configuration (plain structured YAML, one `config_file` parameter).
-# EXAMPLE sheet, material and obstacle values: measure the real sheet and obstacle before use.
+# Dimensions and density are for the measured stand-in. Material stiffness and obstacle geometry
+# are starting values for hardware validation.
 sheet:
   width_m: 0.84
   height_m: 0.84
   cells_x: 28            # 29 x 29 particles: the simulator's validated real-time ("lean") mesh
   cells_y: 28
-  areal_density_kg_m2: 0.2
+  areal_density_kg_m2: 0.215  # 152 g / (0.84 m × 0.84 m), sheet only
   stretch: [30000.0, 30000.0, 6000.0]   # Style3D weft, warp, shear; uncalibrated nominal values
   bend: [0.002, 0.001, 0.0005]
   patch_m: 0.03          # side of each grip patch: set to the measured finger contact size

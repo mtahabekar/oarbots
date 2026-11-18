@@ -19,8 +19,14 @@ What had to change: the glove colour (per camera), the depth gate that settles t
 small tags, the tag search size (new fallback option), where depth is sampled on a tag (new grid option:
 the wrist cameras' depth has holes on the tags), and the perception nodes' sheet-processing rate (they
 could not keep up at 15 fps). **Live** (16:12-16:21, final settings, 15 Hz nodes): overhead 96 % / 89 % (left / right hand, hands
-steady at waist height), Blue wrist 98 % / 46 %, Silver wrist 100 % / 100 %; every miss checked was a tag out
-of sight, at the image edge or tilted, not a detection failure.
+steady at waist height), Blue wrist 98 % / 46 %, Silver wrist 100 % / 100 %. The later
+[grasp-pose capture](../2026-11-18_sheet_capture/README.md) provides separate evidence for actual sheet
+handling, including wrist pose rejections.
+
+The [live JSONL recordings](live/) and [images](images/) remain with this record. An external raw
+archive at `/media/taha/ExtermeLinux/claude-1000/lab/captures/2026-11-18_glove_test/` combines the
+laptop's captures with additional diagnostic frames recovered from Claude's scratchpad.
+The [SHA-256 manifest](raw_files.sha256) covers all 1,102 files in that archive.
 
 ## How the detector decides
 
@@ -320,7 +326,7 @@ median, which also contains the hands' own motion).
 | Blue wrist, 0.6-1.3 m (16:17) | 15.0 Hz, 0.132 / 0.170 s | **98 %** | **46 %**, 11 gaps up to 2.3 s | 46 % | 2.2, 1.3, 2.8 / 2.8, 1.5, 10.9 mm |
 | Silver wrist, 0.5-0.9 m (16:20) | 15.0 Hz, 0.183 / 0.227 s | **100 %** | **100 %** (598 of 600) | 100 % | 1.2, 1.0, 0.9 / 0.6, 0.8, 0.9 mm |
 
-- **Misses are visibility, not detection.** A first overhead run (16:12) with the hands moving freely
+- **Visibility limited these individual-camera runs.** A first overhead run (16:12) with the hands moving freely
   found the right hand in 24 %: it was raised and tilted, its tag out of sight (image 18); `glove_check`
   beside it detected every tag that was in the image. On Blue's wrist camera the right hand was often at
   the image edge or tilted up close (image 17, t = 9 s); `glove_check` over 20 s detected 22 of 22 and 17 of

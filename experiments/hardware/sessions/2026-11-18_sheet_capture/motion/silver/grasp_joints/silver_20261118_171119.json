@@ -1,0 +1,59 @@
+{
+ "robot": "silver",
+ "target": "grasp (grasp.yaml)",
+ "start_joints": [
+  1.4909,
+  3.3585,
+  5.286,
+  2.0754,
+  -1.4458,
+  -1.3019
+ ],
+ "target_joints": [
+  0.5157,
+  3.3563,
+  1.5452,
+  4.7644,
+  1.4248,
+  -1.8635
+ ],
+ "speed_deg_s": 10.0,
+ "preflight": {
+  "joint_change_deg": [
+   -55.9,
+   -0.1,
+   -214.3,
+   154.1,
+   164.5,
+   -32.2
+  ],
+  "checks": 216,
+  "seconds_at_speed": 23.4,
+  "closest_to_other_arm_m": 0.548,
+  "closest_where": "j2n6s300_end_effector at 7 %",
+  "tool_start_world": [
+   0.127,
+   -0.628,
+   1.162
+  ],
+  "tool_end_world": [
+   0.411,
+   -0.423,
+   1.059
+  ],
+  "tool_lowest_z": 1.059,
+  "tool_x_range": [
+   0.008,
+   0.6
+  ]
+ },
+ "final_joints": [
+  0.513,
+  3.3559,
+  1.5294,
+  -1.5089,
+  1.4375,
+  -1.8647
+ ],
+ "final_error_deg": 0.9
+}

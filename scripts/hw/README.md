@@ -80,22 +80,26 @@ paths relative to the home folder, for example `exec python3 fabric_ws/scripts/h
 
 ### Grasp pose and Silver's fingers
 
-The arms hold their sheet corners about 0.65 m ahead of their bases, 1.05 m high (test guide §9.2).
-`grasp_target.py` (laptop, read-only) shows where a pose puts the tool and what the wrist camera sees;
-`grasp_drive.py` (on the helper) moves the tool there in a straight line, translation only, through the
-guard's fabric input, so it moves only while the deadman is held with Fabric Follow (CBF) on:
+The arms hold their sheet corners about 0.65 m ahead of their bases and 1.05 m high. Use
+`grasp_target.py` on the laptop to check the simulated targets and camera views. For the physical
+approach from Home, use the guarded joint-space procedure, with the sheet clear and one arm at a
+time. Use the preflight to check each path with the other arm in its actual pose.
 
 ```bash
-python3 scripts/hw/grasp_target.py --robot blue --position -0.40 -0.42 1.05        # laptop, session env
-scripts/hw/lab.sh session blue exec python3 fabric_ws/scripts/hw/grasp_drive.py --robot blue --to -0.40 -0.42 1.05 --check-only
-scripts/hw/lab.sh session blue exec python3 fabric_ws/scripts/hw/grasp_drive.py --robot blue --to -0.40 -0.42 1.05
-scripts/hw/lab.sh session blue exec python3 fabric_ws/scripts/hw/grasp_drive.py --robot blue --home
+python3 scripts/hw/grasp_target.py --robot blue  # laptop, session env
+scripts/hw/lab.sh session blue exec python3 fabric_ws/scripts/hw/grasp_joints.py --robot blue --check-only
 ```
 
-Silver's fingers stay closed: `hold_fingers:=100` in `hosts/silver.args` makes Silver's guard send 100 %
-closure with every command while the deadman is held. The arm driver opens the fingers once when the
-session starts (Kinova `InitFingers`); put the corner in then, and the first deadman hold closes them.
-They stay closed until the next session start. Blue's fingers are not commanded.
+With a clear cell and the operator at the tablet, run the same joint-space command without
+`--check-only`. Repeat the preflight on Silver after Blue arrives. The guard requires Fabric
+Follow and the deadman. After the arms are stationary, attach the sheet at the recorded binder
+clips. Blue's fingers are electrically uncommanded, and Silver's guard requests closed fingers
+while Fabric Follow is selected and the deadman is held. Check finger position after driver
+startup. The driver calls `InitFingers` and Silver's fingers stayed closed on the observed restarts.
+
+The short Cartesian inset using `grasp_drive.py` is deferred. The driver input received nonzero
+commands at grasp with no measured displacement. See the [motion record](../../experiments/hardware/sessions/2026-11-18_sheet_capture/README.md#cartesian-attempt-and-final-state)
+and [motion qualification plan](../../docs/fabric-hardware-test-guide.md#blocks-c-and-d-qualify-force-stops-and-the-grasp-pose-cartesian-envelope).
 
 ### Blue's wrist sensor is plugged into Silver's laptop
 
@@ -147,6 +151,8 @@ run the recorder on the camera's own computer with `exec` if it sees nothing.
   and `first_motion.py` then aborts waiting for force. Restart that robot's session.
 - **Arm USB:** the arm driver exits (`KinovaCommException`); the guard keeps running without it.
   Restart that robot's session, then call the driver start service (below) before any motion.
+- **Wrist camera USB:** Blue's camera dropped during the approach. Verify cable slack and
+  confirm image and camera info streams after the session restart.
 
 ## Versions
 
