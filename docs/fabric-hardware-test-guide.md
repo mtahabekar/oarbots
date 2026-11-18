@@ -1,8 +1,8 @@
 # Fabric pipeline: pre-hardware work, rehearsal results, and test-day guide
 
-**Date:** 13 November 2026. Follows the [hardware demonstration plan](fabric-hardware-demo-plan.md) (work items 4.1–4.7).
+**Date:** 13 November 2026; lab sessions 16–18 November (§8); plan for the rest of the hardware tests updated 18 November (§9). Follows the [hardware demonstration plan](fabric-hardware-demo-plan.md) (work items 4.1–4.7).
 
-**Evidence boundary.** Everything below was built and measured on the compute laptop (RTX 5070 Laptop GPU) against the simulated cell in Isaac Sim 6.2 and against recordings of it. Nothing ran on the robots, the Azure cameras, or real carbon fabric. Numbers are single runs unless a range is given, and replays vary by several millimetres from run to run. Nothing is committed.
+**Evidence boundary.** Sections 1–7 were built and measured on the compute laptop (RTX 5070 Laptop GPU) against the simulated cell in Isaac Sim 6.2 and against recordings of it; numbers there are single runs unless a range is given, and replays vary by several millimetres from run to run. Section 8 is measured on the real robots and cameras with a stand-in sheet (black cotton or polyester, not carbon). The estimator, the twin and the CBF have not yet run on real sensor data. Section 9 is a plan.
 
 ## 1. What now exists
 
@@ -190,13 +190,13 @@ Operating the twin:
 
 The obstacle is the `obstacle` section of `twin.yaml` (centre, half extents, yaw in the world frame). The twin sends zero whenever a grip measurement is missing, the estimator is stale, the CBF fails, or the simulated sheet touches the obstacle.
 
-## 6. What is left for you, in order
+## 6. What is left
 
-1. ~~**On this laptop (needs `sudo`):** install `ros-jazzy-rmw-cyclonedds-cpp` and `chrony`; attach a USB Ethernet adapter.~~ Done 2026-11-16; `scripts/hw/laptop_env.sh` writes the CycloneDDS profile (§8.1).
-2. ~~**On the helpers:** build `oarbot_runtime` and `tablet_gui`.~~ Done 2026-11-16, in a separate `~/fabric_ws` on Blue, Silver and the tablet (§8.1); the NUC on 2026-11-17 (overhead camera only).
-3. **Fill the `fabric_cell` templates:** sheet size and mass, tag size and tag-to-pinch offset, colour thresholds, `calibration.yaml` (the launch refuses to start while it says `measured: false`), workspace box and force limit in `bridge.yaml`, obstacle in `twin.yaml`. Done so far: stand-in sheet size and mass (2026-11-17), overhead camera pose and parked bases in `calibration.yaml` (2026-11-17), glove colour, tag search and depth sampling for all three cameras (2026-11-18, §8.5).
-4. **Hardware gates** from the plan (§5): carbon depth first, then H1–H3, H5, H7, H9, H12, H15. H3 translation passed on both robots on 2026-11-16 and confirmed the command frame in `bridge.yaml` (§8.2), and again on Blue on 2026-11-18 after its arm came back; H3 rotation is still open. H9: every host within 3.2 ms of the laptop on 2026-11-18 (tablet 7.3 ms).
-5. **Shadow sessions before any closed loop:** estimator alone, then twin with `commands:=false`, then warm-up, then closed loop without an obstacle.
+Replaced by the plan in §9, which starts from the state at the end of 18 November. Done from the
+original list: CycloneDDS and chrony on this laptop and the USB Ethernet (2026-11-16); `~/fabric_ws` on
+Blue, Silver and the tablet (2026-11-16) and the NUC (2026-11-17); from the `fabric_cell` templates, the
+stand-in sheet's size and mass, the overhead camera pose and parked bases in `calibration.yaml`
+(2026-11-17), and glove detection on all three cameras (2026-11-18, §8.5).
 
 ## 7. Changes outside this repository
 
@@ -371,3 +371,217 @@ Tag size: 8 cm (the gloves' tags, `docs/fabric-hardware-demo-plan.md`); the wris
 with it within 2-4 %. Open: the
 tag-to-pinch offsets (pivot calibration), a check at a grasp pose for the wrist cameras, the wrist
 cameras' gripper mask and the sheet thresholds once the sheet is in view.
+
+## 9. The rest of the hardware tests (plan, 18 November 2026)
+
+Starts from the end of the third lab day (`experiments/hardware/sessions/2026-11-18_lab_log.md`). The
+gates and sessions are the demo plan's (§5 and §6 there). Values marked *proposed* are starting points
+to replace with a measurement, not limits.
+
+### 9.1 Where each gate and session stands
+
+| Gate or session | State at the end of 2026-11-18 | Left |
+| --- | --- | --- |
+| H1 physical E-stop | Not tested | Which actuators each physical stop cuts (lab docs first) |
+| H2 command loss, restart | Seen in passing: the guard stops on heartbeat loss (Silver's wired link drops, 2026-11-17); the Kinova driver latches after any 0.2 s gap and only logs it (§8.4) | Deadman-release stopping distance; loss of the bridge's commands; the driver state made visible |
+| H3 axes and units | Translation passed on both robots (Blue twice, §8.2); rotation not tested | Rotation is not needed while the bridge sends zero angular velocity. Orientation hold: see 9.2 |
+| H5 wrist force | Both sensors stream (97 Hz raw, 83 Hz calibrated); Blue's on Silver's laptop | Known loads, sign, unloaded residual; the §3.4 capacities |
+| H7 cameras | Overhead pose measured (floor plane and roof markers); wrist cameras on factory intrinsics; gloves calibrated on all three (§8.5) | Wrist hand–eye, by seeing one glove from two cameras at once |
+| H9 clocks and sync | Clocks passed (hosts within 3.2 ms of the laptop, tablet 7.3 ms) | Whether three ToF cameras on one sheet disturb each other's depth |
+| H11 carbon | Not done: no carbon ply yet | Needs the ply |
+| H12 sustained load | Not done | 30 minutes with everything running, during S3 |
+| H15 grip frames | Placeholders; `calibration.yaml` says `measured: false`, so `compute.launch.py` refuses to start | Both robots |
+| S0 bench | Stand-in measured: 84 × 84 cm, 152 g (0.215 kg/m²), bending 1.4e-5 N m | Carbon |
+| S1 platform | As the gates above | H5, H15, part of H2 |
+| S2–S6 | Not started | All |
+
+Two hardware items block the later blocks:
+
+- **Blue's gripper is not connected electrically** (`scripts/hw/hosts/blue.args`; unplugged since
+  2026-11-16, and not reconnected when the camera and wrist sensor were). Blue cannot hold its corner
+  until it is. Grip slip, Blue's grip frame and every session from S2 on need it.
+- **No procedure yet for the grasp.** Every run so far started from Home, and the bridge only
+  translates. See 9.2.
+
+### 9.2 Why the grasp pose comes first
+
+The order suggested at the end of 18 November was: sheet thresholds, tag-to-pinch offsets, force tests,
+then Silver's grip frame. This plan puts **the grasp pose** ahead of all of them, because most of what is
+left needs the arms holding the corners where they will hold them in the demo:
+
+- At Home the wrist cameras look sideways into the room, not at the cell (§8.5). Their sheet
+  thresholds, the masks for their own gripper fingers, and the glove check "at a grasp pose" all need the
+  grasp pose's view.
+- The grip frames (H15), the robot grip slip (§3.4 item 3) and the arm margin at the grasp pose (§3.4
+  item 2) need a corner held in the fingers.
+
+**Target.** The simulated layout already has one (`config/fabric_layout.json` in `oarbot_simulation`):
+each robot's corner 0.645 m ahead of its base, 1.05 m above the floor, the tool pitched 30° down and
+turned 45° inward. The real bases are parked within 7 mm and 0.6° of the same layout, so the simulated
+grasp joints (`grasp_arm`) are the starting point. The demo does not need that pose exactly: the twin
+uses measured grips, and the stretch guard keeps the grips short of the sheet.
+
+**How the arms get there.** The guarded velocity mode only translates, so there are two ways:
+
+1. **Joystick, before the session's arm driver starts (recommended).** It's the lab's own way to move the
+   arms, and it opens and closes the fingers. Use it before the session starts: the arms were homed by
+   joystick with no driver running (§8.3 step 1), and the home button did nothing while our session's
+   driver ran (lab log 2026-11-17). Start the session afterwards and record the joint angles, so later
+   days can return to the same pose. On the first try, check that starting the driver neither moves the
+   arm nor opens the fingers.
+2. **Setup mode** (`setup_mode:=true`, a joint trajectory and the finger action). This is more
+   repeatable, but it is gate H4, which has never been validated (platform audit), so it costs lab time.
+
+**Orientation hold.** The bridge sends zero angular velocity, so in the demo each tool keeps its grasp
+orientation and the grip offset only has to be right at that orientation. That makes H15 measurable with
+translations alone (block B). Forward kinematics on the joint angles the H3 runs recorded
+(`scripts/hw/h3_orientation.py`) shows how well the orientation holds:
+
+| Runs | Travel | Tool rotation, p99 |
+| --- | --- | --- |
+| Blue, x, y and z legs (2026-11-16 and 18, clean runs) | 2.6–3.9 cm | 0.44–0.65° |
+| Silver, z legs | 3.3 cm | 0.23° |
+| Silver, x and y legs (`silver_20261116_212017`) | 3.7 cm | **3.98°**, about 1° per cm; rotates back on the return |
+
+Silver's x/y rotation is either real or a mismatch between Silver's joint readings and the model. The
+TF the twin reads uses the same model either way. At a lever arm of a few centimetres from the end
+effector to the corner tip it moves the grip by millimetres. Block B's check shows which it is.
+
+### 9.3 Before the next lab day (on this laptop)
+
+| # | Work | Needed for |
+| --- | --- | --- |
+| L1 | Grasp target per robot: the simulated `grasp_arm` joints checked in MoveIt against the real robots (camera bracket, UWB wing, riser) at the parked base poses. Gives the tool pose in the world and what each wrist camera will see from there | Block A |
+| L2 | `glove_check.py --pivot`: save each tag's pose in the camera frame. Solve offline (least squares) for the pinch point in tag coordinates; the residual is the hand grip error. Unit test on synthetic poses | Block B |
+| L3 | Grip check for H15: a stiff card held in the fingers like a sheet corner, with an 8 cm tag (ID 22, same dictionary) at a measured offset from the card's tip. The overhead camera and the other robot's wrist camera find the tag. Compare the tip in the world with `fabric_grip` from TF and fit the offset in the end-effector frame | Block B |
+| L4 | `glove_tune.py sheet` and `mask`: colour statistics of hand-labelled sheet and background regions; the mask a threshold set produces; valid depth on the sheet; the gripper mask from grasp-pose frames (pixels that stay near and unchanged across frames) | Block A |
+| L5 | Configuration from the stand-in: areal density 0.215 (now 0.2) in `estimator.yaml` and `twin.yaml`. Keep the twin's bending low and have the warm-up fit shear only: the stand-in's bending length (1.9 cm) is below the twin's 3 cm mesh spacing, so bending is not identifiable with this sheet (lab log 2026-11-17) | S2–S4 |
+| L6 | The Kinova driver's stopped state in the guard diagnostics and the tablet GUI (§8.4, first row) | S4–S6 |
+| L7 | The arm response in the twin's actuator model: no motion at 1 cm/s and almost none at 2 cm/s (2026-11-16). At 3 cm/s on 2026-11-18, Blue's steady speed was 2.4 cm/s in z, 2.0 in y and 1.6–1.7 in x (55–80 % of the command) after a 0.35–0.56 s lag (§8.2). Warm-up insets must run at 3 cm/s or more, or the arms do not move | S4–S6 |
+| L8 | Bridge workspace box around the grasp pose, measured with MoveIt as `BOXES` in `sim_bridge.py` was around Home (`bridge.yaml` has ±10 m now, so no limit) | S4–S6 |
+
+L1–L5 are needed for the next lab day; L6–L8 only before the first commanded motion with the sheet (S4).
+
+### 9.4 Lab blocks, in order
+
+Each block says what it needs, what to do, and when it's done. Bring-up for every block follows §8.1
+and `scripts/hw/README.md`. Check the clocks first: after the 2026-11-18 power cycle, Blue's Dingo was
+still 16 ms off.
+
+#### Block A: grasp pose, sheet and gloves in view (half to one day)
+
+Needs: L1, L4, Blue's gripper connected, the stand-in sheet, the person with the gloves, and a second
+person at the tablet.
+
+1. Each arm to its grasp pose (9.2), fingers closed on the drawn 3 × 3 cm corner square. Start the
+   sessions and record the joint angles.
+2. The person holds the other two corners, hands flat at waist height, standing so that the sheet hangs
+   slack.
+3. Capture all three cameras with `glove_check.py`, saving frames at 2 Hz: the sheet still, sagging
+   more, moving slowly. Then without the person and the sheet (background), and with the fingers empty
+   (gripper masks). Capture only while the overhead perception node is stopped: beside it, the node
+   dropped to 6.5 Hz (§8.5).
+4. Depth interference (H9, camera part): the valid-depth fraction on the sheet in each camera, with the
+   other two cameras' depth on and then off.
+5. Live glove check of the wrist cameras at the grasp pose (`glove_record.py`, as in §8.5).
+
+Offline afterwards: the sheet thresholds (`cloth_*`), `workspace_roi` per camera, and
+`static_exclusion_mask` for each wrist camera. Then live, each node with the new settings.
+
+Done when each camera's sheet mask covers the sheet and little else (report both fractions against the
+hand labels), the valid depth on the stand-in is recorded per camera, and the gloves still arrive at
+15 Hz with p95 age under the node's 0.25 s limit. With fewer pixels taken as sheet the nodes should
+gain margin; Silver's wrist node was at 0.227 s.
+
+#### Block B: grip frames (H15) and tag-to-pinch offsets (half a day)
+
+Needs: L2, L3 and the grasp pose from block A. Also a pin on a stand and the card with tag 22.
+
+1. **Grip frames.** The card in each robot's fingers, held like the corner. At the grasp pose and after
+   `first_motion.py` legs of ±3–5 cm along x, y and z (3 cm/s, as in H3), the overhead camera and the
+   other robot's wrist camera locate the card's tag. Fit the offset, write both `fabric_grip` transforms
+   and set `measured: true` in `calibration.yaml`. The residual is the robot grip error. Whether Silver's
+   card turns with x/y travel answers the question in 9.2.
+2. **Tag-to-pinch offsets.** The person pinches the pin the way they hold a corner and turns the hand
+   about ±30° for 20–30 s, in front of Silver's wrist camera at about 0.6 m (largest tags, 100 %
+   detection). Do each hand. The offset goes into `tag_to_grip_offsets_m` in all three perception files;
+   the scatter is the hand grip error. If the scatter is over about 1.5 cm (*proposed*), the tag on the
+   back of the hand moves with the fingers. Then switch to a clip, as the demo plan suggests (§5 there).
+3. **Cross-view check (H7, wrist hand–eye).** With the calibration published, one glove seen by the
+   overhead camera and a wrist camera at once. Record how far apart the two world positions are (the
+   platform audit's first target is 1–2 cm).
+4. **Stretch guard slack.** Recompute `edge_slack_m` and `diagonal_slack_m` from the robot grip error,
+   the hand grip error and 0.1 m/s × latency (now 3 cm, from assumed 1 cm errors).
+
+Done when `compute.launch.py` starts on the measured calibration, the offsets and both grip errors are
+in the configuration, and the cross-view difference is recorded.
+
+#### Block C: wrist force (H5) and the capacities of §3.4, both robots (half to one day)
+
+Needs: the grasp pose; masses of about 0.2, 0.4 and 0.6 kg (bottles weighed on the kitchen scale will
+do); a spring or luggage scale to about 50 N; string and a clip; `scripts/hw/ft_record.py`.
+
+1. **Unloaded residual**, no sheet: the calibrated force at Home and at the grasp pose. It should be
+   near zero at both; this checks the compensation of the tool's mass and cables.
+2. **Known loads** hung from the grip at the grasp pose: the calibrated force should read m·g downward in
+   the world (sign and scale). Watch the joint efforts and whether the arm holds its position: that is
+   the arm margin (§3.4 item 2). Then pull horizontally toward the person with the spring scale. The
+   world force should point toward the person, which confirms `force_on_robot_sign: +1`.
+3. **Grip slip** (§3.4 item 3): corner in the fingers, pull along the edge and along the diagonal, five
+   times each, on each robot.
+4. **The person's comfortable pull** (§3.4 item 4).
+5. **Thresholds.** `force_limit_n` in `bridge.yaml` is the smallest of the arm margin, half the slip
+   force and the comfortable pull. `force_soft_n` in `twin.yaml` is half of that. Turn `force_feedback` on
+   only once step 2 has confirmed the sign.
+6. **The bridge's force stop, once.** With the bridge armed and a zero command, pull past `force_limit_n`
+   with the spring scale. The arm must stop and need a re-arm.
+
+Done when both thresholds come from these measurements and the measurements are recorded.
+
+#### Block D: stops (H1, part of H2), one to two hours
+
+The deadman is the primary stop, so this block measures it rather than adding automatic stops.
+
+1. **H1.** From the lab's documentation and the user: which actuators each physical stop cuts (arm
+   power, Dingo motors). Test only what the documentation says is safe to test.
+2. **Deadman release** during a 3 cm/s `first_motion.py` leg: time and distance to stop, from the
+   joint states.
+3. **Command loss** with the bridge armed: stop the twin on this laptop, then pull the laptop's cable.
+   The bridge's 0.1 s timeout must stop the arm, a latched Kinova driver must show in the diagnostics
+   (L6), and nothing may restart without a deliberate action.
+
+Done when the stopping distance is recorded and every loss stops the arm.
+
+#### Sessions S2–S6
+
+| Session | What runs | Measure | Notes |
+| --- | --- | --- | --- |
+| **S2** estimation in shadow (D1), after B | Arms holding still at the grasp pose; the person moves their corners slowly. `compute.launch.py commands:=false`, twin off | Analysis rate and age; fused hand coverage and gaps; depth residual on a withheld camera | The twin sends zero after `hand_coast_sec` (1 s) without a hand (§4), so fused coverage decides whether the arms will keep following. D1's proposed 100 ms capture-to-state age can't be met as stated: the glove messages alone are 0.13–0.23 s old at p95 (§8.5). Record the age and set the acceptance from it. A marker ply for D1's error figure needs a second stand-in with 4–6 small tags |
+| **S3** twin and CBF in shadow (D2), with H12 | As S2, plus twin and CBF with `commands_enabled: false`, and a virtual obstacle in `twin.yaml` (the default 0.44 × 0.44 × 0.32 m box under the sheet's centre to start). Run 30 min for H12 | Twin frame time with the estimator on the same GPU; twin grips against measured grips; CBF update time; logged commands against the motion (direction and size) | D2 proposals: p95 frame under 16.7 ms, grips within 10 mm |
+| **S4** warm-up (D3), after L6–L8 and C | Scripted insets of 2 and 4 cm through the guard | Free-running twin error against depth, before and after, on a held-out motion | Shear only with the stand-in (L5); insets at 3 cm/s or more (L7) |
+| **S5** closed loop, no obstacle, after D | CBF mode; the person leads at 0.1 m/s or less; a second person holds the deadman | Following, wrist force against the thresholds, each stop triggered once | |
+| **S6** transfer (D4) | Obstacle away from the path, then on it, then the filter off for contrast | D4 acceptance | Obstacle, A and B chosen on site (demo plan §5) |
+
+### 9.5 Inputs needed from you
+
+1. Blue's gripper connected, and its fingers opening and closing under the joystick.
+2. The grasp method: the joystick (recommended) or setup mode (9.2).
+3. Materials. Block B: a pin on a stand, a stiff card, tag 22 printed at 8 cm. Block C: the masses and a
+   spring scale.
+4. When the carbon ply arrives. H11, carbon in S0, and D1 on carbon wait for it; everything above uses
+   the stand-in.
+5. A second person at the tablet for S4–S6: the person holding the sheet has both hands busy.
+6. Optional: the proper fix for Blue's ground loop (lab log 2026-11-18, "What is left", item 1). The
+   workaround works.
+
+### 9.6 Rough schedule
+
+| Lab day | Blocks |
+| --- | --- |
+| 4 | A, B |
+| 5 | C, D, S2 |
+| 6 | S3 with H12, S4 |
+| 7 | S5, S6 |
+
+These are estimates and assume the robots work. A day that loses an arm or a camera moves everything
+after it.

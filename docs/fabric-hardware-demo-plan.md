@@ -3,6 +3,8 @@
 **Date:** 12 November 2026.
 
 > **Status, 13 November 2026:** work items 4.1–4.7 have been implemented and rehearsed in simulation. The results, what changed from this plan, and the remaining on-site steps are in the [test guide](fabric-hardware-test-guide.md).
+>
+> **Status, 18 November 2026:** three lab days done (test guide §8). The plan for the remaining gates and sessions S2–S6, starting from that state, is in [test guide §9](fabric-hardware-test-guide.md#9-the-rest-of-the-hardware-tests-plan-18-november-2026). Two changes to §5 here: the grasp pose and closing the fingers need a procedure, either the joystick or gate H4, which this plan had marked as not needed; and H15 covers both robots.
 
 **Based on:** the [research proposal](fabric-state-estimation-research.md), the [progress report](fabric-state-estimation-progress-report.md), the [learning-methods report](fabric-learning-methods-report.md), the [platform audit](platform-audit.md), and the simulator documents (`SIM_CELL.md`, `FABRIC_INTEGRATION.md`, `PERFORMANCE_REVIEW.md` in `/media/taha/ExtermeLinux/oarbot_simulation`; `capsule_cbf/` in `~/ros2_colcon_ws/src/fabric_sim_isaacsim_newton`).
 
