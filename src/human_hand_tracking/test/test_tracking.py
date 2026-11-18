@@ -127,6 +127,38 @@ def test_glove_region_search_matches_full_frame_and_skips_tags_without_glove_col
     assert [hand.hand_id for hand in detector.detect(image, k, np.zeros(5))[1]] == ['human_left']
 
 
+def test_unscaled_fallback_supplies_only_glove_tags_the_enlarged_search_missed():
+    k = np.array([[910., 0., 960.], [0., 910., 540.], [0., 0., 1.]])
+    image = np.full((1080, 1920, 3), 230, np.uint8)
+    image[300:520, 300:520] = (0, 220, 0)
+    draw_tag(image, cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_4X4_50), 20, 370, 370)
+    image[300:520, 1300:1520] = (0, 220, 0)
+    draw_tag(image, cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_4X4_50), 21, 1370, 370)
+    plain = GloveDetector(tag_size_m=.06, roi_upscale=2)
+    both = GloveDetector(tag_size_m=.06, roi_upscale=2, roi_fallback_unscaled=True)
+    # Both searches find both tags: the enlarged search's corners are kept, nothing is added twice.
+    reference = {h.tag_id: h.position for h in plain.detect(image, k, np.zeros(5))[1]}
+    found = {h.tag_id: h.position for h in both.detect(image, k, np.zeros(5))[1]}
+    assert set(found) == {20, 21}
+    for tag in found:
+        np.testing.assert_allclose(found[tag], reference[tag], atol=1e-9)
+    # The enlarged search misses tag 20 (as glare did on the real overhead camera): only the
+    # fallback recovers it, from the original-size crop.
+    for detector in (plain, both):
+        search = detector._aruco
+        def without_20_when_enlarged(crop, search=search):
+            corners, ids = search(crop)
+            if crop.shape[0] > 1000:  # enlarged crop: (220 px glove + 2 x 220 px padding) x 2
+                keep = [i for i, tag in enumerate(ids) if tag != 20]
+                return [corners[i] for i in keep], [ids[i] for i in keep]
+            return corners, ids
+        detector._aruco = without_20_when_enlarged
+    assert [h.tag_id for h in plain.detect(image, k, np.zeros(5))[1]] == [21]
+    assert sorted(h.tag_id for h in both.detect(image, k, np.zeros(5))[1]) == [20, 21]
+    with pytest.raises(ValueError):
+        GloveDetector(roi_upscale=0)
+
+
 def plane_depth(detector, rvec, tvec, k, shape):
     """Ideal registered depth of the tag's plane (and beyond it, of the same plane)."""
     rotation = cv2.Rodrigues(rvec)[0]

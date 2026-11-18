@@ -1,0 +1,2869 @@
+{
+ "summary": {
+  "params": {
+   "glove_hsv_lower": [
+    35,
+    80,
+    60
+   ],
+   "glove_hsv_upper": [
+    90,
+    255,
+    255
+   ],
+   "tag_min_color_support": 0.08,
+   "tag_roi_upscale": 2,
+   "tag_use_depth": true,
+   "tag_depth_gate_m": 0.005
+  },
+  "detected": {
+   "20": "0/17",
+   "21": "0/26"
+  },
+  "misses": {
+   "glove colour support 0.05 < 0.08": 4,
+   "glove colour support 0.03 < 0.08": 10,
+   "glove colour support 0.06 < 0.08": 7,
+   "glove colour support 0.02 < 0.08": 14,
+   "glove colour support 0.07 < 0.08": 1,
+   "glove colour support 0.04 < 0.08": 7
+  },
+  "support_min_median": {
+   "21": [
+    0.024,
+    0.042
+   ],
+   "20": [
+    0.017,
+    0.019
+   ]
+  },
+  "colour_regions_median_max": [
+   3,
+   5
+  ],
+  "detect_ms_median_max": [
+   3.3,
+   5.1
+  ],
+  "search_reprojection_px_median_max": [
+   0.06,
+   0.11
+  ],
+  "ambiguous_tags": 31,
+  "depth_residual_mm_right_pose_median": 5.1,
+  "depth_residual_mm_right_pose_min_max": [
+   2.5,
+   7.6
+  ],
+  "depth_residual_mm_wrong_pose_min_max": [
+   25.7,
+   32.0
+  ]
+ },
+ "frames": [
+  {
+   "frame": "frame_010",
+   "regions": 2,
+   "tags": [
+    {
+     "id": 4,
+     "side_px": 132.4,
+     "centre_px": [
+      714.5,
+      681.7
+     ],
+     "support": 0.0,
+     "ring_hsv_median": [
+      140,
+      13,
+      142
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       0,
+       75,
+       160
+      ],
+      [
+       0,
+       5,
+       35
+      ],
+      [
+       67,
+       215,
+       254
+      ]
+     ],
+     "in_search_region": false,
+     "detected": false,
+     "why": "not a glove ID"
+    },
+    {
+     "id": 21,
+     "side_px": 31.1,
+     "centre_px": [
+      1326.2,
+      489.4
+     ],
+     "support": 0.046,
+     "ring_hsv_median": [
+      96,
+      73,
+      158
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       75,
+       92,
+       164
+      ],
+      [
+       1,
+       7,
+       206
+      ],
+      [
+       108,
+       226,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      0.41,
+      0.58
+     ],
+     "pose_without_depth": false,
+     "pose_with_depth": true,
+     "depth_at_tag_m": 2.084,
+     "detected": false,
+     "why": "glove colour support 0.05 < 0.08"
+    },
+    {
+     "id": 20,
+     "side_px": 26.2,
+     "centre_px": [
+      1277.0,
+      374.4
+     ],
+     "support": 0.025,
+     "ring_hsv_median": [
+      110,
+      12,
+      153
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       0,
+       92,
+       140
+      ],
+      [
+       0,
+       5,
+       148
+      ],
+      [
+       147,
+       223,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      0.86,
+      0.98
+     ],
+     "pose_without_depth": true,
+     "pose_with_depth": true,
+     "depth_at_tag_m": 2.37,
+     "detected": false,
+     "why": "glove colour support 0.03 < 0.08"
+    }
+   ]
+  },
+  {
+   "frame": "frame_011",
+   "regions": 1,
+   "tags": [
+    {
+     "id": 4,
+     "side_px": 132.4,
+     "centre_px": [
+      714.3,
+      681.8
+     ],
+     "support": 0.0,
+     "ring_hsv_median": [
+      133,
+      13,
+      142
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       0,
+       75,
+       160
+      ],
+      [
+       0,
+       5,
+       34
+      ],
+      [
+       66,
+       212,
+       254
+      ]
+     ],
+     "in_search_region": false,
+     "detected": false,
+     "why": "not a glove ID"
+    },
+    {
+     "id": 21,
+     "side_px": 31.1,
+     "centre_px": [
+      1320.2,
+      487.1
+     ],
+     "support": 0.058,
+     "ring_hsv_median": [
+      101,
+      61,
+      159
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       57,
+       92,
+       164
+      ],
+      [
+       1,
+       7,
+       180
+      ],
+      [
+       102,
+       230,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      0.28,
+      0.44
+     ],
+     "pose_without_depth": true,
+     "pose_with_depth": true,
+     "depth_at_tag_m": 2.086,
+     "detected": false,
+     "why": "glove colour support 0.06 < 0.08"
+    },
+    {
+     "id": 20,
+     "side_px": 26.7,
+     "centre_px": [
+      1276.3,
+      373.6
+     ],
+     "support": 0.022,
+     "ring_hsv_median": [
+      110,
+      10,
+      153
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       25,
+       91,
+       160
+      ],
+      [
+       1,
+       7,
+       147
+      ],
+      [
+       120,
+       227,
+       255
+      ]
+     ],
+     "in_search_region": false,
+     "reprojection_px": [
+      1.22,
+      1.35
+     ],
+     "pose_without_depth": true,
+     "pose_with_depth": true,
+     "depth_at_tag_m": 2.364,
+     "detected": false,
+     "why": "glove colour support 0.02 < 0.08"
+    }
+   ]
+  },
+  {
+   "frame": "frame_012",
+   "regions": 5,
+   "tags": [
+    {
+     "id": 4,
+     "side_px": 132.4,
+     "centre_px": [
+      714.5,
+      681.6
+     ],
+     "support": 0.0,
+     "ring_hsv_median": [
+      140,
+      13,
+      142
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       0,
+       75,
+       160
+      ],
+      [
+       0,
+       5,
+       38
+      ],
+      [
+       67,
+       215,
+       254
+      ]
+     ],
+     "in_search_region": false,
+     "detected": false,
+     "why": "not a glove ID"
+    },
+    {
+     "id": 21,
+     "side_px": 31.2,
+     "centre_px": [
+      1328.6,
+      485.2
+     ],
+     "support": 0.054,
+     "ring_hsv_median": [
+      101,
+      92,
+      159
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       0,
+       92,
+       165
+      ],
+      [
+       0,
+       5,
+       186
+      ],
+      [
+       94,
+       220,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      0.62,
+      0.85
+     ],
+     "pose_without_depth": false,
+     "pose_with_depth": true,
+     "depth_at_tag_m": 2.086,
+     "detected": false,
+     "why": "glove colour support 0.05 < 0.08"
+    },
+    {
+     "id": 20,
+     "side_px": 25.8,
+     "centre_px": [
+      1281.2,
+      377.5
+     ],
+     "support": 0.023,
+     "ring_hsv_median": [
+      98,
+      12,
+      154
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       30,
+       92,
+       165
+      ],
+      [
+       1,
+       5,
+       223
+      ],
+      [
+       154,
+       253,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      0.05,
+      0.33
+     ],
+     "pose_without_depth": true,
+     "pose_with_depth": true,
+     "depth_at_tag_m": 2.349,
+     "detected": false,
+     "why": "glove colour support 0.02 < 0.08"
+    }
+   ]
+  },
+  {
+   "frame": "frame_013",
+   "regions": 3,
+   "tags": [
+    {
+     "id": 4,
+     "side_px": 132.4,
+     "centre_px": [
+      714.3,
+      681.8
+     ],
+     "support": 0.0,
+     "ring_hsv_median": [
+      140,
+      12,
+      142
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       0,
+       75,
+       160
+      ],
+      [
+       0,
+       5,
+       33
+      ],
+      [
+       66,
+       215,
+       254
+      ]
+     ],
+     "in_search_region": false,
+     "detected": false,
+     "why": "not a glove ID"
+    },
+    {
+     "id": 21,
+     "side_px": 31.3,
+     "centre_px": [
+      1328.5,
+      485.9
+     ],
+     "support": 0.052,
+     "ring_hsv_median": [
+      97,
+      92,
+      159
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       50,
+       92,
+       156
+      ],
+      [
+       1,
+       5,
+       192
+      ],
+      [
+       99,
+       221,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      0.84,
+      1.02
+     ],
+     "pose_without_depth": false,
+     "pose_with_depth": true,
+     "depth_at_tag_m": 2.074,
+     "detected": false,
+     "why": "glove colour support 0.05 < 0.08"
+    }
+   ]
+  },
+  {
+   "frame": "frame_014",
+   "regions": 3,
+   "tags": [
+    {
+     "id": 4,
+     "side_px": 132.4,
+     "centre_px": [
+      714.4,
+      681.7
+     ],
+     "support": 0.0,
+     "ring_hsv_median": [
+      133,
+      12,
+      142
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       0,
+       75,
+       160
+      ],
+      [
+       0,
+       5,
+       32
+      ],
+      [
+       67,
+       215,
+       254
+      ]
+     ],
+     "in_search_region": false,
+     "detected": false,
+     "why": "not a glove ID"
+    },
+    {
+     "id": 21,
+     "side_px": 31.8,
+     "centre_px": [
+      1327.2,
+      484.1
+     ],
+     "support": 0.061,
+     "ring_hsv_median": [
+      96,
+      77,
+      159
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       45,
+       93,
+       165
+      ],
+      [
+       1,
+       8,
+       196
+      ],
+      [
+       100,
+       209,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      0.71,
+      0.95
+     ],
+     "pose_without_depth": false,
+     "pose_with_depth": true,
+     "depth_at_tag_m": 2.072,
+     "detected": false,
+     "why": "glove colour support 0.06 < 0.08"
+    },
+    {
+     "id": 20,
+     "side_px": 26.3,
+     "centre_px": [
+      1283.1,
+      375.3
+     ],
+     "support": 0.026,
+     "ring_hsv_median": [
+      103,
+      10,
+      153
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       45,
+       93,
+       160
+      ],
+      [
+       1,
+       8,
+       252
+      ],
+      [
+       87,
+       157,
+       255
+      ]
+     ],
+     "in_search_region": false,
+     "reprojection_px": [
+      0.67,
+      0.67
+     ],
+     "pose_without_depth": false,
+     "pose_with_depth": false,
+     "depth_at_tag_m": 2.342,
+     "detected": false,
+     "why": "glove colour support 0.03 < 0.08"
+    }
+   ]
+  },
+  {
+   "frame": "frame_015",
+   "regions": 2,
+   "tags": [
+    {
+     "id": 4,
+     "side_px": 132.4,
+     "centre_px": [
+      714.3,
+      681.8
+     ],
+     "support": 0.0,
+     "ring_hsv_median": [
+      133,
+      13,
+      142
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       0,
+       90,
+       160
+      ],
+      [
+       0,
+       5,
+       31
+      ],
+      [
+       66,
+       212,
+       254
+      ]
+     ],
+     "in_search_region": false,
+     "detected": false,
+     "why": "not a glove ID"
+    },
+    {
+     "id": 21,
+     "side_px": 31.7,
+     "centre_px": [
+      1332.1,
+      485.3
+     ],
+     "support": 0.064,
+     "ring_hsv_median": [
+      102,
+      92,
+      159
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       75,
+       92,
+       165
+      ],
+      [
+       1,
+       5,
+       190
+      ],
+      [
+       108,
+       233,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      0.9,
+      1.11
+     ],
+     "pose_without_depth": false,
+     "pose_with_depth": true,
+     "depth_at_tag_m": 2.079,
+     "detected": false,
+     "why": "glove colour support 0.06 < 0.08"
+    },
+    {
+     "id": 20,
+     "side_px": 26.3,
+     "centre_px": [
+      1286.1,
+      374.5
+     ],
+     "support": 0.018,
+     "ring_hsv_median": [
+      96,
+      10,
+      153
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       70,
+       93,
+       165
+      ],
+      [
+       2,
+       6,
+       248
+      ],
+      [
+       86,
+       156,
+       255
+      ]
+     ],
+     "in_search_region": false,
+     "reprojection_px": [
+      0.8,
+      0.8
+     ],
+     "pose_without_depth": false,
+     "pose_with_depth": false,
+     "depth_at_tag_m": 2.342,
+     "detected": false,
+     "why": "glove colour support 0.02 < 0.08"
+    }
+   ]
+  },
+  {
+   "frame": "frame_016",
+   "regions": 3,
+   "tags": [
+    {
+     "id": 4,
+     "side_px": 132.4,
+     "centre_px": [
+      714.4,
+      681.7
+     ],
+     "support": 0.0,
+     "ring_hsv_median": [
+      140,
+      13,
+      142
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       0,
+       90,
+       165
+      ],
+      [
+       0,
+       5,
+       35
+      ],
+      [
+       67,
+       215,
+       254
+      ]
+     ],
+     "in_search_region": false,
+     "detected": false,
+     "why": "not a glove ID"
+    },
+    {
+     "id": 21,
+     "side_px": 32.0,
+     "centre_px": [
+      1332.5,
+      484.2
+     ],
+     "support": 0.06,
+     "ring_hsv_median": [
+      101,
+      87,
+      160
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       80,
+       95,
+       164
+      ],
+      [
+       2,
+       8,
+       214
+      ],
+      [
+       90,
+       198,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      0.97,
+      1.16
+     ],
+     "pose_without_depth": false,
+     "pose_with_depth": true,
+     "depth_at_tag_m": 2.073,
+     "detected": false,
+     "why": "glove colour support 0.06 < 0.08"
+    }
+   ]
+  },
+  {
+   "frame": "frame_017",
+   "regions": 3,
+   "tags": [
+    {
+     "id": 4,
+     "side_px": 132.4,
+     "centre_px": [
+      714.3,
+      681.8
+     ],
+     "support": 0.0,
+     "ring_hsv_median": [
+      133,
+      13,
+      142
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       0,
+       110,
+       160
+      ],
+      [
+       0,
+       5,
+       34
+      ],
+      [
+       66,
+       212,
+       254
+      ]
+     ],
+     "in_search_region": false,
+     "detected": false,
+     "why": "not a glove ID"
+    },
+    {
+     "id": 21,
+     "side_px": 31.7,
+     "centre_px": [
+      1336.4,
+      489.4
+     ],
+     "support": 0.062,
+     "ring_hsv_median": [
+      99,
+      92,
+      160
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       60,
+       93,
+       165
+      ],
+      [
+       1,
+       5,
+       200
+      ],
+      [
+       111,
+       232,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      0.8,
+      0.98
+     ],
+     "pose_without_depth": false,
+     "pose_with_depth": true,
+     "depth_at_tag_m": 2.081,
+     "detected": false,
+     "why": "glove colour support 0.06 < 0.08"
+    },
+    {
+     "id": 20,
+     "side_px": 25.4,
+     "centre_px": [
+      1289.4,
+      378.1
+     ],
+     "support": 0.021,
+     "ring_hsv_median": [
+      93,
+      8,
+      152
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       50,
+       92,
+       156
+      ],
+      [
+       1,
+       5,
+       236
+      ],
+      [
+       85,
+       177,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      0.79,
+      0.82
+     ],
+     "pose_without_depth": false,
+     "pose_with_depth": false,
+     "depth_at_tag_m": 2.337,
+     "detected": false,
+     "why": "glove colour support 0.02 < 0.08"
+    }
+   ]
+  },
+  {
+   "frame": "frame_018",
+   "regions": 3,
+   "tags": [
+    {
+     "id": 4,
+     "side_px": 132.4,
+     "centre_px": [
+      714.4,
+      681.7
+     ],
+     "support": 0.0,
+     "ring_hsv_median": [
+      140,
+      12,
+      142
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       0,
+       75,
+       156
+      ],
+      [
+       0,
+       5,
+       35
+      ],
+      [
+       67,
+       217,
+       254
+      ]
+     ],
+     "in_search_region": false,
+     "detected": false,
+     "why": "not a glove ID"
+    },
+    {
+     "id": 21,
+     "side_px": 31.9,
+     "centre_px": [
+      1325.2,
+      486.9
+     ],
+     "support": 0.065,
+     "ring_hsv_median": [
+      100,
+      78,
+      159
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       53,
+       92,
+       165
+      ],
+      [
+       2,
+       7,
+       207
+      ],
+      [
+       89,
+       218,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      0.81,
+      0.93
+     ],
+     "pose_without_depth": false,
+     "pose_with_depth": true,
+     "depth_at_tag_m": 2.075,
+     "detected": false,
+     "why": "glove colour support 0.06 < 0.08"
+    },
+    {
+     "id": 20,
+     "side_px": 25.5,
+     "centre_px": [
+      1281.4,
+      377.5
+     ],
+     "support": 0.018,
+     "ring_hsv_median": [
+      96,
+      10,
+      153
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       45,
+       92,
+       150
+      ],
+      [
+       1,
+       5,
+       245
+      ],
+      [
+       88,
+       182,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      0.76,
+      0.82
+     ],
+     "pose_without_depth": false,
+     "pose_with_depth": false,
+     "depth_at_tag_m": 2.339,
+     "detected": false,
+     "why": "glove colour support 0.02 < 0.08"
+    }
+   ]
+  },
+  {
+   "frame": "frame_019",
+   "regions": 2,
+   "tags": [
+    {
+     "id": 4,
+     "side_px": 132.4,
+     "centre_px": [
+      714.3,
+      681.8
+     ],
+     "support": 0.0,
+     "ring_hsv_median": [
+      133,
+      13,
+      142
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       0,
+       75,
+       160
+      ],
+      [
+       0,
+       5,
+       36
+      ],
+      [
+       66,
+       213,
+       254
+      ]
+     ],
+     "in_search_region": false,
+     "detected": false,
+     "why": "not a glove ID"
+    },
+    {
+     "id": 21,
+     "side_px": 32.0,
+     "centre_px": [
+      1326.9,
+      485.6
+     ],
+     "support": 0.05,
+     "ring_hsv_median": [
+      100,
+      85,
+      159
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       70,
+       92,
+       165
+      ],
+      [
+       1,
+       7,
+       205
+      ],
+      [
+       87,
+       205,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      0.65,
+      0.84
+     ],
+     "pose_without_depth": false,
+     "pose_with_depth": true,
+     "depth_at_tag_m": 2.07,
+     "detected": false,
+     "why": "glove colour support 0.05 < 0.08"
+    },
+    {
+     "id": 20,
+     "side_px": 25.8,
+     "centre_px": [
+      1281.5,
+      375.5
+     ],
+     "support": 0.027,
+     "ring_hsv_median": [
+      95,
+      10,
+      153
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       0,
+       91,
+       160
+      ],
+      [
+       1,
+       8,
+       252
+      ],
+      [
+       85,
+       176,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      0.65,
+      0.71
+     ],
+     "pose_without_depth": false,
+     "pose_with_depth": false,
+     "depth_at_tag_m": 2.334,
+     "detected": false,
+     "why": "glove colour support 0.03 < 0.08"
+    }
+   ]
+  },
+  {
+   "frame": "frame_020",
+   "regions": 2,
+   "tags": [
+    {
+     "id": 4,
+     "side_px": 132.3,
+     "centre_px": [
+      714.4,
+      681.7
+     ],
+     "support": 0.0,
+     "ring_hsv_median": [
+      140,
+      12,
+      142
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       0,
+       75,
+       160
+      ],
+      [
+       0,
+       5,
+       36
+      ],
+      [
+       66,
+       216,
+       254
+      ]
+     ],
+     "in_search_region": false,
+     "detected": false,
+     "why": "not a glove ID"
+    },
+    {
+     "id": 20,
+     "side_px": 25.7,
+     "centre_px": [
+      1283.1,
+      376.0
+     ],
+     "support": 0.018,
+     "ring_hsv_median": [
+      94,
+      10,
+      153
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       15,
+       92,
+       156
+      ],
+      [
+       1,
+       6,
+       255
+      ],
+      [
+       86,
+       170,
+       255
+      ]
+     ],
+     "in_search_region": false,
+     "reprojection_px": [
+      0.51,
+      0.54
+     ],
+     "pose_without_depth": false,
+     "pose_with_depth": true,
+     "depth_at_tag_m": 2.332,
+     "detected": false,
+     "why": "glove colour support 0.02 < 0.08"
+    },
+    {
+     "id": 21,
+     "side_px": 31.7,
+     "centre_px": [
+      1330.3,
+      485.4
+     ],
+     "support": 0.066,
+     "ring_hsv_median": [
+      101,
+      90,
+      159
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       50,
+       92,
+       165
+      ],
+      [
+       1,
+       6,
+       193
+      ],
+      [
+       94,
+       219,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      0.78,
+      0.93
+     ],
+     "pose_without_depth": false,
+     "pose_with_depth": true,
+     "depth_at_tag_m": 2.076,
+     "detected": false,
+     "why": "glove colour support 0.07 < 0.08"
+    }
+   ]
+  },
+  {
+   "frame": "frame_021",
+   "regions": 3,
+   "tags": [
+    {
+     "id": 4,
+     "side_px": 132.4,
+     "centre_px": [
+      714.4,
+      681.8
+     ],
+     "support": 0.0,
+     "ring_hsv_median": [
+      133,
+      13,
+      142
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       0,
+       75,
+       160
+      ],
+      [
+       0,
+       5,
+       31
+      ],
+      [
+       66,
+       212,
+       254
+      ]
+     ],
+     "in_search_region": false,
+     "detected": false,
+     "why": "not a glove ID"
+    },
+    {
+     "id": 21,
+     "side_px": 31.5,
+     "centre_px": [
+      1326.4,
+      485.0
+     ],
+     "support": 0.057,
+     "ring_hsv_median": [
+      98,
+      71,
+      159
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       50,
+       92,
+       165
+      ],
+      [
+       1,
+       5,
+       180
+      ],
+      [
+       97,
+       225,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      0.75,
+      0.92
+     ],
+     "pose_without_depth": false,
+     "pose_with_depth": true,
+     "depth_at_tag_m": 2.076,
+     "detected": false,
+     "why": "glove colour support 0.06 < 0.08"
+    },
+    {
+     "id": 20,
+     "side_px": 25.6,
+     "centre_px": [
+      1280.1,
+      377.0
+     ],
+     "support": 0.017,
+     "ring_hsv_median": [
+      96,
+      8,
+      152
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       0,
+       92,
+       150
+      ],
+      [
+       0,
+       5,
+       252
+      ],
+      [
+       87,
+       170,
+       255
+      ]
+     ],
+     "in_search_region": false,
+     "reprojection_px": [
+      0.61,
+      0.63
+     ],
+     "pose_without_depth": false,
+     "pose_with_depth": false,
+     "depth_at_tag_m": 2.329,
+     "detected": false,
+     "why": "glove colour support 0.02 < 0.08"
+    }
+   ]
+  },
+  {
+   "frame": "frame_028",
+   "regions": 2,
+   "tags": [
+    {
+     "id": 4,
+     "side_px": 132.3,
+     "centre_px": [
+      714.3,
+      681.7
+     ],
+     "support": 0.0,
+     "ring_hsv_median": [
+      133,
+      13,
+      142
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       0,
+       90,
+       160
+      ],
+      [
+       0,
+       5,
+       36
+      ],
+      [
+       67,
+       217,
+       254
+      ]
+     ],
+     "in_search_region": false,
+     "detected": false,
+     "why": "not a glove ID"
+    },
+    {
+     "id": 20,
+     "side_px": 24.1,
+     "centre_px": [
+      1269.8,
+      376.4
+     ],
+     "support": 0.021,
+     "ring_hsv_median": [
+      110,
+      10,
+      152
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       4,
+       93,
+       152
+      ],
+      [
+       1,
+       5,
+       252
+      ],
+      [
+       93,
+       204,
+       255
+      ]
+     ],
+     "in_search_region": false,
+     "reprojection_px": [
+      0.85,
+      0.92
+     ],
+     "pose_without_depth": true,
+     "pose_with_depth": true,
+     "depth_at_tag_m": 2.415,
+     "detected": false,
+     "why": "glove colour support 0.02 < 0.08"
+    },
+    {
+     "id": 21,
+     "side_px": 31.2,
+     "centre_px": [
+      1323.9,
+      495.6
+     ],
+     "support": 0.043,
+     "ring_hsv_median": [
+      98,
+      113,
+      145
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       75,
+       94,
+       165
+      ],
+      [
+       2,
+       9,
+       172
+      ],
+      [
+       84,
+       219,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      0.99,
+      1.16
+     ],
+     "pose_without_depth": false,
+     "pose_with_depth": true,
+     "depth_at_tag_m": 2.1,
+     "detected": false,
+     "why": "glove colour support 0.04 < 0.08"
+    }
+   ]
+  },
+  {
+   "frame": "frame_029",
+   "regions": 1,
+   "tags": [
+    {
+     "id": 4,
+     "side_px": 132.4,
+     "centre_px": [
+      714.4,
+      681.7
+     ],
+     "support": 0.0,
+     "ring_hsv_median": [
+      140,
+      13,
+      142
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       0,
+       75,
+       160
+      ],
+      [
+       0,
+       5,
+       35
+      ],
+      [
+       67,
+       214,
+       254
+      ]
+     ],
+     "in_search_region": false,
+     "detected": false,
+     "why": "not a glove ID"
+    },
+    {
+     "id": 21,
+     "side_px": 31.3,
+     "centre_px": [
+      1325.5,
+      503.4
+     ],
+     "support": 0.042,
+     "ring_hsv_median": [
+      100,
+      107,
+      146
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       55,
+       92,
+       165
+      ],
+      [
+       1,
+       8,
+       192
+      ],
+      [
+       80,
+       210,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      0.83,
+      1.02
+     ],
+     "pose_without_depth": false,
+     "pose_with_depth": true,
+     "depth_at_tag_m": 2.094,
+     "detected": false,
+     "why": "glove colour support 0.04 < 0.08"
+    }
+   ]
+  },
+  {
+   "frame": "frame_030",
+   "regions": 2,
+   "tags": [
+    {
+     "id": 4,
+     "side_px": 132.3,
+     "centre_px": [
+      714.3,
+      681.7
+     ],
+     "support": 0.0,
+     "ring_hsv_median": [
+      133,
+      12,
+      142
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       0,
+       75,
+       165
+      ],
+      [
+       0,
+       5,
+       32
+      ],
+      [
+       66,
+       216,
+       254
+      ]
+     ],
+     "in_search_region": false,
+     "detected": false,
+     "why": "not a glove ID"
+    },
+    {
+     "id": 20,
+     "side_px": 24.9,
+     "centre_px": [
+      1273.1,
+      368.5
+     ],
+     "support": 0.018,
+     "ring_hsv_median": [
+      99,
+      12,
+      153
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       70,
+       93,
+       160
+      ],
+      [
+       1,
+       8,
+       250
+      ],
+      [
+       92,
+       168,
+       255
+      ]
+     ],
+     "in_search_region": false,
+     "reprojection_px": [
+      0.7,
+      0.77
+     ],
+     "pose_without_depth": false,
+     "pose_with_depth": false,
+     "depth_at_tag_m": 2.424,
+     "detected": false,
+     "why": "glove colour support 0.02 < 0.08"
+    },
+    {
+     "id": 21,
+     "side_px": 31.8,
+     "centre_px": [
+      1325.7,
+      503.2
+     ],
+     "support": 0.039,
+     "ring_hsv_median": [
+      98,
+      115,
+      145
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       48,
+       93,
+       169
+      ],
+      [
+       2,
+       8,
+       202
+      ],
+      [
+       78,
+       202,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      1.02,
+      1.23
+     ],
+     "pose_without_depth": false,
+     "pose_with_depth": true,
+     "depth_at_tag_m": 2.097,
+     "detected": false,
+     "why": "glove colour support 0.04 < 0.08"
+    }
+   ]
+  },
+  {
+   "frame": "frame_031",
+   "regions": 3,
+   "tags": [
+    {
+     "id": 4,
+     "side_px": 132.3,
+     "centre_px": [
+      714.5,
+      681.6
+     ],
+     "support": 0.0,
+     "ring_hsv_median": [
+      140,
+      12,
+      142
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       0,
+       75,
+       160
+      ],
+      [
+       0,
+       5,
+       35
+      ],
+      [
+       66,
+       214,
+       254
+      ]
+     ],
+     "in_search_region": false,
+     "detected": false,
+     "why": "not a glove ID"
+    },
+    {
+     "id": 21,
+     "side_px": 31.1,
+     "centre_px": [
+      1322.0,
+      505.0
+     ],
+     "support": 0.041,
+     "ring_hsv_median": [
+      98,
+      104,
+      147
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       70,
+       93,
+       165
+      ],
+      [
+       1,
+       7,
+       220
+      ],
+      [
+       80,
+       232,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      0.14,
+      0.17
+     ],
+     "pose_without_depth": false,
+     "pose_with_depth": false,
+     "depth_at_tag_m": 2.097,
+     "detected": false,
+     "why": "glove colour support 0.04 < 0.08"
+    }
+   ]
+  },
+  {
+   "frame": "frame_032",
+   "regions": 3,
+   "tags": [
+    {
+     "id": 4,
+     "side_px": 132.3,
+     "centre_px": [
+      714.3,
+      681.6
+     ],
+     "support": 0.0,
+     "ring_hsv_median": [
+      140,
+      12,
+      142
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       0,
+       75,
+       165
+      ],
+      [
+       0,
+       5,
+       35
+      ],
+      [
+       67,
+       216,
+       254
+      ]
+     ],
+     "in_search_region": false,
+     "detected": false,
+     "why": "not a glove ID"
+    },
+    {
+     "id": 20,
+     "side_px": 25.0,
+     "centre_px": [
+      1270.4,
+      368.6
+     ],
+     "support": 0.017,
+     "ring_hsv_median": [
+      110,
+      10,
+      152
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       30,
+       93,
+       165
+      ],
+      [
+       1,
+       6,
+       248
+      ],
+      [
+       93,
+       173,
+       255
+      ]
+     ],
+     "in_search_region": false,
+     "reprojection_px": [
+      0.78,
+      0.83
+     ],
+     "pose_without_depth": true,
+     "pose_with_depth": true,
+     "depth_at_tag_m": 2.425,
+     "detected": false,
+     "why": "glove colour support 0.02 < 0.08"
+    },
+    {
+     "id": 21,
+     "side_px": 31.5,
+     "centre_px": [
+      1323.1,
+      502.9
+     ],
+     "support": 0.036,
+     "ring_hsv_median": [
+      99,
+      116,
+      149
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       70,
+       94,
+       164
+      ],
+      [
+       1,
+       9,
+       186
+      ],
+      [
+       77,
+       198,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      0.87,
+      1.08
+     ],
+     "pose_without_depth": false,
+     "pose_with_depth": true,
+     "depth_at_tag_m": 2.097,
+     "detected": false,
+     "why": "glove colour support 0.04 < 0.08"
+    }
+   ]
+  },
+  {
+   "frame": "frame_033",
+   "regions": 3,
+   "tags": [
+    {
+     "id": 4,
+     "side_px": 132.3,
+     "centre_px": [
+      714.5,
+      681.6
+     ],
+     "support": 0.0,
+     "ring_hsv_median": [
+      133,
+      13,
+      142
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       0,
+       75,
+       156
+      ],
+      [
+       0,
+       5,
+       36
+      ],
+      [
+       67,
+       206,
+       254
+      ]
+     ],
+     "in_search_region": false,
+     "detected": false,
+     "why": "not a glove ID"
+    },
+    {
+     "id": 20,
+     "side_px": 24.7,
+     "centre_px": [
+      1270.0,
+      368.6
+     ],
+     "support": 0.017,
+     "ring_hsv_median": [
+      105,
+      12,
+      153
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       70,
+       93,
+       165
+      ],
+      [
+       2,
+       8,
+       250
+      ],
+      [
+       91,
+       171,
+       255
+      ]
+     ],
+     "in_search_region": false,
+     "reprojection_px": [
+      0.78,
+      0.83
+     ],
+     "pose_without_depth": true,
+     "pose_with_depth": true,
+     "depth_at_tag_m": 2.423,
+     "detected": false,
+     "why": "glove colour support 0.02 < 0.08"
+    },
+    {
+     "id": 21,
+     "side_px": 32.7,
+     "centre_px": [
+      1321.2,
+      501.0
+     ],
+     "support": 0.033,
+     "ring_hsv_median": [
+      99,
+      115,
+      146
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       83,
+       96,
+       173
+      ],
+      [
+       3,
+       11,
+       209
+      ],
+      [
+       75,
+       167,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      0.67,
+      0.8
+     ],
+     "pose_without_depth": false,
+     "pose_with_depth": false,
+     "depth_at_tag_m": 2.106,
+     "detected": false,
+     "why": "glove colour support 0.03 < 0.08"
+    }
+   ]
+  },
+  {
+   "frame": "frame_034",
+   "regions": 2,
+   "tags": [
+    {
+     "id": 4,
+     "side_px": 132.2,
+     "centre_px": [
+      714.4,
+      681.6
+     ],
+     "support": 0.0,
+     "ring_hsv_median": [
+      140,
+      13,
+      142
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       0,
+       75,
+       165
+      ],
+      [
+       0,
+       5,
+       34
+      ],
+      [
+       67,
+       215,
+       254
+      ]
+     ],
+     "in_search_region": false,
+     "detected": false,
+     "why": "not a glove ID"
+    },
+    {
+     "id": 21,
+     "side_px": 31.5,
+     "centre_px": [
+      1325.4,
+      502.9
+     ],
+     "support": 0.031,
+     "ring_hsv_median": [
+      99,
+      108,
+      149
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       73,
+       93,
+       165
+      ],
+      [
+       2,
+       8,
+       184
+      ],
+      [
+       75,
+       204,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      0.8,
+      0.99
+     ],
+     "pose_without_depth": false,
+     "pose_with_depth": true,
+     "depth_at_tag_m": 2.103,
+     "detected": false,
+     "why": "glove colour support 0.03 < 0.08"
+    }
+   ]
+  },
+  {
+   "frame": "frame_035",
+   "regions": 4,
+   "tags": [
+    {
+     "id": 4,
+     "side_px": 132.3,
+     "centre_px": [
+      714.5,
+      681.5
+     ],
+     "support": 0.0,
+     "ring_hsv_median": [
+      133,
+      13,
+      142
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       0,
+       75,
+       160
+      ],
+      [
+       0,
+       5,
+       35
+      ],
+      [
+       67,
+       207,
+       254
+      ]
+     ],
+     "in_search_region": false,
+     "detected": false,
+     "why": "not a glove ID"
+    },
+    {
+     "id": 21,
+     "side_px": 31.9,
+     "centre_px": [
+      1324.0,
+      503.6
+     ],
+     "support": 0.033,
+     "ring_hsv_median": [
+      98,
+      112,
+      145
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       55,
+       93,
+       164
+      ],
+      [
+       1,
+       9,
+       203
+      ],
+      [
+       74,
+       191,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      0.69,
+      0.9
+     ],
+     "pose_without_depth": false,
+     "pose_with_depth": true,
+     "depth_at_tag_m": 2.104,
+     "detected": false,
+     "why": "glove colour support 0.03 < 0.08"
+    }
+   ]
+  },
+  {
+   "frame": "frame_036",
+   "regions": 3,
+   "tags": [
+    {
+     "id": 4,
+     "side_px": 132.3,
+     "centre_px": [
+      714.4,
+      681.5
+     ],
+     "support": 0.0,
+     "ring_hsv_median": [
+      140,
+      13,
+      142
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       0,
+       75,
+       160
+      ],
+      [
+       0,
+       5,
+       39
+      ],
+      [
+       68,
+       216,
+       254
+      ]
+     ],
+     "in_search_region": false,
+     "detected": false,
+     "why": "not a glove ID"
+    },
+    {
+     "id": 21,
+     "side_px": 31.7,
+     "centre_px": [
+      1317.1,
+      503.7
+     ],
+     "support": 0.036,
+     "ring_hsv_median": [
+      99,
+      109,
+      151
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       51,
+       93,
+       165
+      ],
+      [
+       1,
+       8,
+       211
+      ],
+      [
+       76,
+       194,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      0.64,
+      0.86
+     ],
+     "pose_without_depth": false,
+     "pose_with_depth": true,
+     "depth_at_tag_m": 2.106,
+     "detected": false,
+     "why": "glove colour support 0.04 < 0.08"
+    }
+   ]
+  },
+  {
+   "frame": "frame_037",
+   "regions": 2,
+   "tags": [
+    {
+     "id": 4,
+     "side_px": 132.3,
+     "centre_px": [
+      714.6,
+      681.5
+     ],
+     "support": 0.0,
+     "ring_hsv_median": [
+      138,
+      12,
+      142
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       0,
+       75,
+       160
+      ],
+      [
+       0,
+       5,
+       36
+      ],
+      [
+       67,
+       206,
+       254
+      ]
+     ],
+     "in_search_region": false,
+     "detected": false,
+     "why": "not a glove ID"
+    },
+    {
+     "id": 21,
+     "side_px": 32.3,
+     "centre_px": [
+      1316.7,
+      500.4
+     ],
+     "support": 0.029,
+     "ring_hsv_median": [
+      99,
+      113,
+      148
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       80,
+       95,
+       173
+      ],
+      [
+       2,
+       11,
+       206
+      ],
+      [
+       76,
+       167,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      0.76,
+      0.81
+     ],
+     "pose_without_depth": false,
+     "pose_with_depth": false,
+     "depth_at_tag_m": 2.119,
+     "detected": false,
+     "why": "glove colour support 0.03 < 0.08"
+    },
+    {
+     "id": 20,
+     "side_px": 24.7,
+     "centre_px": [
+      1264.6,
+      369.3
+     ],
+     "support": 0.018,
+     "ring_hsv_median": [
+      106,
+      10,
+      152
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       66,
+       93,
+       156
+      ],
+      [
+       1,
+       5,
+       250
+      ],
+      [
+       92,
+       163,
+       255
+      ]
+     ],
+     "in_search_region": false,
+     "reprojection_px": [
+      0.72,
+      0.78
+     ],
+     "pose_without_depth": false,
+     "pose_with_depth": false,
+     "depth_at_tag_m": 2.423,
+     "detected": false,
+     "why": "glove colour support 0.02 < 0.08"
+    }
+   ]
+  },
+  {
+   "frame": "frame_038",
+   "regions": 4,
+   "tags": [
+    {
+     "id": 4,
+     "side_px": 132.2,
+     "centre_px": [
+      714.4,
+      681.5
+     ],
+     "support": 0.0,
+     "ring_hsv_median": [
+      140,
+      13,
+      142
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       0,
+       75,
+       160
+      ],
+      [
+       0,
+       5,
+       38
+      ],
+      [
+       68,
+       218,
+       254
+      ]
+     ],
+     "in_search_region": false,
+     "detected": false,
+     "why": "not a glove ID"
+    },
+    {
+     "id": 20,
+     "side_px": 24.6,
+     "centre_px": [
+      1266.6,
+      368.5
+     ],
+     "support": 0.019,
+     "ring_hsv_median": [
+      101,
+      10,
+      153
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       33,
+       92,
+       165
+      ],
+      [
+       1,
+       7,
+       249
+      ],
+      [
+       90,
+       168,
+       255
+      ]
+     ],
+     "in_search_region": false,
+     "reprojection_px": [
+      0.72,
+      0.79
+     ],
+     "pose_without_depth": false,
+     "pose_with_depth": true,
+     "depth_at_tag_m": 2.418,
+     "detected": false,
+     "why": "glove colour support 0.02 < 0.08"
+    },
+    {
+     "id": 21,
+     "side_px": 32.5,
+     "centre_px": [
+      1319.4,
+      500.3
+     ],
+     "support": 0.034,
+     "ring_hsv_median": [
+      101,
+      122,
+      145
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       80,
+       94,
+       174
+      ],
+      [
+       1,
+       11,
+       194
+      ],
+      [
+       74,
+       169,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      0.93,
+      1.01
+     ],
+     "pose_without_depth": false,
+     "pose_with_depth": false,
+     "depth_at_tag_m": 2.11,
+     "detected": false,
+     "why": "glove colour support 0.03 < 0.08"
+    }
+   ]
+  },
+  {
+   "frame": "frame_039",
+   "regions": 5,
+   "tags": [
+    {
+     "id": 4,
+     "side_px": 132.3,
+     "centre_px": [
+      714.6,
+      681.4
+     ],
+     "support": 0.0,
+     "ring_hsv_median": [
+      140,
+      13,
+      142
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       0,
+       75,
+       165
+      ],
+      [
+       0,
+       5,
+       35
+      ],
+      [
+       66,
+       216,
+       254
+      ]
+     ],
+     "in_search_region": false,
+     "detected": false,
+     "why": "not a glove ID"
+    },
+    {
+     "id": 21,
+     "side_px": 31.2,
+     "centre_px": [
+      1311.9,
+      500.5
+     ],
+     "support": 0.041,
+     "ring_hsv_median": [
+      99,
+      109,
+      150
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       70,
+       95,
+       170
+      ],
+      [
+       1,
+       8,
+       189
+      ],
+      [
+       76,
+       200,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      0.7,
+      0.88
+     ],
+     "pose_without_depth": false,
+     "pose_with_depth": false,
+     "depth_at_tag_m": 2.105,
+     "detected": false,
+     "why": "glove colour support 0.04 < 0.08"
+    },
+    {
+     "id": 20,
+     "side_px": 24.0,
+     "centre_px": [
+      1260.2,
+      369.7
+     ],
+     "support": 0.031,
+     "ring_hsv_median": [
+      103,
+      10,
+      153
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       75,
+       93,
+       160
+      ],
+      [
+       1,
+       7,
+       245
+      ],
+      [
+       91,
+       184,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      0.82,
+      0.88
+     ],
+     "pose_without_depth": false,
+     "pose_with_depth": false,
+     "depth_at_tag_m": 2.424,
+     "detected": false,
+     "why": "glove colour support 0.03 < 0.08"
+    }
+   ]
+  },
+  {
+   "frame": "frame_040",
+   "regions": 2,
+   "tags": [
+    {
+     "id": 4,
+     "side_px": 132.3,
+     "centre_px": [
+      714.4,
+      681.5
+     ],
+     "support": 0.0,
+     "ring_hsv_median": [
+      140,
+      13,
+      142
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       0,
+       75,
+       165
+      ],
+      [
+       0,
+       5,
+       35
+      ],
+      [
+       67,
+       212,
+       254
+      ]
+     ],
+     "in_search_region": false,
+     "detected": false,
+     "why": "not a glove ID"
+    },
+    {
+     "id": 21,
+     "side_px": 31.3,
+     "centre_px": [
+      1307.1,
+      501.4
+     ],
+     "support": 0.032,
+     "ring_hsv_median": [
+      99,
+      104,
+      153
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       60,
+       94,
+       167
+      ],
+      [
+       1,
+       9,
+       195
+      ],
+      [
+       76,
+       198,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      0.47,
+      0.59
+     ],
+     "pose_without_depth": false,
+     "pose_with_depth": true,
+     "depth_at_tag_m": 2.114,
+     "detected": false,
+     "why": "glove colour support 0.03 < 0.08"
+    }
+   ]
+  },
+  {
+   "frame": "frame_041",
+   "regions": 3,
+   "tags": [
+    {
+     "id": 4,
+     "side_px": 132.3,
+     "centre_px": [
+      714.6,
+      681.4
+     ],
+     "support": 0.0,
+     "ring_hsv_median": [
+      133,
+      13,
+      142
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       0,
+       75,
+       160
+      ],
+      [
+       0,
+       5,
+       35
+      ],
+      [
+       67,
+       209,
+       254
+      ]
+     ],
+     "in_search_region": false,
+     "detected": false,
+     "why": "not a glove ID"
+    },
+    {
+     "id": 21,
+     "side_px": 30.2,
+     "centre_px": [
+      1298.6,
+      497.0
+     ],
+     "support": 0.024,
+     "ring_hsv_median": [
+      100,
+      89,
+      155
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       75,
+       95,
+       156
+      ],
+      [
+       1,
+       4,
+       195
+      ],
+      [
+       128,
+       254,
+       255
+      ]
+     ],
+     "in_search_region": false,
+     "reprojection_px": [
+      0.21,
+      0.39
+     ],
+     "pose_without_depth": true,
+     "pose_with_depth": true,
+     "depth_at_tag_m": 2.114,
+     "detected": false,
+     "why": "glove colour support 0.02 < 0.08"
+    }
+   ]
+  }
+ ]
+}

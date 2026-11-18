@@ -95,6 +95,24 @@ mount is insulated or a USB isolator is fitted, Blue's sensor cable runs to Silv
 
 To move the sensor back: delete both lines, plug it into Blue's laptop, restart both sessions.
 
+### Glove tags: check and calibrate a camera
+
+`glove_check.py` runs on the computer a camera is plugged into (1080p frames do not cross the network)
+and shows what the glove detector sees with that camera's perception settings, frame by frame: every
+tag in the image, detected or not and why (colour support, search region, pose), the colour around it,
+and the grip position (world frame for the overhead camera). It saves raw frames for offline tuning:
+
+```bash
+scripts/hw/lab.sh session nuc exec python3 fabric_ws/scripts/hw/glove_check.py --camera overhead --seconds 60
+scripts/hw/lab.sh session blue exec python3 fabric_ws/scripts/hw/glove_check.py --camera blue_wrist --seconds 60
+```
+
+Output: `~/fabric_ws/run/glove_check/<camera>_<time>/` (`frames.jsonl`, saved colour and depth frames,
+annotated JPEGs). `--params FILE` tries other settings live. Offline on the laptop, `glove_tune.py`
+measures the glove colour near the tags, the look-alikes in the scene, and evaluates any parameter set
+on the saved frames with annotated images. The overhead camera's calibration of 2026-11-18, step by
+step: `experiments/hardware/sessions/2026-11-18_glove_test/README.md`.
+
 ### After unplugging anything
 
 - **F/T sensor:** the Rokubi node does not reopen its port after a replug. It stays up and silent,

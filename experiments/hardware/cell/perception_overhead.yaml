@@ -5,6 +5,10 @@
 #   against a light matte floor), min_component_area and glove_min_area_px (pixel areas: these are
 #   for half-resolution images), static_exclusion_mask (a wrist camera's own gripper).
 # Inspect fabric/labels and fabric/depth_valid with publish_debug_images: true while tuning.
+#
+# MEASURED 2026-11-18 (lab log 2026-11-18, "Glove test"; scripts/hw/glove_check.py, 26 frames, both gloves
+# at ~2.1-2.4 m, tags 24-32 px): glove colour, tag_depth_gate_m, tag_roi_upscale. Still template values:
+# tag_to_grip_offsets_m (pivot calibration), workspace_roi, cloth_* and the depth noise model.
 /**:
   ros__parameters:
     glove_tag_dictionary: DICT_4X4_50
@@ -12,12 +16,16 @@
     - 20
     - 21
     glove_tag_size_m: 0.08
+    # Teal rubber gloves under the overhead lights: H 90-94 (shaded parts to 101), S median 140, V 44-192.
+    # H <= 100 excludes the blue cable pile behind the robots (H 102-105); S >= 100 excludes dark
+    # teal-grey trousers (S 70-100). Leaves ~7 colour regions per frame (the detector searches the
+    # whole image above 8); support around the tags 0.24-0.31 (gate 0.08).
     glove_hsv_lower:
+    - 88
+    - 100
     - 35
-    - 80
-    - 60
     glove_hsv_upper:
-    - 90
+    - 100
     - 255
     - 255
     tag_to_grip_offsets_m:
@@ -32,8 +40,18 @@
     tag_pixel_stddev: 0.7
     tag_position_floor_m: 0.01
     glove_min_area_px: 25
+    # Tag search, measured on 43 tag sightings (24-32 px): the 2x enlarged search gives precise corners
+    # (reprojection 0.03-0.11 px) but lost tag 20 in 4 frames (glare on the print); the original-size
+    # search found all 43 but with coarse corners (to 1.4 px; depth residual of the right pose to
+    # 11.9 mm, at the gate). Both, with 2x preferred: 43/43, reprojection <= 1.21 px, residual <= 8.9 mm.
     tag_roi_upscale: 2
+    tag_roi_fallback_unscaled: true
     tag_use_depth: true
+    # Depth residual of a tag pose (mean of 5 samples, tilt only), measured with the search above: right
+    # pose 0.7-8.9 mm (median 5.0), wrong pose of the ambiguous pair 25.7-32.8 mm (36 ambiguous tags at
+    # 2.1-2.4 m). 12 mm lies between; the default 5 mm (simulated depth) rejected 16 of 44 sightings.
+    # The rule that the other pose must fit at least 2x worse still applies.
+    tag_depth_gate_m: 0.012
     workspace_roi:
     - 0.18
     - 0.5

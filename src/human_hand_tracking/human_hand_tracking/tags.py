@@ -24,13 +24,19 @@ class GloveDetector:
                  hsv_lower=(35, 80, 60), hsv_upper=(90, 255, 255),
                  dictionary='DICT_4X4_50', max_reprojection_px=2.0,
                  min_color_support=0.08, pixel_stddev=0.7, position_floor_m=0.01,
-                 min_glove_area_px=100, depth_gate_m=0.005, max_range_correction=0.25, roi_upscale=1):
+                 min_glove_area_px=100, depth_gate_m=0.005, max_range_correction=0.25, roi_upscale=1,
+                 roi_fallback_unscaled=False):
         # With registered depth (detect(..., depth=)): an ambiguous planar pose is resolved by
         # the candidate whose tilt matches the measured depth within depth_gate_m (mean, after
         # removing the offset), and the tag's range is rescaled to the measured depth; a tag
         # whose range would change by more than max_range_correction (fraction) is rejected.
         # roi_upscale: each glove region is enlarged this many times (cubic) before the ArUco
         # search; tags only ~17 px wide are otherwise often missed.
+        # roi_fallback_unscaled (with roi_upscale > 1): also search each region at its original size
+        # and keep a glove tag that only this search found. The enlarged search localises corners
+        # better and wins where both find a tag; on the real overhead camera (25-32 px tags, glare on
+        # the print) it lost 4 of 43 tags that the original-size search found (lab log 2026-11-18).
+        self.roi_fallback_unscaled = bool(roi_fallback_unscaled)
         self.depth_gate = float(depth_gate_m)
         self.max_range_correction = float(max_range_correction)
         if int(roi_upscale) != roi_upscale or not 1 <= roi_upscale <= 4:
@@ -143,6 +149,14 @@ class GloveDetector:
             corners += [(quad + 0.5) / s - 0.5 + np.float32([x0, y0]) if s > 1 else quad + np.float32([x0, y0])
                         for quad in found]
             ids += tags
+        if s > 1 and self.roi_fallback_unscaled:
+            missing = set(self.identities) - set(ids)
+            for x0, y0, x1, y1 in boxes if missing else []:
+                found, tags = self._aruco(np.ascontiguousarray(bgr[y0:y1, x0:x1]))
+                for quad, tag in zip(found, tags):
+                    if tag in missing:
+                        corners.append(quad + np.float32([x0, y0]))
+                        ids.append(tag)
         return corners, (np.array(ids, np.int32).reshape(-1, 1) if ids else None)
 
     def depth_fit(self, rvec, tvec, points, depth):
