@@ -13,7 +13,7 @@ Measure and record:
 | Rest width/height | Measure the unstretched ply along the selected material u/v directions. Set `mesh.width_m`, `height_m`. Defaults are simulator examples. |
 | Dry mass and area | Weigh the actual sheet; compute `areal_density_kg_m2 = mass_kg/(width_m*height_m)`. Exclude grippers/tags/gloves from sheet mass. |
 | Weave orientation | Identify warp/weft and map them to u/v. Record which physical corner is `(0,0)`. Do not rotate the sheet or swap attachments without updating the mapping. |
-| Attachment locations | Define the cloth contact point at Blue `(0,0)`, Silver `(1,0)`, human left `(0,1)`, human right `(1,1)`. This version models point corners, not finite contact patches. |
+| Attachment locations | Define the cloth contact point at Blue `(0,0)`, Silver `(1,0)`, human right `(0,1)`, human left `(1,1)` (the person's hands, facing the robots). This version models point corners, not finite contact patches. |
 | Operating envelope | Record camera distances, sheet speed/acceleration, expected sag and permitted slack. No self-contact, table contact or obstacle contact is supported. |
 | Material coefficients | Start with nominal Style3D values only for shadow tests. These are effective solver coefficients, not cured-composite elastic moduli. Joint parameter identification is not provided yet. |
 
@@ -91,7 +91,7 @@ Repeat for Silver with its measured transform. Confirm the actual end-effector f
 
 ## 5. Tagged gloves and pinch-point calibration
 
-Use distinct persistent tags for human left/right, with a white quiet border and measured outer-black-square size. Example IDs are 20/21 in `DICT_4X4_50`, separate from robot localization IDs. Both gloves may share one distinctive colour. Use non-glove-coloured light sleeves and a contrasting background when using HSV sheet segmentation. A flexible or bent tag violates the planar pose model; prefer a rigid cuff/tag fixture.
+Use distinct persistent tags for human left/right, with a white quiet border and measured outer-black-square size. The cell uses 21 (left hand) and 20 (right hand) in `DICT_4X4_50`, separate from robot localization IDs. Both gloves may share one distinctive colour. Use non-glove-coloured light sleeves and a contrasting background when using HSV sheet segmentation. A flexible or bent tag violates the planar pose model; prefer a rigid cuff/tag fixture.
 
 For each glove, measure the vector from tag centre to the actual fabric pinch point **in tag coordinates**. OpenCV tag axes are x right, y up on the printed face, z out of that face. Enter left xyz then right xyz in `tag_to_grip_offsets_m`. A practical calibration is to hold the pinch point against a fixed metrology target while rotating the rigid tag fixture through several poses, solve for the constant offset, and validate on withheld poses. The current tool consumes the calibrated offset; it does not automate this calibration fit.
 

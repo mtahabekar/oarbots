@@ -15,7 +15,7 @@ def test_tag_pose_offset_and_positive_covariance():
     rvec = np.array([[3.0], [.12], [.15]])
     tvec = np.array([[.06], [.02], [.7]])
     points = cv2.projectPoints(detector.object_points, rvec, tvec, calibration(), None)[0][:, 0]
-    result = detector.from_corners(20, points, calibration(), np.zeros(5))
+    result = detector.from_corners(21, points, calibration(), np.zeros(5))  # tag 21: the left hand
     assert result is not None and result.hand_id == 'human_left'
     np.testing.assert_allclose(result.position, cv2.Rodrigues(rvec)[0] @ [.01, -.015, .02] + tvec.ravel(), atol=1e-6)
     assert np.linalg.eigvalsh(result.covariance).min() >= .01**2 - 1e-10
@@ -36,7 +36,8 @@ def test_rendered_same_colour_gloves_have_tag_identity_and_missing_stays_missing
     draw_tag(image, detector.dictionary, 20, 420, 180)
     mask, hands = detector.detect(image, calibration(), np.zeros(5))
     assert {hand.hand_id for hand in hands} == {'human_left', 'human_right'}
-    assert next(hand for hand in hands if hand.hand_id == 'human_left').position[0] > 0
+    # Identity comes from the tag, not the colour: tag 21 (left hand) was drawn on the image's left.
+    assert next(hand for hand in hands if hand.hand_id == 'human_left').position[0] < 0
     assert mask[200, 110]  # black marker pixels are excluded as well as glove colour
     image[:] = (0, 220, 0)
     assert detector.detect(image, calibration(), np.zeros(5))[1] == []
@@ -54,7 +55,7 @@ def test_duplicate_tag_or_absent_colour_support_cannot_supply_identity():
 
 
 def measurement(camera='a', x=1., stamp=1_000_000_000, covariance=None):
-    return Measurement('human_left', 20, camera, stamp, np.array([x, 0., 1.]),
+    return Measurement('human_left', 21, camera, stamp, np.array([x, 0., 1.]),
                        np.eye(3)*.01**2 if covariance is None else covariance)
 
 
@@ -116,7 +117,7 @@ def test_glove_region_search_matches_full_frame_and_skips_tags_without_glove_col
     draw_tag(image, detector.dictionary, 21, 1400, 600)  # on white: no glove nearby
     k = np.array([[910., 0., 960.], [0., 910., 540.], [0., 0., 1.]])
     mask, hands = detector.detect(image, k, np.zeros(5))
-    assert [hand.hand_id for hand in hands] == ['human_left']
+    assert [hand.hand_id for hand in hands] == ['human_right']  # tag 20: the right hand
     # Same corners as an unrestricted search, so cropping does not bias the pose.
     full, ids = detector._aruco(image)
     reference = detector.from_corners(20, full[ids.index(20)][0].astype(np.float64), k, np.zeros(5))
@@ -124,7 +125,7 @@ def test_glove_region_search_matches_full_frame_and_skips_tags_without_glove_col
     # Overlapping glove regions are merged, so one tag is never seen twice.
     image[300:520, 520:700] = (0, 220, 0)
     image[300:520, 515:525] = 230
-    assert [hand.hand_id for hand in detector.detect(image, k, np.zeros(5))[1]] == ['human_left']
+    assert [hand.hand_id for hand in detector.detect(image, k, np.zeros(5))[1]] == ['human_right']
 
 
 def test_unscaled_fallback_supplies_only_glove_tags_the_enlarged_search_missed():

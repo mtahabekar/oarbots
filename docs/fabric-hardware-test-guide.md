@@ -289,7 +289,8 @@ Procedure, from the repository root on this laptop (each `lab.sh` call asks for 
    simulated robots grasp about 20 s later.
 6. Terminal 2, the glove keys (keep it focused): the command `run_sim_twin.sh` prints, with
    `--speed 0.1` so the real commands clear the deadband. Left glove W/S, D/A, E/Q; right glove
-   I/K, L/J, O/U; Space stops both.
+   I/K, L/J, O/U; Space stops both. These are the plant's names, by sheet side: its left glove holds
+   the corner on Blue's side, which the hand states call `human_right` (the person's right hand).
 7. Terminal 3, after the grasp: `source scripts/hw/laptop_env.sh`, then
    `ros2 topic pub --once /oarbot_blue/fabric_cbf/arm std_msgs/msg/Bool "{data: true}"` and the same
    for silver. Each bridge's diagnostics then say "Following the fabric twin".
@@ -339,9 +340,12 @@ cell is unchanged). Tools: `scripts/hw/glove_check.py` (on a camera host: what t
 a tag is missed, saves frames) and `scripts/hw/glove_tune.py` (offline on saved frames: colour
 measurement, look-alikes, any parameter set with annotated images).
 
-Hand identities: `human_left`/`human_right` name sheet corners, not the person's hands. `human_left` is
-corner (0, 1) on Blue's side (-x), which a person facing the robots holds with their **right** hand; tag
-20 is worn on that hand (measured at x = -0.14). Keep the IDs `[20, 21]`.
+Hand identities (since 2026-11-18): `human_left` and `human_right` are the person's own hands, facing
+the robots. The left hand wears tag 21 and holds sheet corner (1, 1) on Silver's side; the right hand
+wears tag 20 (measured at x = -0.14) and holds (0, 1) on Blue's side. Every `glove_tag_ids` and
+`human_corner_uv` lists the left hand first: `[21, 20]` and `[1, 1, 0, 1]`. Before this change the names
+were sheet sides (`human_left` was Blue's side, tag 20); results recorded before 2026-11-18 (the
+simulation evaluations and `sim-eval-2026-11-16`) use the old names.
 
 Open: the live check with these settings, the tag size by ruler, the tag-to-pinch offsets (pivot
 calibration), and the same calibration for both wrist cameras.

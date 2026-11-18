@@ -72,7 +72,7 @@ class FabricCamera(Node):
         max_tracks = param('max_tracks', 200)
         self.tracker = PointTracker(max_tracks, param('track_max_gap_sec', .2),
                                     param('track_fb_threshold_px', 1.)) if max_tracks > 0 else None
-        self.gloves = GloveDetector(param('glove_tag_ids', [20, 21]), param('glove_tag_size_m', .04),
+        self.gloves = GloveDetector(param('glove_tag_ids', [21, 20]), param('glove_tag_size_m', .04),
             param('tag_to_grip_offsets_m', [0., 0., 0., 0., 0., 0.]),
             param('glove_hsv_lower', [35, 80, 60]), param('glove_hsv_upper', [90, 255, 255]),
             param('glove_tag_dictionary', 'DICT_4X4_50'), param('tag_max_reprojection_px', 2.),

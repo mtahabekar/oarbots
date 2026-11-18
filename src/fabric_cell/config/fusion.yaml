@@ -1,8 +1,7 @@
-# Tagged-glove hand fusion on the real cell. human_corner_uv: left hand (0,1), right hand (1,1).
-# Hand names are sheet sides, not the person's hands: human_left holds corner (u, v) = (0, 1) on Blue's
-# side (-x), next to Blue's corner (0, 0); a person facing the robots holds it with their RIGHT hand.
-# glove_tag_ids lists [human_left, human_right]: tag 20 is worn on the hand on Blue's side
-# (measured 2026-11-18, experiments/hardware/sessions/2026-11-18_glove_test).
+# Tagged-glove hand fusion on the real cell. Hands are the person's own, facing the robots:
+# glove_tag_ids and human_corner_uv list the left hand, then the right. The left hand (tag 21) holds
+# corner (u, v) = (1, 1) on Silver's side, the right hand (tag 20) corner (0, 1) on Blue's side, next to
+# Blue's corner (0, 0) (measured 2026-11-18, experiments/hardware/sessions/2026-11-18_glove_test).
 /**:
   ros__parameters:
     world_frame: world
@@ -11,12 +10,12 @@
     - /oarbot_silver/azure_kinect/fabric/gloves
     - /nuc/fabric/gloves
     glove_tag_ids:
-    - 20
     - 21
+    - 20
     human_corner_uv:
+    - 1.0
+    - 1.0
     - 0.0
-    - 1.0
-    - 1.0
     - 1.0
     max_age_sec: 0.5
     max_wait_sec: 0.35

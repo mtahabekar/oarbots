@@ -7,12 +7,12 @@
     - /oarbot_silver/azure_kinect/fabric/gloves
     - /nuc/fabric/gloves
     glove_tag_ids:
-    - 20
     - 21
+    - 20
     human_corner_uv:
+    - 1.0
+    - 1.0
     - 0.0
-    - 1.0
-    - 1.0
     - 1.0
     # Simulated cell: fusion judges camera liveness in wall-clock time (monotonic) against
     # max_age_sec, while stamps are sim time. The plant runs at ~0.23x real time, so the 5 Hz

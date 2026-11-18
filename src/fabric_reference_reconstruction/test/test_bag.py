@@ -21,7 +21,7 @@ def test_offline_import_uses_late_recorded_tf_and_raw_gloves():
             position=Point32(x=0., y=0., z=1.), axial_variance=.0001, quality=.5)])
         hands = GloveObservations(header=header, camera_id='camera', hands=[
             GloveObservation(hand_id=identity, position=Point(x=x, y=.84, z=1.), covariance=(np.eye(3)*.0001).ravel().tolist())
-            for identity, x in [('human_left', 0.), ('human_right', .84)]])
+            for identity, x in [('human_right', 0.), ('human_left', .84)]])
         messages.extend([('/camera/fabric/observations', observation), ('/camera/fabric/gloves', hands)])
     transforms = []
     for child, x in [('camera', 0.), ('blue_grip', 0.), ('silver_grip', .84)]:

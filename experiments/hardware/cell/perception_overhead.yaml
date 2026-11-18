@@ -13,8 +13,8 @@
   ros__parameters:
     glove_tag_dictionary: DICT_4X4_50
     glove_tag_ids:
-    - 20
     - 21
+    - 20
     glove_tag_size_m: 0.08
     # Teal rubber gloves under the overhead lights: H 90-94 (shaded parts to 101), S median 140, V 44-192.
     # H <= 100 excludes the blue cable pile behind the robots (H 102-105); S >= 100 excludes dark

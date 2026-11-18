@@ -19,7 +19,7 @@ class TagMeasurement:
 
 
 class GloveDetector:
-    def __init__(self, tag_ids=(20, 21), tag_size_m=0.04,
+    def __init__(self, tag_ids=(21, 20), tag_size_m=0.04,
                  grip_offsets=(0., 0., 0., 0., 0., 0.),
                  hsv_lower=(35, 80, 60), hsv_upper=(90, 255, 255),
                  dictionary='DICT_4X4_50', max_reprojection_px=2.0,
@@ -64,6 +64,8 @@ class GloveDetector:
         self.parameters = (cv2.aruco.DetectorParameters_create() if
                            hasattr(cv2.aruco, 'DetectorParameters_create') else cv2.aruco.DetectorParameters())
         self.parameters.cornerRefinementMethod = cv2.aruco.CORNER_REFINE_SUBPIX
+        # tag_ids: [the person's left hand, right hand]; human_left holds sheet corner (1, 1) on Silver's
+        # side, human_right corner (0, 1) on Blue's side (the person faces the robots).
         self.identities = dict(zip(tag_ids, ('human_left', 'human_right')))
         self.offsets = dict(zip(tag_ids, np.asarray(grip_offsets).reshape(2, 3)))
         s = tag_size_m / 2

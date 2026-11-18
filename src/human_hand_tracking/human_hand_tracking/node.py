@@ -38,8 +38,10 @@ class HandFusion(Node):
         self.spatial_gate = param('view_spatial_gate_m', .15)
         jerk = param('jerk_stddev', 3.)
         gap = param('filter_max_gap_sec', .5)
-        tags = param('glove_tag_ids', [20, 21])
-        uvs = param('human_corner_uv', [0., 1., 1., 1.])
+        # The person's left hand, then right: tags 21 and 20, sheet corners (1, 1) and (0, 1) (the person
+        # faces the robots, so the left hand is on Silver's side).
+        tags = param('glove_tag_ids', [21, 20])
+        uvs = param('human_corner_uv', [1., 1., 0., 1.])
         numeric = [self.max_age, self.max_wait, self.sync_tolerance, self.extrinsic_noise,
                    self.fusion_floor, self.max_speed, self.spatial_gate]
         if (not topics or len(topics) > 8 or len(set(topics)) != len(topics) or not self.world

@@ -3,7 +3,8 @@
 No ROS, Isaac or PhysX. The cloth runtime (prescribed grip patches, captured CUDA graph) is the
 simulator's `capsule_cbf.newton_runtime.ClothRuntime`, used unchanged apart from one added
 external-force buffer. Material corners follow the estimator's convention:
-0 Blue (u, v) = (0, 0), 1 Silver (1, 0), 2 human left (0, 1), 3 human right (1, 1).
+0 Blue (u, v) = (0, 0), 1 Silver (1, 0), 2 human right (0, 1), 3 human left (1, 1): the person faces the
+robots, so their right hand is on Blue's side.
 
 The Newton model is built axis-aligned in a *twin frame*: the world rotated about the vertical
 (and mirrored if the corners run the other way round) so that the material u axis lies along x.

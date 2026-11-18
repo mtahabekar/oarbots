@@ -53,7 +53,7 @@ def load_params(path):
 
 def detector_from(p):
     """The same construction as fabric_perception/node.py."""
-    return GloveDetector(p.get('glove_tag_ids', [20, 21]), p.get('glove_tag_size_m', .04),
+    return GloveDetector(p.get('glove_tag_ids', [21, 20]), p.get('glove_tag_size_m', .04),
                          p.get('tag_to_grip_offsets_m', [0.] * 6), p.get('glove_hsv_lower', [35, 80, 60]),
                          p.get('glove_hsv_upper', [90, 255, 255]), p.get('glove_tag_dictionary', 'DICT_4X4_50'),
                          p.get('tag_max_reprojection_px', 2.), p.get('tag_min_color_support', .08),

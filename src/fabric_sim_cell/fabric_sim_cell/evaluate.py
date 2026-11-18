@@ -36,7 +36,7 @@ def score(estimate, truth_positions, mesh, label):
     per_time = np.linalg.norm(est['positions'] - truth['positions'], axis=2)
     report.update(label=label, states=int(len(keep)),
                   grip_error_m={name: float(np.percentile(grip[:, i], 95)) for i, name in
-                                enumerate(('blue', 'silver', 'human_left', 'human_right'))},
+                                enumerate(('blue', 'silver', 'human_right', 'human_left'))},
                   per_state_p95_m={'median': float(np.median(np.percentile(per_time, 95, axis=1))),
                                    'worst': float(np.percentile(per_time, 95, axis=1).max())},
                   degraded_fraction=float(np.mean(estimate['degraded'][keep])))

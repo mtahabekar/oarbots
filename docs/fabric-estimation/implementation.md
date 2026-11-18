@@ -48,8 +48,8 @@ The mesh is row-major. `u` increases along columns and `v` along rows. Triangle 
 |---|---|---|
 | 0 | `(0,0)` | Blue calibrated grip frame |
 | 1 | `(1,0)` | Silver calibrated grip frame |
-| 2 | `(0,1)` | `human_left` tagged grip |
-| 3 | `(1,1)` | `human_right` tagged grip |
+| 2 | `(0,1)` | `human_right` tagged grip (the person's right hand, facing the robots; before 2026-11-18: `human_left`) |
+| 3 | `(1,1)` | `human_left` tagged grip (the person's left hand; before 2026-11-18: `human_right`) |
 
 These are physical material identities, not camera-image left/right. Configure the glove pipeline's `human_corner_uv` accordingly. Orient the ply so u/v correspond to the intended warp/weft convention. Mesh masses are triangle-area lumped, including attachment-vertex mass; total mass is width × height × areal density. `model_id` hashes the complete mesh specification. It does not identify the material parameter calibration; archive the physics configuration separately.
 

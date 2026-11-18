@@ -2,7 +2,7 @@
   ros__parameters:
     # EXAMPLE calibration: replace colour, size, offsets and ROI for this cell.
     glove_tag_dictionary: DICT_4X4_50
-    glove_tag_ids: [20, 21]  # human_left, human_right; avoid robot tags 0/4
+    glove_tag_ids: [21, 20]  # the person's left hand, right hand; avoid robot tags 0/4
     glove_tag_size_m: 0.04  # outer black square, excluding white margin
     glove_hsv_lower: [35, 80, 60]  # example: bright green gloves
     glove_hsv_upper: [90, 255, 255]

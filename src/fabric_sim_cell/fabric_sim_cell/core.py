@@ -73,7 +73,9 @@ def calibration_transforms(calibration, errors=None):
 
 
 # --------------------------------------------------------------------- oracle hands
-HANDS = {'glove_left': ('human_left', 20, (0.0, 1.0)), 'glove_right': ('human_right', 21, (1.0, 1.0))}
+# The plant names its gloves by sheet side (glove_left at u = 0, Blue's side); the hand states name the
+# person's hands, facing the robots: the right hand holds (0, 1) on Blue's side, the left (1, 1).
+HANDS = {'glove_left': ('human_right', 20, (0.0, 1.0)), 'glove_right': ('human_left', 21, (1.0, 1.0))}
 
 
 def hand_covariance(position_std, velocity_std):

@@ -129,7 +129,7 @@ def glove_message(producer, stamp=None, frame='wrist_optical'):
     return GloveObservations(header=Header(stamp=stamp or producer.get_clock().now().to_msg(), frame_id=frame),
         camera_id='fixture_wrist', hands=[GloveObservation(hand_id=hand, tag_id=tag,
             position=Point(x=.1, y=.2, z=.7), covariance=(np.eye(3)*.0001).ravel().tolist())
-            for hand, tag in (('human_left', 20), ('human_right', 21))])
+            for hand, tag in (('human_left', 21), ('human_right', 20))])
 
 
 def set_tf(fusion, stamp, translation):

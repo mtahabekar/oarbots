@@ -70,7 +70,8 @@ def extract(messages, mesh, runtime, max_frames=120, stride=1):
                     for hand in glove.hands:
                         if hand.hand_id not in ('human_left', 'human_right'):
                             continue
-                        corner = 2 if hand.hand_id == 'human_left' else 3
+                        # The person's right hand holds mesh corner 2, (0, 1) on Blue's side; the left 3.
+                        corner = 2 if hand.hand_id == 'human_right' else 3
                         p = hand.position; rotation = glove_transform[:3, :3]
                         # Per-view tag covariance excludes camera extrinsic error
                         # (online fusion adds it); add it here too.
