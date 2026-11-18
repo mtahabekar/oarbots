@@ -1,0 +1,24 @@
+host tablet20 user tablet
+ros2_ws head 69846d575382facf31d29707ed7a5805002e7bc2 branch tablet-gui-update
+ros2_ws worktree e1794a9c6ec86bce (3 entries)
+ros2_ws dep Azure_Kinect_ROS_Driver 0eaaa56 modified=0
+ros2_ws dep kinova-ros2 3c4a77a modified=0
+ros2_ws dep ros2-aruco-pose-estimation e43ea7a modified=0
+ros2_ws venv 60fad8880995598a
+unit tablet_cd.service enabled=enabled active=inactive definition=3145f8d0520ec860
+user units enabled: ubuntu-report.path filter-chain.service gcr-ssh-agent.service gnome-keyring-daemon.service obex.service org.freedesktop.IBus.session.GNOME.service pipewire-pulse.service pipewire.service session-migration.service snap.snapd-desktop-integration.snapd-desktop-integration.service tracker-miner-fs-3.service wireplumber.service xdg-desktop-portal-rewrite-launchers.service dirmngr.socket gcr-ssh-agent.socket gnome-keyring-daemon.socket gpg-agent-browser.socket gpg-agent-extra.socket gpg-agent-ssh.socket gpg-agent.socket keyboxd.socket pipewire-pulse.socket pipewire.socket pk-debconf-helper.socket speech-dispatcher.socket launchpadlib-cache-clean.timer snap.firmware-updater.firmware-notifier.timer 
+file cec7084f95aefcf7 /usr/local/bin/tablet_cd.sh
+file 3a25b62ec7249bd5 /etc/udev/rules.d/70-snap.firefox.rules
+file a9d291dc55620b16 /etc/udev/rules.d/70-snap.firmware-updater.rules
+file b463abb7fb5c51d7 /etc/udev/rules.d/70-snap.snapd-desktop-integration.rules
+file 76ba34b32931fa5a /etc/udev/rules.d/70-snap.snapd.rules
+file f24a09d9d18e88da /etc/udev/rules.d/70-snap.snap-store.rules
+netplan -rw-r--r-- 104 1770683560 01-network-manager-all.yaml
+netplan -rw------- 644 1785863475 50-cloud-init.yaml
+netplan -rw------- 717 1785946004 90-NM-bae937b3-0209-4d04-ba12-88732b41b58d.yaml
+packages 2787 1ad8b55276912143
+sysctl rmem_max=4194304 wmem_max=4194304
+file feb1e019fbb4ff9f /home/tablet/.bashrc
+file 28b4a453b68dde64 /home/tablet/.profile
+file 7a12a23485b4d1bf /home/tablet/tablet_launch.sh
+crontab e3b0c44298fc1c14
