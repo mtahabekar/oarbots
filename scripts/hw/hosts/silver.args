@@ -6,3 +6,7 @@ body_tracking:=false
 # Blue's Rokubi is plugged into this laptop too (lab log 2026-11-18: on Blue's laptop it makes Blue's
 # arm jitter). fabric_session.sh starts its node as fabric-ft-blue; this line is not a launch argument.
 hosted_ft:=blue
+# Silver's fingers stay closed on its sheet corner (user, 2026-11-18): the guard sends 100 % closure with
+# every command while the deadman is held. The driver opens them once when the session starts; put the
+# corner in then, and the first deadman hold closes them. Blue's gripper is not controllable: no setting.
+hold_fingers:=100

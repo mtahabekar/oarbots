@@ -76,3 +76,25 @@ def test_vector_norm_limits():
 def test_invalid_timeout(value):
     with pytest.raises(ValueError):
         Guard(timeout=value)
+
+
+
+def test_fingers_held_closed_only_while_permitted():
+    assert Guard().finger_output(1.) is None            # off by default: the fingers are never commanded
+    g = Guard(hold_fingers=100.)
+    g.estop_update(False, 1.)
+    g.deadman_update(True, 1.)
+    assert g.finger_output(1.) is None                  # held deadman at start-up cannot arm
+    enable(g)
+    assert g.finger_output(1.02) == pytest.approx(100.)
+    assert not any(g.output(1.02)[0])                   # holding the fingers never moves the arm
+    g.deadman_update(False, 1.03)
+    assert g.finger_output(1.03) is None                # released: the fingers stay where they are
+    g.estop_update(True, 1.04)
+    assert g.finger_output(1.04) is None
+
+
+def test_hold_fingers_must_be_a_percentage():
+    for bad in (-1., 101., math.nan):
+        with pytest.raises(ValueError):
+            Guard(hold_fingers=bad)

@@ -18,9 +18,12 @@ MODES = ('disabled', 'teleop', 'admittance', 'fabric_cbf')
 
 
 class Guard:
-    def __init__(self, timeout=0.25, command_timeout=0.15):
+    def __init__(self, timeout=0.25, command_timeout=0.15, hold_fingers=None):
         if not all(isfinite(v) and v > 0 for v in (timeout, command_timeout)):
             raise ValueError('Timeouts must be finite and positive')
+        if hold_fingers is not None and not (isfinite(hold_fingers) and 0. <= hold_fingers <= 100.):
+            raise ValueError('hold_fingers must be a closure percentage in 0..100')
+        self.hold_fingers = None if hold_fingers is None else float(hold_fingers)
         self.timeout, self.command_timeout = timeout, command_timeout
         self.deadman, self.estop = False, True
         self.deadman_time = self.estop_time = float('-inf')
@@ -77,6 +80,12 @@ class Guard:
             self.commands[source] = (limited(values, linear_limit, angular_limit), now)
         except ValueError:
             self.trip()
+
+    def finger_output(self, now):
+        """Finger closure (percent) to send with this tick's arm command, or None to leave the fingers as they
+        are. With hold_fingers set, the fingers are driven to it only while the deadman is held: releasing it
+        stops them where they are, and the driver's own start-up (which opens them) is never fought."""
+        return self.hold_fingers if self.hold_fingers is not None and self.permitted(now) else None
 
     def output(self, now):
         zero = (0.,)*6

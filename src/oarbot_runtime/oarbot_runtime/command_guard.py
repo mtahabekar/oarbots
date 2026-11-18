@@ -7,7 +7,7 @@ from rclpy.qos import QoSProfile
 from rclpy.duration import Duration
 from rclpy.clock import Clock, ClockType
 from geometry_msgs.msg import TwistStamped
-from kinova_msgs.msg import PoseVelocity
+from kinova_msgs.msg import PoseVelocity, PoseVelocityWithFingers
 from std_msgs.msg import Bool, String
 from diagnostic_msgs.msg import DiagnosticArray, DiagnosticStatus, KeyValue
 from oarbot_runtime.guard import Guard
@@ -22,8 +22,11 @@ class CommandGuard(Node):
         if self.get_namespace() == '/':
             raise ValueError('Run command_guard in the robot namespace')
         self.ambiguous = False
+        # Finger closure (percent) to hold while the deadman is held; negative: never command the fingers.
+        hold = float(self.declare_parameter('hold_fingers_percent', -1.0).value)
         self.guard = Guard(self.declare_parameter('heartbeat_timeout_sec', 0.25).value,
-                           self.declare_parameter('command_timeout_sec', 0.15).value)
+                           self.declare_parameter('command_timeout_sec', 0.15).value,
+                           None if hold < 0 else hold)
         self.limits = [self.declare_parameter(name, value).value for name, value in (
             ('max_arm_linear_mps', 0.1), ('max_arm_angular_rps', 0.3),
             ('max_base_linear_mps', 0.15), ('max_base_angular_rps', 0.3))]
@@ -31,6 +34,11 @@ class CommandGuard(Node):
             raise ValueError('Speed limits must be finite and positive')
         qos = QoSProfile(depth=1, lifespan=Duration(seconds=self.guard.command_timeout))
         self.arm_pub = self.create_publisher(PoseVelocity, 'kinova/j2n6s300_driver/in/cartesian_velocity', qos)
+        # Fingers travel in the same 100 Hz stream: with hold_fingers_percent set and the deadman held, each
+        # tick's arm command goes out with the finger target (one stream, so the arm's trajectory FIFO never
+        # gets a second source); otherwise the plain command leaves the fingers as they are (HAND_NOMOVEMENT).
+        self.arm_fingers_pub = self.create_publisher(
+            PoseVelocityWithFingers, 'kinova/j2n6s300_driver/in/cartesian_velocity_with_fingers', qos)
         self.base_pub = self.create_publisher(TwistStamped, 'dingo/cmd_vel', qos)
         self.diagnostics_pub = self.create_publisher(DiagnosticArray, 'diagnostics', 10)
         self.create_subscription(Bool, '/tablet_gui/deadman', lambda m: self.guard.deadman_update(m.data, monotonic()), 1)
@@ -64,8 +72,14 @@ class CommandGuard(Node):
     def tick(self):
         if self.ambiguous:
             self.guard.trip()
-        arm, base = self.guard.output(monotonic())
-        self.arm_pub.publish(PoseVelocity(**dict(zip(FIELDS, arm))))
+        now = monotonic()
+        arm, base = self.guard.output(now)
+        fingers = self.guard.finger_output(now)
+        if fingers is None:
+            self.arm_pub.publish(PoseVelocity(**dict(zip(FIELDS, arm))))
+        else:
+            self.arm_fingers_pub.publish(PoseVelocityWithFingers(**dict(zip(FIELDS, arm)),
+                                                                 fingers_closure_percentage=fingers))
         msg = TwistStamped()
         msg.header.stamp = self.get_clock().now().to_msg()
         msg.header.frame_id = self.get_namespace().strip('/') + '/base_link'

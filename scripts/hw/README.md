@@ -78,6 +78,25 @@ Arguments after `start` override them, for example `lab.sh session blue start ca
 Paths passed through `exec` must not start with `~`: the laptop's shell expands it before SSH. Use
 paths relative to the home folder, for example `exec python3 fabric_ws/scripts/hw/first_motion.py`.
 
+### Grasp pose and Silver's fingers
+
+The arms hold their sheet corners about 0.65 m ahead of their bases, 1.05 m high (test guide §9.2).
+`grasp_target.py` (laptop, read-only) shows where a pose puts the tool and what the wrist camera sees;
+`grasp_drive.py` (on the helper) moves the tool there in a straight line, translation only, through the
+guard's fabric input, so it moves only while the deadman is held with Fabric Follow (CBF) on:
+
+```bash
+python3 scripts/hw/grasp_target.py --robot blue --position -0.40 -0.42 1.05        # laptop, session env
+scripts/hw/lab.sh session blue exec python3 fabric_ws/scripts/hw/grasp_drive.py --robot blue --to -0.40 -0.42 1.05 --check-only
+scripts/hw/lab.sh session blue exec python3 fabric_ws/scripts/hw/grasp_drive.py --robot blue --to -0.40 -0.42 1.05
+scripts/hw/lab.sh session blue exec python3 fabric_ws/scripts/hw/grasp_drive.py --robot blue --home
+```
+
+Silver's fingers stay closed: `hold_fingers:=100` in `hosts/silver.args` makes Silver's guard send 100 %
+closure with every command while the deadman is held. The arm driver opens the fingers once when the
+session starts (Kinova `InitFingers`); put the corner in then, and the first deadman hold closes them.
+They stay closed until the next session start. Blue's fingers are not commanded.
+
 ### Blue's wrist sensor is plugged into Silver's laptop
 
 With Blue's Rokubi on Blue's own laptop, Blue's arm jitters and reports stale joint angles while it
