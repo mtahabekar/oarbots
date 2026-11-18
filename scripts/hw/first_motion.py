@@ -37,7 +37,7 @@ from rclpy.time import Time
 from ament_index_python.packages import get_package_share_directory
 from builtin_interfaces.msg import Duration as DurationMsg
 from geometry_msgs.msg import PoseStamped, WrenchStamped
-from kinova_msgs.msg import PoseVelocity
+from kinova_msgs.msg import PoseVelocity, PoseVelocityWithFingers
 from moveit_msgs.msg import RobotState
 from moveit_msgs.srv import GetPositionIK, GetStateValidity
 from sensor_msgs.msg import JointState
@@ -104,6 +104,9 @@ class FirstMotion(Node):
         self.samples = []
         self.create_subscription(JointState, self.ns + '/joint_states', self.on_joints, 10)
         self.create_subscription(PoseVelocity, self.guard_topic, self.on_guard, 10)
+        # A guard holding the fingers (hold_fingers, Silver) sends its arm command on this input instead while
+        # the deadman is held: the same twist fields, so it is guard output too.
+        self.create_subscription(PoseVelocityWithFingers, self.guard_topic + '_with_fingers', self.on_guard, 10)
         self.create_subscription(WrenchStamped, self.ns + '/force_torque_raw', self.on_force, qos_profile_sensor_data)
         self.ik = self.create_client(GetPositionIK, self.ns + '/compute_ik')
         self.validity = self.create_client(GetStateValidity, self.ns + '/check_state_validity')
