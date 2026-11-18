@@ -19,7 +19,8 @@ angles in rad. Preflight: MoveIt finds every degree of the joint path collision-
 wrist and camera stay at least 15 cm from the other arm. Aborts only on faults: stale or jumping joint
 readings, a joint more than 10 deg off the path (the arm not following), joints faster than 3x the
 command, the guard forwarding a command it was not given, or a gravity-compensated wrist-force change
-above the rated payload.
+above the rated payload within half a second (slow drift with the wrist's orientation is the compensation,
+not contact).
 """
 import argparse
 import csv
@@ -58,6 +59,7 @@ GAIN_PER_S = 1.0
 ACCEL_SEC = 1.0                  # ramp of the path speed at start and end
 FORCE_CONTACT_N = 15.7
 FORCE_WINDOW_SEC = 0.25
+FORCE_LOOKBACK_SEC = 0.5
 CLEARANCE_M = 0.15
 WAIT_SEC = 120.0
 LINKS = ('j2n6s300_end_effector', 'j2n6s300_link_5', 'camera_base')
@@ -253,7 +255,7 @@ class GraspJoints(Node):
         s, sdot = 0.0, 0.0
         period = 1.0 / RATE_HZ
         prev_q, prev_t = None, None
-        f0 = self.mean_force()
+        history = []                             # (time, 0.25 s mean force)
         last_progress = waiting_note = time.monotonic()
         done = arrived_note = False
         finished_at = None
@@ -301,8 +303,15 @@ class GraspJoints(Node):
                 if np.max(np.abs(self.forwarded)) > max(m for _, m in recent) + 2.0:
                     raise Abort(f'The guard forwarded {np.round(self.forwarded, 1).tolist()}, more than was commanded')
             f = self.mean_force()
-            if f is not None and f0 is not None and np.linalg.norm(f - f0) > FORCE_CONTACT_N:
-                raise Abort(f'Compensated wrist force (0.25 s mean) changed by {np.linalg.norm(f - f0):.1f} N: contact or snag')
+            if f is not None:
+                # A snag shows as a fast change. The compensated force also drifts slowly with the wrist's
+                # orientation when the compensation is off (Blue: 39 N at rest, 2 N/s while turning,
+                # 2026-11-18), so compare with the 0.25 s mean of half a second ago, not with the start.
+                history = [(t, v) for t, v in history if tick - t <= FORCE_LOOKBACK_SEC + 0.1] + [(tick, f)]
+                old = [v for t, v in history if tick - t >= FORCE_LOOKBACK_SEC]
+                if old and np.linalg.norm(f - old[-1]) > FORCE_CONTACT_N:
+                    raise Abort(f'Compensated wrist force changed by {np.linalg.norm(f - old[-1]):.1f} N within '
+                                f'{FORCE_LOOKBACK_SEC} s: contact or snag')
             self.samples.append([round(tick - self.t0, 3), round(s, 4), int(forwarding), *np.round(v, 3), *np.round(q, 5),
                                  *(np.round(f, 2) if f is not None else [math.nan] * 3)])
             if forwarding and sdot > 0:
