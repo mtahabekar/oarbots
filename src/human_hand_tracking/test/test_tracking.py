@@ -204,6 +204,34 @@ def test_depth_that_is_not_the_tag_rejects_rather_than_passing_a_biased_range():
     assert detector.from_corners(21, points, k, np.zeros(5)) is not None  # without depth: PnP alone
 
 
+def test_depth_grid_keeps_a_tag_whose_depth_has_holes_at_the_five_default_samples():
+    """Registered depth on the real wrist cameras has holes on the tags; a grid uses the depth that is
+    there, the five default samples miss it. Depth over one quarter only still does not count."""
+    k = np.array([[915., 0., 960.], [0., 915., 540.], [0., 0., 1.]])
+    rvec = cv2.Rodrigues(cv2.Rodrigues(np.array([np.pi, 0., 0.]))[0] @ cv2.Rodrigues(np.array([.3, .2, 0.]))[0])[0]
+    tvec = np.array([[.05], [.02], [.6]])
+    five = GloveDetector(tag_size_m=.08)
+    grid = GloveDetector(tag_size_m=.08, depth_grid=7)
+    points = cv2.projectPoints(five.object_points, rvec, tvec, k, None)[0][:, 0]
+    depth = plane_depth(five, rvec, tvec, k, (1080, 1920))
+    centre = points.mean(axis=0)
+    for u, v in np.vstack((centre + .7 * (points - centre), centre)):   # the five default samples
+        x, y = int(round(u)), int(round(v))
+        depth[y-4:y+5, x-4:x+5] = 0                                        # a hole at each
+    assert five.from_corners(21, points, k, np.zeros(5), depth=depth) is None
+    kept = grid.from_corners(21, points, k, np.zeros(5), depth=depth)
+    plain = grid.from_corners(21, points, k, np.zeros(5))
+    assert kept is not None and np.linalg.norm(kept.position - plain.position) < .002   # exact corners: same range
+    # Depth only in one quarter of the tag: the tilt is not constrained, so no depth fit.
+    quarter = np.zeros_like(depth)
+    x0, y0 = np.floor(points.min(axis=0)).astype(int)
+    quarter[y0:int(centre[1]), x0:int(centre[0])] = depth[y0:int(centre[1]), x0:int(centre[0])]
+    rv, tv = cv2.solvePnPGeneric(grid.object_points, points, k, None, flags=cv2.SOLVEPNP_IPPE_SQUARE)[1:3]
+    assert np.isnan(grid.depth_fit(rv[0], tv[0], points, quarter)[0])
+    with pytest.raises(ValueError):
+        GloveDetector(depth_grid=2)
+
+
 def test_consumer_propagation_uses_the_filter_model_and_adds_its_process_noise():
     state = np.r_[[1., 2., 3.], [.1, 0., 0.], [0., .5, 0.]]
     covariance = np.diag([.005**2]*3+[.05**2]*3+[.3**2]*3)

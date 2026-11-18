@@ -1,0 +1,57 @@
+{
+ "messages": 1349,
+ "duration_s": 89.9,
+ "rate_hz": 15.01,
+ "age_s_median_p95": [
+  0.115,
+  0.178
+ ],
+ "human_left": {
+  "tag": [
+   21
+  ],
+  "detected_in": "543/1349 (40 %)",
+  "longest_gap_s": 53.55,
+  "mean_position_m": [
+   0.297,
+   0.243,
+   1.0
+  ],
+  "still_samples": 53,
+  "moving_samples": 485,
+  "still_sd_mm": [
+   207.0,
+   33.1,
+   105.9
+  ]
+ },
+ "human_right": {
+  "tag": [
+   20
+  ],
+  "detected_in": "424/1349 (31 %)",
+  "longest_gap_s": 53.09,
+  "mean_position_m": [
+   -0.189,
+   0.228,
+   0.985
+  ],
+  "still_samples": 20,
+  "moving_samples": 385,
+  "still_sd_mm": [
+   212.3,
+   40.6,
+   148.5
+  ]
+ },
+ "camera_diagnostics": {
+  "processing_ms_median_p95": [
+   105.4,
+   123.5
+  ],
+  "capture_age_ms_median": 164.5,
+  "messages": [
+   "Classical baseline; validate colour/ROI/noise calibration"
+  ]
+ }
+}

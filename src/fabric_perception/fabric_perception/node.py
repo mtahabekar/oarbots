@@ -79,7 +79,7 @@ class FabricCamera(Node):
             param('tag_min_color_support', .08), param('tag_pixel_stddev', .7),
             param('tag_position_floor_m', .01), param('glove_min_area_px', 100),
             param('tag_depth_gate_m', .005), param('tag_max_range_correction', .25), param('tag_roi_upscale', 1),
-            param('tag_roi_fallback_unscaled', False))
+            param('tag_roi_fallback_unscaled', False), param('tag_depth_grid', 0))
         # tag_use_depth: give the glove detector the registered depth, which resolves ambiguous
         # (small, frontal) tag poses and replaces the biased PnP range; a tag whose depth does not
         # support it is then dropped. Off by default: it needs depth that is valid on the tags.

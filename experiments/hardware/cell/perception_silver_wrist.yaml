@@ -5,6 +5,11 @@
 #   against a light matte floor), min_component_area and glove_min_area_px (pixel areas: these are
 #   for half-resolution images), static_exclusion_mask (a wrist camera's own gripper).
 # Inspect fabric/labels and fabric/depth_valid with publish_debug_images: true while tuning.
+#
+# MEASURED 2026-11-18 (lab log 2026-11-18, "Glove test"; experiments/hardware/sessions/2026-11-18_glove_test,
+# "Wrist cameras"; arms at Home, gloves 0.4-1.0 m from the lens, tags 43-191 px): glove colour, tag search,
+# depth sampling. Still template values: tag_to_grip_offsets_m (pivot calibration), workspace_roi,
+# static_exclusion_mask (the gripper's own fingers show at the image edge), cloth_* and the depth noise model.
 /**:
   ros__parameters:
     glove_tag_dictionary: DICT_4X4_50
@@ -12,12 +17,15 @@
     - 21
     - 20
     glove_tag_size_m: 0.08
+    # Teal gloves seen up close by the wrist camera: greener and more saturated than from overhead
+    # (Silver: H 93-97, S 151-255, V 85-170). H 90-99, S >= 120 leaves ~4 colour regions per frame (the overhead's
+    # 88-100 / S >= 100 gave 9-18); colour support around the tags 0.20-0.35 (gate 0.08).
     glove_hsv_lower:
-    - 35
-    - 80
-    - 60
-    glove_hsv_upper:
     - 90
+    - 120
+    - 40
+    glove_hsv_upper:
+    - 99
     - 255
     - 255
     tag_to_grip_offsets_m:
@@ -33,7 +41,16 @@
     tag_position_floor_m: 0.01
     glove_min_area_px: 25
     tag_roi_upscale: 2
+    tag_roi_fallback_unscaled: true   # as on the overhead camera; no tag needed it here (43-191 px tags)
     tag_use_depth: true
+    # Registered depth has holes on the tags at 0.4-1.0 m (depth mapped onto 1080p colour leaves blotches):
+    # with the default five sample points 49 of 87 tag sightings were dropped for missing depth, with a
+    # 7 x 7 grid 79 of 87 are kept. The rest have no depth over two or more quarters of the tag, or (one)
+    # depth from behind the tag (32 % beyond the tag's range). Where depth is valid it agrees with the
+    # tag's size: depth/PnP range 0.96-1.06 (90 %).
+    tag_depth_grid: 7
+    # No ambiguous (two-pose) tags at these sizes; the overhead camera's measured gate for consistency.
+    tag_depth_gate_m: 0.012
     workspace_roi:
     - 0.0
     - 0.0

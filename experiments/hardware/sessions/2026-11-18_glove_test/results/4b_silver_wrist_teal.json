@@ -1,0 +1,2228 @@
+{
+ "summary": {
+  "params": {
+   "glove_hsv_lower": [
+    90,
+    120,
+    40
+   ],
+   "glove_hsv_upper": [
+    99,
+    255,
+    255
+   ],
+   "tag_min_color_support": 0.08,
+   "tag_roi_upscale": 2,
+   "tag_use_depth": true,
+   "tag_depth_gate_m": 0.005
+  },
+  "detected": {
+   "20": "15/20",
+   "21": "2/25"
+  },
+  "misses": {
+   "pose rejected (reprojection, ambiguity or depth)": 25,
+   "outside the colour-gated search regions": 3
+  },
+  "support_min_median": {
+   "21": [
+    0.225,
+    0.346
+   ],
+   "20": [
+    0.204,
+    0.297
+   ]
+  },
+  "colour_regions_median_max": [
+   4,
+   6
+  ],
+  "detect_ms_median_max": [
+   12.4,
+   28.4
+  ],
+  "search_reprojection_px_median_max": [
+   0.23,
+   0.99
+  ],
+  "ambiguous_tags": 0,
+  "depth_residual_mm_right_pose_median": null,
+  "depth_residual_mm_right_pose_min_max": null,
+  "depth_residual_mm_wrong_pose_min_max": null
+ },
+ "frames": [
+  {
+   "frame": "frame_004",
+   "regions": 4,
+   "tags": [
+    {
+     "id": 21,
+     "side_px": 85.2,
+     "centre_px": [
+      1187.1,
+      720.5
+     ],
+     "support": 0.408,
+     "ring_hsv_median": [
+      96,
+      134,
+      111
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       30,
+       104,
+       170
+      ],
+      [
+       1,
+       24,
+       242
+      ],
+      [
+       67,
+       196,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      0.68,
+      5.75
+     ],
+     "pose_without_depth": true,
+     "pose_with_depth": false,
+     "depth_at_tag_m": 0.567,
+     "detected": false,
+     "why": "pose rejected (reprojection, ambiguity or depth)"
+    },
+    {
+     "id": 20,
+     "side_px": 67.8,
+     "centre_px": [
+      829.4,
+      664.7
+     ],
+     "support": 0.295,
+     "ring_hsv_median": [
+      99,
+      126,
+      105
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       15,
+       120,
+       164
+      ],
+      [
+       1,
+       12,
+       177
+      ],
+      [
+       43,
+       191,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      0.16,
+      1.58
+     ],
+     "pose_without_depth": true,
+     "pose_with_depth": true,
+     "depth_at_tag_m": 0.806,
+     "detected": true,
+     "grip_camera_m": [
+      -0.14,
+      0.122,
+      0.755
+     ],
+     "sd_m": [
+      0.01,
+      0.01,
+      0.0116
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "frame_005",
+   "regions": 4,
+   "tags": [
+    {
+     "id": 21,
+     "side_px": 73.3,
+     "centre_px": [
+      1092.5,
+      695.8
+     ],
+     "support": 0.44,
+     "ring_hsv_median": [
+      96,
+      137,
+      136
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       90,
+       124,
+       168
+      ],
+      [
+       1,
+       12,
+       213
+      ],
+      [
+       78,
+       229,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      0.78,
+      4.74
+     ],
+     "pose_without_depth": true,
+     "pose_with_depth": false,
+     "depth_at_tag_m": 0.932,
+     "detected": false,
+     "why": "pose rejected (reprojection, ambiguity or depth)"
+    }
+   ]
+  },
+  {
+   "frame": "frame_006",
+   "regions": 4,
+   "tags": [
+    {
+     "id": 21,
+     "side_px": 85.3,
+     "centre_px": [
+      1168.3,
+      748.6
+     ],
+     "support": 0.325,
+     "ring_hsv_median": [
+      150,
+      133,
+      98
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       30,
+       140,
+       170
+      ],
+      [
+       1,
+       9,
+       134
+      ],
+      [
+       59,
+       226,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      0.23,
+      6.22
+     ],
+     "pose_without_depth": true,
+     "pose_with_depth": false,
+     "depth_at_tag_m": 0.576,
+     "detected": false,
+     "why": "pose rejected (reprojection, ambiguity or depth)"
+    }
+   ]
+  },
+  {
+   "frame": "frame_008",
+   "regions": 4,
+   "tags": [
+    {
+     "id": 21,
+     "side_px": 65.6,
+     "centre_px": [
+      1164.0,
+      724.1
+     ],
+     "support": 0.263,
+     "ring_hsv_median": [
+      153,
+      125,
+      89
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       93,
+       150,
+       170
+      ],
+      [
+       1,
+       28,
+       213
+      ],
+      [
+       61,
+       197,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      0.73,
+      3.87
+     ],
+     "pose_without_depth": true,
+     "pose_with_depth": false,
+     "depth_at_tag_m": null,
+     "detected": false,
+     "why": "pose rejected (reprojection, ambiguity or depth)"
+    },
+    {
+     "id": 20,
+     "side_px": 72.4,
+     "centre_px": [
+      732.3,
+      664.8
+     ],
+     "support": 0.321,
+     "ring_hsv_median": [
+      115,
+      135,
+      118
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       54,
+       124,
+       167
+      ],
+      [
+       1,
+       9,
+       124
+      ],
+      [
+       65,
+       222,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      0.13,
+      3.0
+     ],
+     "pose_without_depth": true,
+     "pose_with_depth": true,
+     "depth_at_tag_m": 0.736,
+     "detected": true,
+     "grip_camera_m": [
+      -0.19,
+      0.114,
+      0.681
+     ],
+     "sd_m": [
+      0.0101,
+      0.01,
+      0.0111
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "frame_009",
+   "regions": 4,
+   "tags": [
+    {
+     "id": 21,
+     "side_px": 79.3,
+     "centre_px": [
+      1429.9,
+      760.2
+     ],
+     "support": 0.37,
+     "ring_hsv_median": [
+      125,
+      133,
+      103
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       66,
+       124,
+       172
+      ],
+      [
+       1,
+       18,
+       216
+      ],
+      [
+       58,
+       207,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      0.82,
+      5.32
+     ],
+     "pose_without_depth": true,
+     "pose_with_depth": false,
+     "depth_at_tag_m": 1.027,
+     "detected": false,
+     "why": "pose rejected (reprojection, ambiguity or depth)"
+    },
+    {
+     "id": 20,
+     "side_px": 54.2,
+     "centre_px": [
+      1128.0,
+      696.5
+     ],
+     "support": 0.3,
+     "ring_hsv_median": [
+      145,
+      134,
+      107
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       75,
+       150,
+       170
+      ],
+      [
+       1,
+       6,
+       103
+      ],
+      [
+       69,
+       247,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      0.31,
+      1.4
+     ],
+     "pose_without_depth": true,
+     "pose_with_depth": false,
+     "depth_at_tag_m": 0.981,
+     "detected": false,
+     "why": "pose rejected (reprojection, ambiguity or depth)"
+    }
+   ]
+  },
+  {
+   "frame": "frame_010",
+   "regions": 4,
+   "tags": [
+    {
+     "id": 21,
+     "side_px": 58.4,
+     "centre_px": [
+      1109.8,
+      704.2
+     ],
+     "support": 0.368,
+     "ring_hsv_median": [
+      145,
+      135,
+      88
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       90,
+       125,
+       168
+      ],
+      [
+       2,
+       21,
+       231
+      ],
+      [
+       68,
+       211,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      0.35,
+      3.13
+     ],
+     "pose_without_depth": true,
+     "pose_with_depth": false,
+     "depth_at_tag_m": 1.036,
+     "detected": false,
+     "why": "pose rejected (reprojection, ambiguity or depth)"
+    }
+   ]
+  },
+  {
+   "frame": "frame_011",
+   "regions": 5,
+   "tags": [
+    {
+     "id": 21,
+     "side_px": 102.0,
+     "centre_px": [
+      1274.2,
+      806.0
+     ],
+     "support": 0.291,
+     "ring_hsv_median": [
+      157,
+      129,
+      106
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       0,
+       110,
+       170
+      ],
+      [
+       0,
+       7,
+       126
+      ],
+      [
+       63,
+       248,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      0.28,
+      7.46
+     ],
+     "pose_without_depth": true,
+     "pose_with_depth": false,
+     "depth_at_tag_m": 0.503,
+     "detected": false,
+     "why": "pose rejected (reprojection, ambiguity or depth)"
+    },
+    {
+     "id": 20,
+     "side_px": 74.6,
+     "centre_px": [
+      891.0,
+      696.4
+     ],
+     "support": 0.3,
+     "ring_hsv_median": [
+      98,
+      130,
+      119
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       30,
+       124,
+       168
+      ],
+      [
+       1,
+       10,
+       149
+      ],
+      [
+       59,
+       205,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      0.23,
+      2.69
+     ],
+     "pose_without_depth": true,
+     "pose_with_depth": true,
+     "depth_at_tag_m": 0.721,
+     "detected": true,
+     "grip_camera_m": [
+      -0.076,
+      0.139,
+      0.671
+     ],
+     "sd_m": [
+      0.01,
+      0.0101,
+      0.0111
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "frame_012",
+   "regions": 5,
+   "tags": [
+    {
+     "id": 21,
+     "side_px": 90.0,
+     "centre_px": [
+      1613.8,
+      830.3
+     ],
+     "support": 0.284,
+     "ring_hsv_median": [
+      156,
+      121,
+      84
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       0,
+       120,
+       174
+      ],
+      [
+       1,
+       22,
+       215
+      ],
+      [
+       55,
+       187,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      0.7,
+      5.59
+     ],
+     "pose_without_depth": true,
+     "pose_with_depth": false,
+     "depth_at_tag_m": null,
+     "detected": false,
+     "why": "pose rejected (reprojection, ambiguity or depth)"
+    },
+    {
+     "id": 20,
+     "side_px": 62.2,
+     "centre_px": [
+      1074.5,
+      698.0
+     ],
+     "support": 0.349,
+     "ring_hsv_median": [
+      96,
+      138,
+      129
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       6,
+       114,
+       162
+      ],
+      [
+       1,
+       5,
+       96
+      ],
+      [
+       73,
+       226,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      0.17,
+      1.49
+     ],
+     "pose_without_depth": true,
+     "pose_with_depth": true,
+     "depth_at_tag_m": 0.845,
+     "detected": true,
+     "grip_camera_m": [
+      0.068,
+      0.152,
+      0.802
+     ],
+     "sd_m": [
+      0.01,
+      0.0101,
+      0.012
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "frame_013",
+   "regions": 4,
+   "tags": [
+    {
+     "id": 20,
+     "side_px": 94.4,
+     "centre_px": [
+      789.6,
+      709.5
+     ],
+     "support": 0.235,
+     "ring_hsv_median": [
+      105,
+      74,
+      108
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       20,
+       120,
+       163
+      ],
+      [
+       1,
+       17,
+       213
+      ],
+      [
+       52,
+       197,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      0.25,
+      2.32
+     ],
+     "pose_without_depth": true,
+     "pose_with_depth": true,
+     "depth_at_tag_m": 0.583,
+     "detected": true,
+     "grip_camera_m": [
+      -0.14,
+      0.111,
+      0.531
+     ],
+     "sd_m": [
+      0.01,
+      0.01,
+      0.0105
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "frame_017",
+   "regions": 4,
+   "tags": [
+    {
+     "id": 20,
+     "side_px": 58.7,
+     "centre_px": [
+      725.1,
+      717.5
+     ],
+     "support": 0.295,
+     "ring_hsv_median": [
+      96,
+      56,
+      135
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       45,
+       97,
+       128
+      ],
+      [
+       1,
+       7,
+       207
+      ],
+      [
+       63,
+       245,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      0.06,
+      0.89
+     ],
+     "pose_without_depth": true,
+     "pose_with_depth": true,
+     "depth_at_tag_m": 0.968,
+     "detected": true,
+     "grip_camera_m": [
+      -0.27,
+      0.199,
+      0.918
+     ],
+     "sd_m": [
+      0.0103,
+      0.0102,
+      0.0135
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "frame_018",
+   "regions": 4,
+   "tags": [
+    {
+     "id": 21,
+     "side_px": 88.8,
+     "centre_px": [
+      1415.0,
+      767.9
+     ],
+     "support": 0.376,
+     "ring_hsv_median": [
+      94,
+      129,
+      119
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       6,
+       103,
+       172
+      ],
+      [
+       1,
+       9,
+       214
+      ],
+      [
+       66,
+       242,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      0.19,
+      5.0
+     ],
+     "pose_without_depth": true,
+     "pose_with_depth": false,
+     "depth_at_tag_m": 0.618,
+     "detected": false,
+     "why": "pose rejected (reprojection, ambiguity or depth)"
+    },
+    {
+     "id": 20,
+     "side_px": 60.8,
+     "centre_px": [
+      895.0,
+      668.2
+     ],
+     "support": 0.302,
+     "ring_hsv_median": [
+      95,
+      122,
+      161
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       6,
+       104,
+       150
+      ],
+      [
+       1,
+       6,
+       106
+      ],
+      [
+       125,
+       252,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      0.09,
+      1.53
+     ],
+     "pose_without_depth": true,
+     "pose_with_depth": true,
+     "depth_at_tag_m": 0.837,
+     "detected": true,
+     "grip_camera_m": [
+      -0.091,
+      0.124,
+      0.788
+     ],
+     "sd_m": [
+      0.01,
+      0.0101,
+      0.0123
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "frame_019",
+   "regions": 4,
+   "tags": [
+    {
+     "id": 21,
+     "side_px": 140.8,
+     "centre_px": [
+      1355.4,
+      879.0
+     ],
+     "support": 0.377,
+     "ring_hsv_median": [
+      94,
+      131,
+      113
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       0,
+       111,
+       170
+      ],
+      [
+       0,
+       49,
+       241
+      ],
+      [
+       73,
+       192,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      0.22,
+      9.58
+     ],
+     "pose_without_depth": true,
+     "pose_with_depth": false,
+     "depth_at_tag_m": 0.412,
+     "detected": false,
+     "why": "pose rejected (reprojection, ambiguity or depth)"
+    },
+    {
+     "id": 20,
+     "side_px": 77.3,
+     "centre_px": [
+      907.8,
+      707.1
+     ],
+     "support": 0.23,
+     "ring_hsv_median": [
+      95,
+      28,
+      153
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       30,
+       101,
+       150
+      ],
+      [
+       1,
+       6,
+       200
+      ],
+      [
+       69,
+       218,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      0.09,
+      1.6
+     ],
+     "pose_without_depth": true,
+     "pose_with_depth": true,
+     "depth_at_tag_m": 0.7,
+     "detected": true,
+     "grip_camera_m": [
+      -0.078,
+      0.132,
+      0.65
+     ],
+     "sd_m": [
+      0.01,
+      0.01,
+      0.011
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "frame_020",
+   "regions": 6,
+   "tags": [
+    {
+     "id": 21,
+     "side_px": 69.9,
+     "centre_px": [
+      1052.5,
+      735.7
+     ],
+     "support": 0.324,
+     "ring_hsv_median": [
+      120,
+      133,
+      114
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       75,
+       140,
+       167
+      ],
+      [
+       1,
+       21,
+       207
+      ],
+      [
+       55,
+       197,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      0.61,
+      3.9
+     ],
+     "pose_without_depth": true,
+     "pose_with_depth": false,
+     "depth_at_tag_m": null,
+     "detected": false,
+     "why": "pose rejected (reprojection, ambiguity or depth)"
+    }
+   ]
+  },
+  {
+   "frame": "frame_021",
+   "regions": 5,
+   "tags": [
+    {
+     "id": 21,
+     "side_px": 83.8,
+     "centre_px": [
+      1092.3,
+      771.1
+     ],
+     "support": 0.356,
+     "ring_hsv_median": [
+      125,
+      135,
+      117
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       75,
+       132,
+       170
+      ],
+      [
+       1,
+       24,
+       219
+      ],
+      [
+       59,
+       198,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      0.3,
+      5.61
+     ],
+     "pose_without_depth": true,
+     "pose_with_depth": false,
+     "depth_at_tag_m": 0.589,
+     "detected": false,
+     "why": "pose rejected (reprojection, ambiguity or depth)"
+    },
+    {
+     "id": 20,
+     "side_px": 84.7,
+     "centre_px": [
+      685.2,
+      702.3
+     ],
+     "support": 0.323,
+     "ring_hsv_median": [
+      97,
+      132,
+      130
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       30,
+       120,
+       150
+      ],
+      [
+       1,
+       11,
+       206
+      ],
+      [
+       74,
+       205,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      0.11,
+      2.7
+     ],
+     "pose_without_depth": true,
+     "pose_with_depth": true,
+     "depth_at_tag_m": 0.668,
+     "detected": true,
+     "grip_camera_m": [
+      -0.214,
+      0.13,
+      0.614
+     ],
+     "sd_m": [
+      0.0101,
+      0.01,
+      0.0108
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "frame_023",
+   "regions": 4,
+   "tags": [
+    {
+     "id": 21,
+     "side_px": 127.7,
+     "centre_px": [
+      1100.4,
+      972.2
+     ],
+     "support": 0.225,
+     "ring_hsv_median": [
+      105,
+      121,
+      96
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       0,
+       103,
+       170
+      ],
+      [
+       0,
+       21,
+       227
+      ],
+      [
+       60,
+       197,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      0.3,
+      5.65
+     ],
+     "pose_without_depth": true,
+     "pose_with_depth": true,
+     "depth_at_tag_m": 0.496,
+     "detected": true,
+     "grip_camera_m": [
+      0.043,
+      0.25,
+      0.455
+     ],
+     "sd_m": [
+      0.01,
+      0.0101,
+      0.0103
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "frame_024",
+   "regions": 6,
+   "tags": [
+    {
+     "id": 21,
+     "side_px": 186.6,
+     "centre_px": [
+      952.2,
+      935.5
+     ],
+     "support": 0.26,
+     "ring_hsv_median": [
+      116,
+      128,
+      134
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       0,
+       95,
+       165
+      ],
+      [
+       0,
+       15,
+       235
+      ],
+      [
+       72,
+       204,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      0.42,
+      16.37
+     ],
+     "pose_without_depth": true,
+     "pose_with_depth": false,
+     "depth_at_tag_m": 0.297,
+     "detected": false,
+     "why": "pose rejected (reprojection, ambiguity or depth)"
+    },
+    {
+     "id": 20,
+     "side_px": 163.8,
+     "centre_px": [
+      460.9,
+      740.4
+     ],
+     "support": 0.204,
+     "ring_hsv_median": [
+      107,
+      195,
+      164
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       0,
+       96,
+       170
+      ],
+      [
+       0,
+       12,
+       222
+      ],
+      [
+       106,
+       204,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      0.16,
+      5.12
+     ],
+     "pose_without_depth": true,
+     "pose_with_depth": false,
+     "depth_at_tag_m": 0.387,
+     "detected": false,
+     "why": "pose rejected (reprojection, ambiguity or depth)"
+    }
+   ]
+  },
+  {
+   "frame": "frame_026",
+   "regions": 5,
+   "tags": [
+    {
+     "id": 20,
+     "side_px": 82.8,
+     "centre_px": [
+      721.0,
+      669.8
+     ],
+     "support": 0.348,
+     "ring_hsv_median": [
+      96,
+      138,
+      132
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       0,
+       120,
+       150
+      ],
+      [
+       0,
+       11,
+       191
+      ],
+      [
+       61,
+       216,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      0.34,
+      3.29
+     ],
+     "pose_without_depth": true,
+     "pose_with_depth": true,
+     "depth_at_tag_m": 0.673,
+     "detected": true,
+     "grip_camera_m": [
+      -0.192,
+      0.101,
+      0.614
+     ],
+     "sd_m": [
+      0.0101,
+      0.01,
+      0.0107
+     ]
+    },
+    {
+     "id": 21,
+     "side_px": 99.5,
+     "centre_px": [
+      1344.2,
+      814.3
+     ],
+     "support": 0.329,
+     "ring_hsv_median": [
+      120,
+      126,
+      106
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       8,
+       120,
+       170
+      ],
+      [
+       1,
+       17,
+       219
+      ],
+      [
+       56,
+       197,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      0.95,
+      8.76
+     ],
+     "pose_without_depth": true,
+     "pose_with_depth": false,
+     "depth_at_tag_m": 0.542,
+     "detected": false,
+     "why": "pose rejected (reprojection, ambiguity or depth)"
+    }
+   ]
+  },
+  {
+   "frame": "frame_027",
+   "regions": 5,
+   "tags": [
+    {
+     "id": 20,
+     "side_px": 85.3,
+     "centre_px": [
+      752.0,
+      677.2
+     ],
+     "support": 0.293,
+     "ring_hsv_median": [
+      97,
+      119,
+      118
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       0,
+       110,
+       141
+      ],
+      [
+       0,
+       8,
+       176
+      ],
+      [
+       66,
+       221,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      0.25,
+      2.5
+     ],
+     "pose_without_depth": true,
+     "pose_with_depth": true,
+     "depth_at_tag_m": 0.64,
+     "detected": true,
+     "grip_camera_m": [
+      -0.168,
+      0.103,
+      0.585
+     ],
+     "sd_m": [
+      0.01,
+      0.01,
+      0.0107
+     ]
+    },
+    {
+     "id": 21,
+     "side_px": 104.4,
+     "centre_px": [
+      1235.4,
+      793.2
+     ],
+     "support": 0.391,
+     "ring_hsv_median": [
+      95,
+      132,
+      115
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       0,
+       100,
+       170
+      ],
+      [
+       0,
+       7,
+       215
+      ],
+      [
+       80,
+       247,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      0.75,
+      8.75
+     ],
+     "pose_without_depth": true,
+     "pose_with_depth": false,
+     "depth_at_tag_m": null,
+     "detected": false,
+     "why": "pose rejected (reprojection, ambiguity or depth)"
+    }
+   ]
+  },
+  {
+   "frame": "frame_028",
+   "regions": 4,
+   "tags": [
+    {
+     "id": 21,
+     "side_px": 54.5,
+     "centre_px": [
+      1145.5,
+      731.3
+     ],
+     "support": 0.351,
+     "ring_hsv_median": [
+      125,
+      128,
+      102
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       75,
+       126,
+       169
+      ],
+      [
+       1,
+       8,
+       201
+      ],
+      [
+       61,
+       232,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      0.51,
+      2.98
+     ],
+     "pose_without_depth": true,
+     "pose_with_depth": false,
+     "depth_at_tag_m": null,
+     "detected": false,
+     "why": "pose rejected (reprojection, ambiguity or depth)"
+    }
+   ]
+  },
+  {
+   "frame": "frame_029",
+   "regions": 4,
+   "tags": [
+    {
+     "id": 21,
+     "side_px": 110.8,
+     "centre_px": [
+      1139.6,
+      858.1
+     ],
+     "support": 0.273,
+     "ring_hsv_median": [
+      140,
+      131,
+      93
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       0,
+       125,
+       170
+      ],
+      [
+       0,
+       19,
+       163
+      ],
+      [
+       63,
+       202,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      0.24,
+      8.61
+     ],
+     "pose_without_depth": true,
+     "pose_with_depth": false,
+     "depth_at_tag_m": 0.485,
+     "detected": false,
+     "why": "pose rejected (reprojection, ambiguity or depth)"
+    },
+    {
+     "id": 20,
+     "side_px": 104.7,
+     "centre_px": [
+      685.7,
+      744.1
+     ],
+     "support": 0.314,
+     "ring_hsv_median": [
+      120,
+      130,
+      119
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       0,
+       120,
+       168
+      ],
+      [
+       0,
+       11,
+       144
+      ],
+      [
+       61,
+       204,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      0.28,
+      6.46
+     ],
+     "pose_without_depth": true,
+     "pose_with_depth": false,
+     "depth_at_tag_m": 0.538,
+     "detected": false,
+     "why": "pose rejected (reprojection, ambiguity or depth)"
+    }
+   ]
+  },
+  {
+   "frame": "frame_030",
+   "regions": 5,
+   "tags": [
+    {
+     "id": 21,
+     "side_px": 84.0,
+     "centre_px": [
+      1444.5,
+      849.3
+     ],
+     "support": 0.328,
+     "ring_hsv_median": [
+      95,
+      120,
+      114
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       6,
+       113,
+       170
+      ],
+      [
+       1,
+       9,
+       219
+      ],
+      [
+       58,
+       216,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      0.77,
+      5.23
+     ],
+     "pose_without_depth": true,
+     "pose_with_depth": false,
+     "depth_at_tag_m": null,
+     "detected": false,
+     "why": "pose rejected (reprojection, ambiguity or depth)"
+    }
+   ]
+  },
+  {
+   "frame": "frame_031",
+   "regions": 4,
+   "tags": [
+    {
+     "id": 20,
+     "side_px": 64.4,
+     "centre_px": [
+      1060.1,
+      759.4
+     ],
+     "support": 0.297,
+     "ring_hsv_median": [
+      96,
+      70,
+      131
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       45,
+       99,
+       124
+      ],
+      [
+       1,
+       9,
+       194
+      ],
+      [
+       69,
+       234,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      0.14,
+      1.09
+     ],
+     "pose_without_depth": true,
+     "pose_with_depth": true,
+     "depth_at_tag_m": 0.868,
+     "detected": true,
+     "grip_camera_m": [
+      0.048,
+      0.213,
+      0.832
+     ],
+     "sd_m": [
+      0.01,
+      0.0102,
+      0.0125
+     ]
+    },
+    {
+     "id": 21,
+     "side_px": 121.7,
+     "centre_px": [
+      1724.9,
+      949.0
+     ],
+     "support": 0.269,
+     "ring_hsv_median": [
+      169,
+      114,
+      71
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       0,
+       92,
+       173
+      ],
+      [
+       0,
+       21,
+       233
+      ],
+      [
+       50,
+       190,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      0.47,
+      8.71
+     ],
+     "pose_without_depth": true,
+     "pose_with_depth": false,
+     "depth_at_tag_m": null,
+     "detected": false,
+     "why": "pose rejected (reprojection, ambiguity or depth)"
+    }
+   ]
+  },
+  {
+   "frame": "frame_033",
+   "regions": 4,
+   "tags": [
+    {
+     "id": 21,
+     "side_px": 139.2,
+     "centre_px": [
+      1164.1,
+      896.0
+     ],
+     "support": 0.379,
+     "ring_hsv_median": [
+      95,
+      135,
+      136
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       0,
+       93,
+       167
+      ],
+      [
+       0,
+       6,
+       128
+      ],
+      [
+       82,
+       253,
+       255
+      ]
+     ],
+     "in_search_region": false,
+     "reprojection_px": [
+      0.55,
+      11.05
+     ],
+     "pose_without_depth": true,
+     "pose_with_depth": false,
+     "depth_at_tag_m": 0.368,
+     "detected": false,
+     "why": "outside the colour-gated search regions"
+    },
+    {
+     "id": 20,
+     "side_px": 95.4,
+     "centre_px": [
+      796.3,
+      741.9
+     ],
+     "support": 0.265,
+     "ring_hsv_median": [
+      99,
+      80,
+      123
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       0,
+       110,
+       140
+      ],
+      [
+       0,
+       7,
+       145
+      ],
+      [
+       64,
+       242,
+       255
+      ]
+     ],
+     "in_search_region": false,
+     "reprojection_px": [
+      0.52,
+      3.22
+     ],
+     "pose_without_depth": true,
+     "pose_with_depth": true,
+     "depth_at_tag_m": 0.587,
+     "detected": false,
+     "why": "outside the colour-gated search regions"
+    }
+   ]
+  },
+  {
+   "frame": "frame_037",
+   "regions": 4,
+   "tags": [
+    {
+     "id": 21,
+     "side_px": 47.1,
+     "centre_px": [
+      1168.9,
+      719.4
+     ],
+     "support": 0.28,
+     "ring_hsv_median": [
+      109,
+      48,
+      138
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       75,
+       104,
+       140
+      ],
+      [
+       1,
+       5,
+       208
+      ],
+      [
+       150,
+       251,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      0.63,
+      1.59
+     ],
+     "pose_without_depth": true,
+     "pose_with_depth": true,
+     "depth_at_tag_m": 1.073,
+     "detected": true,
+     "grip_camera_m": [
+      0.239,
+      0.222,
+      1.012
+     ],
+     "sd_m": [
+      0.0104,
+      0.0103,
+      0.0153
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "frame_038",
+   "regions": 3,
+   "tags": [
+    {
+     "id": 21,
+     "side_px": 117.9,
+     "centre_px": [
+      1199.2,
+      846.5
+     ],
+     "support": 0.346,
+     "ring_hsv_median": [
+      96,
+      133,
+      124
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       0,
+       109,
+       170
+      ],
+      [
+       0,
+       11,
+       220
+      ],
+      [
+       71,
+       230,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      0.28,
+      5.37
+     ],
+     "pose_without_depth": true,
+     "pose_with_depth": false,
+     "depth_at_tag_m": 0.462,
+     "detected": false,
+     "why": "pose rejected (reprojection, ambiguity or depth)"
+    },
+    {
+     "id": 20,
+     "side_px": 67.8,
+     "centre_px": [
+      916.4,
+      735.4
+     ],
+     "support": 0.248,
+     "ring_hsv_median": [
+      96,
+      75,
+      177
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       15,
+       115,
+       165
+      ],
+      [
+       2,
+       15,
+       214
+      ],
+      [
+       61,
+       196,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      0.1,
+      1.25
+     ],
+     "pose_without_depth": true,
+     "pose_with_depth": true,
+     "depth_at_tag_m": 0.807,
+     "detected": true,
+     "grip_camera_m": [
+      -0.074,
+      0.179,
+      0.758
+     ],
+     "sd_m": [
+      0.01,
+      0.0101,
+      0.0117
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "frame_040",
+   "regions": 3,
+   "tags": [
+    {
+     "id": 21,
+     "side_px": 59.1,
+     "centre_px": [
+      1079.0,
+      728.3
+     ],
+     "support": 0.458,
+     "ring_hsv_median": [
+      96,
+      150,
+      117
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       90,
+       101,
+       168
+      ],
+      [
+       3,
+       94,
+       222
+      ],
+      [
+       50,
+       105,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      0.42,
+      2.59
+     ],
+     "pose_without_depth": true,
+     "pose_with_depth": false,
+     "depth_at_tag_m": null,
+     "detected": false,
+     "why": "pose rejected (reprojection, ambiguity or depth)"
+    }
+   ]
+  },
+  {
+   "frame": "frame_042",
+   "regions": 3,
+   "tags": [
+    {
+     "id": 20,
+     "side_px": 88.8,
+     "centre_px": [
+      666.3,
+      850.1
+     ],
+     "support": 0.298,
+     "ring_hsv_median": [
+      96,
+      28,
+      147
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       50,
+       104,
+       124
+      ],
+      [
+       1,
+       8,
+       220
+      ],
+      [
+       125,
+       247,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      0.18,
+      1.95
+     ],
+     "pose_without_depth": true,
+     "pose_with_depth": true,
+     "depth_at_tag_m": 0.662,
+     "detected": true,
+     "grip_camera_m": [
+      -0.233,
+      0.227,
+      0.605
+     ],
+     "sd_m": [
+      0.0101,
+      0.0101,
+      0.0108
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "frame_043",
+   "regions": 2,
+   "tags": [
+    {
+     "id": 20,
+     "side_px": 64.8,
+     "centre_px": [
+      1071.7,
+      1015.4
+     ],
+     "support": 0.334,
+     "ring_hsv_median": [
+      95,
+      43,
+      125
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       42,
+       99,
+       125
+      ],
+      [
+       1,
+       18,
+       235
+      ],
+      [
+       59,
+       172,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      0.04,
+      1.11
+     ],
+     "pose_without_depth": true,
+     "pose_with_depth": true,
+     "depth_at_tag_m": 0.962,
+     "detected": true,
+     "grip_camera_m": [
+      0.068,
+      0.492,
+      0.923
+     ],
+     "sd_m": [
+      0.0101,
+      0.011,
+      0.0133
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "frame_044",
+   "regions": 3,
+   "tags": [
+    {
+     "id": 20,
+     "side_px": 58.5,
+     "centre_px": [
+      573.8,
+      803.8
+     ],
+     "support": 0.256,
+     "ring_hsv_median": [
+      101,
+      18,
+      126
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       45,
+       99,
+       126
+      ],
+      [
+       1,
+       7,
+       211
+      ],
+      [
+       125,
+       245,
+       255
+      ]
+     ],
+     "in_search_region": false,
+     "reprojection_px": [
+      0.13,
+      0.92
+     ],
+     "pose_without_depth": true,
+     "pose_with_depth": true,
+     "depth_at_tag_m": 1.025,
+     "detected": false,
+     "why": "outside the colour-gated search regions"
+    },
+    {
+     "id": 21,
+     "side_px": 68.6,
+     "centre_px": [
+      1051.5,
+      984.0
+     ],
+     "support": 0.396,
+     "ring_hsv_median": [
+      95,
+      91,
+      136
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       70,
+       102,
+       122
+      ],
+      [
+       1,
+       12,
+       206
+      ],
+      [
+       84,
+       239,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      0.13,
+      2.0
+     ],
+     "pose_without_depth": true,
+     "pose_with_depth": false,
+     "depth_at_tag_m": null,
+     "detected": false,
+     "why": "pose rejected (reprojection, ambiguity or depth)"
+    }
+   ]
+  }
+ ]
+}

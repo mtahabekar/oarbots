@@ -77,7 +77,7 @@ def cmd_colour(args):
     near, rest = [], []
     for _, f, bgr, _ in frames:
         hsv = cv2.cvtColor(bgr, cv2.COLOR_BGR2HSV)
-        m = near_mask(hsv.shape[:2], [t for t in f['tags'] if t['id'] in GLOVE_IDS])
+        m = near_mask(hsv.shape[:2], [t for t in f['tags'] if t['id'] in GLOVE_IDS], args.reach, args.margin)
         coloured = (hsv[..., 1] >= args.min_s) & (hsv[..., 2] >= args.min_v)
         near.append(hsv[(m > 0) & coloured])
         rest.append(hsv[(m == 0) & coloured])
@@ -230,7 +230,7 @@ def cmd_evaluate(args):
             cv2.imwrite(str(out / f'{name}.jpg'), cv2.resize(view, None, fx=args.scale, fy=args.scale),
                         [cv2.IMWRITE_JPEG_QUALITY, 85])
     summary = {
-        'params': {k_: params[k_] for k_ in ('glove_hsv_lower', 'glove_hsv_upper', 'tag_min_color_support', 'tag_roi_upscale', 'tag_roi_fallback_unscaled',
+        'params': {k_: params[k_] for k_ in ('glove_hsv_lower', 'glove_hsv_upper', 'tag_min_color_support', 'tag_roi_upscale', 'tag_roi_fallback_unscaled', 'tag_depth_grid',
                                             'tag_use_depth') if k_ in params} | {'tag_depth_gate_m': det.depth_gate},
         'detected': {str(t): f'{hit.get(t, 0)}/{seen[t]}' for t in sorted(seen)},
         'misses': why,
@@ -259,6 +259,9 @@ def main():
     c.add_argument('--hue', type=int, nargs=2, metavar=('LO', 'HI'))
     c.add_argument('--range', type=int, nargs=6, metavar=('H', 'S', 'V', 'H', 'S', 'V'), help='candidate lower and upper HSV')
     c.add_argument('--min-area', type=int, default=25)
+    c.add_argument('--reach', type=float, default=3.5, help='sample within this many tag widths of a tag (overhead: 3.5;\n'
+                   'close frontal views: ~2, else the sleeves and body dominate)')
+    c.add_argument('--margin', type=float, default=1.45, help='exclude a square this many tag widths wide (tag and paper margin)')
     c.add_argument('--json')
     s = sub.add_parser('sample', help='HSV of in-range pixels inside named boxes of one saved frame')
     s.add_argument('run')

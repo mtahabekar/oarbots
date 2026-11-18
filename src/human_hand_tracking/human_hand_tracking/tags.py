@@ -25,7 +25,7 @@ class GloveDetector:
                  dictionary='DICT_4X4_50', max_reprojection_px=2.0,
                  min_color_support=0.08, pixel_stddev=0.7, position_floor_m=0.01,
                  min_glove_area_px=100, depth_gate_m=0.005, max_range_correction=0.25, roi_upscale=1,
-                 roi_fallback_unscaled=False):
+                 roi_fallback_unscaled=False, depth_grid=0):
         # With registered depth (detect(..., depth=)): an ambiguous planar pose is resolved by
         # the candidate whose tilt matches the measured depth within depth_gate_m (mean, after
         # removing the offset), and the tag's range is rescaled to the measured depth; a tag
@@ -37,6 +37,13 @@ class GloveDetector:
         # better and wins where both find a tag; on the real overhead camera (25-32 px tags, glare on
         # the print) it lost 4 of 43 tags that the original-size search found (lab log 2026-11-18).
         self.roi_fallback_unscaled = bool(roi_fallback_unscaled)
+        # depth_grid: sample the tag's depth on an n x n grid over its face instead of five points (0).
+        # Registered depth has holes on the tags at close range (depth mapped onto 1080p colour leaves
+        # blotches; the real wrist cameras lost most tags to them, lab log 2026-11-18); a grid keeps
+        # every sample that has depth, and needs samples in at least three of the tag's quarters.
+        if int(depth_grid) != depth_grid or depth_grid not in (0,) and not 3 <= depth_grid <= 15:
+            raise ValueError('depth_grid must be 0 (five points) or an integer 3..15')
+        self.depth_grid = int(depth_grid)
         self.depth_gate = float(depth_gate_m)
         self.max_range_correction = float(max_range_correction)
         if int(roi_upscale) != roi_upscale or not 1 <= roi_upscale <= 4:
@@ -167,23 +174,35 @@ class GloveDetector:
         Returns (shape residual m, range scale): the mean |predicted - measured| depth after
         removing each side's mean (the tag's tilt, independent of any range bias), and the
         median measured/predicted depth ratio. Samples sit 30 % in from the detected corners
-        and at the centre, off the tag's edges; each is the median of the valid pixels of a
-        3 x 3 window. (nan, nan) if fewer than four samples have depth.
+        and at the centre, off the tag's edges, or (depth_grid) on an n x n grid between 10 and
+        90 % across the tag; each is the median of the valid pixels of a 3 x 3 window. (nan, nan)
+        if fewer than four samples have depth, or (grid) they cover fewer than three quarters.
         """
         rotation = cv2.Rodrigues(rvec)[0]
         centre = points.mean(axis=0)
-        pixels = np.vstack((centre + 0.7 * (points - centre), centre))
-        model = np.vstack((0.7 * self.object_points, np.zeros((1, 3))))
+        if self.depth_grid:
+            # Bilinear over the corners (TL, TR, BR, BL) in the image and in the tag plane alike.
+            g = np.linspace(0.1, 0.9, self.depth_grid)
+            a, b = (m.ravel() for m in np.meshgrid(g, g))
+            weights = np.stack(((1-a)*(1-b), a*(1-b), a*b, (1-a)*b), axis=1)
+            pixels, model = weights @ points, weights @ self.object_points
+            quarter = (a > 0.5).astype(int) * 2 + (b > 0.5).astype(int)
+        else:
+            pixels = np.vstack((centre + 0.7 * (points - centre), centre))
+            model = np.vstack((0.7 * self.object_points, np.zeros((1, 3))))
+            quarter = None
         predicted = (model @ rotation.T + tvec.ravel())[:, 2]
         h, w = depth.shape[:2]
-        pairs = []
-        for (u, v), z in zip(pixels, predicted):
+        pairs, quarters = [], set()
+        for i, ((u, v), z) in enumerate(zip(pixels, predicted)):
             x, y = int(round(u)), int(round(v))
             window = depth[max(0, y-1):min(h, y+2), max(0, x-1):min(w, x+2)].ravel()
             window = window[np.isfinite(window) & (window > 0)]
             if len(window):
                 pairs.append((z, float(np.median(window))))
-        if len(pairs) < 4:
+                if quarter is not None:
+                    quarters.add(int(quarter[i]))
+        if len(pairs) < 4 or (quarter is not None and len(quarters) < 3):
             return float('nan'), float('nan')
         z, measured = np.array(pairs).T
         shape = float(np.mean(np.abs((measured - measured.mean()) - (z - z.mean()))))

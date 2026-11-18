@@ -60,7 +60,7 @@ def detector_from(p):
                          p.get('tag_pixel_stddev', .7), p.get('tag_position_floor_m', .01),
                          p.get('glove_min_area_px', 100), p.get('tag_depth_gate_m', .005),
                          p.get('tag_max_range_correction', .25), p.get('tag_roi_upscale', 1),
-                         p.get('tag_roi_fallback_unscaled', False))
+                         p.get('tag_roi_fallback_unscaled', False), p.get('tag_depth_grid', 0))
 
 
 def analyse(det, bgr, depth, k, dist, use_depth, world=None):

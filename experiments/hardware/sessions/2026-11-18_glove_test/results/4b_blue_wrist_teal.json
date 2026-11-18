@@ -1,0 +1,2240 @@
+{
+ "summary": {
+  "params": {
+   "glove_hsv_lower": [
+    90,
+    120,
+    40
+   ],
+   "glove_hsv_upper": [
+    99,
+    255,
+    255
+   ],
+   "tag_min_color_support": 0.08,
+   "tag_roi_upscale": 2,
+   "tag_use_depth": true,
+   "tag_depth_gate_m": 0.005
+  },
+  "detected": {
+   "20": "9/21",
+   "21": "21/21"
+  },
+  "misses": {
+   "pose rejected (reprojection, ambiguity or depth)": 10,
+   "outside the colour-gated search regions": 2
+  },
+  "support_min_median": {
+   "20": [
+    0.264,
+    0.292
+   ],
+   "21": [
+    0.239,
+    0.259
+   ]
+  },
+  "colour_regions_median_max": [
+   4,
+   6
+  ],
+  "detect_ms_median_max": [
+   12.5,
+   24.6
+  ],
+  "search_reprojection_px_median_max": [
+   0.2,
+   0.99
+  ],
+  "ambiguous_tags": 0,
+  "depth_residual_mm_right_pose_median": null,
+  "depth_residual_mm_right_pose_min_max": null,
+  "depth_residual_mm_wrong_pose_min_max": null
+ },
+ "frames": [
+  {
+   "frame": "frame_004",
+   "regions": 4,
+   "tags": [
+    {
+     "id": 20,
+     "side_px": 87.5,
+     "centre_px": [
+      490.4,
+      782.5
+     ],
+     "support": 0.313,
+     "ring_hsv_median": [
+      150,
+      154,
+      78
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       68,
+       125,
+       170
+      ],
+      [
+       1,
+       30,
+       220
+      ],
+      [
+       50,
+       186,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      0.15,
+      4.55
+     ],
+     "pose_without_depth": true,
+     "pose_with_depth": false,
+     "depth_at_tag_m": null,
+     "detected": false,
+     "why": "pose rejected (reprojection, ambiguity or depth)"
+    },
+    {
+     "id": 21,
+     "side_px": 71.3,
+     "centre_px": [
+      933.6,
+      613.1
+     ],
+     "support": 0.249,
+     "ring_hsv_median": [
+      96,
+      141,
+      131
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       0,
+       101,
+       165
+      ],
+      [
+       0,
+       10,
+       226
+      ],
+      [
+       78,
+       178,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      0.72,
+      3.83
+     ],
+     "pose_without_depth": true,
+     "pose_with_depth": true,
+     "depth_at_tag_m": 0.712,
+     "detected": true,
+     "grip_camera_m": [
+      0.008,
+      0.069,
+      0.663
+     ],
+     "sd_m": [
+      0.01,
+      0.01,
+      0.011
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "frame_005",
+   "regions": 4,
+   "tags": [
+    {
+     "id": 21,
+     "side_px": 67.0,
+     "centre_px": [
+      938.0,
+      608.3
+     ],
+     "support": 0.259,
+     "ring_hsv_median": [
+      96,
+      136,
+      140
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       11,
+       120,
+       165
+      ],
+      [
+       1,
+       4,
+       187
+      ],
+      [
+       153,
+       249,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      0.75,
+      3.21
+     ],
+     "pose_without_depth": true,
+     "pose_with_depth": true,
+     "depth_at_tag_m": 0.74,
+     "detected": true,
+     "grip_camera_m": [
+      0.009,
+      0.066,
+      0.703
+     ],
+     "sd_m": [
+      0.01,
+      0.01,
+      0.0111
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "frame_006",
+   "regions": 3,
+   "tags": [
+    {
+     "id": 20,
+     "side_px": 102.2,
+     "centre_px": [
+      490.4,
+      775.6
+     ],
+     "support": 0.285,
+     "ring_hsv_median": [
+      167,
+      142,
+      79
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       0,
+       114,
+       170
+      ],
+      [
+       0,
+       9,
+       209
+      ],
+      [
+       73,
+       239,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      0.55,
+      7.35
+     ],
+     "pose_without_depth": true,
+     "pose_with_depth": false,
+     "depth_at_tag_m": null,
+     "detected": false,
+     "why": "pose rejected (reprojection, ambiguity or depth)"
+    }
+   ]
+  },
+  {
+   "frame": "frame_007",
+   "regions": 2,
+   "tags": [
+    {
+     "id": 20,
+     "side_px": 117.8,
+     "centre_px": [
+      646.9,
+      739.9
+     ],
+     "support": 0.281,
+     "ring_hsv_median": [
+      164,
+      139,
+      85
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       0,
+       120,
+       170
+      ],
+      [
+       0,
+       12,
+       204
+      ],
+      [
+       75,
+       225,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      0.27,
+      9.02
+     ],
+     "pose_without_depth": true,
+     "pose_with_depth": true,
+     "depth_at_tag_m": 0.459,
+     "detected": true,
+     "grip_camera_m": [
+      -0.116,
+      0.11,
+      0.422
+     ],
+     "sd_m": [
+      0.01,
+      0.01,
+      0.0102
+     ]
+    },
+    {
+     "id": 21,
+     "side_px": 77.0,
+     "centre_px": [
+      1061.5,
+      580.4
+     ],
+     "support": 0.251,
+     "ring_hsv_median": [
+      94,
+      105,
+      156
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       0,
+       94,
+       150
+      ],
+      [
+       0,
+       3,
+       118
+      ],
+      [
+       189,
+       254,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      0.12,
+      0.84
+     ],
+     "pose_without_depth": true,
+     "pose_with_depth": true,
+     "depth_at_tag_m": 0.692,
+     "detected": true,
+     "grip_camera_m": [
+      0.115,
+      0.036,
+      0.641
+     ],
+     "sd_m": [
+      0.01,
+      0.01,
+      0.0109
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "frame_008",
+   "regions": 3,
+   "tags": [
+    {
+     "id": 20,
+     "side_px": 107.6,
+     "centre_px": [
+      415.5,
+      835.4
+     ],
+     "support": 0.273,
+     "ring_hsv_median": [
+      167,
+      130,
+      79
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       0,
+       120,
+       171
+      ],
+      [
+       0,
+       17,
+       216
+      ],
+      [
+       70,
+       212,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      0.2,
+      6.8
+     ],
+     "pose_without_depth": true,
+     "pose_with_depth": false,
+     "depth_at_tag_m": null,
+     "detected": false,
+     "why": "pose rejected (reprojection, ambiguity or depth)"
+    }
+   ]
+  },
+  {
+   "frame": "frame_010",
+   "regions": 3,
+   "tags": [
+    {
+     "id": 20,
+     "side_px": 84.6,
+     "centre_px": [
+      460.8,
+      764.5
+     ],
+     "support": 0.273,
+     "ring_hsv_median": [
+      166,
+      131,
+      81
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       30,
+       120,
+       170
+      ],
+      [
+       1,
+       14,
+       205
+      ],
+      [
+       74,
+       221,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      0.22,
+      4.53
+     ],
+     "pose_without_depth": true,
+     "pose_with_depth": false,
+     "depth_at_tag_m": 0.693,
+     "detected": false,
+     "why": "pose rejected (reprojection, ambiguity or depth)"
+    }
+   ]
+  },
+  {
+   "frame": "frame_011",
+   "regions": 3,
+   "tags": [
+    {
+     "id": 20,
+     "side_px": 97.9,
+     "centre_px": [
+      649.8,
+      763.7
+     ],
+     "support": 0.274,
+     "ring_hsv_median": [
+      166,
+      143,
+      78
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       0,
+       120,
+       170
+      ],
+      [
+       0,
+       18,
+       220
+      ],
+      [
+       71,
+       212,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      0.22,
+      6.27
+     ],
+     "pose_without_depth": true,
+     "pose_with_depth": true,
+     "depth_at_tag_m": 0.565,
+     "detected": true,
+     "grip_camera_m": [
+      -0.157,
+      0.152,
+      0.527
+     ],
+     "sd_m": [
+      0.01,
+      0.01,
+      0.0104
+     ]
+    },
+    {
+     "id": 21,
+     "side_px": 85.6,
+     "centre_px": [
+      1104.1,
+      645.4
+     ],
+     "support": 0.246,
+     "ring_hsv_median": [
+      95,
+      108,
+      139
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       6,
+       95,
+       170
+      ],
+      [
+       1,
+       9,
+       215
+      ],
+      [
+       83,
+       225,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      0.11,
+      2.36
+     ],
+     "pose_without_depth": true,
+     "pose_with_depth": true,
+     "depth_at_tag_m": 0.65,
+     "detected": true,
+     "grip_camera_m": [
+      0.134,
+      0.084,
+      0.596
+     ],
+     "sd_m": [
+      0.01,
+      0.01,
+      0.0107
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "frame_012",
+   "regions": 3,
+   "tags": [
+    {
+     "id": 20,
+     "side_px": 57.0,
+     "centre_px": [
+      728.3,
+      686.3
+     ],
+     "support": 0.296,
+     "ring_hsv_median": [
+      165,
+      146,
+      91
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       90,
+       128,
+       170
+      ],
+      [
+       2,
+       44,
+       198
+      ],
+      [
+       59,
+       214,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      0.66,
+      3.11
+     ],
+     "pose_without_depth": true,
+     "pose_with_depth": false,
+     "depth_at_tag_m": 0.93,
+     "detected": false,
+     "why": "pose rejected (reprojection, ambiguity or depth)"
+    }
+   ]
+  },
+  {
+   "frame": "frame_013",
+   "regions": 3,
+   "tags": [
+    {
+     "id": 20,
+     "side_px": 97.5,
+     "centre_px": [
+      632.4,
+      780.8
+     ],
+     "support": 0.305,
+     "ring_hsv_median": [
+      167,
+      145,
+      90
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       30,
+       140,
+       170
+      ],
+      [
+       1,
+       11,
+       208
+      ],
+      [
+       63,
+       217,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      0.03,
+      7.75
+     ],
+     "pose_without_depth": true,
+     "pose_with_depth": false,
+     "depth_at_tag_m": null,
+     "detected": false,
+     "why": "pose rejected (reprojection, ambiguity or depth)"
+    },
+    {
+     "id": 21,
+     "side_px": 79.4,
+     "centre_px": [
+      1249.9,
+      775.6
+     ],
+     "support": 0.252,
+     "ring_hsv_median": [
+      124,
+      146,
+      109
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       20,
+       96,
+       165
+      ],
+      [
+       1,
+       6,
+       221
+      ],
+      [
+       91,
+       252,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      0.08,
+      1.66
+     ],
+     "pose_without_depth": true,
+     "pose_with_depth": true,
+     "depth_at_tag_m": 0.748,
+     "detected": true,
+     "grip_camera_m": [
+      0.264,
+      0.204,
+      0.704
+     ],
+     "sd_m": [
+      0.0102,
+      0.0101,
+      0.0113
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "frame_014",
+   "regions": 4,
+   "tags": [
+    {
+     "id": 20,
+     "side_px": 77.8,
+     "centre_px": [
+      570.6,
+      892.0
+     ],
+     "support": 0.367,
+     "ring_hsv_median": [
+      97,
+      146,
+      130
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       75,
+       114,
+       170
+      ],
+      [
+       1,
+       13,
+       166
+      ],
+      [
+       62,
+       213,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      0.11,
+      2.89
+     ],
+     "pose_without_depth": true,
+     "pose_with_depth": true,
+     "depth_at_tag_m": 0.78,
+     "detected": true,
+     "grip_camera_m": [
+      -0.31,
+      0.309,
+      0.734
+     ],
+     "sd_m": [
+      0.0102,
+      0.0102,
+      0.0112
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "frame_016",
+   "regions": 4,
+   "tags": [
+    {
+     "id": 20,
+     "side_px": 64.2,
+     "centre_px": [
+      769.6,
+      891.2
+     ],
+     "support": 0.346,
+     "ring_hsv_median": [
+      95,
+      122,
+      168
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       12,
+       97,
+       125
+      ],
+      [
+       2,
+       12,
+       130
+      ],
+      [
+       88,
+       243,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      0.06,
+      1.55
+     ],
+     "pose_without_depth": true,
+     "pose_with_depth": true,
+     "depth_at_tag_m": 0.945,
+     "detected": true,
+     "grip_camera_m": [
+      -0.185,
+      0.377,
+      0.895
+     ],
+     "sd_m": [
+      0.0101,
+      0.0105,
+      0.0128
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "frame_019",
+   "regions": 4,
+   "tags": [
+    {
+     "id": 20,
+     "side_px": 74.6,
+     "centre_px": [
+      658.7,
+      791.4
+     ],
+     "support": 0.308,
+     "ring_hsv_median": [
+      124,
+      143,
+      114
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       30,
+       140,
+       170
+      ],
+      [
+       1,
+       18,
+       155
+      ],
+      [
+       39,
+       210,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      0.1,
+      3.4
+     ],
+     "pose_without_depth": true,
+     "pose_with_depth": true,
+     "depth_at_tag_m": 0.767,
+     "detected": true,
+     "grip_camera_m": [
+      -0.235,
+      0.226,
+      0.722
+     ],
+     "sd_m": [
+      0.0101,
+      0.0101,
+      0.0111
+     ]
+    },
+    {
+     "id": 21,
+     "side_px": 78.8,
+     "centre_px": [
+      1125.9,
+      573.0
+     ],
+     "support": 0.268,
+     "ring_hsv_median": [
+      95,
+      137,
+      151
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       0,
+       128,
+       172
+      ],
+      [
+       0,
+       6,
+       149
+      ],
+      [
+       66,
+       252,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      0.61,
+      5.56
+     ],
+     "pose_without_depth": true,
+     "pose_with_depth": true,
+     "depth_at_tag_m": 0.628,
+     "detected": true,
+     "grip_camera_m": [
+      0.123,
+      0.04,
+      0.577
+     ],
+     "sd_m": [
+      0.01,
+      0.01,
+      0.0106
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "frame_020",
+   "regions": 4,
+   "tags": [
+    {
+     "id": 20,
+     "side_px": 120.0,
+     "centre_px": [
+      473.4,
+      848.6
+     ],
+     "support": 0.314,
+     "ring_hsv_median": [
+      126,
+      140,
+      101
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       0,
+       125,
+       170
+      ],
+      [
+       0,
+       11,
+       150
+      ],
+      [
+       47,
+       221,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      0.2,
+      8.82
+     ],
+     "pose_without_depth": true,
+     "pose_with_depth": true,
+     "depth_at_tag_m": 0.481,
+     "detected": true,
+     "grip_camera_m": [
+      -0.221,
+      0.171,
+      0.429
+     ],
+     "sd_m": [
+      0.01,
+      0.01,
+      0.0102
+     ]
+    },
+    {
+     "id": 21,
+     "side_px": 61.7,
+     "centre_px": [
+      915.8,
+      694.9
+     ],
+     "support": 0.239,
+     "ring_hsv_median": [
+      103,
+      122,
+      135
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       80,
+       125,
+       156
+      ],
+      [
+       1,
+       6,
+       122
+      ],
+      [
+       68,
+       251,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      0.55,
+      1.81
+     ],
+     "pose_without_depth": true,
+     "pose_with_depth": true,
+     "depth_at_tag_m": 0.861,
+     "detected": true,
+     "grip_camera_m": [
+      -0.009,
+      0.158,
+      0.812
+     ],
+     "sd_m": [
+      0.01,
+      0.0101,
+      0.0122
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "frame_021",
+   "regions": 5,
+   "tags": [
+    {
+     "id": 20,
+     "side_px": 108.0,
+     "centre_px": [
+      381.2,
+      897.0
+     ],
+     "support": 0.277,
+     "ring_hsv_median": [
+      162,
+      125,
+      75
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       3,
+       96,
+       170
+      ],
+      [
+       1,
+       12,
+       214
+      ],
+      [
+       64,
+       235,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      0.15,
+      6.4
+     ],
+     "pose_without_depth": true,
+     "pose_with_depth": false,
+     "depth_at_tag_m": 0.598,
+     "detected": false,
+     "why": "pose rejected (reprojection, ambiguity or depth)"
+    }
+   ]
+  },
+  {
+   "frame": "frame_022",
+   "regions": 6,
+   "tags": [
+    {
+     "id": 20,
+     "side_px": 113.6,
+     "centre_px": [
+      376.2,
+      855.0
+     ],
+     "support": 0.286,
+     "ring_hsv_median": [
+      165,
+      130,
+      89
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       0,
+       115,
+       171
+      ],
+      [
+       0,
+       10,
+       146
+      ],
+      [
+       64,
+       234,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      0.14,
+      8.15
+     ],
+     "pose_without_depth": true,
+     "pose_with_depth": false,
+     "depth_at_tag_m": 0.498,
+     "detected": false,
+     "why": "pose rejected (reprojection, ambiguity or depth)"
+    }
+   ]
+  },
+  {
+   "frame": "frame_023",
+   "regions": 4,
+   "tags": [
+    {
+     "id": 21,
+     "side_px": 79.3,
+     "centre_px": [
+      1053.8,
+      667.3
+     ],
+     "support": 0.265,
+     "ring_hsv_median": [
+      96,
+      123,
+      140
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       0,
+       95,
+       133
+      ],
+      [
+       0,
+       3,
+       102
+      ],
+      [
+       134,
+       253,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      0.2,
+      3.66
+     ],
+     "pose_without_depth": true,
+     "pose_with_depth": true,
+     "depth_at_tag_m": 0.644,
+     "detected": true,
+     "grip_camera_m": [
+      0.088,
+      0.103,
+      0.59
+     ],
+     "sd_m": [
+      0.01,
+      0.01,
+      0.0108
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "frame_024",
+   "regions": 4,
+   "tags": [
+    {
+     "id": 21,
+     "side_px": 108.8,
+     "centre_px": [
+      1063.0,
+      643.4
+     ],
+     "support": 0.25,
+     "ring_hsv_median": [
+      95,
+      113,
+      144
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       0,
+       95,
+       167
+      ],
+      [
+       0,
+       5,
+       214
+      ],
+      [
+       73,
+       236,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      1.24,
+      5.8
+     ],
+     "pose_without_depth": true,
+     "pose_with_depth": true,
+     "depth_at_tag_m": 0.492,
+     "detected": true,
+     "grip_camera_m": [
+      0.083,
+      0.065,
+      0.437
+     ],
+     "sd_m": [
+      0.01,
+      0.01,
+      0.0102
+     ]
+    },
+    {
+     "id": 20,
+     "side_px": 161.1,
+     "centre_px": [
+      496.8,
+      866.0
+     ],
+     "support": 0.264,
+     "ring_hsv_median": [
+      165,
+      142,
+      86
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       0,
+       150,
+       170
+      ],
+      [
+       0,
+       12,
+       158
+      ],
+      [
+       65,
+       216,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      0.38,
+      18.13
+     ],
+     "pose_without_depth": true,
+     "pose_with_depth": false,
+     "depth_at_tag_m": 0.352,
+     "detected": false,
+     "why": "pose rejected (reprojection, ambiguity or depth)"
+    }
+   ]
+  },
+  {
+   "frame": "frame_025",
+   "regions": 5,
+   "tags": [
+    {
+     "id": 21,
+     "side_px": 87.3,
+     "centre_px": [
+      834.5,
+      745.7
+     ],
+     "support": 0.264,
+     "ring_hsv_median": [
+      125,
+      138,
+      114
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       0,
+       120,
+       170
+      ],
+      [
+       0,
+       6,
+       164
+      ],
+      [
+       59,
+       251,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      0.82,
+      5.74
+     ],
+     "pose_without_depth": true,
+     "pose_with_depth": true,
+     "depth_at_tag_m": 0.596,
+     "detected": true,
+     "grip_camera_m": [
+      -0.048,
+      0.141,
+      0.545
+     ],
+     "sd_m": [
+      0.01,
+      0.01,
+      0.0105
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "frame_026",
+   "regions": 5,
+   "tags": [
+    {
+     "id": 21,
+     "side_px": 61.6,
+     "centre_px": [
+      972.2,
+      648.0
+     ],
+     "support": 0.253,
+     "ring_hsv_median": [
+      96,
+      114,
+      154
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       8,
+       140,
+       165
+      ],
+      [
+       1,
+       5,
+       203
+      ],
+      [
+       80,
+       244,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      1.15,
+      2.91
+     ],
+     "pose_without_depth": true,
+     "pose_with_depth": true,
+     "depth_at_tag_m": 0.844,
+     "detected": true,
+     "grip_camera_m": [
+      0.04,
+      0.108,
+      0.791
+     ],
+     "sd_m": [
+      0.01,
+      0.01,
+      0.0119
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "frame_027",
+   "regions": 4,
+   "tags": [
+    {
+     "id": 21,
+     "side_px": 101.9,
+     "centre_px": [
+      1277.2,
+      603.1
+     ],
+     "support": 0.24,
+     "ring_hsv_median": [
+      94,
+      133,
+      127
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       0,
+       120,
+       176
+      ],
+      [
+       0,
+       12,
+       213
+      ],
+      [
+       62,
+       205,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      0.47,
+      5.17
+     ],
+     "pose_without_depth": true,
+     "pose_with_depth": true,
+     "depth_at_tag_m": 0.563,
+     "detected": true,
+     "grip_camera_m": [
+      0.201,
+      0.051,
+      0.497
+     ],
+     "sd_m": [
+      0.01,
+      0.01,
+      0.0103
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "frame_029",
+   "regions": 4,
+   "tags": [
+    {
+     "id": 20,
+     "side_px": 110.6,
+     "centre_px": [
+      463.6,
+      841.8
+     ],
+     "support": 0.269,
+     "ring_hsv_median": [
+      167,
+      139,
+      75
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       0,
+       103,
+       170
+      ],
+      [
+       0,
+       9,
+       210
+      ],
+      [
+       72,
+       234,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      0.43,
+      6.69
+     ],
+     "pose_without_depth": true,
+     "pose_with_depth": false,
+     "depth_at_tag_m": null,
+     "detected": false,
+     "why": "pose rejected (reprojection, ambiguity or depth)"
+    },
+    {
+     "id": 21,
+     "side_px": 72.0,
+     "centre_px": [
+      882.6,
+      700.3
+     ],
+     "support": 0.25,
+     "ring_hsv_median": [
+      97,
+      102,
+      155
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       0,
+       115,
+       162
+      ],
+      [
+       1,
+       6,
+       211
+      ],
+      [
+       73,
+       234,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      0.96,
+      2.7
+     ],
+     "pose_without_depth": true,
+     "pose_with_depth": true,
+     "depth_at_tag_m": 0.735,
+     "detected": true,
+     "grip_camera_m": [
+      -0.024,
+      0.134,
+      0.684
+     ],
+     "sd_m": [
+      0.01,
+      0.01,
+      0.0111
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "frame_030",
+   "regions": 4,
+   "tags": [
+    {
+     "id": 20,
+     "side_px": 79.0,
+     "centre_px": [
+      494.2,
+      796.7
+     ],
+     "support": 0.342,
+     "ring_hsv_median": [
+      106,
+      134,
+      117
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       0,
+       110,
+       150
+      ],
+      [
+       0,
+       12,
+       187
+      ],
+      [
+       46,
+       209,
+       255
+      ]
+     ],
+     "in_search_region": false,
+     "reprojection_px": [
+      0.97,
+      3.58
+     ],
+     "pose_without_depth": true,
+     "pose_with_depth": false,
+     "depth_at_tag_m": null,
+     "detected": false,
+     "why": "outside the colour-gated search regions"
+    }
+   ]
+  },
+  {
+   "frame": "frame_031",
+   "regions": 4,
+   "tags": [
+    {
+     "id": 20,
+     "side_px": 63.2,
+     "centre_px": [
+      791.1,
+      811.5
+     ],
+     "support": 0.292,
+     "ring_hsv_median": [
+      96,
+      146,
+      148
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       8,
+       97,
+       165
+      ],
+      [
+       1,
+       8,
+       150
+      ],
+      [
+       49,
+       237,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      0.04,
+      1.93
+     ],
+     "pose_without_depth": true,
+     "pose_with_depth": true,
+     "depth_at_tag_m": 0.929,
+     "detected": true,
+     "grip_camera_m": [
+      -0.159,
+      0.297,
+      0.887
+     ],
+     "sd_m": [
+      0.0101,
+      0.0103,
+      0.0128
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "frame_032",
+   "regions": 3,
+   "tags": [
+    {
+     "id": 21,
+     "side_px": 63.7,
+     "centre_px": [
+      1303.6,
+      515.9
+     ],
+     "support": 0.245,
+     "ring_hsv_median": [
+      93,
+      116,
+      141
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       38,
+       95,
+       172
+      ],
+      [
+       2,
+       28,
+       225
+      ],
+      [
+       48,
+       176,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      1.71,
+      2.12
+     ],
+     "pose_without_depth": false,
+     "pose_with_depth": false,
+     "depth_at_tag_m": 0.872,
+     "detected": true,
+     "grip_camera_m": [
+      0.336,
+      -0.013,
+      0.819
+     ],
+     "sd_m": [
+      0.0103,
+      0.01,
+      0.0119
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "frame_034",
+   "regions": 4,
+   "tags": [
+    {
+     "id": 21,
+     "side_px": 73.4,
+     "centre_px": [
+      1117.4,
+      712.1
+     ],
+     "support": 0.263,
+     "ring_hsv_median": [
+      132,
+      149,
+      86
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       6,
+       120,
+       166
+      ],
+      [
+       1,
+       7,
+       127
+      ],
+      [
+       48,
+       245,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      0.54,
+      3.69
+     ],
+     "pose_without_depth": true,
+     "pose_with_depth": true,
+     "depth_at_tag_m": 0.708,
+     "detected": true,
+     "grip_camera_m": [
+      0.13,
+      0.144,
+      0.651
+     ],
+     "sd_m": [
+      0.01,
+      0.01,
+      0.0109
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "frame_036",
+   "regions": 4,
+   "tags": [
+    {
+     "id": 21,
+     "side_px": 72.9,
+     "centre_px": [
+      1101.1,
+      578.8
+     ],
+     "support": 0.283,
+     "ring_hsv_median": [
+      94,
+      119,
+      154
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       0,
+       96,
+       150
+      ],
+      [
+       0,
+       4,
+       217
+      ],
+      [
+       152,
+       252,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      1.03,
+      1.99
+     ],
+     "pose_without_depth": true,
+     "pose_with_depth": true,
+     "depth_at_tag_m": 0.724,
+     "detected": true,
+     "grip_camera_m": [
+      0.142,
+      0.039,
+      0.668
+     ],
+     "sd_m": [
+      0.01,
+      0.01,
+      0.0111
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "frame_038",
+   "regions": 4,
+   "tags": [
+    {
+     "id": 21,
+     "side_px": 64.7,
+     "centre_px": [
+      764.8,
+      711.3
+     ],
+     "support": 0.262,
+     "ring_hsv_median": [
+      124,
+      60,
+      165
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       30,
+       105,
+       150
+      ],
+      [
+       1,
+       10,
+       231
+      ],
+      [
+       118,
+       200,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      0.68,
+      2.57
+     ],
+     "pose_without_depth": true,
+     "pose_with_depth": true,
+     "depth_at_tag_m": 0.838,
+     "detected": true,
+     "grip_camera_m": [
+      -0.136,
+      0.162,
+      0.791
+     ],
+     "sd_m": [
+      0.0101,
+      0.0101,
+      0.0118
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "frame_042",
+   "regions": 5,
+   "tags": [
+    {
+     "id": 20,
+     "side_px": 140.8,
+     "centre_px": [
+      293.9,
+      909.8
+     ],
+     "support": 0.29,
+     "ring_hsv_median": [
+      102,
+      134,
+      98
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       0,
+       96,
+       172
+      ],
+      [
+       0,
+       8,
+       156
+      ],
+      [
+       48,
+       219,
+       255
+      ]
+     ],
+     "in_search_region": false,
+     "reprojection_px": [
+      0.02,
+      11.44
+     ],
+     "pose_without_depth": true,
+     "pose_with_depth": false,
+     "depth_at_tag_m": null,
+     "detected": false,
+     "why": "outside the colour-gated search regions"
+    }
+   ]
+  },
+  {
+   "frame": "frame_043",
+   "regions": 4,
+   "tags": [
+    {
+     "id": 21,
+     "side_px": 54.0,
+     "centre_px": [
+      1190.3,
+      795.5
+     ],
+     "support": 0.294,
+     "ring_hsv_median": [
+      115,
+      130,
+      100
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       19,
+       110,
+       167
+      ],
+      [
+       1,
+       15,
+       226
+      ],
+      [
+       45,
+       203,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      0.84,
+      2.14
+     ],
+     "pose_without_depth": true,
+     "pose_with_depth": true,
+     "depth_at_tag_m": 1.024,
+     "detected": true,
+     "grip_camera_m": [
+      0.257,
+      0.293,
+      0.963
+     ],
+     "sd_m": [
+      0.0103,
+      0.0104,
+      0.0137
+     ]
+    },
+    {
+     "id": 20,
+     "side_px": 64.8,
+     "centre_px": [
+      783.3,
+      957.9
+     ],
+     "support": 0.349,
+     "ring_hsv_median": [
+      95,
+      105,
+      144
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       18,
+       100,
+       128
+      ],
+      [
+       1,
+       13,
+       189
+      ],
+      [
+       93,
+       237,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      0.05,
+      1.69
+     ],
+     "pose_without_depth": true,
+     "pose_with_depth": true,
+     "depth_at_tag_m": 0.934,
+     "detected": true,
+     "grip_camera_m": [
+      -0.167,
+      0.433,
+      0.879
+     ],
+     "sd_m": [
+      0.0101,
+      0.0107,
+      0.0129
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "frame_044",
+   "regions": 4,
+   "tags": [
+    {
+     "id": 21,
+     "side_px": 51.5,
+     "centre_px": [
+      985.4,
+      839.2
+     ],
+     "support": 0.322,
+     "ring_hsv_median": [
+      96,
+      116,
+      121
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       83,
+       95,
+       125
+      ],
+      [
+       2,
+       9,
+       228
+      ],
+      [
+       106,
+       242,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      0.97,
+      2.27
+     ],
+     "pose_without_depth": true,
+     "pose_with_depth": true,
+     "depth_at_tag_m": 1.014,
+     "detected": true,
+     "grip_camera_m": [
+      0.05,
+      0.334,
+      0.951
+     ],
+     "sd_m": [
+      0.01,
+      0.0106,
+      0.0143
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "frame_045",
+   "regions": 2,
+   "tags": [
+    {
+     "id": 21,
+     "side_px": 63.0,
+     "centre_px": [
+      623.9,
+      964.6
+     ],
+     "support": 0.389,
+     "ring_hsv_median": [
+      95,
+      103,
+      131
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       75,
+       100,
+       122
+      ],
+      [
+       2,
+       10,
+       106
+      ],
+      [
+       98,
+       242,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      0.22,
+      2.14
+     ],
+     "pose_without_depth": true,
+     "pose_with_depth": true,
+     "depth_at_tag_m": 0.883,
+     "detected": true,
+     "grip_camera_m": [
+      -0.29,
+      0.404,
+      0.827
+     ],
+     "sd_m": [
+      0.0103,
+      0.0105,
+      0.0122
+     ]
+    }
+   ]
+  },
+  {
+   "frame": "frame_046",
+   "regions": 3,
+   "tags": [
+    {
+     "id": 20,
+     "side_px": 63.3,
+     "centre_px": [
+      817.8,
+      878.9
+     ],
+     "support": 0.3,
+     "ring_hsv_median": [
+      96,
+      143,
+      131
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       12,
+       95,
+       115
+      ],
+      [
+       2,
+       29,
+       179
+      ],
+      [
+       72,
+       206,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      0.15,
+      2.31
+     ],
+     "pose_without_depth": true,
+     "pose_with_depth": true,
+     "depth_at_tag_m": 0.901,
+     "detected": true,
+     "grip_camera_m": [
+      -0.119,
+      0.344,
+      0.855
+     ],
+     "sd_m": [
+      0.0101,
+      0.0104,
+      0.0124
+     ]
+    },
+    {
+     "id": 21,
+     "side_px": 53.0,
+     "centre_px": [
+      1273.2,
+      700.9
+     ],
+     "support": 0.284,
+     "ring_hsv_median": [
+      168,
+      214,
+      107
+     ],
+     "band_hsv_p10_50_90": [
+      [
+       83,
+       95,
+       173
+      ],
+      [
+       1,
+       9,
+       234
+      ],
+      [
+       118,
+       244,
+       255
+      ]
+     ],
+     "in_search_region": true,
+     "reprojection_px": [
+      0.72,
+      1.22
+     ],
+     "pose_without_depth": true,
+     "pose_with_depth": true,
+     "depth_at_tag_m": 1.077,
+     "detected": true,
+     "grip_camera_m": [
+      0.379,
+      0.194,
+      1.017
+     ],
+     "sd_m": [
+      0.0106,
+      0.0102,
+      0.0143
+     ]
+    }
+   ]
+  }
+ ]
+}
