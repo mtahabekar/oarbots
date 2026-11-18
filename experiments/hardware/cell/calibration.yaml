@@ -21,10 +21,15 @@ transforms:
 # plate's mount only (base and arm level, checked by the user), so roll 0. A roll about the robot's
 # forward axis leaves the heading (from the front-back edges) and the corner-mean centre unaffected to
 # first order.
+# Blue re-parked 2026-11-18 12:50 (it had been moved; lab log 2026-11-18, "Blue's position"). Its marker
+# was then partly hidden by Silver's arm, so x, y, yaw come from park_guide's marker fit (10 s, 19 fits,
+# sd 0.3 / 0.2 mm, 0.04 deg) corrected by the fit's offset on Blue's tilted plate, measured against the
+# corners at 12:44 (fit - corners: x +5.4, y -0.2 mm, yaw -1.12 deg; 3 frames): fit (-0.4169, -1.0609,
+# 89.16) -> (-0.4223, -1.0607, 90.28). z unchanged (tape).
 - parent: world
   child: oarbot_blue/base_link
-  translation: [-0.4246, -1.0671, 0.006]
-  rotation_xyzw: [0.0, 0.0, 0.714289, 0.69985]
+  translation: [-0.4223, -1.0607, 0.006]
+  rotation_xyzw: [0.0, 0.0, 0.708853, 0.705356]
 - parent: world
   child: oarbot_silver/base_link
   translation: [0.4165, -1.0708, 0.012]

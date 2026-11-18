@@ -12,11 +12,14 @@ One robot at a time, in the order given (Silver first when it is in Blue's way).
 turn in place to the target heading, then translate (holonomic) holding it. `robot@x,y`: translate
 to the staging point (x, y) without turning, turn there, then translate to the target holding the
 heading; use it when the robot (or an arm sticking out) must not turn where it stands or next to
-its parked neighbour. Final goal: within 2 cm and 2 degrees for 1.5 s (or 3 cm, 3 degrees for 6 s); staging: 4 cm, 3 degrees.
+its parked neighbour. Final goal: within 2 cm and 2 degrees for 1.5 s (or 1.5 times that for 6 s);
+staging: 4 cm, 3 degrees. `--tol=M,DEG` sets a tighter final goal, e.g. `--tol=0.006,1.0` to put a base
+back within the ~5 mm of the 2026-11-17 parking (our session's camera: 15 fps, 0.085 s old frames).
 At most 0.05 m/s and 0.10 rad/s (guard limits 0.15 / 0.3); zero whenever the pose is older than
 1.7 s (the overhead frames arrive 1.15 s late) or the marker is not seen.
 
     python3 park_drive.py overhead_world.json oarbot_silver oarbot_blue@-0.42,-0.30
+    python3 park_drive.py overhead_world.json --tol=0.006,1.0 oarbot_blue
 
 Where it runs. The guard rejects commands stamped in its future, so run it on the machine whose
 clock is furthest behind among the helpers (2026-11-17: Silver, 46 ms behind the laptop, Blue 20 ms):
@@ -71,8 +74,9 @@ def on_poses(msg):
 
 
 class ParkDrive(Node):
-    def __init__(self, world, specs):
+    def __init__(self, world, specs, tol=(TOL_M, TOL_DEG)):
         super().__init__('park_drive')
+        self.tol_m, self.tol_deg = tol
         targets = json.load(open(world))['targets']
         self.order, self.goals = [], []          # goals: (robot, x, y, yaw or None, final)
         for spec in specs:
@@ -135,13 +139,13 @@ class ParkDrive(Node):
         dx, dy = tx - x, ty - y
         turn = 0.0 if tyaw is None else (tyaw - yaw + 180) % 360 - 180
         dist = math.hypot(dx, dy)
-        tol_m, tol_deg = (TOL_M, TOL_DEG) if final else (0.04, 3.0)
+        tol_m, tol_deg = (self.tol_m, self.tol_deg) if final else (0.04, 3.0)
         # Marker noise and the drive deadband can keep a base hunting at the fine tolerance: accept a
-        # final pose that has stayed within 3 cm and 3 degrees for 6 s.
-        near = dist < 0.03 and abs(turn) < 3.0
+        # final pose that has stayed within 1.5 times the tolerance for 6 s.
+        near = dist < 1.5 * self.tol_m and abs(turn) < 1.5 * self.tol_deg
         self.near_since = (getattr(self, 'near_since', None) or time.time()) if near else None
         if final and near and time.time() - self.near_since > 6.0:
-            tol_m, tol_deg = 0.03, 3.0
+            tol_m, tol_deg = 1.5 * self.tol_m, 1.5 * self.tol_deg
         if dist < tol_m and abs(turn) < tol_deg:
             self.send(robot)
             self.settled_since = self.settled_since or time.time()
@@ -180,10 +184,12 @@ class ParkDrive(Node):
 
 
 def main():
-    if len(sys.argv) < 3:
+    args = [a for a in sys.argv[2:] if not a.startswith('--tol=')]
+    tol = [tuple(float(v) for v in a[len('--tol='):].split(',')) for a in sys.argv[2:] if a.startswith('--tol=')]
+    if len(sys.argv) < 3 or not args:
         sys.exit(__doc__)
     rclpy.init()
-    node = ParkDrive(sys.argv[1], sys.argv[2:])
+    node = ParkDrive(sys.argv[1], args, tol[-1] if tol else (TOL_M, TOL_DEG))
     try:
         rclpy.spin(node)
     except KeyboardInterrupt:
