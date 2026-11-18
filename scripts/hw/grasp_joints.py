@@ -312,8 +312,8 @@ class GraspJoints(Node):
             if not forwarding and tick - waiting_note > 5.0:
                 print(f'    waiting for the deadman ({100*s:.0f} % of the path done)', flush=True)
                 waiting_note = tick
-            if tick - last_progress > WAIT_SEC and not done:
-                raise Abort(f'No deadman for {WAIT_SEC:.0f} s')
+            if tick - last_progress > self.args.wait and not done:
+                raise Abort(f'No deadman for {self.args.wait:.0f} s')
             if done and tick - last_progress > 60.0:
                 return q
             if done and not arrived_note:
@@ -357,6 +357,7 @@ def main():
     ap.add_argument('--robot', choices=('blue', 'silver'), required=True)
     ap.add_argument('--to', nargs='+', default=['grasp'], help='grasp (default), home, or six joint angles (rad)')
     ap.add_argument('--speed', type=float, default=10.0, help='largest joint speed, deg/s (the guard allows 15)')
+    ap.add_argument('--wait', type=float, default=WAIT_SEC, help='seconds to wait for the deadman before giving up')
     ap.add_argument('--check-only', action='store_true', help='run the preflight checks and send nothing')
     args = ap.parse_args()
     if not 0 < args.speed <= 15:

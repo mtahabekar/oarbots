@@ -110,9 +110,12 @@ class Guard:
 
     def finger_output(self, now):
         """Finger closure (percent) to send with this tick's arm command, or None to leave the fingers as they
-        are. With hold_fingers set, the fingers are driven to it only while the deadman is held: releasing it
-        stops them where they are, and the driver's own start-up (which opens them) is never fought."""
-        return self.hold_fingers if self.hold_fingers is not None and self.permitted(now) else None
+        are. With hold_fingers set, the fingers are driven to it only while the deadman is held and this robot
+        is in the fabric_cbf mode (the deadman is shared by both robots): releasing it stops them where they
+        are, and the driver's own start-up (which opens them) is never fought."""
+        if self.hold_fingers is None or not self.permitted(now):
+            return None
+        return self.hold_fingers if self.mode == 'fabric_cbf' and 0 <= now-self.mode_time <= self.timeout else None
 
     def output(self, now):
         zero = (0.,)*6

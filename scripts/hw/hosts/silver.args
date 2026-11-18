@@ -8,5 +8,6 @@ body_tracking:=false
 hosted_ft:=blue
 # Silver's fingers stay closed on its sheet corner (user, 2026-11-18): the guard sends 100 % closure with
 # every command while the deadman is held. The driver opens them once when the session starts; put the
-# corner in then, and the first deadman hold closes them. Blue's gripper is not controllable: no setting.
+# corner in then; the first deadman hold with Fabric Follow (CBF) on for Silver closes them (not a hold for
+# Blue alone: the deadman is shared). Blue's gripper is not controllable: no setting.
 hold_fingers:=100

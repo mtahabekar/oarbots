@@ -86,6 +86,8 @@ def test_fingers_held_closed_only_while_permitted():
     g.deadman_update(True, 1.)
     assert g.finger_output(1.) is None                  # held deadman at start-up cannot arm
     enable(g)
+    assert g.finger_output(1.02) is None                # deadman held for the other robot (not in fabric mode)
+    g.mode_update('fabric_cbf', 1.02)
     assert g.finger_output(1.02) == pytest.approx(100.)
     assert not any(g.output(1.02)[0])                   # holding the fingers never moves the arm
     g.deadman_update(False, 1.03)
