@@ -1,0 +1,64 @@
+{
+  "robot": "blue",
+  "step_m": 0.05,
+  "speeds_mps": [
+    0.03
+  ],
+  "axes": [
+    "z"
+  ],
+  "preflight": {
+    "home_offset_rad": 0.008329968415603517,
+    "ik_targets_checked": 40,
+    "ik_max_joint_change_rad": 0.29653753356427875,
+    "joint_bound_rad": 0.4448063003464181,
+    "axis_travel_checked_cm": 6.000000000000001,
+    "hand_in_arm_base_m": [
+      0.2813227295962776,
+      -0.28801755026804554,
+      0.500605449174758
+    ]
+  },
+  "wrist_force_check": true,
+  "legs": [
+    {
+      "axis": "z",
+      "sign": 1.0,
+      "speed_cmd_mps": 0.03,
+      "forwarded_m": 0.05039680537354624,
+      "moved_m": 0.03914067301615798,
+      "steady_speed_mps": 0.023640921269174903,
+      "direction_arm_base": [
+        -0.001,
+        -0.031,
+        1.0
+      ],
+      "direction_robot_base": [
+        -0.001,
+        -0.031,
+        1.0
+      ],
+      "lag_s": 0.3455993360003049
+    },
+    {
+      "axis": "z",
+      "sign": -1.0,
+      "speed_cmd_mps": 0.03,
+      "forwarded_m": -0.05040109099344839,
+      "moved_m": 0.037729370697135174,
+      "steady_speed_mps": 0.024160736245395567,
+      "direction_arm_base": [
+        0.002,
+        -0.001,
+        -1.0
+      ],
+      "direction_robot_base": [
+        0.002,
+        -0.001,
+        -1.0
+      ],
+      "lag_s": 0.4101088580000578
+    }
+  ],
+  "return_error_m": 0.0018908038791408878
+}

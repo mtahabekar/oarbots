@@ -193,9 +193,9 @@ The obstacle is the `obstacle` section of `twin.yaml` (centre, half extents, yaw
 ## 6. What is left for you, in order
 
 1. ~~**On this laptop (needs `sudo`):** install `ros-jazzy-rmw-cyclonedds-cpp` and `chrony`; attach a USB Ethernet adapter.~~ Done 2026-11-16; `scripts/hw/laptop_env.sh` writes the CycloneDDS profile (§8.1).
-2. ~~**On the helpers:** build `oarbot_runtime` and `tablet_gui`.~~ Done 2026-11-16, in a separate `~/fabric_ws` on Blue, Silver and the tablet (§8.1). The NUC is not set up yet.
+2. ~~**On the helpers:** build `oarbot_runtime` and `tablet_gui`.~~ Done 2026-11-16, in a separate `~/fabric_ws` on Blue, Silver and the tablet (§8.1); the NUC on 2026-11-17 (overhead camera only).
 3. **Fill the `fabric_cell` templates:** sheet size and mass, tag size and tag-to-pinch offset, colour thresholds, `calibration.yaml` (the launch refuses to start while it says `measured: false`), workspace box and force limit in `bridge.yaml`, obstacle in `twin.yaml`.
-4. **Hardware gates** from the plan (§5): carbon depth first, then H1–H3, H5, H7, H9, H12, H15. H3 translation passed on both robots on 2026-11-16 and confirmed the command frame in `bridge.yaml` (§8.2); H3 rotation is still open.
+4. **Hardware gates** from the plan (§5): carbon depth first, then H1–H3, H5, H7, H9, H12, H15. H3 translation passed on both robots on 2026-11-16 and confirmed the command frame in `bridge.yaml` (§8.2), and again on Blue on 2026-11-18 after its arm came back; H3 rotation is still open. H9: every host within 3.2 ms of the laptop on 2026-11-18 (tablet 7.3 ms).
 5. **Shadow sessions before any closed loop:** estimator alone, then twin with `commands:=false`, then warm-up, then closed loop without an obstacle.
 
 ## 7. Changes outside this repository
@@ -222,6 +222,12 @@ changing it. `scripts/hw/README.md` is the runbook for every command below.
   (`experiments/hardware/stock_snapshots/`).
 - **The stock deploy service** (`*_cd.service`) pulls upstream `main` into `~/ros2_ws` and rebuilds at
   every boot. Keep fabric work on the fork.
+- **Clocks.** Since 2026-11-17 this laptop is the cell's time server (chrony, campus server upstream);
+  every other host's timesyncd asks it first. On 2026-11-18 all hosts were within 3.2 ms of the laptop,
+  the tablet within 7.3 ms (`scripts/hw/clock_offsets.py`).
+- **Blue's wrist sensor is plugged into Silver's laptop.** On Blue's own laptop it forms a ground loop
+  with Blue's arm USB, and Blue's arm jitters and reports stale joint angles while moving (§8.4). Silver's
+  session reads it (`hosted_ft:=blue`); the runbook has the details.
 
 ### 8.2 Gate H3, translation (2026-11-16)
 
@@ -235,6 +241,11 @@ through the guard and the tablet deadman. Results and 50 Hz samples:
 - **Velocity response.** No motion at 1 cm/s and almost none at 2 cm/s; at 3-4 cm/s the arm delivers
   65-75 % of the command after 0.3-0.6 s. The twin's slow corrections fall in that deadband, and its
   actuator model should include the lag before closed loop.
+- **Blue again, 2026-11-18** (`experiments/hardware/sessions/2026-11-18_blue_h3/`), after its arm came
+  back from someone's firmware work and with its wrist sensor on Silver's laptop: same directions,
+  clean joint readings, return error 2-4 mm. At 3 cm/s z delivered 3.8-3.9 cm of 5 (day 1: 2.8-2.9),
+  x 2.2-2.4 cm at 1.6-1.7 cm/s (day 1: 3.0-3.1 cm at 2.0 cm/s), y 2.6 cm. Use today's numbers for
+  Blue in the twin's actuator model.
 
 ### 8.3 Real robots executing the simulated cell's twin
 
@@ -260,8 +271,10 @@ glove keys -> Isaac plant (oarbot_simulation) -> estimator -> fabric_twin + CBF 
   `scripts/hw/sim_bridge.py`): 10 cm down, 8 cm up, 12 cm forward and inward, 5 cm back, 4 cm outward.
   The outward side is short because the forearm and wrist camera approach the UWB wing. At a face of
   the box the bridge holds the motion that would go further out and keeps following the rest; it
-  stops (latched) only 2 cm beyond the box. Silver's force stop is 15.7 N (payload rating) on the
-  0.25 s mean, so start-up jolts do not trip it; Blue has no wrist sensor and runs without one.
+  stops (latched) only 2 cm beyond the box. The force stop is 15.7 N (payload rating) on the
+  0.25 s mean, so start-up jolts do not trip it. A bridge uses it only when its robot's calibrated
+  force is published: on 2026-11-16 Blue had no sensor and ran without it; since 2026-11-18 Blue's
+  sensor publishes from Silver's laptop.
 
 Procedure, from the repository root on this laptop (each `lab.sh` call asks for the lab password):
 
@@ -295,9 +308,12 @@ home both arms; `lab.sh stock blue start` and the same for silver; `lab.sh snaps
 | --- | --- | --- |
 | The patched Kinova driver stops the arm API after any gap over 0.2 s in its 100 Hz command stream, and only logs it | On 2026-11-16 both arms ignored commands for about 20 minutes while guard and bridge reported normally (Blue's helper froze at 21:31; Silver's cause unknown, 21:42) | Workaround: the start service (§8.3 step 4). To do: report the driver state in the guard diagnostics and the tablet GUI |
 | Blue's helper laptop dropped off the network twice (both interfaces at once, no reboot) | Blue's guard and driver stall | To investigate: power and suspend settings |
-| Calibrated wrist force on Silver runs at about 81 Hz with gaps up to 70 ms (raw 97 Hz) | The compensator waits for TF at each sample's exact time and drops samples older than 0.1 s | Not a blocker (the bridge's force timeout is 0.25 s); fix with a lag tolerance derived from the gravity error |
+| Calibrated wrist force runs at about 82-83 Hz with gaps up to 70-80 ms and ~37 ms age (raw 97 Hz), on both robots (2026-11-18) | The compensator waits for TF at each sample's exact time and drops samples older than 0.1 s | Not a blocker (the bridge's force timeout is 0.25 s); fix with a lag tolerance derived from the gravity error |
 | Raw wrist force swings +/-4 N (peak 10 N) when the arm jerks into motion | An unfiltered contact threshold trips on vibration | Filter before thresholding |
 | The plant's joint targets are not wrapped (`oarbot/robot.py`, `oarbot_simulation`) | After long runs PhysX rejects targets beyond +/-2 pi and a simulated arm stops following | To fix in the plant |
-| Blue's Dingo computer does not boot (panel: power blue, battery red, rest off) | No Blue base data; the arm and laptop are unaffected | Bases are not needed for the fabric tests |
+| Blue's Dingo computer did not boot on 2026-11-16 (panel: power blue, battery red, rest off) | No Blue base data that day | Boots again since 2026-11-17 (both bases parked by the overhead camera) |
+| Blue's arm jitters and its joint readings go stale while it moves whenever Blue's Rokubi and Blue's arm USB are on the same laptop (2026-11-18) | A test run read 2 joint updates in 98 steps, then 80 mrad jumps, and aborted; the guard's workspace checks would be blind | Ground loop through the wrist-mounted sensor (charger and hub port make no difference). Workaround: Blue's sensor on Silver's laptop (`hosted_ft:=blue`). Fix: insulate Blue's sensor mount or fit a USB isolator |
+| The Rokubi node stays up but silent after its sensor is replugged; the arm driver exits when the arm's USB is unplugged | Missing force or joint states with no session error | Restart that robot's session after any replug |
+| Blue's stock Rokubi node exits at every start (no `/dev/sensor_bota_rokubi_ft_0` alias on Blue's laptop) | Stock admittance on Blue has no force data | Tell the lab; our session uses the `/dev/serial/by-id` path |
 | The bridge latched a stop at the box face and on single force samples (first twin run, 22:22) | Blue stopped after 12.9 cm inward, Silver after 1 s on a start-up force spike | Fixed: soft box edge with a 2 cm hard margin, force stop on the 0.25 s mean |
 | Silver's 1080p colour frames (about 8 MB) did not reach local subscribers with default DDS buffers | Wrist perception would get no images | The session profile asks for 64 MB receive buffers; frames arrive at 15 Hz |

@@ -73,7 +73,34 @@ a force change that suggests contact.
 
 Per-robot defaults, such as unplugged devices and the F/T serial port, are in `hosts/<robot>.args`.
 Arguments after `start` override them, for example `lab.sh session blue start camera:=true`.
-`status` and `logs` show the session state and the last 200 log lines.
+`status` and `logs` show the session state and the last 200 log lines (`logs ft-blue` for a hosted sensor).
+
+Paths passed through `exec` must not start with `~`: the laptop's shell expands it before SSH. Use
+paths relative to the home folder, for example `exec python3 fabric_ws/scripts/hw/first_motion.py`.
+
+### Blue's wrist sensor is plugged into Silver's laptop
+
+With Blue's Rokubi on Blue's own laptop, Blue's arm jitters and reports stale joint angles while it
+moves: the sensor body is bolted to the wrist, and its USB and the arm's USB on one laptop form a
+ground loop (lab log 2026-11-18, `experiments/hardware/sessions/2026-11-18_blue_h3/`). Until Blue's
+mount is insulated or a USB isolator is fitted, Blue's sensor cable runs to Silver's riser hub:
+
+- `hosts/blue.args` has `ft:=false`, so Blue's session starts no F/T node of its own.
+- `hosts/silver.args` has `hosted_ft:=blue`. `lab.sh session silver start` then also starts Blue's
+  node on Silver's laptop as `fabric-ft-blue` (`hosted_ft.launch.py`), with Blue's name, calibration and
+  serial port (from `hosts/blue.args`). `session silver stop` stops it with the rest.
+- Everything that uses Blue's force subscribes by topic, and Blue's calibrated force takes Blue's TF
+  from the network, so nothing else changes. `hosted_ft:=none` after `start` leaves it out.
+- Leave slack in the cable for Blue's arm motion and do not drive the bases while it is plugged in.
+
+To move the sensor back: delete both lines, plug it into Blue's laptop, restart both sessions.
+
+### After unplugging anything
+
+- **F/T sensor:** the Rokubi node does not reopen its port after a replug. It stays up and silent,
+  and `first_motion.py` then aborts waiting for force. Restart that robot's session.
+- **Arm USB:** the arm driver exits (`KinovaCommException`); the guard keeps running without it.
+  Restart that robot's session, then call the driver start service (below) before any motion.
 
 ## Versions
 
@@ -96,7 +123,8 @@ and each robot's bridge, guard and the tablet deadman, the real robots too. You 
 2. `lab.sh session blue start-bridge` and `lab.sh session silver start-bridge`. Each checks Home and a
    per-robot workspace box around the Home tool position (`BOXES` in `sim_bridge.py`, measured with MoveIt) again, then starts the
    bridge with the sim layout as its world frame (a mirror for directions, not a lab calibration).
-   Blue has no wrist sensor, so its bridge runs without the force stop.
+   A bridge uses the force stop only when that robot's wrist force is published; since 2026-11-18
+   Blue's is (from Silver's laptop, see above).
 3. `scripts/hw/run_sim_twin.sh [SIM_SECONDS] [oracle|gloves]` opens Isaac Sim and RViz and starts the
    relay; it prints the glove-key command for a second terminal.
 4. After the robots grasp in the sim: `source scripts/hw/laptop_env.sh`, then arm each bridge with

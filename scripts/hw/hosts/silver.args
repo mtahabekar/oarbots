@@ -3,3 +3,6 @@
 ft_serial_port:=/dev/serial/by-id/usb-FTDI_FT232R_USB_UART_AK7GN0G1-if00-port0
 # Body tracking is not used by the fabric cell and costs GPU time.
 body_tracking:=false
+# Blue's Rokubi is plugged into this laptop too (lab log 2026-11-18: on Blue's laptop it makes Blue's
+# arm jitter). fabric_session.sh starts its node as fabric-ft-blue; this line is not a launch argument.
+hosted_ft:=blue

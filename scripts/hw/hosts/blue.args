@@ -1,7 +1,12 @@
 # Default launch arguments for OARBot Blue's fabric session. Command-line arguments override these.
-# 2026-11-17: wrist camera and Rokubi reconnected (the Rokubi has no /dev/sensor_bota_rokubi_ft_0
-# alias on this laptop). The gripper is not connected electrically, and the arm's controller does not
-# detect its actuators after firmware work (lab log 2026-11-17), so the arm driver fails at start.
+# The gripper is not connected electrically. The arm works again on 2026-11-18 (on 2026-11-17 its
+# controller found no actuators after someone's firmware work).
+#
+# Blue's Rokubi is plugged into Silver's laptop, not this one (lab log 2026-11-18): on this laptop the
+# sensor and the arm's USB form a ground loop and the arm jitters and reports stale joint angles while
+# it moves. Silver's session reads it (hosts/silver.args, hosted_ft:=blue), so Blue's own node is off.
+# The port below is the sensor's adapter; Silver's session reads it from here.
+ft:=false
 ft_serial_port:=/dev/serial/by-id/usb-FTDI_FT232R_USB_UART_AK6VFMAU-if00-port0
 # Body tracking is not used by the fabric cell and costs GPU time.
 body_tracking:=false

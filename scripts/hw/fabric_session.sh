@@ -9,6 +9,10 @@
 #
 # The stack runs as transient user services (fabric-stack, fabric-cell): nothing is installed,
 # nothing starts at boot, and a reboot always returns the machine to the stock system.
+#
+# hosted_ft:=<robot> in hosts/<this robot>.args (or after `start`) is read by this script, not passed to
+# the launch: it starts the other robot's wrist sensor, plugged into this laptop, as fabric-ft-<robot>.
+# hosted_ft:=none cancels it.
 set -eo pipefail
 here="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 source "$here/lib.sh"
@@ -60,6 +64,22 @@ launch_unit() {
     echo "$unit started on $iface $address, domain $FABRIC_DOMAIN. Log: $run/$unit.log"
 }
 
+# Another robot's Rokubi plugged into this laptop (a ground loop makes Blue's arm jitter when its
+# sensor is on Blue's own laptop; lab log 2026-11-18). The serial port comes from that robot's args.
+start_hosted_ft() {
+    local other="$1" port
+    case "$other" in blue|silver) ;; *) echo "hosted_ft: unknown robot '$other'" >&2; return 1 ;; esac
+    [ "$other" != "$robot" ] || { echo "hosted_ft names this robot; its own sensor runs with ft:=true" >&2; return 1; }
+    port="$(sed -n 's/^ft_serial_port:=//p' "$here/hosts/$other.args" 2>/dev/null | tail -1)"
+    [ -n "$port" ] || { echo "hosted_ft: no ft_serial_port in hosts/$other.args" >&2; return 1; }
+    if [ ! -e "$port" ]; then
+        echo "hosted_ft: $other's sensor ($port) is not plugged into this laptop; fabric-ft-$other not started" >&2
+        return 0
+    fi
+    launch_unit "fabric-ft-$other" ros2 launch "$here/hosted_ft.launch.py" "robot:=$other" "serial_port:=$port"
+}
+units=(fabric-bridge fabric-cell fabric-ft-blue fabric-ft-silver fabric-stack)
+
 cmd="${1:-status}"; shift || true
 case "$cmd" in
     start)
@@ -77,7 +97,15 @@ case "$cmd" in
             defaults=()
             [ -f "$here/hosts/$robot.args" ] && mapfile -t defaults < <(grep -vE '^\s*(#|$)' "$here/hosts/$robot.args")
             # Later arguments win, so command-line arguments override the host defaults.
-            launch_unit fabric-stack ros2 launch oarbot_launch "oarbot_${robot}_helper_laptop.launch.py" "${defaults[@]}" "$@"
+            launch_args=(); hosted=""
+            for arg in "${defaults[@]}" "$@"; do
+                case "$arg" in
+                    hosted_ft:=*) hosted="${arg#hosted_ft:=}"; [ "$hosted" = none ] && hosted="" ;;
+                    *) launch_args+=("$arg") ;;
+                esac
+            done
+            launch_unit fabric-stack ros2 launch oarbot_launch "oarbot_${robot}_helper_laptop.launch.py" "${launch_args[@]}"
+            [ -z "$hosted" ] || start_hosted_ft "$hosted" || echo "fabric-stack runs without $hosted's sensor" >&2
         elif [ "$role" = camera ]; then
             launch_unit fabric-stack ros2 launch "$here/nuc_camera.launch.py" "$@"
         else
@@ -110,7 +138,7 @@ case "$cmd" in
         launch_unit fabric-bridge ros2 launch "$here/sim_bridge.launch.py" "robot:=$robot" "params_file:=$params"
         record start-bridge "$@" ;;
     stop)
-        for unit in fabric-bridge fabric-cell fabric-stack; do
+        for unit in "${units[@]}"; do
             unit_active "$unit" && systemctl --user stop "$unit" && echo "$unit stopped"
         done
         record stop
@@ -119,12 +147,12 @@ case "$cmd" in
     status)
         echo "deployed: $(tr '\n' ' ' < "$ws/DEPLOYED" 2>/dev/null || echo 'not built')"
         echo "checkout: $(git -C "$ws" describe --tags --always --dirty)"
-        for unit in fabric-stack fabric-cell fabric-bridge; do echo "$unit: $(systemctl --user is-active "$unit" 2>/dev/null || true)"; done
+        for unit in "${units[@]}"; do echo "$unit: $(systemctl --user is-active "$unit" 2>/dev/null || true)"; done
         if [ -n "$stock_unit" ]; then echo "stock $stock_unit: $(systemctl is-active "$stock_unit" 2>/dev/null || true)"; fi
         echo "lab address: $(fabric_pick_address || true)"
         echo "rmem_max: $(cat /proc/sys/net/core/rmem_max)" ;;
     logs)
-        tail -n 200 "$run/fabric-${1:-stack}.log" ;;
+        tail -n 200 "$run/fabric-${1:-stack}.log" ;;   # stack, cell, bridge, ft-blue, ft-silver
     exec)
         [ $# -ge 1 ] || { echo "usage: exec <command...>" >&2; exit 2; }
         unit_active fabric-stack || { echo "Start the stack first" >&2; exit 1; }

@@ -42,3 +42,6 @@ for it before closed loop.
   A contact check must filter it; the script now uses a 0.25 s mean and the 1.6 kg payload rating.
 - Run `silver_20261116_211228` (1 cm/s) and the first leg of `silver_20261116_211542` produced no
   motion; `211542` was then stopped by the old unfiltered 5 N force check.
+
+Blue repeated this test on 2026-11-18, after its arm came back and with its wrist sensor on Silver's
+laptop: `../2026-11-18_blue_h3/`.
