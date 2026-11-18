@@ -110,8 +110,17 @@ scripts/hw/lab.sh session blue exec python3 fabric_ws/scripts/hw/glove_check.py 
 Output: `~/fabric_ws/run/glove_check/<camera>_<time>/` (`frames.jsonl`, saved colour and depth frames,
 annotated JPEGs). `--params FILE` tries other settings live. Offline on the laptop, `glove_tune.py`
 measures the glove colour near the tags, the look-alikes in the scene, and evaluates any parameter set
-on the saved frames with annotated images. The overhead camera's calibration of 2026-11-18, step by
+on the saved frames with annotated images. The calibration of all three cameras on 2026-11-18, step by
 step: `experiments/hardware/sessions/2026-11-18_glove_test/README.md`.
+
+To check a camera's real perception node live: `lab.sh session nuc start-cell <cell_dir>` on the NUC (on a
+helper, `start-cell` also starts the CBF bridge; for perception alone run `fabric_cell
+camera_host.launch.py camera:=<robot>_wrist` as a `fabric-cell` unit), then
+`python3 scripts/hw/glove_record.py --camera <camera> --seconds 90 --out live.jsonl` on the session domain:
+rate, age at arrival, per-hand detection, gaps and positions. The nodes keep up at 15 fps only with
+`fabric_rate_hz: 5` (sheet processing at 5 Hz, gloves on every frame); a node that falls behind drops
+frames for age and publishes no gloves at all. Laptop discovery of a newly started node can take a minute:
+run the recorder on the camera's own computer with `exec` if it sees nothing.
 
 ### After unplugging anything
 

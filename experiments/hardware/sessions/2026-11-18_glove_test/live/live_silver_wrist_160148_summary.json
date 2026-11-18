@@ -1,0 +1,25 @@
+{
+ "messages": 2249,
+ "duration_s": 149.9,
+ "rate_hz": 15.0,
+ "age_s_median_p95": [
+  0.109,
+  0.171
+ ],
+ "human_left": {
+  "detected_in": "0/2249"
+ },
+ "human_right": {
+  "detected_in": "0/2249"
+ },
+ "camera_diagnostics": {
+  "processing_ms_median_p95": [
+   112.1,
+   119.7
+  ],
+  "capture_age_ms_median": 157.0,
+  "messages": [
+   "Classical baseline; validate colour/ROI/noise calibration"
+  ]
+ }
+}

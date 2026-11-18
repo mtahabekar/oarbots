@@ -194,7 +194,7 @@ The obstacle is the `obstacle` section of `twin.yaml` (centre, half extents, yaw
 
 1. ~~**On this laptop (needs `sudo`):** install `ros-jazzy-rmw-cyclonedds-cpp` and `chrony`; attach a USB Ethernet adapter.~~ Done 2026-11-16; `scripts/hw/laptop_env.sh` writes the CycloneDDS profile (§8.1).
 2. ~~**On the helpers:** build `oarbot_runtime` and `tablet_gui`.~~ Done 2026-11-16, in a separate `~/fabric_ws` on Blue, Silver and the tablet (§8.1); the NUC on 2026-11-17 (overhead camera only).
-3. **Fill the `fabric_cell` templates:** sheet size and mass, tag size and tag-to-pinch offset, colour thresholds, `calibration.yaml` (the launch refuses to start while it says `measured: false`), workspace box and force limit in `bridge.yaml`, obstacle in `twin.yaml`. Done so far: stand-in sheet size and mass (2026-11-17), overhead camera pose and parked bases in `calibration.yaml` (2026-11-17), overhead glove colour and tag search (2026-11-18, §8.5).
+3. **Fill the `fabric_cell` templates:** sheet size and mass, tag size and tag-to-pinch offset, colour thresholds, `calibration.yaml` (the launch refuses to start while it says `measured: false`), workspace box and force limit in `bridge.yaml`, obstacle in `twin.yaml`. Done so far: stand-in sheet size and mass (2026-11-17), overhead camera pose and parked bases in `calibration.yaml` (2026-11-17), glove colour, tag search and depth sampling for all three cameras (2026-11-18, §8.5).
 4. **Hardware gates** from the plan (§5): carbon depth first, then H1–H3, H5, H7, H9, H12, H15. H3 translation passed on both robots on 2026-11-16 and confirmed the command frame in `bridge.yaml` (§8.2), and again on Blue on 2026-11-18 after its arm came back; H3 rotation is still open. H9: every host within 3.2 ms of the laptop on 2026-11-18 (tablet 7.3 ms).
 5. **Shadow sessions before any closed loop:** estimator alone, then twin with `commands:=false`, then warm-up, then closed loop without an obstacle.
 
@@ -319,26 +319,37 @@ home both arms; `lab.sh stock blue start` and the same for silver; `lab.sh snaps
 | The bridge latched a stop at the box face and on single force samples (first twin run, 22:22) | Blue stopped after 12.9 cm inward, Silver after 1 s on a start-up force spike | Fixed: soft box edge with a 2 cm hard margin, force stop on the 0.25 s mean |
 | Silver's 1080p colour frames (about 8 MB) did not reach local subscribers with default DDS buffers | Wrist perception would get no images | The session profile asks for 64 MB receive buffers; frames arrive at 15 Hz |
 
-### 8.5 Glove tags on the overhead camera (2026-11-18)
+### 8.5 Glove tags on the three cameras (2026-11-18)
 
 The full record, with images, every step and how to repeat it:
 `experiments/hardware/sessions/2026-11-18_glove_test/README.md`.
 
 The detector's settings came from the simulated cell (green gloves, ~17 px tags, ideal depth). With the
-real teal gloves under the real overhead camera they detected **0 of 43** glove-tag sightings; after
-calibration **43 of 43** (26 frames, person about 1.1 m in front of the robots, tags 24-32 px at
-2.1-2.4 m). Three changes, each from a measurement:
+real teal gloves they detected nothing; after calibration, on recorded frames:
+
+| Camera | Tags | Shipped | Calibrated |
+| --- | --- | --- | --- |
+| Overhead, 24-32 px at 2.1-2.4 m | 43 | 0 | 43 |
+| Blue wrist, 43-178 px at 0.4-1.0 m | 42 | 0 | 40 |
+| Silver wrist, 45-191 px at 0.4-1.0 m | 45 | 0 | 39 |
+
+Live (overhead node, 13:01, person in view 37 s): left hand in 98 % and right in 77 % of the 15 Hz glove
+messages, 0.115 s old; every miss was a tag not visible. The live check of all three cameras is open.
 
 | Setting | Was | Now | Measured reason |
 | --- | --- | --- | --- |
-| `glove_hsv_lower/upper` | H 35-90, S >= 80, V >= 60 (green) | H 88-100, S >= 100, V >= 35 | Gloves H 90-101; the cable pile behind the robots H 102-105; trousers S 70-100. Leaves ~7 colour regions per frame |
-| `tag_depth_gate_m` | 0.005 | 0.012 | Ambiguous small tags: the right pose fits the depth within 2.5-8.9 mm, the wrong one is off by 25.7-32.8 mm |
+| `glove_hsv_lower/upper`, overhead | H 35-90, S >= 80, V >= 60 (green) | H 88-100, S >= 100, V >= 35 | Gloves H 90-101; the cable pile behind the robots H 102-105; trousers S 70-100. ~7 colour regions per frame |
+| `glove_hsv_lower/upper`, wrist cameras | same | H 90-99, S >= 120, V >= 40 | Up close the gloves are H 93-97, S median 249; ~4 colour regions per frame |
+| `tag_depth_gate_m` | 0.005 | 0.012 | Ambiguous small tags (overhead): the right pose fits the depth within 2.5-8.9 mm, the wrong one is off by 25.7-32.8 mm |
 | `tag_roi_upscale`, new `tag_roi_fallback_unscaled` | 2, (none) | 2, true | The 2x search lost tag 20 under glare in 4 frames; the original size alone finds it but with corners too coarse for the gates (1.77 px, 11.9 mm). Fallback: original size only for a glove tag the 2x search missed |
+| new `tag_depth_grid` | (five points) | 7 | The wrist cameras' registered depth has holes on the tags at 0.4-1.0 m: five points dropped 49 of 87 tags, a 7 x 7 grid (three quarters needed) 8 of 87 |
+| `fabric_rate_hz` | 0 (every frame) | 5 | A full frame takes ~90-115 ms on the NUC and helpers; every frame left them ~0.25 s old and the nodes published (almost) no gloves. At 5 Hz the gloves run at 15 Hz |
 
-The fallback is a new option in `human_hand_tracking.tags.GloveDetector` (off by default; the simulated
-cell is unchanged). Tools: `scripts/hw/glove_check.py` (on a camera host: what the detector sees and why
-a tag is missed, saves frames) and `scripts/hw/glove_tune.py` (offline on saved frames: colour
-measurement, look-alikes, any parameter set with annotated images).
+The fallback and the grid are new options in `human_hand_tracking.tags.GloveDetector` (off by default;
+the simulated cell is unchanged). Tools: `scripts/hw/glove_check.py` (on a camera host: what the detector
+sees and why a tag is missed, saves frames), `scripts/hw/glove_tune.py` (offline on saved frames: colour
+measurement, look-alikes, any parameter set with annotated images) and `scripts/hw/glove_record.py` (a
+perception node's live glove output: rate, age, per-hand detection, gaps).
 
 Hand identities (since 2026-11-18): `human_left` and `human_right` are the person's own hands, facing
 the robots. The left hand wears tag 21 and holds sheet corner (1, 1) on Silver's side; the right hand
@@ -347,5 +358,7 @@ wears tag 20 (measured at x = -0.14) and holds (0, 1) on Blue's side. Every `glo
 were sheet sides (`human_left` was Blue's side, tag 20); results recorded before 2026-11-18 (the
 simulation evaluations and `sim-eval-2026-11-16`) use the old names.
 
-Open: the live check with these settings, the tag size by ruler, the tag-to-pinch offsets (pivot
-calibration), and the same calibration for both wrist cameras.
+Tag size: 8 cm (the gloves' tags, `docs/fabric-hardware-demo-plan.md`); the wrist cameras' depth agrees
+with it within 2-4 %. Open: the live check of all three cameras with the person in view, the
+tag-to-pinch offsets (pivot calibration), a check at a grasp pose for the wrist cameras, the wrist
+cameras' gripper mask and the sheet thresholds once the sheet is in view.

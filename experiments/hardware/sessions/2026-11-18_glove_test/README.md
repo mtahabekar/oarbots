@@ -1,4 +1,4 @@
-# Glove test, overhead camera (2026-11-18)
+# Glove test: overhead and wrist cameras (2026-11-18)
 
 The person wears two gloves with ArUco tags (DICT_4X4_50, IDs 20 and 21) on the backs of the hands.
 `fabric_perception` finds them in each camera with `human_hand_tracking.tags.GloveDetector` and reports
@@ -7,11 +7,20 @@ from the simulated cell: green gloves, ~17 px tags and ideal depth. This test ca
 real overhead camera and the real gloves, and records every step so it can be repeated for the wrist
 cameras or new gloves.
 
-Result: with the shipped settings the overhead camera detected **0 of 43** glove-tag sightings; with the
-calibrated settings ([`experiments/hardware/cell/perception_overhead.yaml`](../../cell/perception_overhead.yaml))
-**43 of 43**, in ~8 ms per frame. Three things had to change: the glove colour, the depth gate that
-settles the pose ambiguity of small tags, and how the tag search enlarges the image. The live check
-with the new settings is still to do (see "Not done yet").
+Result on recorded frames, shipped settings -> calibrated settings (`experiments/hardware/cell/perception_*.yaml`):
+
+| Camera | Tag sightings | Shipped | Calibrated |
+| --- | --- | --- | --- |
+| Overhead (NUC), tags 24-32 px at 2.1-2.4 m | 43 | 0 | **43** |
+| Blue wrist, tags 43-178 px at 0.4-1.0 m | 42 | 0 | **40** |
+| Silver wrist, tags 45-191 px at 0.4-1.0 m | 45 | 0 | **39** |
+
+What had to change: the glove colour (per camera), the depth gate that settles the pose ambiguity of
+small tags, the tag search size (new fallback option), where depth is sampled on a tag (new grid option:
+the wrist cameras' depth has holes on the tags), and the perception nodes' sheet-processing rate (they
+could not keep up at 15 fps). **Live**, the overhead node detected the left hand in 98 % and the right in
+77 % of its 15 Hz messages while the person was in view (13:01; every miss was a tag not visible). The
+live check of all three cameras with the final settings is still to do (16:01 ran with nobody in view).
 
 ## How the detector decides
 
@@ -189,6 +198,121 @@ compute laptop; the NUC is slower but the whole overhead pipeline must stay with
 the two grips were 0.39-0.51 m apart (17 frames with both); grip height 1.02-1.08 m above the floor
 (hands at waist height).
 
+## Live check, overhead camera (13:01)
+
+The real perception node (`fabric_cell camera_host.launch.py camera:=overhead`) on the NUC, its glove
+output recorded on the laptop with `scripts/hw/glove_record.py` (`live/overhead_live_130153.jsonl`), and
+`glove_check.py` at 2 Hz beside it for the reasons of any miss. Settings: this test's overhead calibration
+with five-point depth (the depth grid below came later).
+
+**The node first could not keep up.** A full frame (sheet segmentation, depth, gloves) takes 88-105 ms on
+the NUC's CPU; processing every frame (`fabric_rate_hz` 0, the default) left frames 0.249 s old at
+publication, past the node's 0.25 s limit, and it dropped nearly all of them (3 messages in 8 s). The
+node can process the sheet at a lower rate and the gloves on every frame: at `fabric_rate_hz: 5` the glove
+messages run at 15.0 Hz, 0.115 s old (p95 0.178 s). The simulated cell's monitor profile also ran the
+overhead camera at 5 Hz. Now in the configuration.
+
+| Over the 37 s the person was in view (553 messages) | Left hand (tag 21) | Right hand (tag 20) |
+| --- | --- | --- |
+| Detected | **543 (98 %)** | **424 (77 %)** |
+| Gaps over 0.5 s | none | 4, longest 0.9 s |
+| Scatter about a 1 s running median (x, y, z; upper bound, the hands were moving) | 4.3, 1.8, 3.5 mm | 7.3, 3.8, 7.6 mm |
+| Mean position (world) | x +0.30 (Silver's side) | x -0.19 (Blue's side) |
+
+Both hands in 76 % of the messages. In `glove_check`'s frames over the same time every tag that was in
+the image was detected (tag 21: 68 of 68, tag 20: 32 of 32): the misses are the right hand's tag turned
+away or hidden by the body, not detection. The saved frames, re-run with the final settings: 10 of 10
+tags detected.
+
+![Live run, final settings](images/16_overhead_live_run_calibrated_frame_013.jpg)
+
+*16: a frame of the live run, final overhead settings: both gloves detected, positions in the world frame.*
+
+## Wrist cameras (13:04-13:30)
+
+With the arms at Home the wrist cameras look sideways into the room at shoulder height, so the person
+held the gloves up 0.4-1.0 m in front of each lens (tags 43-191 px), moving between the two cameras; both
+recorded at once with `glove_check.py`, 150 s, a frame saved every 2 s (`blue_wrist_20261118_130948`,
+`silver_wrist_20261118_130948` in the raw-data folder). Blue's camera saw tag 21 in 134 and tag 20 in
+106 frames, Silver's 145 and 123; 32 and 29 saved frames show glove tags.
+
+![Both wrist cameras during the capture](images/09_wrist_cameras_capture_contact_sheet.jpg)
+
+*09: Blue's wrist camera (top row) and Silver's (bottom) over the capture.*
+
+**Colour.** Up close and from the front, the 3.5-tag-width neighbourhood used for the overhead camera is
+mostly the person's maroon sleeves and chest; a ring just outside each tag's paper margin (0.8-2.0 tag
+widths, `glove_tune.py colour --reach 2 --margin 1.6`) is mostly glove: teal H 92-97, up to 3.4 times more common there than elsewhere
+(`results/3a_*`; teal also appears in the room behind). The wrist cameras see it greener and far more saturated than the overhead camera
+(`results/3b_*`, 5th-95th percentiles):
+
+| Wrist camera | Hue | Saturation (5th %ile, median) | Brightness |
+| --- | --- | --- | --- |
+| Blue | 94-97 | 180, 249 | 80-181 |
+| Silver | 93-97 | 151, 249 | 85-170 |
+
+The overhead camera's range left 9-10 colour regions per frame (up to 18, often above the 8 that send the
+detector to a whole-image search); **H 90-99, S >= 120, V >= 40** leaves 4 (at most 6), 0-1 of them away from
+the gloves. Colour support around the tags 0.20-0.35 (0.08 needed).
+
+**Steps** (`glove_tune.py evaluate`, `results/4*_*.json`):
+
+| Step | Blue: tag 20 | Blue: tag 21 | Silver: tag 20 | Silver: tag 21 |
+| --- | --- | --- | --- | --- |
+| A template (green) | 0/21 | 0/21 | 0/20 | 0/25 |
+| B teal colour | 9/21 | 21/21 | 15/20 | 2/25 |
+| D B + 12 mm gate + fallback search (the overhead settings) | 9/21 | 21/21 | 17/20 | 2/25 |
+| E B, original-size search only | 9/21 | 20/21 | 17/20 | 2/25 |
+| **F D + depth sampled on a 7 x 7 grid** | **19/21** | **21/21** | **20/20** | **19/25** |
+
+No tag was ambiguous at these sizes, so the depth gate does nothing here. The misses at B-E are the depth
+check: the tag's depth range is checked against the measured depth, and a tag whose depth samples are
+missing is dropped.
+
+![Blue wrist, five-point depth: tag 20 rejected](images/11_blue_wrist_teal_five_point_depth_frame_004.jpg)
+
+*11: Blue's wrist camera, teal colour, five-point depth: tag 20 dropped ("pose rejected"). 10 shows the
+same frame with the template settings, 12 with the final ones.*
+
+![Blue wrist, calibrated](images/12_blue_wrist_calibrated_frame_004.jpg)
+
+*12: the same frame with the depth sampled on a 7 x 7 grid: both tags detected. The grey shapes at the
+right edge are Blue's own gripper fingers (to be masked out for the sheet: `static_exclusion_mask`).*
+
+**Depth holes on the tags.** The rejected tags had 7-45 % valid depth at their centre. The holes come as
+blotches and streaks, where the depth image is mapped onto the 1080p colour image at close range, and
+they are not the black ink (frame 004, tag 20: 15 % invalid on black pixels, 20 % on white).
+
+![Depth holes on the tags](images/15_wrist_depth_holes_on_tags_frame_004.png)
+
+*15: Blue's wrist camera, frame 004: tags 20 and 21 and, in red, the pixels without depth.*
+
+The detector sampled depth at five points (the centre and 70 % of the way to each corner, 3 x 3 pixels
+each) and needed four. A new option, `depth_grid` in `GloveDetector` (`tag_depth_grid` in the node, off by
+default so the simulated cell is unchanged), samples an n x n grid over the tag face and keeps every
+sample with depth, still requiring samples in three of the tag's four quarters so the tilt check keeps
+its meaning (unit test `test_depth_grid_keeps_a_tag_whose_depth_has_holes_at_the_five_default_samples`).
+With a 7 x 7 grid: Blue 30 -> 40 of 42, Silver 19 -> 39 of 45. Of the 8 left, 7 have no depth over two or
+more quarters and one has depth from behind the tag (32 % beyond its range): rightly dropped. Where depth
+is valid it agrees with the tag's size (depth/PnP range 0.98-1.06 on Blue, 0.96-1.03 on Silver, 90 %),
+which also confirms the 8 cm tag size. On the overhead camera the grid changes nothing in detection
+(43/43) and tightens the depth residuals (right pose 3.1-6.3 mm, wrong 23.2-27.6 mm; `results/2f_*`).
+
+![Silver wrist, calibrated](images/14_silver_wrist_calibrated_frame_004.jpg)
+
+*14: Silver's wrist camera, final settings (13: the same frame with five-point depth, tag 21 dropped).*
+
+**Frame rate.** Like the overhead node, the wrist nodes processed the sheet on every frame (~102-115 ms on
+the helpers; the template sheet thresholds take ~830 000 pixels of a wrist image as sheet) and published
+no gloves at all. With `fabric_rate_hz: 5`: gloves at 15.1 Hz on both, full frames 147 and 163 ms old.
+
+## Live check of all three cameras (16:01): not yet valid
+
+After the power cycle and the redeployment (`6fc4c70`), all three perception nodes ran with the final
+settings (the wrist nodes with `fabric_rate_hz: 5` from a trial copy of the cell folder) and their glove
+output was recorded on their own computers for 150 s (`live/live_*_160148.jsonl`): 15.0 Hz each, 0.10-0.11 s
+old, but no glove in any camera; frames taken right after showed empty scenes, so nobody was in view.
+
 ## Found on the way
 
 - **Tag 20 is on the person's right hand.** Facing the robots (-y), tag 20's grip is at world x = -0.14
@@ -199,22 +323,25 @@ the two grips were 0.39-0.51 m apart (17 frames with both); grip height 1.02-1.0
   `human_corner_uv: [1, 1, 0, 1]` everywhere (left hand first), with code defaults, the simulated cell's
   glove mapping and the tests changed to match. The corner each glove drives is unchanged: tag 20 still
   holds (0, 1) on Blue's side.
-- The wrist cameras at Home cannot see the person; their glove calibration needs the arms at a grasp
-  pose or the gloves held up in front of them.
+- The wrist cameras at Home cannot see the person; their glove calibration used gloves held up in front
+  of them. At a grasp pose they will see the person from closer and at another angle: check there too.
 - Colour regions away from the gloves remain (5 per frame) at the room's edges; restricting the glove
   search to the cell's region would remove them (the segmenter has `workspace_roi`, the glove detector
   does not).
 
 ## Not done yet
 
-1. **Live check** with the calibrated settings. A 60 s run at 12:08 (`runs/overhead_20261118_120823/`)
-   happened while nobody was in view: no glove tags in 253 frames, so it confirms nothing. Needs the
-   code change deployed to the NUC first (`lab.sh setup nuc`).
+1. **Live check of all three cameras** with the final settings and the person in view (the 12:08 and
+   16:01 runs had nobody in view). Coordinate: the person says "ready" at each camera.
 2. ~~Which hand has which tag~~: settled (above): tag 20 on the right hand, Blue's side; names renamed.
-3. **Tag size** with a ruler (black square edge).
+3. ~~Tag size~~: 8 cm, from the user's documentation (`docs/fabric-hardware-demo-plan.md`); the wrist
+   cameras' depth agrees with the tags' apparent size within 2-4 %.
 4. **Tag-to-pinch offsets** (`tag_to_grip_offsets_m`, still a template): pivot calibration.
-5. **Wrist cameras:** the same steps per camera.
-6. Sheet segmentation (`cloth_*`, `workspace_roi`) for the overhead camera, once the sheet is in view.
+5. ~~Wrist cameras~~: calibrated on recorded frames (above); check again at a grasp pose.
+6. **Sheet:** segmentation (`cloth_*`, `workspace_roi`) for all three cameras once the sheet is in view,
+   and `static_exclusion_mask` for the wrist cameras' own gripper fingers.
+7. **Hands in the world frame from all cameras** (`human_hand_tracking` fusion): needs the cell
+   calibration published, which waits for the measured `fabric_grip` transforms (gate H15).
 
 ## Repeat it
 
@@ -229,4 +356,13 @@ python3 scripts/hw/glove_tune.py sample RUN frame_033 --range 85 70 35 105 255 2
 python3 scripts/hw/glove_tune.py colour RUN --range 88 100 35 100 255 255   # regions per frame
 python3 scripts/hw/glove_tune.py evaluate RUN --params experiments/hardware/cell/perception_overhead.yaml \
     --images out/ --json out/result.json
+# wrist cameras: sample the glove colour in a ring just outside the tags (the body dominates further out)
+python3 scripts/hw/glove_tune.py colour RUN --reach 2 --margin 1.6
+# 3. live: the camera's perception node, then its glove output (rate, age, per-hand detection, gaps)
+scripts/hw/lab.sh session nuc start-cell /home/nuc/fabric_ws/experiments/hardware/cell
+source scripts/hw/laptop_env.sh
+python3 scripts/hw/glove_record.py --camera overhead --seconds 90 --out live.jsonl
 ```
+
+Raw frames of every run (colour PNG, 16-bit depth PNG, `frames.jsonl`) are on the compute laptop in
+`/home/taha/fabric_hw_data/2026-11-18_glove_test/`.
