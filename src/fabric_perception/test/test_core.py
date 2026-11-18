@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
 import pytest
-from fabric_perception.core import (Camera, DepthProcessor, PointTracker, Segmenter,
+from fabric_perception.core import (Camera, DepthProcessor, DepthWorkspace, PointTracker, Segmenter,
                                     UVRegressor, boundaries, depth_metres)
 
 
@@ -67,6 +67,51 @@ def test_depth_gates_holes_fold_edges_boundaries_and_uses_metric_units():
     assert depth_metres(np.ones((2, 2), np.float32), '32FC1')[0, 0] == 1
     with pytest.raises(ValueError):
         depth_metres(depth, 'mono16')
+
+
+def test_workspace_gate_keeps_rgb_holes_local_and_does_not_create_depth_or_boundary_evidence():
+    c = camera()
+    bgr = np.full((120, 160, 3), 220, np.uint8)
+    bgr[15:105, 15:145] = [20, 30, 55]  # dark but saturated
+    depth = np.ones(bgr.shape[:2], np.float32)
+    depth[:, :40] = 0
+    depth[:, 120:] = 2
+    depth[60, 65] = 0
+    depth[60, 75] = 2
+    gate = DepthWorkspace(depth_range=(.2, 1.25), fill_px=7)
+    mask = gate.mask(depth, c)
+    assert mask[60, 65] and not mask[60, 75]
+    assert not mask[:, :40].any() and not mask[:, 120:].any()
+    gloves = np.zeros_like(mask)
+    segmenter = Segmenter(cloth_max_saturation=40, cloth_dark_value=60)
+    assert not Segmenter(cloth_max_saturation=40).infer(bgr, gloves)[0].any()
+    sheet, _, confidence, occlusion, roi = segmenter.infer(bgr, gloves, depth_roi=mask)
+    assert sheet[60, 65] and not sheet[60, 75]
+    valid, *_ = DepthProcessor().process(depth, sheet, c)
+    assert not valid[60, 65] and not valid[60, 75]
+    sampled = boundaries(sheet, confidence, occlusion, roi)
+    points = np.concatenate([points for points, _, _ in sampled])
+    weights = np.concatenate([weights for _, weights, _ in sampled])
+    x, y = points.T
+    clipped = (x == 40) | (x == 119)
+    actual_top = (y == 15) & (45 < x) & (x < 110)
+    assert clipped.any() and np.all(weights[clipped] == 0)
+    assert actual_top.any() and np.all(weights[actual_top] > 0)
+    assert not gate.mask(np.zeros_like(depth), c).any()
+
+
+def test_workspace_box_uses_calibrated_rays_and_camera_to_box_transform():
+    c = camera(distortion=[.1, -.03, .001, .002, 0.])
+    depth = np.full((c.height, c.width), 1.0, np.float32)
+    depth[15, 20] = np.nan
+    rotation = np.array([[0., -1., 0.], [1., 0., 0.], [0., 0., 1.]])
+    translation = np.array([.1, 0., .2])
+    box = [.05, -.15, 1., .24, .12, 1.5]
+    workspace = DepthWorkspace(box=box)
+    y, x = np.indices(depth.shape)
+    points = c.unproject(np.column_stack((x.ravel(), y.ravel())), depth.ravel()) @ rotation.T + translation
+    expected = ((points >= box[:3]) & (points <= box[3:])).all(axis=1).reshape(depth.shape)
+    np.testing.assert_array_equal(workspace.mask(depth, c, (rotation, translation)) > 0, expected)
 
 
 def test_no_depth_returns_no_fake_points_and_bounded_sampling():

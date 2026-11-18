@@ -64,7 +64,49 @@ components of at least 300 px. The overhead view improves visually. The wrist ga
 cloth at the narrower depth field of view, and Silver's sagged frame still has speckled holes.
 Blue's floor/image-bottom probe also contains near returns, so a wrist depth band alone is insufficient.
 Trying a V ≤ 60 branch independent of saturation was proposed after examining Silver's speckle patch.
-These settings are exploratory and the hardware perception configs still use the original baseline.
+The following trial evaluates those settings through the implemented perception path.
+
+## Labelled workspace trial
+
+Visible-cloth polygons were drawn on frames 7 (steady), 27 (sagged), and 40 (released) from each
+camera. The [annotations](workspace_labels.json) use 480 × 270 coordinates. The replay scales them
+to raw RGB resolution and excludes a 12 px band near each outline before computing precision and
+recall. The thresholds came from other frames in the same recording. These scores describe a
+single scene with approximate labels.
+
+| Camera | Candidate | Steady precision / recall | Sagged precision / recall |
+| --- | --- | ---: | ---: |
+| Overhead | Image ROI, HSV, world box | 96.6% / 92.2% | 94.7% / 90.1% |
+| Blue wrist | HSV, V ≤ 60 branch, optical-depth band | 99.8% / 88.2% | 98.0% / 88.7% |
+| Silver wrist | HSV, V ≤ 60 branch, optical-depth band | 99.6% / 88.8% | 96.8% / 80.5% |
+
+On the sagged wrist frames, the dark branch raised recall from 79.9% to 88.7% on Blue and
+75.6% to 80.5% on Silver. The registered depth field of view still clips visible cloth at both
+wrists. The labelled wrist interiors had zero depth on the released frame, and the gated masks
+had zero recall there. The thin overhead outline on frame 40 had no interior after applying
+the annotation tolerance. Background and clip examples from a separate run are the next
+validation data.
+
+The [comparison image](images/workspace_comparison.jpg) and [results](workspace_results.json)
+show the original baseline, updated colour and ROI, geometry, and the dark branch. The results
+include retained depth and supported contours. The [built ROS node replay](diagnostics/workspace_ros_replay.txt)
+used the steady and sagged frames from each camera with the staged parameter file. All six
+produced observations. The warmed callbacks took 50–70 ms on the compute laptop. The first
+overhead callback, including the ray cache, took 186 ms. Measure capture-to-publication age on
+the camera hosts during the next trial.
+
+The [candidate overlay](../../cell/perception_workspace.yaml) is for the stationary stand-in test.
+For a perception-only test on the selected camera host, use the absolute path to its deployed
+cell directory and pick the matching `camera` value:
+
+```bash
+cell=/absolute/path/to/the/deployed/cell
+ros2 launch fabric_cell camera_host.launch.py camera:=overhead \
+  cell_dir:="$cell" perception_overrides:="$cell/perception_workspace.yaml"
+```
+
+The overhead box uses the measured world-to-camera TF chain. Bring up that existing calibration
+before testing the box. Robot and glove calibration still gate the measured-cell estimator run.
 
 ## Cartesian attempt and final state
 
@@ -99,6 +141,8 @@ session=experiments/hardware/sessions/2026-11-18_sheet_capture
 capture=/home/taha/fabric_hw_data/2026-11-18_sheet_capture
 PYTHONPATH="scripts/hw:src/fabric_perception:src/human_hand_tracking:${PYTHONPATH:-}" \
   python3 "$session/score_capture.py" "$capture"
+PYTHONPATH="scripts/hw:src/fabric_perception:src/human_hand_tracking:${PYTHONPATH:-}" \
+  python3 "$session/score_capture.py" "$capture" --workspace
 (cd "$capture" && sha256sum --quiet -c "$OLDPWD/$session/raw_files.sha256")
 ```
 

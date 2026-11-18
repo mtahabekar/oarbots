@@ -44,10 +44,11 @@ class Segmenter:
     """HSV baseline or explicit ONNX RGB -> four-class logits contract."""
     def __init__(self, backend='hsv', model_path='', input_size=(640, 384),
                  cloth_max_value=85, cloth_max_saturation=110,
-                 min_component_area=300, confidence_threshold=.65, roi=()):
+                 min_component_area=300, confidence_threshold=.65, roi=(), cloth_dark_value=-1):
         if backend not in ('hsv', 'onnx'):
             raise ValueError('segmentation_backend must be hsv or onnx')
         if (not 0 <= cloth_max_value <= 255 or not 0 <= cloth_max_saturation <= 255
+                or not -1 <= cloth_dark_value <= cloth_max_value
                 or min_component_area <= 0 or not 0 < confidence_threshold <= 1
                 or len(input_size) != 2 or min(input_size) <= 0):
             raise ValueError('Invalid segmentation settings')
@@ -56,10 +57,11 @@ class Segmenter:
             raise ValueError('ROI must be normalized [left, top, right, bottom]')
         self.backend, self.size, self.roi = backend, tuple(input_size), roi
         self.max_v, self.max_s, self.min_area = cloth_max_value, cloth_max_saturation, min_component_area
+        self.dark_value = cloth_dark_value
         self.threshold = confidence_threshold
         self.net = cv2.dnn.readNetFromONNX(model_path) if backend == 'onnx' else None
 
-    def infer(self, bgr, glove_mask, robot_mask=None, hsv=None):
+    def infer(self, bgr, glove_mask, robot_mask=None, hsv=None, depth_roi=None):
         """`hsv`: the caller's HSV conversion of `bgr`, if it already has one (the glove detector's)."""
         h, w = bgr.shape[:2]
         roi = np.zeros((h, w), np.uint8)
@@ -68,6 +70,8 @@ class Segmenter:
         if self.net is None:
             hsv = cv2.cvtColor(bgr, cv2.COLOR_BGR2HSV) if hsv is None else hsv
             sheet = cv2.inRange(hsv, (0, 0, 0), (179, self.max_s, self.max_v))
+            if self.dark_value >= 0:
+                sheet |= cv2.inRange(hsv, (0, 0, 0), (179, 255, self.dark_value))
             labels = np.zeros((h, w), np.uint8)
             confidence = np.full((h, w), .5, np.float32)  # heuristic, not calibrated probability
         else:
@@ -87,7 +91,9 @@ class Segmenter:
         robot_mask = np.zeros((h, w), np.uint8) if robot_mask is None else robot_mask
         occlusion = cv2.bitwise_or(glove_mask, robot_mask)
         occlusion = cv2.dilate(occlusion, np.ones((7, 7), np.uint8))
-        sheet[(roi == 0) | (occlusion > 0)] = 0
+        # Depth limits cloth evidence only; hands and robots keep their labels.
+        visible = roi if depth_roi is None else cv2.bitwise_and(roi, depth_roi)
+        sheet[(visible == 0) | (occlusion > 0)] = 0
         count, components, stats, _ = cv2.connectedComponentsWithStats(sheet)
         keep = np.zeros(count, np.uint8)
         keep[1:] = np.uint8(stats[1:, cv2.CC_STAT_AREA] >= self.min_area) * 255
@@ -97,7 +103,7 @@ class Segmenter:
         labels[glove_mask > 0] = 2
         labels[robot_mask > 0] = 3
         labels[roi == 0] = 0
-        return sheet, labels, confidence, occlusion, roi
+        return sheet, labels, confidence, occlusion, visible
 
 
 def boundaries(sheet, confidence, occlusion, roi, max_points=1200):
@@ -132,6 +138,57 @@ def boundaries(sheet, confidence, occlusion, roi, max_points=1200):
         weights[invalid[y, x]] = 0.
         output.append((samples, weights, hole))
     return output
+
+
+class DepthWorkspace:
+    """Optional optical-depth band and box in a calibrated workspace frame."""
+
+    def __init__(self, depth_range=None, box=None, fill_px=0):
+        if depth_range is not None and (len(depth_range) != 2 or not np.isfinite(depth_range).all()
+                                        or not 0 < depth_range[0] < depth_range[1]):
+            raise ValueError('workspace_depth_range_m must be an increasing positive depth range')
+        self.box = None if box is None else np.asarray(box, dtype=np.float64)
+        if self.box is not None and (self.box.shape != (6,) or not np.isfinite(self.box).all()
+                                     or not np.all(self.box[:3] < self.box[3:])):
+            raise ValueError('workspace_box_m must be [xmin, ymin, zmin, xmax, ymax, zmax]')
+        if fill_px < 0 or (fill_px > 0 and fill_px % 2 != 1):
+            raise ValueError('workspace_depth_fill_px must be zero or a positive odd number')
+        self.depth_range = depth_range
+        self.kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (fill_px, fill_px)) if fill_px else None
+        self.camera, self.rays = None, None
+        self.rotation, self.directions = None, None
+
+    def mask(self, depth, camera, transform=None):
+        if self.depth_range is None and self.box is None:
+            return None
+        valid = np.isfinite(depth) & (depth > 0.)
+        inside = valid.copy()
+        if self.depth_range is not None:
+            lo, hi = self.depth_range
+            inside &= (depth >= lo) & (depth <= hi)
+        if self.box is not None:
+            if transform is None:
+                raise ValueError('Camera-to-workspace transform required for a workspace box')
+            rotation, translation = transform
+            if not np.isfinite(translation).all():
+                raise ValueError('Workspace transform must have finite translation')
+            if camera is not self.camera:
+                y, x = np.indices(depth.shape, dtype=np.int32)
+                pixels = np.column_stack((x.ravel(), y.ravel()))
+                self.rays = camera.unproject(pixels, np.ones(len(pixels))).reshape(*depth.shape, 3).astype(np.float32)
+                self.camera = camera
+                self.rotation = None
+            if not np.array_equal(self.rotation, rotation):
+                self.rotation = np.array(rotation, copy=True)
+                self.directions = cv2.transform(self.rays, self.rotation.astype(np.float32))
+            for axis, (lo, hi) in enumerate(zip(self.box[:3], self.box[3:])):
+                position = self.directions[..., axis] * depth + translation[axis]
+                inside &= (position >= lo) & (position <= hi)
+        mask = inside.astype(np.uint8) * 255
+        if self.kernel is not None:
+            closed = cv2.morphologyEx(mask, cv2.MORPH_CLOSE, self.kernel)
+            np.copyto(mask, closed, where=~valid)
+        return mask
 
 
 class DepthProcessor:

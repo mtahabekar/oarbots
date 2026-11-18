@@ -105,6 +105,42 @@ def test_camera_source_stamps_sensor_qos_depth_dropout_and_missing_gloves(graph)
     assert len(output) == count
 
 
+def test_camera_box_waits_for_capture_tf_while_publishing_gloves(graph):
+    camera, producer, executor = graph(FabricCamera, ['-r', '__ns:=/camera_fixture',
+        '-p', 'workspace_box_frame:=world_fixture', '-p', 'workspace_box_m:=[0.0,-1.0,0.5,1.0,1.0,1.5]'])
+    rgb_pub, depth_pub, info_pub, _ = camera_inputs(producer)
+    output, gloves = [], []
+    producer.create_subscription(FabricObservations, '/camera_fixture/fabric/observations', output.append,
+                                 qos_profile_sensor_data)
+    producer.create_subscription(GloveObservations, '/camera_fixture/fabric/gloves', gloves.append,
+                                 qos_profile_sensor_data)
+    spin(executor, .25)
+
+    def send(rgb, depth, info):
+        info_pub.publish(info)
+        rgb_pub.publish(rgb)
+        depth_pub.publish(depth)
+        spin(executor, .12)
+
+    rgb, depth, info = images(producer)
+    send(rgb, depth, info)
+    assert not output and gloves[-1].header == rgb.header
+    assert 'capture-time workspace TF' in camera.drop_reason
+
+    rgb, depth, info = images(producer)
+    tf = TransformStamped(header=Header(stamp=depth.header.stamp, frame_id='world_fixture'),
+                          child_frame_id=depth.header.frame_id)
+    tf.transform.rotation.w = 1.
+    camera.tf.set_transform(tf, 'fixture')
+    send(rgb, depth, info)
+    result = output[-1]
+    assert result.header == rgb.header and result.depth
+    assert all(sample.u >= 80 for sample in result.depth)
+    cut_edge = [w for boundary in result.boundaries
+                for point, w in zip(boundary.pixels, boundary.confidence) if point.x == 80]
+    assert cut_edge and not any(cut_edge)
+
+
 def test_camera_requires_exact_capture_robot_mask_when_configured(graph):
     _, producer, executor = graph(FabricCamera, ['-r', '__ns:=/camera_fixture', '-p', 'require_robot_mask:=true'])
     rgb_pub, depth_pub, info_pub, mask_pub = camera_inputs(producer)

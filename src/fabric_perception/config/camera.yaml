@@ -19,6 +19,11 @@
     segmentation_confidence: 0.65
     cloth_max_value: 85
     cloth_max_saturation: 110
+    cloth_dark_value: -1  # optional saturation-independent value cutoff
+    workspace_depth_range_m: [0.0, 0.0]  # disabled, or [near, far] in optical Z
+    workspace_box_frame: ''  # disabled, or a calibrated TF frame such as world
+    workspace_box_m: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]  # [xmin, ymin, zmin, xmax, ymax, zmax]
+    workspace_depth_fill_px: 0  # optional odd kernel; fill missing RGB-mask support only
     min_component_area: 300
     # No trained weights are bundled. Never invent UV from image coordinates.
     uv_model: ''

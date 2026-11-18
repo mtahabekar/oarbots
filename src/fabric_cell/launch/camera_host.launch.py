@@ -1,6 +1,6 @@
 """Run on each computer a camera is plugged into (both helper laptops and the NUC).
 
-    ros2 launch fabric_cell camera_host.launch.py camera:=blue_wrist [cell_dir:=/abs/path]
+    ros2 launch fabric_cell camera_host.launch.py camera:=blue_wrist [cell_dir:=/abs/path] [perception_overrides:=/abs/file.yaml]
 
 Starts `fabric_perception` for that camera next to its driver, so only compact observations and
 glove measurements leave the computer. `cell_dir` holds this cell's `perception_<camera>.yaml`;
@@ -22,12 +22,17 @@ def nodes(context):
     if camera not in CAMERAS:
         raise RuntimeError(f'camera must be one of {sorted(CAMERAS)}')
     cell = LaunchConfiguration('cell_dir').perform(context) or str(Path(FindPackageShare('fabric_cell').perform(context))/'config')
+    parameters = [str(Path(cell)/f'perception_{camera}.yaml')]
+    overrides = LaunchConfiguration('perception_overrides').perform(context)
+    if overrides:
+        parameters.append(overrides)
     return [Node(package='fabric_perception', executable='camera', namespace=CAMERAS[camera], name='fabric_perception',
-                 output='screen', parameters=[str(Path(cell)/f'perception_{camera}.yaml'), {'camera_id': camera}])]
+                 output='screen', parameters=[*parameters, {'camera_id': camera}])]
 
 
 def generate_launch_description():
     return LaunchDescription([
         DeclareLaunchArgument('camera', description='blue_wrist, silver_wrist or overhead'),
         DeclareLaunchArgument('cell_dir', default_value='', description='Directory with this cell\'s configuration files'),
+        DeclareLaunchArgument('perception_overrides', default_value='', description='Optional camera parameters applied after the cell YAML'),
         OpaqueFunction(function=nodes)])

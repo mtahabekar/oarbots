@@ -416,21 +416,18 @@ again. The saved joint/FK analysis alone cannot distinguish Silver tool rotation
 
 ### 9.3 Next work on the laptop
 
-1. Label visible cloth and background in the saved steady, sagged and hand-release frames. Split by
-   phase or sequence for tuning and validation. Start with the existing HSV segmenter, per-camera
-   `workspace_roi`, glove exclusion and depth-quality filters. Compare the real baseline with a
-   corrected overhead ROI, per-camera HSV and geometric gating. Score visible-cloth precision and
-   recall, valid depth on labelled cloth, supported boundary points and processing time by camera.
-2. Where a gate helps, integrate it into the existing perception path. Treat geometry-clipped
-   outlines as ROI edges in `boundaries()`. Keep the raw depth validity mask for 3-D observations
-   and distinguish missing depth from physical occlusion. Check RGB-only boundary evidence where
-   the sheet extends outside the registered depth field of view. Use `static_exclusion_mask` only
-   where empty-clip images show persistent robot pixels and compare it against held-out cloth.
-3. Prepare a tag 22 card with a measured tip offset and use the existing tag detector and TF
+1. Use the [labelled workspace trial](../experiments/hardware/sessions/2026-11-18_sheet_capture/README.md#labelled-workspace-trial)
+   to start the next stationary camera run. The candidate settings are opt-in. On new recordings,
+   score precision, recall, raw and accepted depth, supported contours and end-to-end latency
+   by camera. The wrist gates lost the released cloth outside the depth field of view. Check
+   RGB-only boundary evidence on labelled clips in that region before using it in the estimator.
+   Use `static_exclusion_mask` where empty-clip images show persistent robot pixels and compare
+   it against held-out cloth.
+2. Prepare a tag 22 card with a measured tip offset and use the existing tag detector and TF
    transforms to fit each clip grip. For the gloves, use raw tag poses for a fixed-pinch pivot
    fit, then measure scatter on independent hand poses. Add the required pose output to the current
    diagnostic if needed. Record the residuals before deploying the offsets.
-4. Use the measured stand-in density, 0.215 kg/m², in the estimator and twin. Evaluate shear first
+3. Use the measured stand-in density, 0.215 kg/m², in the estimator and twin. Evaluate shear first
    using the existing parameter bank and held-out depth. The stand-in's roughly 1.9 cm bending length
    is below the twin's 3 cm spacing. Treat a fitted bending value as mesh-dependent until sensitivity
    tests identify it. Keep the simulation calibration and real-cell calibration separate.

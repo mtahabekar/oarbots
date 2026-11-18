@@ -1,0 +1,478 @@
+{
+  "annotation_margin_px": 12,
+  "cameras": {
+    "overhead": {
+      "colour_settings": {
+        "workspace_roi": [
+          0.48,
+          0.25,
+          0.8,
+          0.65
+        ],
+        "cloth_max_saturation": 60,
+        "cloth_max_value": 90
+      },
+      "geometry_settings": {
+        "workspace_box_frame": "world",
+        "workspace_box_m": [
+          -0.5,
+          -0.5,
+          0.3,
+          0.5,
+          0.45,
+          1.2
+        ],
+        "workspace_depth_fill_px": 31
+      },
+      "dark_value": 60,
+      "frames": {
+        "7": {
+          "label_interior_pixels": 69601,
+          "raw_depth_on_cloth": 0.954,
+          "variants": {
+            "baseline": {
+              "precision": 0.0003,
+              "recall": 0.0007,
+              "false_positive_pixels": 136787,
+              "accepted_depth_on_cloth": 0.0,
+              "sampled_depth_points": 256,
+              "supported_boundary_points": 232,
+              "total_boundary_points": 240,
+              "processing_ms_median_of_3": 35.52
+            },
+            "colour_roi": {
+              "precision": 0.8083,
+              "recall": 0.9229,
+              "false_positive_pixels": 15237,
+              "accepted_depth_on_cloth": 0.9099,
+              "sampled_depth_points": 256,
+              "supported_boundary_points": 223,
+              "total_boundary_points": 240,
+              "processing_ms_median_of_3": 23.1
+            },
+            "geometry": {
+              "precision": 0.9664,
+              "recall": 0.9222,
+              "false_positive_pixels": 2234,
+              "accepted_depth_on_cloth": 0.9099,
+              "sampled_depth_points": 256,
+              "supported_boundary_points": 129,
+              "total_boundary_points": 230,
+              "processing_ms_median_of_3": 33.72
+            },
+            "dark_geometry": {
+              "precision": 0.9658,
+              "recall": 0.9223,
+              "false_positive_pixels": 2272,
+              "accepted_depth_on_cloth": 0.91,
+              "sampled_depth_points": 256,
+              "supported_boundary_points": 127,
+              "total_boundary_points": 231,
+              "processing_ms_median_of_3": 34.94
+            }
+          }
+        },
+        "27": {
+          "label_interior_pixels": 48816,
+          "raw_depth_on_cloth": 0.8943,
+          "variants": {
+            "baseline": {
+              "precision": 0.001,
+              "recall": 0.0028,
+              "false_positive_pixels": 140196,
+              "accepted_depth_on_cloth": 0.0002,
+              "sampled_depth_points": 256,
+              "supported_boundary_points": 232,
+              "total_boundary_points": 240,
+              "processing_ms_median_of_3": 36.06
+            },
+            "colour_roi": {
+              "precision": 0.7359,
+              "recall": 0.9145,
+              "false_positive_pixels": 16020,
+              "accepted_depth_on_cloth": 0.762,
+              "sampled_depth_points": 256,
+              "supported_boundary_points": 233,
+              "total_boundary_points": 240,
+              "processing_ms_median_of_3": 27.26
+            },
+            "geometry": {
+              "precision": 0.9467,
+              "recall": 0.9012,
+              "false_positive_pixels": 2476,
+              "accepted_depth_on_cloth": 0.7612,
+              "sampled_depth_points": 256,
+              "supported_boundary_points": 217,
+              "total_boundary_points": 240,
+              "processing_ms_median_of_3": 37.2
+            },
+            "dark_geometry": {
+              "precision": 0.9407,
+              "recall": 0.9251,
+              "false_positive_pixels": 2848,
+              "accepted_depth_on_cloth": 0.8229,
+              "sampled_depth_points": 256,
+              "supported_boundary_points": 149,
+              "total_boundary_points": 224,
+              "processing_ms_median_of_3": 36.51
+            }
+          }
+        },
+        "40": {
+          "label_interior_pixels": 0,
+          "raw_depth_on_cloth": null,
+          "variants": {
+            "baseline": {
+              "precision": null,
+              "recall": null,
+              "false_positive_pixels": 170746,
+              "accepted_depth_on_cloth": null,
+              "sampled_depth_points": 256,
+              "supported_boundary_points": 232,
+              "total_boundary_points": 240,
+              "processing_ms_median_of_3": 38.33
+            },
+            "colour_roi": {
+              "precision": null,
+              "recall": null,
+              "false_positive_pixels": 7249,
+              "accepted_depth_on_cloth": null,
+              "sampled_depth_points": 43,
+              "supported_boundary_points": 237,
+              "total_boundary_points": 240,
+              "processing_ms_median_of_3": 26.04
+            },
+            "geometry": {
+              "precision": null,
+              "recall": null,
+              "false_positive_pixels": 1412,
+              "accepted_depth_on_cloth": null,
+              "sampled_depth_points": 35,
+              "supported_boundary_points": 134,
+              "total_boundary_points": 230,
+              "processing_ms_median_of_3": 37.37
+            },
+            "dark_geometry": {
+              "precision": null,
+              "recall": null,
+              "false_positive_pixels": 1432,
+              "accepted_depth_on_cloth": null,
+              "sampled_depth_points": 38,
+              "supported_boundary_points": 123,
+              "total_boundary_points": 233,
+              "processing_ms_median_of_3": 38.92
+            }
+          }
+        }
+      }
+    },
+    "blue_wrist": {
+      "colour_settings": {
+        "cloth_max_saturation": 70,
+        "cloth_max_value": 150
+      },
+      "geometry_settings": {
+        "workspace_depth_range_m": [
+          0.1,
+          1.25
+        ],
+        "workspace_depth_fill_px": 31
+      },
+      "dark_value": 60,
+      "frames": {
+        "7": {
+          "label_interior_pixels": 976124,
+          "raw_depth_on_cloth": 0.8819,
+          "variants": {
+            "baseline": {
+              "precision": 0.9169,
+              "recall": 0.959,
+              "false_positive_pixels": 84801,
+              "accepted_depth_on_cloth": 0.5995,
+              "sampled_depth_points": 256,
+              "supported_boundary_points": 239,
+              "total_boundary_points": 240,
+              "processing_ms_median_of_3": 48.35
+            },
+            "colour_roi": {
+              "precision": 0.8863,
+              "recall": 0.9979,
+              "false_positive_pixels": 124923,
+              "accepted_depth_on_cloth": 0.6599,
+              "sampled_depth_points": 256,
+              "supported_boundary_points": 229,
+              "total_boundary_points": 240,
+              "processing_ms_median_of_3": 31.14
+            },
+            "geometry": {
+              "precision": 0.9979,
+              "recall": 0.8818,
+              "false_positive_pixels": 1814,
+              "accepted_depth_on_cloth": 0.6588,
+              "sampled_depth_points": 256,
+              "supported_boundary_points": 121,
+              "total_boundary_points": 228,
+              "processing_ms_median_of_3": 28.2
+            },
+            "dark_geometry": {
+              "precision": 0.9979,
+              "recall": 0.8818,
+              "false_positive_pixels": 1814,
+              "accepted_depth_on_cloth": 0.6588,
+              "sampled_depth_points": 256,
+              "supported_boundary_points": 121,
+              "total_boundary_points": 228,
+              "processing_ms_median_of_3": 28.81
+            }
+          }
+        },
+        "27": {
+          "label_interior_pixels": 772896,
+          "raw_depth_on_cloth": 0.9048,
+          "variants": {
+            "baseline": {
+              "precision": 0.0975,
+              "recall": 0.0229,
+              "false_positive_pixels": 163447,
+              "accepted_depth_on_cloth": 0.0046,
+              "sampled_depth_points": 165,
+              "supported_boundary_points": 232,
+              "total_boundary_points": 240,
+              "processing_ms_median_of_3": 42.38
+            },
+            "colour_roi": {
+              "precision": 0.6877,
+              "recall": 0.8912,
+              "false_positive_pixels": 312786,
+              "accepted_depth_on_cloth": 0.6383,
+              "sampled_depth_points": 256,
+              "supported_boundary_points": 232,
+              "total_boundary_points": 240,
+              "processing_ms_median_of_3": 72.21
+            },
+            "geometry": {
+              "precision": 0.9782,
+              "recall": 0.799,
+              "false_positive_pixels": 13744,
+              "accepted_depth_on_cloth": 0.6365,
+              "sampled_depth_points": 256,
+              "supported_boundary_points": 229,
+              "total_boundary_points": 240,
+              "processing_ms_median_of_3": 51.57
+            },
+            "dark_geometry": {
+              "precision": 0.9796,
+              "recall": 0.8867,
+              "false_positive_pixels": 14243,
+              "accepted_depth_on_cloth": 0.8256,
+              "sampled_depth_points": 256,
+              "supported_boundary_points": 221,
+              "total_boundary_points": 240,
+              "processing_ms_median_of_3": 39.62
+            }
+          }
+        },
+        "40": {
+          "label_interior_pixels": 56183,
+          "raw_depth_on_cloth": 0.0,
+          "variants": {
+            "baseline": {
+              "precision": 0.0363,
+              "recall": 0.2615,
+              "false_positive_pixels": 390091,
+              "accepted_depth_on_cloth": 0.0,
+              "sampled_depth_points": 256,
+              "supported_boundary_points": 239,
+              "total_boundary_points": 240,
+              "processing_ms_median_of_3": 58.84
+            },
+            "colour_roi": {
+              "precision": 0.0653,
+              "recall": 0.9349,
+              "false_positive_pixels": 751694,
+              "accepted_depth_on_cloth": 0.0,
+              "sampled_depth_points": 256,
+              "supported_boundary_points": 234,
+              "total_boundary_points": 240,
+              "processing_ms_median_of_3": 60.65
+            },
+            "geometry": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "false_positive_pixels": 14873,
+              "accepted_depth_on_cloth": 0.0,
+              "sampled_depth_points": 10,
+              "supported_boundary_points": 4,
+              "total_boundary_points": 235,
+              "processing_ms_median_of_3": 30.38
+            },
+            "dark_geometry": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "false_positive_pixels": 14873,
+              "accepted_depth_on_cloth": 0.0,
+              "sampled_depth_points": 10,
+              "supported_boundary_points": 4,
+              "total_boundary_points": 235,
+              "processing_ms_median_of_3": 24.32
+            }
+          }
+        }
+      }
+    },
+    "silver_wrist": {
+      "colour_settings": {
+        "cloth_max_saturation": 70,
+        "cloth_max_value": 150
+      },
+      "geometry_settings": {
+        "workspace_depth_range_m": [
+          0.1,
+          1.25
+        ],
+        "workspace_depth_fill_px": 31
+      },
+      "dark_value": 60,
+      "frames": {
+        "7": {
+          "label_interior_pixels": 979930,
+          "raw_depth_on_cloth": 0.887,
+          "variants": {
+            "baseline": {
+              "precision": 0.8811,
+              "recall": 0.9912,
+              "false_positive_pixels": 131122,
+              "accepted_depth_on_cloth": 0.6616,
+              "sampled_depth_points": 256,
+              "supported_boundary_points": 229,
+              "total_boundary_points": 240,
+              "processing_ms_median_of_3": 28.76
+            },
+            "colour_roi": {
+              "precision": 0.8516,
+              "recall": 0.9971,
+              "false_positive_pixels": 170316,
+              "accepted_depth_on_cloth": 0.6755,
+              "sampled_depth_points": 256,
+              "supported_boundary_points": 226,
+              "total_boundary_points": 240,
+              "processing_ms_median_of_3": 25.13
+            },
+            "geometry": {
+              "precision": 0.996,
+              "recall": 0.8875,
+              "false_positive_pixels": 3495,
+              "accepted_depth_on_cloth": 0.6746,
+              "sampled_depth_points": 256,
+              "supported_boundary_points": 90,
+              "total_boundary_points": 228,
+              "processing_ms_median_of_3": 24.66
+            },
+            "dark_geometry": {
+              "precision": 0.996,
+              "recall": 0.8875,
+              "false_positive_pixels": 3525,
+              "accepted_depth_on_cloth": 0.6746,
+              "sampled_depth_points": 256,
+              "supported_boundary_points": 90,
+              "total_boundary_points": 228,
+              "processing_ms_median_of_3": 25.75
+            }
+          }
+        },
+        "27": {
+          "label_interior_pixels": 721715,
+          "raw_depth_on_cloth": 0.8051,
+          "variants": {
+            "baseline": {
+              "precision": 0.1888,
+              "recall": 0.0635,
+              "false_positive_pixels": 196700,
+              "accepted_depth_on_cloth": 0.0198,
+              "sampled_depth_points": 205,
+              "supported_boundary_points": 216,
+              "total_boundary_points": 240,
+              "processing_ms_median_of_3": 35.07
+            },
+            "colour_roi": {
+              "precision": 0.6863,
+              "recall": 0.9405,
+              "false_positive_pixels": 310236,
+              "accepted_depth_on_cloth": 0.6703,
+              "sampled_depth_points": 256,
+              "supported_boundary_points": 217,
+              "total_boundary_points": 240,
+              "processing_ms_median_of_3": 42.18
+            },
+            "geometry": {
+              "precision": 0.9687,
+              "recall": 0.7563,
+              "false_positive_pixels": 17651,
+              "accepted_depth_on_cloth": 0.6691,
+              "sampled_depth_points": 256,
+              "supported_boundary_points": 213,
+              "total_boundary_points": 240,
+              "processing_ms_median_of_3": 37.43
+            },
+            "dark_geometry": {
+              "precision": 0.9678,
+              "recall": 0.8054,
+              "false_positive_pixels": 19333,
+              "accepted_depth_on_cloth": 0.794,
+              "sampled_depth_points": 256,
+              "supported_boundary_points": 199,
+              "total_boundary_points": 240,
+              "processing_ms_median_of_3": 27.19
+            }
+          }
+        },
+        "40": {
+          "label_interior_pixels": 65956,
+          "raw_depth_on_cloth": 0.0,
+          "variants": {
+            "baseline": {
+              "precision": 0.0804,
+              "recall": 0.5467,
+              "false_positive_pixels": 412574,
+              "accepted_depth_on_cloth": 0.0,
+              "sampled_depth_points": 129,
+              "supported_boundary_points": 233,
+              "total_boundary_points": 240,
+              "processing_ms_median_of_3": 42.88
+            },
+            "colour_roi": {
+              "precision": 0.0905,
+              "recall": 0.9907,
+              "false_positive_pixels": 656632,
+              "accepted_depth_on_cloth": 0.0,
+              "sampled_depth_points": 256,
+              "supported_boundary_points": 227,
+              "total_boundary_points": 240,
+              "processing_ms_median_of_3": 39.1
+            },
+            "geometry": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "false_positive_pixels": 3323,
+              "accepted_depth_on_cloth": 0.0,
+              "sampled_depth_points": 0,
+              "supported_boundary_points": 0,
+              "total_boundary_points": 240,
+              "processing_ms_median_of_3": 23.56
+            },
+            "dark_geometry": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "false_positive_pixels": 3323,
+              "accepted_depth_on_cloth": 0.0,
+              "sampled_depth_points": 0,
+              "supported_boundary_points": 0,
+              "total_boundary_points": 240,
+              "processing_ms_median_of_3": 24.52
+            }
+          }
+        }
+      }
+    }
+  }
+}

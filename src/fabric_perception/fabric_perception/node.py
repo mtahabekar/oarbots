@@ -8,17 +8,20 @@ import numpy as np
 import rclpy
 from rclpy.node import Node
 from rclpy.qos import qos_profile_sensor_data
-from builtin_interfaces.msg import Time
+from rclpy.time import Time
+from builtin_interfaces.msg import Time as TimeMsg
 from cv_bridge import CvBridge, CvBridgeError
 from diagnostic_msgs.msg import DiagnosticArray, DiagnosticStatus, KeyValue
 from geometry_msgs.msg import Point, Point32
 from message_filters import Subscriber, ApproximateTimeSynchronizer
 from sensor_msgs.msg import CameraInfo, Image
+from tf2_ros import Buffer, TransformListener, TransformException
 from fabric_state_msgs.msg import (Boundary2D, DepthObservation, FabricObservations,
                                    GloveObservation, GloveObservations, PointTrack, UVPrior)
 from human_hand_tracking.tags import GloveDetector
+from human_hand_tracking.fusion import rotation_matrix
 from .sampling import FabricSampler
-from .core import Camera, DepthProcessor, PointTracker, Segmenter, UVRegressor, boundaries, depth_metres
+from .core import Camera, DepthProcessor, DepthWorkspace, PointTracker, Segmenter, UVRegressor, boundaries, depth_metres
 
 
 def stamp_ns(stamp):
@@ -26,7 +29,7 @@ def stamp_ns(stamp):
 
 
 def time_msg(ns):
-    return Time(sec=int(ns // 1_000_000_000), nanosec=int(ns % 1_000_000_000))
+    return TimeMsg(sec=int(ns // 1_000_000_000), nanosec=int(ns % 1_000_000_000))
 
 
 def model_source(path):
@@ -60,7 +63,18 @@ class FabricCamera(Node):
         self.segmenter = Segmenter(backend, model, size,
             param('cloth_max_value', 85), param('cloth_max_saturation', 110),
             param('min_component_area', 300), param('segmentation_confidence', .65),
-            param('workspace_roi', [0., 0., 1., 1.]))
+            param('workspace_roi', [0., 0., 1., 1.]), param('cloth_dark_value', -1))
+        depth_range = param('workspace_depth_range_m', [0., 0.])
+        self.workspace_frame = param('workspace_box_frame', '')
+        box = param('workspace_box_m', [0.] * 6)
+        if not self.workspace_frame and box != [0.] * 6:
+            raise ValueError('workspace_box_frame is required when workspace_box_m is set')
+        self.workspace = DepthWorkspace(None if depth_range == [0., 0.] else depth_range,
+                                        box if self.workspace_frame else None,
+                                        param('workspace_depth_fill_px', 0))
+        if self.workspace_frame:
+            self.tf = Buffer()
+            self.tf_listener = TransformListener(self.tf, self)
         self.segment_source = model_source(model) if backend == 'onnx' else 'hsv_baseline_uncalibrated'
         uv_model = param('uv_model', '')
         self.uv = UVRegressor(uv_model, size, param('uv_confidence', .7), param('uv_stddev', .05))
@@ -131,6 +145,13 @@ class FabricCamera(Node):
                 color_support=hand.color_support))
         self.hands_pub.publish(output)
 
+    def publish_hands_only(self, header, hands, capture):
+        if (self.get_clock().now().nanoseconds-capture)/1e9 <= self.max_age:
+            self.publish_hands(header, hands)
+            self.last_stamp, self.last_arrival = capture, monotonic()
+            self.drop_reason = self.summary.get('workspace_error', '')
+            self.summary['fabric_sampling'] = 'skipped; gloves processed'
+
     def camera_info(self, msg):
         self.info = msg
 
@@ -171,7 +192,6 @@ class FabricCamera(Node):
             self.drop_reason = 'Waiting for exact-capture robot exclusion mask'
             return
         try:
-            camera = Camera(info.width, info.height, info.k, info.d)
             bgr = self.bridge.imgmsg_to_cv2(rgb, 'bgr8')
             metres = depth_metres(self.bridge.imgmsg_to_cv2(depth, 'passthrough'), depth.encoding)
             robot_mask = None
@@ -185,22 +205,36 @@ class FabricCamera(Node):
                     raise ValueError('static_exclusion_mask must match the raw RGB resolution')
                 robot_mask = self.static_mask if robot_mask is None else cv2.bitwise_or(robot_mask, self.static_mask)
             signature = (info.width, info.height, tuple(info.k), tuple(info.d))
-            if self.calibration is not None and signature != self.calibration:
-                if self.tracker is not None:
+            if signature != self.calibration:
+                self.camera = Camera(info.width, info.height, info.k, info.d)
+                if self.calibration is not None and self.tracker is not None:
                     self.tracker.gray = self.tracker.points = None
-            self.calibration = signature
+                self.calibration = signature
+            camera = self.camera
             # One HSV conversion for the glove detector and the segmenter.
             hsv = cv2.cvtColor(bgr, cv2.COLOR_BGR2HSV)
             glove_mask, hands = self.gloves.detect(bgr, camera.k, camera.distortion,
                                                    depth=metres if self.tag_use_depth else None, hsv=hsv)
             if not self.sampler.due(capture):
                 # Hand input remains at camera cadence even while fabric checks are sparse.
-                if (self.get_clock().now().nanoseconds-capture)/1e9 <= self.max_age:
-                    self.publish_hands(rgb.header, hands)
-                    self.last_stamp, self.last_arrival, self.drop_reason = capture, monotonic(), ''
-                    self.summary['fabric_sampling'] = 'skipped; gloves processed'
+                self.publish_hands_only(rgb.header, hands, capture)
                 return
-            sheet, labels, confidence, occlusion, roi = self.segmenter.infer(bgr, glove_mask, robot_mask, hsv=hsv)
+            transform = None
+            if self.workspace_frame:
+                try:
+                    tf = self.tf.lookup_transform(self.workspace_frame, depth.header.frame_id,
+                                                  Time.from_msg(depth.header.stamp)).transform
+                except TransformException:
+                    reason = f'Waiting for capture-time workspace TF to {self.workspace_frame}'
+                    self.summary['workspace_error'] = reason
+                    self.drop_reason = reason
+                    self.publish_hands_only(rgb.header, hands, capture)
+                    return
+                q, t = tf.rotation, tf.translation
+                transform = (rotation_matrix([q.x, q.y, q.z, q.w]), [t.x, t.y, t.z])
+            depth_roi = self.workspace.mask(metres, camera, transform)
+            sheet, labels, confidence, occlusion, roi = self.segmenter.infer(
+                bgr, glove_mask, robot_mask, hsv=hsv, depth_roi=depth_roi)
             valid, variance, pixels, points, fraction = self.depth.process(metres, sheet, camera)
             output = FabricObservations(header=rgb.header, camera_id=self.camera_id, camera_info=info,
                 depth_stamp=depth.header.stamp, segmentation_source=self.segment_source,
@@ -247,6 +281,8 @@ class FabricCamera(Node):
                     publisher.publish(msg)
             self.last_stamp, self.last_arrival, self.drop_reason = capture, monotonic(), ''
             self.summary = {'sheet_pixels': int(np.count_nonzero(sheet)), 'depth_valid_fraction': fraction,
+                'depth_workspace': 'disabled' if depth_roi is None else
+                'active' if np.any(depth_roi) else 'no depth in workspace',
                 'tracks': len(output.tracks), 'gloves': len(hands), 'processing_ms': (monotonic()-start)*1000,
                 'capture_age_ms': publication_age*1000, 'segmentation': self.segment_source, 'UV': self.uv_source,
                 'robot_exclusion': ('mask' if mask_msg is not None else 'static mask' if self.static_mask is not None

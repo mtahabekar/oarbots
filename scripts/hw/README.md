@@ -145,6 +145,13 @@ rate, age at arrival, per-hand detection, gaps and positions. The nodes keep up 
 frames for age and publishes no gloves at all. Laptop discovery of a newly started node can take a minute:
 run the recorder on the camera's own computer with `exec` if it sees nothing.
 
+For the next stationary stand-in trial, start the existing perception-only `camera_host.launch.py`
+with `perception_overrides:=<cell_dir>/perception_workspace.yaml`. Use the measured overhead TF
+from the session's calibration publisher when testing the world box. Record baseline and candidate
+clips separately so the two nodes do not publish on the same camera topics. The
+[labelled workspace trial](../../experiments/hardware/sessions/2026-11-18_sheet_capture/README.md#labelled-workspace-trial)
+has the launch and replay details.
+
 ### After unplugging anything
 
 - **F/T sensor:** the Rokubi node does not reopen its port after a replug. It stays up and silent,

@@ -7,12 +7,15 @@ import gzip
 import json
 from collections import Counter
 from pathlib import Path
+from time import perf_counter
 
 import cv2
 import numpy as np
+import yaml
 
-from fabric_perception.core import Camera, DepthProcessor, Segmenter, boundaries, depth_metres
-from glove_check import detector_from, load_params
+from fabric_perception.core import Camera, DepthProcessor, DepthWorkspace, Segmenter, boundaries, depth_metres
+from glove_check import NAMESPACES, detector_from, load_params
+from human_hand_tracking.fusion import rotation_matrix
 
 
 SESSION = Path(__file__).resolve().parent
@@ -28,6 +31,37 @@ PROBES = {
     'blue_wrist': {5: (300, 480, 1600, 1020), 22: (450, 700, 1350, 1020)},
     'silver_wrist': {5: (150, 480, 1500, 1020), 22: (200, 760, 1100, 1060)},
 }
+OVERHEAD_ROI = [.48, .25, .80, .65]
+
+
+def read_camera(run):
+    info = json.loads((run / 'camera_info.json').read_text())
+    return Camera(info['width'], info['height'], info['k'], info['d'])
+
+
+def read_frame(run, index, camera, detector, params):
+    stem = run / f'frame_{index:03d}'
+    bgr = cv2.imread(f'{stem}_color.png')
+    depth = depth_metres(cv2.imread(f'{stem}_depth.png', cv2.IMREAD_UNCHANGED), '16UC1')
+    hsv = cv2.cvtColor(bgr, cv2.COLOR_BGR2HSV)
+    gloves, _ = detector.detect(
+        bgr, camera.k, camera.distortion, depth=depth if params['tag_use_depth'] else None, hsv=hsv,
+    )
+    return bgr, depth, hsv, gloves
+
+
+def processors(params):
+    segmenter = Segmenter(
+        cloth_max_value=params['cloth_max_value'], cloth_max_saturation=params['cloth_max_saturation'],
+        min_component_area=params['min_component_area'], roi=params['workspace_roi'],
+        cloth_dark_value=params.get('cloth_dark_value', -1),
+    )
+    depth_processor = DepthProcessor(
+        params['min_depth_m'], params['max_depth_m'], params['depth_edge_threshold_m'],
+        params['depth_noise_floor_m'], params['depth_noise_scale'], params['sample_stride'],
+        params['max_depth_samples'],
+    )
+    return segmenter, depth_processor
 
 
 def capture_summary(capture, camera_id):
@@ -54,43 +88,28 @@ def capture_summary(capture, camera_id):
         },
     }
 
-    info = json.loads((run / 'camera_info.json').read_text())
-    camera = Camera(info['width'], info['height'], info['k'], info['d'])
+    camera = read_camera(run)
     params = load_params(CELL / f'perception_{camera_id}.yaml')
     detector = detector_from(params)
-    segmenter = Segmenter(
-        cloth_max_value=params['cloth_max_value'], cloth_max_saturation=params['cloth_max_saturation'],
-        min_component_area=params['min_component_area'], roi=params['workspace_roi'],
-    )
+    segmenter, depth_processor = processors(params)
     candidates = {}
     if camera_id == 'overhead':
-        roi = [.48, .25, .80, .65]  # contains the observed overhead cloth region
         for name, saturation, value in (
             ('roi_only', params['cloth_max_saturation'], params['cloth_max_value']),
             ('roi_and_hsv', 60, 90),
         ):
             candidates[name] = Segmenter(
                 cloth_max_value=value, cloth_max_saturation=saturation,
-                min_component_area=params['min_component_area'], roi=roi,
+                min_component_area=params['min_component_area'], roi=OVERHEAD_ROI,
             )
         summary['overhead_candidate_settings'] = {
             name: {'roi': model.roi, 'max_saturation': model.max_s, 'max_value': model.max_v}
             for name, model in candidates.items()
         }
-    depth_processor = DepthProcessor(
-        params['min_depth_m'], params['max_depth_m'], params['depth_edge_threshold_m'],
-        params['depth_noise_floor_m'], params['depth_noise_scale'], params['sample_stride'],
-        params['max_depth_samples'],
-    )
     frames, tiles = {}, []
     for index in (5, 22, 38):
         stem = run / f'frame_{index:03d}'
-        bgr = cv2.imread(f'{stem}_color.png')
-        depth = depth_metres(cv2.imread(f'{stem}_depth.png', cv2.IMREAD_UNCHANGED), '16UC1')
-        hsv = cv2.cvtColor(bgr, cv2.COLOR_BGR2HSV)
-        glove_mask, _ = detector.detect(
-            bgr, camera.k, camera.distortion, depth=depth if params['tag_use_depth'] else None, hsv=hsv,
-        )
+        bgr, depth, hsv, glove_mask = read_frame(run, index, camera, detector, params)
         sheet, _, confidence, occlusion, roi = segmenter.infer(bgr, glove_mask, hsv=hsv)
         _, _, _, points, depth_fraction = depth_processor.process(depth, sheet, camera)
         contours = boundaries(sheet, confidence, occlusion, roi, params['max_boundary_points'])
@@ -126,6 +145,86 @@ def capture_summary(capture, camera_id):
     return summary, np.hstack(tiles)
 
 
+def workspace_summary(capture):
+    world = json.loads((SESSION.parent / '2026-11-17_world' / 'overhead_extrinsics.json').read_text())
+    world = world['world_to_nuc_rgb_camera_link']
+    transform = rotation_matrix(world['rotation_xyzw']), world['translation']
+    annotations = json.loads((SESSION / 'workspace_labels.json').read_text())
+    profiles = yaml.safe_load((CELL / 'perception_workspace.yaml').read_text())
+    summary = {'annotation_margin_px': 12, 'cameras': {}}
+    tiles = []
+    # Exclude a tolerance band around the hand-drawn outline from pixel scores.
+    margin = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (25, 25))
+    for name, path in RUNS.items():
+        run = capture / path
+        camera = read_camera(run)
+        params = load_params(CELL / f'perception_{name}.yaml')
+        detector = detector_from(params)
+        overhead = name == 'overhead'
+        overrides = profiles[f'{NAMESPACES[name]}/fabric_perception']['ros__parameters']
+        colour = {key: overrides[key] for key in ('workspace_roi', 'cloth_max_saturation', 'cloth_max_value')
+                  if key in overrides}
+        geometry = {key: value for key, value in overrides.items() if key not in colour and key != 'cloth_dark_value'}
+        dark_value = overrides.get('cloth_dark_value', 60)
+        workspace = DepthWorkspace(geometry.get('workspace_depth_range_m'), geometry.get('workspace_box_m'),
+                                   geometry['workspace_depth_fill_px'])
+        variants = {
+            'baseline': (params, False),
+            'colour_roi': ({**params, **colour}, False),
+            'geometry': ({**params, **colour}, True),
+            'dark_geometry': ({**params, **colour, 'cloth_dark_value': dark_value}, True),
+        }
+        candidates = {label: (*processors(settings), use_gate) for label, (settings, use_gate) in variants.items()}
+        frames = {}
+        for index, polygons in annotations[name].items():
+            bgr, depth, hsv, gloves = read_frame(run, int(index), camera, detector, params)
+            truth = np.zeros(depth.shape, np.uint8)
+            cv2.fillPoly(truth, [np.asarray(polygon, np.int32) * 4 for polygon in polygons], 255)
+            inside = cv2.erode(truth, margin) > 0
+            outside = cv2.dilate(truth, margin) == 0
+            # Warm the ray cache outside the timed measurements.
+            workspace.mask(depth, camera, transform if overhead else None)
+            metrics = {}
+            row = [cv2.resize(bgr, (480, 270))]
+            cv2.polylines(row[0], [np.asarray(polygon, np.int32) for polygon in polygons], True, (0, 255, 255), 1)
+            for label, (segmenter, processor, use_gate) in candidates.items():
+                times = []
+                for _ in range(3):
+                    start = perf_counter()
+                    gate = workspace.mask(depth, camera, transform if overhead else None) if use_gate else None
+                    sheet, _, confidence, occlusion, roi = segmenter.infer(bgr, gloves, hsv=hsv, depth_roi=gate)
+                    valid, _, pixels, _, _ = processor.process(depth, sheet, camera)
+                    contours = boundaries(sheet, confidence, occlusion, roi, params['max_boundary_points'])
+                    times.append((perf_counter() - start) * 1000)
+                predicted = sheet > 0
+                tp, fp = int((predicted & inside).sum()), int((predicted & outside).sum())
+                metrics[label] = {
+                    'precision': round(tp / (tp + fp), 4) if inside.any() and tp + fp else None,
+                    'recall': round(tp / int(inside.sum()), 4) if inside.any() else None,
+                    'false_positive_pixels': fp,
+                    'accepted_depth_on_cloth': round(float(valid[inside].mean()), 4) if inside.any() else None,
+                    'sampled_depth_points': len(pixels),
+                    'supported_boundary_points': sum(int(np.count_nonzero(weights)) for _, weights, _ in contours),
+                    'total_boundary_points': sum(len(weights) for _, weights, _ in contours),
+                    'processing_ms_median_of_3': round(float(np.median(times)), 2),
+                }
+                view = bgr.copy()
+                view[predicted] = (0.4 * view[predicted] + [153, 0, 153]).astype(np.uint8)
+                row.append(cv2.resize(view, (480, 270)))
+            for image, label in zip(row, ('visible cloth outline', *candidates)):
+                cv2.putText(image, f'{name} {index}  {label}', (7, 260), cv2.FONT_HERSHEY_SIMPLEX,
+                            .5, (255, 255, 255), 1)
+            tiles.append(np.hstack(row))
+            frames[index] = {
+                'label_interior_pixels': int(inside.sum()),
+                'raw_depth_on_cloth': round(float((depth[inside] > 0).mean()), 4) if inside.any() else None,
+                'variants': metrics,
+            }
+        summary['cameras'][name] = {'colour_settings': colour, 'geometry_settings': geometry,
+                                   'dark_value': dark_value, 'frames': frames}
+    return summary, np.vstack(tiles)
+
+
 def cartesian_summary():
     summary = {}
     for path in sorted(SESSION.glob('motion/*/grasp_drive/*_samples.csv.gz')):
@@ -150,15 +249,21 @@ def cartesian_summary():
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('capture_dir', type=Path)
-    parser.add_argument('--image', type=Path, help='Optional baseline contact sheet to write')
+    parser.add_argument('--workspace', action='store_true', help='Score the labelled workspace comparison')
+    parser.add_argument('--image', type=Path, help='Optional contact sheet to write')
     args = parser.parse_args()
-    cameras, tiles = {}, []
-    for camera_id in RUNS:
-        cameras[camera_id], tile = capture_summary(args.capture_dir, camera_id)
-        tiles.append(tile)
-    if args.image and not cv2.imwrite(str(args.image), np.vstack(tiles)):
+    if args.workspace:
+        result, image = workspace_summary(args.capture_dir)
+    else:
+        cameras, tiles = {}, []
+        for camera_id in RUNS:
+            cameras[camera_id], tile = capture_summary(args.capture_dir, camera_id)
+            tiles.append(tile)
+        result = {'cameras': cameras, 'cartesian_attempts': cartesian_summary()}
+        image = np.vstack(tiles)
+    if args.image and not cv2.imwrite(str(args.image), image):
         raise OSError(f'Could not write {args.image}')
-    print(json.dumps({'cameras': cameras, 'cartesian_attempts': cartesian_summary()}, indent=2))
+    print(json.dumps(result, indent=2))
 
 
 if __name__ == '__main__':
