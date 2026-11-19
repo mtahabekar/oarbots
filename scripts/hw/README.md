@@ -13,7 +13,10 @@ scripts/hw/fabric_run.sh bridges start
 scripts/hw/fabric_run.sh twin      # own terminal: estimator + twin + RViz, commands off
 scripts/hw/fabric_run.sh status    # until the twin follows with both hands seen
 scripts/hw/fabric_run.sh enable    # then the deadman: release, press, hold
+scripts/hw/fabric_run.sh check     # read-only: arms, guards, bridges, perception, camera ages
 scripts/hw/fabric_run.sh disable; scripts/hw/fabric_run.sh stop-twin; scripts/hw/fabric_run.sh save <run folder>
+scripts/hw/fabric_run.sh review <run folder>   # per arm: commanded vs delivered, faces, stops
+scripts/hw/fabric_run.sh deploy-helpers        # new code to both helpers (sessions stopped, arms hold)
 ```
 
 `cell_up.sh` re-adds the laptop's lab address, checks every host, the clocks (5 ms target), the code

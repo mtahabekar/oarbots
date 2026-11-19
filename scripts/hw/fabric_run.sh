@@ -13,6 +13,13 @@
 #   fabric_run.sh disable               twin commands off + both bridges disarmed
 #   fabric_run.sh stop-twin             end the compute launch and every node it started (writes the recordings)
 #   fabric_run.sh save <run_dir>        large recordings to /home/taha/fabric_hw_data, camera logs from the hosts
+#   fabric_run.sh check                 read-only readiness: arms vs grasp and box, fingers, guards (state, joint
+#                                       cap), bridges (state, force/box stop), perception output, camera frame age
+#   fabric_run.sh review <run_dir>      after a run: per arm, commanded vs delivered speed, box faces, where it
+#                                       stopped; the twin's faults while enabled (scripts/hw/run_review.py)
+#   fabric_run.sh deploy-helpers        both helpers to the fork's branch head: sessions stopped (arms hold
+#                                       their pose), rebuilt, started again with scripts/hw/cell_up.sh;
+#                                       then perception and bridges must be started again
 # The arms move only while the tablet deadman is held with Fabric Follow (CBF) on for that robot; the person
 # holding the sheet cannot hold it, so a second person does. Procedure and evidence:
 # experiments/hardware/sessions/2026-11-18_s5_closed_loop/README.md.
@@ -109,5 +116,29 @@ case "$cmd" in
             "$LAB_SSH" "${HOST[$m]}" 'cd /dev/shm && tar -czf - run_* 2>/dev/null' > "$run/cameras/${m}_perception_logs.tar.gz"
         done
         echo "Large files: $data (checksums also in $run/large_files.sha256); camera logs: $run/cameras" ;;
-    *) sed -n '2,19p' "$0"; exit 2 ;;
+    check)
+        ros_env; python3 "$here/cell_check.py"
+        echo "== perception (latest run on each camera host)"
+        for m in nuc blue silver; do
+            "$LAB_SSH" "${HOST[$m]}" 'd=$(ls -dt /dev/shm/run_*_* 2>/dev/null | head -1); [ -z "$d" ] && { echo "  no perception run"; exit; }
+                now=$(date +%s); o=$(wc -l < $d/observations.jsonl 2>/dev/null); g=$(wc -l < $d/gloves.jsonl 2>/dev/null)
+                age=$(( now - $(stat -c %Y $d/observations.jsonl 2>/dev/null || echo 0) ))
+                hands=$(tail -n 200 $d/gloves.jsonl 2>/dev/null | grep -vc "hands.: \\[\\]")
+                echo "  $(basename $d): $o analyses, $g glove frames, last written ${age} s ago, frames with hands (last 200): $hands"' 2>/dev/null | sed "s/^/$m/"
+        done
+        echo "== camera frame age on each host (want under 0.1 s)"
+        for cam in nuc:/nuc blue:/oarbot_blue/azure_kinect silver:/oarbot_silver/azure_kinect; do
+            echo "  ${cam%%:*}: $(scripts/hw/lab.sh session "${cam%%:*}" exec python3 fabric_ws/scripts/hw/frame_age.py "${cam#*:}" 3 2>/dev/null | grep '^image' || echo 'NO images')"
+        done ;;
+    review) ros_env; python3 "$here/run_review.py" "${1:?review <run_dir>}" ;;
+    deploy-helpers)
+        git fetch -q fork; echo "deploying fork/jazzy-platform-hardening $(git rev-parse --short fork/jazzy-platform-hardening) to both helpers"
+        for r in blue silver; do
+            ( scripts/hw/lab.sh session "$r" stop >/dev/null 2>&1; scripts/hw/lab.sh setup "$r" > "$state/deploy_$r.log" 2>&1
+              echo "$r: $(grep -E '^Deployed|Failed|failed' "$state/deploy_$r.log" | tail -1)" ) &
+        done
+        wait
+        "$here/cell_up.sh"
+        echo "Now: fabric_run.sh perception 3600; fabric_run.sh bridges start; fabric_run.sh check" ;;
+    *) sed -n '2,/^set -uo/p' "$0" | sed '$d'; exit 2 ;;
 esac

@@ -56,6 +56,7 @@ MoveIt-checked every degree, 15 cm from the other arm). At the grasp pose Kinova
 scripts/hw/fabric_run.sh perception 3600   # T1: perception on all three cameras (workspace profile), 1 h
 scripts/hw/fabric_run.sh bridges start     # T1: joint-mode bridges, disarmed; per-robot box, 10 cm/s, 6 N force stop
 scripts/hw/fabric_run.sh twin              # T2: estimator + twin + CBF + RViz, commands OFF; prints its run folder
+scripts/hw/fabric_run.sh check             # T3: arms, guards, bridges (stops, box), perception, camera ages
 scripts/hw/fabric_run.sh status            # T3: repeat until: twin "following the measured grips", stale grip a few %,
                                            #     three cameras ~15 Hz, both hands detected, deadman released
 scripts/hw/fabric_run.sh enable            # T3: commands on (formation captured now) + both bridges armed
@@ -64,8 +65,10 @@ scripts/hw/fabric_run.sh watch 60          # T3: a line every 5 s (commands, bri
 scripts/hw/fabric_run.sh disable           # T3: commands off + bridges disarmed
 scripts/hw/fabric_run.sh stop-twin         # T3 (or Ctrl+C in T2): writes estimate.npz, twin.npz, twin.cbf.jsonl
 scripts/hw/fabric_run.sh save <run folder> # large files to /home/taha/fabric_hw_data, camera logs from the hosts
+scripts/hw/fabric_run.sh review <run folder> # per arm: commanded vs delivered, faces, where it stopped
 ```
-Stops: releasing the deadman stops both arms at once. A bridge stops itself (latched; `enable` re-arms) on a 6 N
+Since 2026-11-19 (`8562767`, lab log 2026-11-19) the box is a wall only and there is no force stop; code updates
+for the helpers: `fabric_run.sh deploy-helpers`. Stops (2026-11-18 settings): releasing the deadman stops both arms at once. A bridge stops itself (latched; `enable` re-arms) on a 6 N
 change of its wrist force or 2 cm beyond its box. Only one compute launch may run (the 23:30 attempt first found
 the 23:14 one still running: two twins; `fabric_run.sh twin` refuses to start a second).
 
