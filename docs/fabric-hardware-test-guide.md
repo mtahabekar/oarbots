@@ -425,7 +425,11 @@ the sheet); the wrists 2–33 %. Fused coverage with a fresh measurement was 67 
 steady and 21 % / 7 % moving. Simultaneous wrist and overhead glove positions differ by 4–14 cm,
 mostly across the line of sight, so the filter rejects some measurements, and after 0.5 s without one
 it restarts at the next measurement. Fix the inputs before tuning the filter: measured tag-to-pinch
-offsets and wrist hand–eye (block B), and tags that stay visible while pinching.
+offsets and wrist hand–eye (block B), and tags that stay visible while pinching. The user viewed the live
+overlay at 22:00 (shadow mode, `scripts/hw/live_perception.sh` on each camera host): acceptable for now,
+hand-tracking improvements deferred. Parameter identification depends less on the hand gaps (the person
+holds still during the warm-up) than on depth and the four grip positions, and on robot motion at the
+grasp pose for the warm-up insets.
 
 ### 9.2 Grasp setup and measured geometry
 
