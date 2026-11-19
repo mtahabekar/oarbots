@@ -318,6 +318,7 @@ home both arms; `lab.sh stock blue start` and the same for silver; `lab.sh snaps
 | Blue's stock Rokubi node exits at every start (no `/dev/sensor_bota_rokubi_ft_0` alias on Blue's laptop) | Stock admittance on Blue has no force data | Tell the lab; our session uses the `/dev/serial/by-id` path |
 | The bridge latched a stop at the box face and on single force samples (first twin run, 22:22) | Blue stopped after 12.9 cm inward, Silver after 1 s on a start-up force spike | Fixed: soft box edge with a 2 cm hard margin, force stop on the 0.25 s mean |
 | Silver's 1080p colour frames (about 8 MB) did not reach local subscribers with default DDS buffers | Wrist perception would get no images | The session profile asks for 64 MB receive buffers; frames arrive at 15 Hz |
+| A full-resolution camera image viewed on the laptop (RViz, `ros2 topic`) fills the camera host's gigabit link (2026-11-18) | The driver backs up: frames stay 0.4–0.6 s old until the camera restarts, and perception drops them all, gloves included (the overhead in every S2 overlay run) | Fixed in `aee15a9`: the NUC session runs `preview_relay.py`, and `fabric_cell.rviz` shows only the preview. Check `frame_age.py` on each camera host before a run; restart a stale camera ([runbook](../scripts/hw/README.md)) |
 
 ### 8.5 Glove tags on the three cameras (2026-11-18)
 
@@ -386,7 +387,7 @@ holds the data, image comparisons, Cartesian diagnosis and last service check.
 | H3, command axes and units | Translation passed on both arms in the earlier free-air configuration. Both joint-space approaches reached the grasp targets. | The Cartesian controller showed zero motion at the grasp pose even after a driver restart. Characterize a working Cartesian envelope around the actual grips before any commanded fabric run. Rotation remains untested. |
 | H4, position actions | Guarded joint velocity provided the setup approach. | The separate position-action setup mode remains untested. |
 | H5, wrist force | Both wrist streams present in the tests, about 97 Hz raw and 83 Hz compensated. Blue's reader is hosted on Silver. | Sign, scale, zero and orientation residuals, load/slip limits, and force-stop validation. Blue showed ~39 N compensated at rest during its first grasp approach. |
-| H7, cameras and hands | Overhead pose measured, factory intrinsics available, glove settings checked individually and at the grasp. | Wrist hand–eye, tag-to-pinch offsets, fused grip accuracy, grasp-view sheet masks and dropout behavior. |
+| H7, cameras and hands | Overhead pose measured, factory intrinsics available, glove settings checked individually and at the grasp. The overhead agrees with the robot kinematics: its depth lies 3.6–6 cm from the model's tool points, at matching heights. In the S2 bag the wrist cameras' sheet points lie 3–4 cm below the overhead's (median nearest-point distance 4.6–5.8 cm). | Wrist hand–eye; tag-to-pinch offsets (wrist and overhead glove positions differ by 4–14 cm, mostly across the line of sight); fused grip accuracy; grasp-view sheet masks; glove visibility while pinching. |
 | H9, clocks and sync | Host offsets recorded. At 16:40 the helpers were within 2 ms, the NUC was −7.4 ms and the tablet +6.6 ms. | Verify offsets against the 5 ms target on capture hosts, measure cross-camera skew, and compare depth with one versus all emitters. |
 | H11, carbon | Stand-in tested. | Measure carbon RGB-D observability and the material separately when the ply is available. |
 | H12, sustained load | Individual nodes were checked. | Run the complete stack for 30 minutes in S3. |
@@ -407,6 +408,24 @@ The [operator repeat](../experiments/hardware/sessions/2026-11-18_s2_overlay/rep
 again lost overhead observations. It recorded hand-corner snaps over 60 cm after tracking gaps
 and 252 ms p95 capture-to-recorder age through the last fused glove sample.
 [Repeat the overlay and save its recordings](../experiments/hardware/sessions/2026-11-18_s2_overlay/README.md#repeat-the-overlay).
+
+**Why the overhead published nothing, and the fix (21:40).** The default `fabric_cell.rviz` showed the
+full-resolution overhead image on the laptop. That stream (about 110 MB/s) fills the NUC's gigabit link;
+the camera driver then backs up and its frames stay 0.4–0.6 s old until the camera restarts, so
+perception (0.25 s limit) drops everything, gloves included. Reproduced with the cell idle: 63 ms →
+564 ms while subscribed, 437 ms after. Since `aee15a9` the NUC session runs the 640 × 360 preview relay
+and RViz shows only that (§8.4). Verified 21:45 with the workspace profile on all three cameras at once
+for 40 s: 5 Hz sheet observations at 125–153 ms p95, gloves at 14.9 Hz, no drops, raw frames 39–64 ms
+old afterwards. [Lab log, evening check](../experiments/hardware/sessions/2026-11-18_lab_log.md#evening-check-and-the-s2-hand-gaps-2130-2200)
+
+**Why the human corners snap.** It is not only the overhead outage. The 19:18 nominal run (all three
+cameras) also stepped 20 cm in 0.03 s during the steady hold. The hands are seen too rarely while
+they hold the sheet: overhead right hand 54 % steady and 12 % moving (89 % in the glove test without
+the sheet); the wrists 2–33 %. Fused coverage with a fresh measurement was 67 % / 30 % (left / right)
+steady and 21 % / 7 % moving. Simultaneous wrist and overhead glove positions differ by 4–14 cm,
+mostly across the line of sight, so the filter rejects some measurements, and after 0.5 s without one
+it restarts at the next measurement. Fix the inputs before tuning the filter: measured tag-to-pinch
+offsets and wrist hand–eye (block B), and tags that stay visible while pinching.
 
 ### 9.2 Grasp setup and measured geometry
 

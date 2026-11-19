@@ -32,6 +32,9 @@ and with it on. Raw RGB was already a median 375 ms old when sampled on the NUC,
 depth was 368 ms old. Both exceeded the 250 ms perception limit. The NUC's system clock was
 within 2 ms of the compute laptop. Restarting just the NUC's overhead camera service restored
 fresh input. The source of the accumulated camera timestamp age remains open.
+**Update 21:40:** found. RViz showed the full-resolution overhead image on the laptop, which fills
+the NUC's gigabit link; the driver backs up until restarted. Reproduced and fixed in `aee15a9` (preview
+relay in the NUC session, RViz on the preview); see the lab log's evening check.
 [Frame age](live/preview/timestamp_age.txt) · [Host clocks](live/preview/clock_offsets.txt)
 
 The optional [NUC preview relay](preview_relay.py) (now `scripts/hw/preview_relay.py`, started by the NUC session) decimates RGB to 640 × 360 at up to 5 Hz. It
