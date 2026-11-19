@@ -1,0 +1,47 @@
+Unknown tag "hardwareInterface" in /robot[@name='oarbot_blue']/transmission[@name='oarbot_blue/j2n6s300_joint_1_trans']/actuator[@name='oarbot_blue/j2n6s300_joint_1_actuator']
+Unknown tag "hardwareInterface" in /robot[@name='oarbot_blue']/transmission[@name='oarbot_blue/j2n6s300_joint_2_trans']/actuator[@name='oarbot_blue/j2n6s300_joint_2_actuator']
+Unknown tag "hardwareInterface" in /robot[@name='oarbot_blue']/transmission[@name='oarbot_blue/j2n6s300_joint_3_trans']/actuator[@name='oarbot_blue/j2n6s300_joint_3_actuator']
+Unknown tag "hardwareInterface" in /robot[@name='oarbot_blue']/transmission[@name='oarbot_blue/j2n6s300_joint_4_trans']/actuator[@name='oarbot_blue/j2n6s300_joint_4_actuator']
+Unknown tag "hardwareInterface" in /robot[@name='oarbot_blue']/transmission[@name='oarbot_blue/j2n6s300_joint_5_trans']/actuator[@name='oarbot_blue/j2n6s300_joint_5_actuator']
+Unknown tag "hardwareInterface" in /robot[@name='oarbot_blue']/transmission[@name='oarbot_blue/j2n6s300_joint_6_trans']/actuator[@name='oarbot_blue/j2n6s300_joint_6_actuator']
+Unknown tag "hardwareInterface" in /robot[@name='oarbot_blue']/transmission[@name='oarbot_blue/j2n6s300_joint_finger_1_trans']/actuator[@name='oarbot_blue/j2n6s300_joint_finger_1_actuator']
+Unknown tag "hardwareInterface" in /robot[@name='oarbot_blue']/transmission[@name='oarbot_blue/j2n6s300_joint_finger_tip_1_trans']/actuator[@name='oarbot_blue/j2n6s300_joint_finger_tip_1_actuator']
+Unknown tag "hardwareInterface" in /robot[@name='oarbot_blue']/transmission[@name='oarbot_blue/j2n6s300_joint_finger_2_trans']/actuator[@name='oarbot_blue/j2n6s300_joint_finger_2_actuator']
+Unknown tag "hardwareInterface" in /robot[@name='oarbot_blue']/transmission[@name='oarbot_blue/j2n6s300_joint_finger_tip_2_trans']/actuator[@name='oarbot_blue/j2n6s300_joint_finger_tip_2_actuator']
+Unknown tag "hardwareInterface" in /robot[@name='oarbot_blue']/transmission[@name='oarbot_blue/j2n6s300_joint_finger_3_trans']/actuator[@name='oarbot_blue/j2n6s300_joint_finger_3_actuator']
+Unknown tag "hardwareInterface" in /robot[@name='oarbot_blue']/transmission[@name='oarbot_blue/j2n6s300_joint_finger_tip_3_trans']/actuator[@name='oarbot_blue/j2n6s300_joint_finger_tip_3_actuator']
+Unknown tag "plugin" in /robot[@name='oarbot_blue']
+[WARN] [1795058269.033478976] [oarbot_blue.fabric_cbf_bridge]: armed
+Traceback (most recent call last):
+  File "/home/oarbot_blue/fabric_ws/install/oarbot_runtime/lib/python3.12/site-packages/oarbot_runtime/fabric_cbf_bridge.py", line 170, in main
+    rclpy.spin(node)
+  File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/__init__.py", line 247, in spin
+    executor.spin_once()
+  File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 934, in spin_once
+    self._spin_once_impl(timeout_sec)
+  File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 915, in _spin_once_impl
+    handler, entity, node = self.wait_for_ready_callbacks(
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 885, in wait_for_ready_callbacks
+    return next(self._cb_iter)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 789, in _wait_for_ready_callbacks
+    wait_set.wait(timeout_nsec)
+KeyboardInterrupt
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/oarbot_blue/fabric_ws/install/oarbot_runtime/lib/oarbot_runtime/fabric_cbf_bridge", line 33, in <module>
+    sys.exit(load_entry_point('oarbot-runtime==0.1.0', 'console_scripts', 'fabric_cbf_bridge')())
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/oarbot_blue/fabric_ws/install/oarbot_runtime/lib/python3.12/site-packages/oarbot_runtime/fabric_cbf_bridge.py", line 173, in main
+    node.tick()
+  File "/home/oarbot_blue/fabric_ws/install/oarbot_runtime/lib/python3.12/site-packages/oarbot_runtime/fabric_cbf_bridge.py", line 130, in tick
+    self.joint_tick()
+  File "/home/oarbot_blue/fabric_ws/install/oarbot_runtime/lib/python3.12/site-packages/oarbot_runtime/fabric_cbf_bridge.py", line 152, in joint_tick
+    self.joint_pub.publish(JointVelocity(**{f'joint{i}': float(degrees(v)) for i, v in enumerate(rates, 1)}))
+  File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/publisher.py", line 70, in publish
+    self.__publisher.publish(msg)
+rclpy._rclpy_pybind11.RCLError: Failed to publish: publisher's context is invalid, at ./src/rcl/publisher.c:423
+[ros2run]: Process exited with failure 1

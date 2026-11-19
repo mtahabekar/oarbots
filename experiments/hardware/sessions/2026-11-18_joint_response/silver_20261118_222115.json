@@ -1,0 +1,303 @@
+{
+ "robot": "silver",
+ "step_m": 0.02,
+ "speeds_mps": [
+  0.01,
+  0.02,
+  0.03
+ ],
+ "axes": "zxy",
+ "calibration_measured": false,
+ "grip_start_world": [
+  0.4051,
+  -0.4296,
+  1.0539
+ ],
+ "workspace_box": [
+  [
+   0.3651,
+   -0.4696,
+   1.0139
+  ],
+  [
+   0.4451,
+   -0.3896,
+   1.0939
+  ]
+ ],
+ "bridge_after_arming": "Following the fabric twin",
+ "legs": [
+  {
+   "axis": "z",
+   "sign": 1.0,
+   "speed_cmd_mps": 0.01,
+   "planned_m": 0.02,
+   "moved_m": 0.0169,
+   "direction_world": [
+    0.032,
+    -0.001,
+    0.999
+   ],
+   "steady_speed_mps": 0.0086,
+   "lag_s": 0.65,
+   "tool_turn_deg": 0.085
+  },
+  {
+   "axis": "z",
+   "sign": -1.0,
+   "speed_cmd_mps": 0.01,
+   "planned_m": 0.02,
+   "moved_m": 0.0164,
+   "direction_world": [
+    -0.068,
+    -0.056,
+    -0.996
+   ],
+   "steady_speed_mps": 0.0094,
+   "lag_s": 0.74,
+   "tool_turn_deg": 0.1
+  },
+  {
+   "axis": "x",
+   "sign": 1.0,
+   "speed_cmd_mps": 0.01,
+   "planned_m": 0.02,
+   "moved_m": 0.02,
+   "direction_world": [
+    0.996,
+    -0.003,
+    -0.088
+   ],
+   "steady_speed_mps": 0.0086,
+   "lag_s": 0.299,
+   "tool_turn_deg": 0.08
+  },
+  {
+   "axis": "x",
+   "sign": -1.0,
+   "speed_cmd_mps": 0.01,
+   "planned_m": 0.02,
+   "moved_m": 0.017,
+   "direction_world": [
+    -0.996,
+    0.078,
+    0.053
+   ],
+   "steady_speed_mps": 0.0089,
+   "lag_s": 0.608,
+   "tool_turn_deg": 0.069
+  },
+  {
+   "axis": "y",
+   "sign": 1.0,
+   "speed_cmd_mps": 0.01,
+   "planned_m": 0.02,
+   "moved_m": 0.0164,
+   "direction_world": [
+    -0.059,
+    0.994,
+    -0.094
+   ],
+   "steady_speed_mps": 0.0089,
+   "lag_s": 0.617,
+   "tool_turn_deg": 0.09
+  },
+  {
+   "axis": "y",
+   "sign": -1.0,
+   "speed_cmd_mps": 0.01,
+   "planned_m": 0.02,
+   "moved_m": 0.0158,
+   "direction_world": [
+    -0.02,
+    -0.999,
+    0.05
+   ],
+   "steady_speed_mps": 0.0084,
+   "lag_s": 0.676,
+   "tool_turn_deg": 0.032
+  },
+  {
+   "axis": "z",
+   "sign": 1.0,
+   "speed_cmd_mps": 0.02,
+   "planned_m": 0.02,
+   "moved_m": 0.0184,
+   "direction_world": [
+    -0.018,
+    -0.08,
+    0.997
+   ],
+   "steady_speed_mps": 0.017,
+   "lag_s": 0.27,
+   "tool_turn_deg": 0.281
+  },
+  {
+   "axis": "z",
+   "sign": -1.0,
+   "speed_cmd_mps": 0.02,
+   "planned_m": 0.02,
+   "moved_m": 0.0171,
+   "direction_world": [
+    -0.035,
+    -0.054,
+    -0.998
+   ],
+   "steady_speed_mps": 0.0192,
+   "lag_s": 0.409,
+   "tool_turn_deg": 0.348
+  },
+  {
+   "axis": "x",
+   "sign": 1.0,
+   "speed_cmd_mps": 0.02,
+   "planned_m": 0.02,
+   "moved_m": 0.0193,
+   "direction_world": [
+    0.992,
+    -0.05,
+    -0.117
+   ],
+   "steady_speed_mps": 0.017,
+   "lag_s": 0.24,
+   "tool_turn_deg": 0.077
+  },
+  {
+   "axis": "x",
+   "sign": -1.0,
+   "speed_cmd_mps": 0.02,
+   "planned_m": 0.02,
+   "moved_m": 0.0173,
+   "direction_world": [
+    -0.988,
+    0.117,
+    0.096
+   ],
+   "steady_speed_mps": 0.019,
+   "lag_s": 0.38,
+   "tool_turn_deg": 0.171
+  },
+  {
+   "axis": "y",
+   "sign": 1.0,
+   "speed_cmd_mps": 0.02,
+   "planned_m": 0.02,
+   "moved_m": 0.0181,
+   "direction_world": [
+    -0.04,
+    0.999,
+    -0.019
+   ],
+   "steady_speed_mps": 0.018,
+   "lag_s": 0.319,
+   "tool_turn_deg": 0.216
+  },
+  {
+   "axis": "y",
+   "sign": -1.0,
+   "speed_cmd_mps": 0.02,
+   "planned_m": 0.02,
+   "moved_m": 0.0172,
+   "direction_world": [
+    -0.067,
+    -0.997,
+    -0.023
+   ],
+   "steady_speed_mps": 0.0188,
+   "lag_s": 0.373,
+   "tool_turn_deg": 0.165
+  },
+  {
+   "axis": "z",
+   "sign": 1.0,
+   "speed_cmd_mps": 0.03,
+   "planned_m": 0.02,
+   "moved_m": 0.02,
+   "direction_world": [
+    -0.035,
+    -0.075,
+    0.997
+   ],
+   "steady_speed_mps": 0.0275,
+   "lag_s": 0.227,
+   "tool_turn_deg": 0.28
+  },
+  {
+   "axis": "z",
+   "sign": -1.0,
+   "speed_cmd_mps": 0.03,
+   "planned_m": 0.02,
+   "moved_m": 0.0182,
+   "direction_world": [
+    -0.009,
+    -0.066,
+    -0.998
+   ],
+   "steady_speed_mps": 0.0278,
+   "lag_s": 0.342,
+   "tool_turn_deg": 0.399
+  },
+  {
+   "axis": "x",
+   "sign": 1.0,
+   "speed_cmd_mps": 0.03,
+   "planned_m": 0.02,
+   "moved_m": 0.0209,
+   "direction_world": [
+    0.993,
+    -0.056,
+    -0.105
+   ],
+   "steady_speed_mps": 0.0297,
+   "lag_s": 0.175,
+   "tool_turn_deg": 0.17
+  },
+  {
+   "axis": "x",
+   "sign": -1.0,
+   "speed_cmd_mps": 0.03,
+   "planned_m": 0.02,
+   "moved_m": 0.0198,
+   "direction_world": [
+    -0.99,
+    0.107,
+    0.089
+   ],
+   "steady_speed_mps": 0.0269,
+   "lag_s": 0.298,
+   "tool_turn_deg": 0.127
+  },
+  {
+   "axis": "y",
+   "sign": 1.0,
+   "speed_cmd_mps": 0.03,
+   "planned_m": 0.02,
+   "moved_m": 0.0196,
+   "direction_world": [
+    -0.043,
+    0.998,
+    -0.036
+   ],
+   "steady_speed_mps": 0.0268,
+   "lag_s": 0.22,
+   "tool_turn_deg": 0.232
+  },
+  {
+   "axis": "y",
+   "sign": -1.0,
+   "speed_cmd_mps": 0.03,
+   "planned_m": 0.02,
+   "moved_m": 0.0184,
+   "direction_world": [
+    -0.055,
+    -0.998,
+    -0.01
+   ],
+   "steady_speed_mps": 0.0257,
+   "lag_s": 0.261,
+   "tool_turn_deg": 0.135
+  }
+ ],
+ "return_error_m": 0.0014,
+ "tool_turn_end_deg": 0.135
+}

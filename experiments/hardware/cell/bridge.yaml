@@ -1,5 +1,11 @@
 # Fabric CBF bridge on each robot helper (oarbot_runtime fabric_cbf_bridge).
 common:
+  # Joint-velocity output (2026-11-18): at the grasp pose both arms report Kinova CartesianFaultState 1
+  # and ignore Cartesian velocity; through joint velocity they follow down to 1 cm/s, 84-99 % delivered,
+  # 0.2-0.8 s lag, tool turn <= 0.4 deg (sessions/2026-11-18_joint_response). The guard forwards joint
+  # commands only in Fabric Follow (CBF) with the deadman held, at most 15 deg/s per joint.
+  output: joint
+  max_joint_dps: 10.0
   world_frame: world
   max_speed_mps: 0.1            # also limited by command_guard (0.1 m/s)
   command_timeout_sec: 0.1      # a command older than this by its own stamp is ignored

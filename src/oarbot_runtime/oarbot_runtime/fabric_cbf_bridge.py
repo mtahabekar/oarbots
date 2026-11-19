@@ -15,6 +15,7 @@ grasp pose both arms report CartesianFaultState 1 and ignore Cartesian velocity 
 from time import monotonic
 
 import rclpy
+import rclpy.executors
 from diagnostic_msgs.msg import DiagnosticArray, DiagnosticStatus, KeyValue
 from geometry_msgs.msg import TwistStamped, WrenchStamped
 from math import degrees, radians
@@ -168,8 +169,13 @@ def main(args=None):
     node = FabricCbfBridge()
     try:
         rclpy.spin(node)
+    except (KeyboardInterrupt, rclpy.executors.ExternalShutdownException):
+        pass
     finally:
         node.bridge.disarm()
-        node.tick()
+        try:
+            node.tick()  # a last zero, if the context still allows publishing
+        except Exception:
+            pass
         node.destroy_node()
         rclpy.try_shutdown()
