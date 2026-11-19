@@ -55,6 +55,15 @@ Visualization Manager:
         Reliability Policy: Reliable
       Namespaces:
         estimate: true
+    - Class: rviz_default_plugins/MarkerArray
+      Name: Twin sheet, obstacle and CBF
+      Enabled: true
+      Topic:
+        Value: /fabric/twin/markers
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Reliable
     - Class: rviz_default_plugins/Camera
       Name: Overhead camera + estimate
       Enabled: true

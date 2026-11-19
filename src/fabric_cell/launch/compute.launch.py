@@ -21,13 +21,13 @@ def nodes(context):
     cell = Path(get('cell_dir') or Path(FindPackageShare('fabric_cell').perform(context))/'config')
     import yaml
     nominal = get('nominal_grips') == 'true'
-    if nominal and (get('twin') != 'false' or get('commands') != 'false'):
-        raise RuntimeError('Nominal grips require estimator-only shadow mode (twin:=false commands:=false)')
+    if nominal and get('commands') != 'false':
+        raise RuntimeError('Nominal grips are for shadow runs only (commands:=false): the robots must not move on them')
     measured = yaml.safe_load((cell/'calibration.yaml').read_text()).get('measured', True)
     if not measured and not nominal:
         raise RuntimeError(f"{cell/'calibration.yaml'} still holds placeholder transforms (measured: false); "
                            'measure the cell calibration first')
-    out = [LogInfo(msg=f'Using nominal grip transforms from {cell / "calibration.yaml"} for S2.')] if nominal else []
+    out = [LogInfo(msg=f'Using nominal grip transforms from {cell / "calibration.yaml"} (shadow run, no commands).')] if nominal else []
     out += [
         Node(package='fabric_sim_cell', executable='calibration_publisher', name='cell_calibration',
              parameters=[{'calibration_file': str(cell/'calibration.yaml'), 'errors_file': ''}]),
