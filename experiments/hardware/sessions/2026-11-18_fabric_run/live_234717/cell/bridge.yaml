@@ -1,0 +1,44 @@
+# Fabric CBF bridge on each robot helper (oarbot_runtime fabric_cbf_bridge).
+common:
+  # Joint-velocity output (2026-11-18): at the grasp pose both arms report Kinova CartesianFaultState 1
+  # and ignore Cartesian velocity; through joint velocity they follow down to 1 cm/s, 84-99 % delivered,
+  # 0.2-0.8 s lag, tool turn <= 0.4 deg (sessions/2026-11-18_joint_response). The guard forwards joint
+  # commands only in Fabric Follow (CBF) with the deadman held, at most 15 deg/s per joint.
+  output: joint
+  max_joint_dps: 15.0            # the guard's joint cap
+  world_frame: world
+  # 10 cm/s, the speed the twin plans with and the guard's limit (user, 2026-11-18 23:35). At 5 cm/s the
+  # arms lagged: in the second closed-loop run the twin asked for 10 cm/s 93-96 % of the time.
+  max_speed_mps: 0.10
+  command_timeout_sec: 0.1      # a command older than this by its own stamp is ignored
+  # Stop if the wrist force moves this far from its value at arming. PLACEHOLDER from the arm's
+  # estimated payload margin: Kinova rates the Jaco2 1.6 kg continuous at mid-range (1.3 kg at full
+  # reach); this cell adds about 0.95 kg beyond the stock hand (wrist sensor stack, camera bracket,
+  # Azure camera), leaving roughly 3-6 N. Replace with min(measured arm margin, half the measured
+  # grip slip force, what the person holds comfortably); see the test guide, "Tension".
+  force_limit_n: 6.0
+  force_timeout_sec: 0.25
+  pose_timeout_sec: 0.25
+  # Tool positions (world, metres) the arm may occupy while following the twin. Set to the
+  # reachable region around the grasp for this cell; the defaults do not restrict anything.
+  workspace_min: [-10.0, -10.0, -10.0]
+  workspace_max: [10.0, 10.0, 10.0]
+blue:
+  # Workspace box (world, m) around the grasp grip measured 22:17-22:21: x +/-8 cm, y -6/+12 cm (toward the
+  # person), z -12/+6 cm. MoveIt finds every corner reachable at the grasp orientation, collision-free, with
+  # joint changes of 37 deg at most (grasp_target.py --position, 22:40). Soft at the faces, stop 2 cm beyond.
+  workspace_min: [-0.502, -0.479, 0.928]
+  workspace_max: [-0.342, -0.299, 1.108]
+  # The frame the Kinova driver interprets Cartesian velocities in. Measured 2026-11-16 (gate H3,
+  # translation): Kinova x/y/z = j2n6s300_link_base x/y/z on both robots, 0.99+ along the axis.
+  # Rotation axes are not verified yet. experiments/hardware/sessions/2026-11-16_h3_translation
+  command_frame: oarbot_blue/j2n6s300_link_base
+  tool_frame: oarbot_blue/fabric_grip
+silver:
+  # Workspace box (world, m) around the grasp grip measured 22:17-22:21: x +/-8 cm, y -6/+12 cm (toward the
+  # person), z -12/+6 cm. MoveIt finds every corner reachable at the grasp orientation, collision-free, with
+  # joint changes of 37 deg at most (grasp_target.py --position, 22:40). Soft at the faces, stop 2 cm beyond.
+  workspace_min: [0.325, -0.49, 0.934]
+  workspace_max: [0.485, -0.31, 1.114]
+  command_frame: oarbot_silver/j2n6s300_link_base   # mounted 180 degrees about Z on its chassis
+  tool_frame: oarbot_silver/fabric_grip

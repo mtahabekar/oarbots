@@ -23,6 +23,9 @@ def generate_launch_description() -> LaunchDescription:
         DeclareLaunchArgument("body_tracking", default_value="true", description="Azure body tracking (uses the GPU)"),
         DeclareLaunchArgument("color_resolution", default_value="1080P"),
         DeclareLaunchArgument("ft", default_value="true", description="Start the Rokubi force-torque driver"),
+        DeclareLaunchArgument("max_arm_joint_dps", default_value="15.0",
+                              description="Command guard: no arm joint faster than this in joint mode (deg/s). The Jaco2 "
+                                          "model's own limits are 36 deg/s for joints 1-3 and 48 for joints 4-6"),
         DeclareLaunchArgument("hold_fingers", default_value="-1",
                               description="Finger closure % the guard holds while the deadman is held; -1: never commands the fingers"),
 
@@ -127,7 +130,8 @@ def generate_launch_description() -> LaunchDescription:
              parameters=[{"tf_prefix": "oarbot_silver/"}],
              condition=UnlessCondition(LaunchConfiguration("setup_mode"))),
         Node(package="oarbot_runtime", executable="command_guard", namespace="oarbot_silver",
-             parameters=[{"hold_fingers_percent": ParameterValue(LaunchConfiguration("hold_fingers"), value_type=float)}],
+             parameters=[{"hold_fingers_percent": ParameterValue(LaunchConfiguration("hold_fingers"), value_type=float),
+                          "max_arm_joint_dps": ParameterValue(LaunchConfiguration("max_arm_joint_dps"), value_type=float)}],
              condition=UnlessCondition(LaunchConfiguration("setup_mode"))),
         Node(package="oarbot_runtime", executable="human_hand_measurements", namespace="oarbot_silver",
              parameters=[{"body_id": ParameterValue(LaunchConfiguration("body_id"), value_type=int)}],

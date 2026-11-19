@@ -1,0 +1,9 @@
+blue: box around the grasp grip x -15/+15 cm, y -12/+12 cm, z -33/+9 cm (one usable step of 3 cm beyond every face)
+   workspace_min: [-0.576, -0.533, 0.723]
+   workspace_max: [-0.276, -0.293, 1.143]
+   largest joint change from the grasp inside the box: [35, 58, 57, 62, 56, 118] deg
+silver: box around the grasp grip x -15/+15 cm, y -12/+12 cm, z -33/+9 cm (one usable step of 3 cm beyond every face)
+   workspace_min: [0.261, -0.543, 0.729]
+   workspace_max: [0.561, -0.303, 1.149]
+   largest joint change from the grasp inside the box: [36, 58, 57, 62, 56, 117] deg
+closest wrist links between the arms, both anywhere in their boxes: 48 cm (required 15)

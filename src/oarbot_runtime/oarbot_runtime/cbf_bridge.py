@@ -16,12 +16,13 @@ def norm(v):
 class CbfBridge:
     def __init__(self, max_speed=.1, command_timeout=.1, force_limit_n=6., force_timeout=.25,
                  workspace_min=(-1e9, -1e9, -1e9), workspace_max=(1e9, 1e9, 1e9), pose_timeout=.25,
-                 require_force=True, force_window=.25, workspace_margin=.02):
+                 require_force=True, force_window=.25, workspace_margin=.02, workspace_stop=True, workspace_gain=0.):
         values = [max_speed, command_timeout, force_limit_n, force_timeout, pose_timeout, force_window, workspace_margin,
-                  *workspace_min, *workspace_max]
+                  workspace_gain, *workspace_min, *workspace_max]
         if (not all(isfinite(v) for v in values)
-                or min(max_speed, command_timeout, force_limit_n, force_timeout, pose_timeout, force_window) <= 0
-                or workspace_margin < 0 or any(a >= b for a, b in zip(workspace_min, workspace_max))):
+                or min(max_speed, command_timeout, force_timeout, pose_timeout, force_window) <= 0
+                or force_limit_n < 0 or workspace_margin < 0 or workspace_gain < 0
+                or any(a >= b for a, b in zip(workspace_min, workspace_max))):
             raise ValueError('Invalid fabric CBF bridge limits')
         self.max_speed, self.command_timeout = max_speed, command_timeout
         self.force_limit, self.force_timeout, self.pose_timeout = force_limit_n, force_timeout, pose_timeout
@@ -30,8 +31,12 @@ class CbfBridge:
         # +/-4 N (peaks 10 N and more) for milliseconds when the arm jerks into motion.
         self.force_window, self.force_samples = force_window, []
         # At a face of the workspace box the bridge holds motion further out and passes the rest; it
-        # stops only workspace_margin beyond the box.
-        self.workspace_margin = workspace_margin
+        # stops only workspace_margin beyond the box, unless workspace_stop is false: then the box is a wall
+        # only (never a stop, and arming is allowed outside it; motion back inside passes). workspace_gain > 0
+        # makes the wall predictive: the outward speed is at most gain x the distance left to the face, so
+        # the arm's response lag carries it less far past the face. 0: full speed up to the face.
+        self.workspace_margin, self.workspace_stop, self.workspace_gain = workspace_margin, bool(workspace_stop), workspace_gain
+        # force_limit_n 0: the wrist force is read (and reported) but never stops the arm.
         # False only for an arm without a wrist sensor: it then arms and runs on pose alone, and the
         # force stop applies only if a fresh force exists at arming.
         self.require_force = bool(require_force)
@@ -55,8 +60,14 @@ class CbfBridge:
             return
         self.force = (tuple(force), now)
         self.force_samples = [(t, f) for t, f in self.force_samples if now-t <= self.force_window] + [self.force[::-1]]
-        if self.baseline is not None and norm([a-b for a, b in zip(self.mean_force(), self.baseline)]) > self.force_limit:
+        if self.force_limit > 0 and self.baseline is not None and self.force_change() > self.force_limit:
             self.trip(f'wrist force changed by more than {self.force_limit:.0f} N')
+
+    def force_change(self):
+        """Change of the windowed wrist force since arming (N), or None when not armed with a force."""
+        if self.baseline is None or not self.force_samples:
+            return None
+        return norm([a-b for a, b in zip(self.mean_force(), self.baseline)])
 
     def mean_force(self):
         n = len(self.force_samples)
@@ -70,7 +81,7 @@ class CbfBridge:
         """Tool position in the world and the 3x3 rotation taking world vectors into the frame the
         arm driver expects (row-major nested lists)."""
         self.pose = (tuple(tool_world), [tuple(row) for row in rotation_command_from_world], now)
-        if not self.inside(tool_world, self.workspace_margin):
+        if self.workspace_stop and not self.inside(tool_world, self.workspace_margin):
             self.trip('tool left the workspace box')
 
     # ---------------------------------------------------------------- arming
@@ -86,7 +97,7 @@ class CbfBridge:
         elif self.pose is None or now-self.pose[2] > self.pose_timeout:
             self.tripped = 'cannot arm: no fresh tool pose'
         else:
-            if not self.inside(self.pose[0], self.workspace_margin):
+            if self.workspace_stop and not self.inside(self.pose[0], self.workspace_margin):
                 self.tripped = 'cannot arm: tool outside the workspace box'
             else:
                 self.baseline, self.tripped = (self.mean_force() if force_fresh else None), ''
@@ -110,8 +121,16 @@ class CbfBridge:
         if self.command is None or now-self.command[1] > self.command_timeout:
             return zero  # no fresh command: hold still, stay armed
         (linear, rotation), (tool, (low, high)) = (self.command[0], self.pose[1]), (self.pose[0], self.workspace)
-        # Soft edge: drop the components that would carry the tool further out of the box.
-        linear = tuple(0. if (x >= b and v > 0) or (x <= a and v < 0) else v for v, x, a, b in zip(linear, tool, low, high))
+        # Soft edge: drop the components that would carry the tool further out of the box; with a gain, slow
+        # the outward component down to zero at the face.
+        def wall(v, x, a, b):
+            if (x >= b and v > 0) or (x <= a and v < 0):
+                return 0.
+            if self.workspace_gain > 0:
+                room = b-x if v > 0 else x-a
+                return max(-self.workspace_gain*room, min(self.workspace_gain*room, v))
+            return v
+        linear = tuple(wall(v, x, a, b) for v, x, a, b in zip(linear, tool, low, high))
         speed = norm(linear)
         scale = min(1., self.max_speed/speed) if speed else 1.
         rotated = tuple(scale*sum(rotation[i][j]*linear[j] for j in range(3)) for i in range(3))

@@ -10,3 +10,7 @@ ft:=false
 ft_serial_port:=/dev/serial/by-id/usb-FTDI_FT232R_USB_UART_AK6VFMAU-if00-port0
 # Body tracking is not used by the fabric cell and costs GPU time.
 body_tracking:=false
+# Command guard joint cap for the fabric bridge's joint-velocity mode: the arm's own limit for joints 1-3
+# (kinova_description j2n6s300.xacro: 36 deg/s for joints 1-3, 48 for 4-6), not the 15 deg/s default
+# (2026-11-19: at 15 deg/s the grip delivers only ~7 cm/s in its worst direction at the grasp pose).
+max_arm_joint_dps:=36

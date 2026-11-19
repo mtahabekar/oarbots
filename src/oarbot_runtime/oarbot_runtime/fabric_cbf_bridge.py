@@ -60,7 +60,8 @@ class FabricCbfBridge(Node):
         self.bridge = CbfBridge(param('max_speed_mps', .1), param('command_timeout_sec', .1), param('force_limit_n', 6.),
                                 param('force_timeout_sec', .25), param('workspace_min', [-10., -10., -10.]),
                                 param('workspace_max', [10., 10., 10.]), param('pose_timeout_sec', .25),
-                                param('require_force', True), param('force_window_sec', .25), param('workspace_margin_m', .02))
+                                param('require_force', True), param('force_window_sec', .25), param('workspace_margin_m', .02),
+                                param('workspace_stop', True), param('workspace_gain_per_s', 0.))
         self.output_mode = param('output', 'cartesian')
         if self.output_mode not in ('cartesian', 'joint'):
             raise ValueError("output must be 'cartesian' or 'joint'")
@@ -161,6 +162,9 @@ class FabricCbfBridge(Node):
                              values=[KeyValue(key='output', value=self.output_mode),
                                      KeyValue(key='command_frame', value=self.command_frame),
                                      KeyValue(key='force_limit_n', value=str(self.bridge.force_limit)),
+                                     KeyValue(key='force_change_n', value=f'{self.bridge.force_change():.1f}'
+                                              if self.bridge.force_change() is not None else ''),
+                                     KeyValue(key='workspace_stop', value=str(self.bridge.workspace_stop)),
                                      KeyValue(key='require_force', value=str(self.bridge.require_force))])]))
 
 

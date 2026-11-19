@@ -125,3 +125,33 @@ def test_soft_workspace_edge_holds_outward_motion_and_stops_beyond_the_margin():
     assert not bridge.tripped
     bridge.pose_update((0., 0., 1.03), IDENTITY, 1.04)                # beyond the margin
     assert 'workspace' in bridge.tripped and not any(bridge.output(1.05))
+
+
+def test_wall_only_box_never_stops_and_arms_outside():
+    bridge = armed(workspace_min=(-.5, -.5, .5), workspace_max=(.5, .5, 1.5), workspace_stop=False)
+    bridge.pose_update((.9, 0., 1.), IDENTITY, 1.01)          # 40 cm beyond the face: no stop
+    bridge.force_update((0., 0., -3.), 1.01)
+    assert not bridge.tripped
+    bridge.command_update((.05, .03, 0.), 0., 1.01)
+    out = bridge.output(1.01)
+    assert out[0] == 0. and out[1] == pytest.approx(.03)       # outward held, the rest passes
+    bridge.command_update((-.05, 0., 0.), 0., 1.02)
+    assert bridge.output(1.02)[0] == pytest.approx(-.05)       # back toward the box passes
+    bridge.disarm()
+    assert bridge.rearm(1.02)                                  # arming outside the box is allowed
+
+
+def test_predictive_wall_slows_outward_motion_near_the_face():
+    bridge = armed(workspace_min=(-.5, -.5, .5), workspace_max=(.5, .5, 1.5), workspace_stop=False, workspace_gain=2.)
+    bridge.pose_update((.45, 0., 1.), IDENTITY, 1.01)
+    bridge.force_update((0., 0., -3.), 1.01)
+    bridge.command_update((.2, 0., 0.), 0., 1.01)
+    assert bridge.output(1.01)[0] == pytest.approx(.1)         # 2/s x 5 cm left
+    bridge.command_update((-.2, 0., 0.), 0., 1.01)
+    assert bridge.output(1.01)[0] == pytest.approx(-.1)        # inward is limited only by max_speed (0.1)
+
+
+def test_force_limit_zero_reads_force_but_never_stops():
+    bridge = armed(force_limit_n=0.)
+    bridge.force_update((0., 0., 60.), 1.01)
+    assert not bridge.tripped and bridge.force_change() == pytest.approx(31.5)

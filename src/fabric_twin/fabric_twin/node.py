@@ -391,8 +391,10 @@ class FabricTwinNode(Node):
         collision = clearance < r['collision_clearance_m']
         estimate_age = (None if self.estimate_received is None
                         else (self.get_clock().now().nanoseconds-self.estimate_received)/1e9)
-        self.fault = ('virtual collision with the obstacle' if collision else
-                      'a grip measurement is missing' if stale.any() else
+        # A virtual collision is reported, not a fault: it never stops the arms (user, 2026-11-19). The CBF
+        # steers the sheet away from the obstacle; the deadman stops the arms.
+        self.virtual_collision = bool(collision)
+        self.fault = ('a grip measurement is missing' if stale.any() else
                       'estimator output is stale' if estimate_age is None or estimate_age > r['estimate_stale_sec'] else '')
         if self.cbf is not None and self.frame % self.cbf_options['period'] == 0:
             nominal = self.warmup.command(time_ns, held[:2]) if self.warmup.active(time_ns) else self.follow_command()
@@ -499,6 +501,7 @@ class FabricTwinNode(Node):
 
     def diagnostics(self):
         values = dict(fault=self.fault, commands_enabled=self.commands_enabled, frame=self.frame,
+                      virtual_collision=getattr(self, 'virtual_collision', False),
                       material=json.dumps(self.material), skipped_frames=self.skipped, stale_grip_frames=self.stale_grips,
                       replaced=self.replaced, warmup=self.warmup.describe())
         if self.cloth is not None and self.frame_ms:
