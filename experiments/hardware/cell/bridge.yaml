@@ -7,7 +7,9 @@ common:
   output: joint
   max_joint_dps: 10.0
   world_frame: world
-  max_speed_mps: 0.1            # also limited by command_guard (0.1 m/s)
+  # First closed-loop runs (2026-11-18): 5 cm/s. The twin plans with 0.1 m/s and does not model the arms'
+  # measured 0.2-0.8 s lag; the guard still limits to 0.1 m/s.
+  max_speed_mps: 0.05
   command_timeout_sec: 0.1      # a command older than this by its own stamp is ignored
   # Stop if the wrist force moves this far from its value at arming. PLACEHOLDER from the arm's
   # estimated payload margin: Kinova rates the Jaco2 1.6 kg continuous at mid-range (1.3 kg at full
@@ -22,11 +24,21 @@ common:
   workspace_min: [-10.0, -10.0, -10.0]
   workspace_max: [10.0, 10.0, 10.0]
 blue:
+  # Workspace box (world, m) around the grasp grip measured 22:17-22:21: x +/-8 cm, y -6/+12 cm (toward the
+  # person), z -12/+6 cm. MoveIt finds every corner reachable at the grasp orientation, collision-free, with
+  # joint changes of 37 deg at most (grasp_target.py --position, 22:40). Soft at the faces, stop 2 cm beyond.
+  workspace_min: [-0.502, -0.479, 0.928]
+  workspace_max: [-0.342, -0.299, 1.108]
   # The frame the Kinova driver interprets Cartesian velocities in. Measured 2026-11-16 (gate H3,
   # translation): Kinova x/y/z = j2n6s300_link_base x/y/z on both robots, 0.99+ along the axis.
   # Rotation axes are not verified yet. experiments/hardware/sessions/2026-11-16_h3_translation
   command_frame: oarbot_blue/j2n6s300_link_base
   tool_frame: oarbot_blue/fabric_grip
 silver:
+  # Workspace box (world, m) around the grasp grip measured 22:17-22:21: x +/-8 cm, y -6/+12 cm (toward the
+  # person), z -12/+6 cm. MoveIt finds every corner reachable at the grasp orientation, collision-free, with
+  # joint changes of 37 deg at most (grasp_target.py --position, 22:40). Soft at the faces, stop 2 cm beyond.
+  workspace_min: [0.325, -0.49, 0.934]
+  workspace_max: [0.485, -0.31, 1.114]
   command_frame: oarbot_silver/j2n6s300_link_base   # mounted 180 degrees about Z on its chassis
   tool_frame: oarbot_silver/fabric_grip

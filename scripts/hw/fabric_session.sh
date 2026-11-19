@@ -3,6 +3,7 @@
 #   fabric_session.sh start [launch args...]   helper: drivers, guard, bridges; tablet: GUI; nuc: overhead camera
 #   fabric_session.sh start-cell <cell_dir>    helper: wrist perception and CBF bridge; nuc: overhead perception
 #   fabric_session.sh start-bridge [--box X Y Z] helper only: CBF bridge executing the simulated cell's twin
+#   fabric_session.sh start-cell-bridge <cell_dir> helper only: CBF bridge for the real cell (its bridge.yaml), alone
 #   fabric_session.sh stop | status | logs [cell]
 #   fabric_session.sh exec <command...>        run a command in the foreground with the session's ROS settings
 # From the laptop: scripts/hw/lab.sh session <blue|silver|tablet|nuc> <command> [args...]
@@ -125,6 +126,13 @@ case "$cmd" in
             launch_unit fabric-cell ros2 launch fabric_cell robot_host.launch.py "robot:=$robot" "cell_dir:=$cell_dir"
         fi
         record start-cell "$cell_dir" ;;
+    start-cell-bridge)
+        [ "$role" = helper ] || { echo "start-cell-bridge runs on the helper laptops" >&2; exit 2; }
+        cell_dir="${1:?usage: start-cell-bridge <absolute cell_dir>}"
+        unit_active fabric-stack || { echo "Start the stack first" >&2; exit 1; }
+        unit_active fabric-bridge && { echo "fabric-bridge is already running" >&2; exit 1; }
+        launch_unit fabric-bridge ros2 launch "$here/cell_bridge.launch.py" "robot:=$robot" "cell_dir:=$cell_dir"
+        record start-cell-bridge "$cell_dir" ;;
     start-bridge)
         [ "$role" = helper ] || { echo "start-bridge runs on the helper laptops" >&2; exit 2; }
         unit_active fabric-stack || { echo "Start the stack first" >&2; exit 1; }

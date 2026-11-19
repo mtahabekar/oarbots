@@ -127,6 +127,9 @@ class Target(Node):
         js.position = list(self.joints.position)
         for i, n in enumerate(ARM):
             js.position[js.name.index(f'oarbot_{self.robot}/{n}')] = float(arm[i])
+        # Fingers open for the check: closed fingertips touch each other in the model (Silver's are held
+        # closed), which MoveIt would count as a collision of every arm pose.
+        js.position = [0.0 if 'finger' in name else v for name, v in zip(js.name, js.position)]
         rs = RobotState()
         rs.joint_state = js
         return rs

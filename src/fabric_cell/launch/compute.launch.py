@@ -21,8 +21,9 @@ def nodes(context):
     cell = Path(get('cell_dir') or Path(FindPackageShare('fabric_cell').perform(context))/'config')
     import yaml
     nominal = get('nominal_grips') == 'true'
-    if nominal and get('commands') != 'false':
-        raise RuntimeError('Nominal grips are for shadow runs only (commands:=false): the robots must not move on them')
+    if nominal and get('commands') != 'false' and get('nominal_commands') != 'true':
+        raise RuntimeError('Nominal grips are for shadow runs (commands:=false); add nominal_commands:=true to command '
+                           'the robots on them in a supervised run')
     measured = yaml.safe_load((cell/'calibration.yaml').read_text()).get('measured', True)
     if not measured and not nominal:
         raise RuntimeError(f"{cell/'calibration.yaml'} still holds placeholder transforms (measured: false); "
@@ -64,6 +65,8 @@ def generate_launch_description():
         DeclareLaunchArgument('bank', default_value='true', description='Warm-up calibration and adaptation'),
         DeclareLaunchArgument('adapt_period_sec', default_value='10.0', description='Online adaptation period; 0 disables it'),
         DeclareLaunchArgument('commands', default_value='false', description="'true': send the twin's commands to the robots"),
+        DeclareLaunchArgument('nominal_commands', default_value='false', choices=['false', 'true'],
+                              description='Allow commands on nominal grips (supervised closed-loop test)'),
         DeclareLaunchArgument('nominal_grips', default_value='false', choices=['false', 'true'],
                               description='Allow nominal grip transforms in estimator-only shadow mode'),
         DeclareLaunchArgument('rviz', default_value='true'),
