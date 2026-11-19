@@ -5,11 +5,11 @@ common:
   # 0.2-0.8 s lag, tool turn <= 0.4 deg (sessions/2026-11-18_joint_response). The guard forwards joint
   # commands only in Fabric Follow (CBF) with the deadman held, at most 15 deg/s per joint.
   output: joint
-  max_joint_dps: 10.0
+  max_joint_dps: 15.0            # the guard's joint cap
   world_frame: world
-  # First closed-loop runs (2026-11-18): 5 cm/s. The twin plans with 0.1 m/s and does not model the arms'
-  # measured 0.2-0.8 s lag; the guard still limits to 0.1 m/s.
-  max_speed_mps: 0.05
+  # 10 cm/s, the speed the twin plans with and the guard's limit (user, 2026-11-18 23:35). At 5 cm/s the
+  # arms lagged: in the second closed-loop run the twin asked for 10 cm/s 93-96 % of the time.
+  max_speed_mps: 0.10
   command_timeout_sec: 0.1      # a command older than this by its own stamp is ignored
   # Stop if the wrist force moves this far from its value at arming. PLACEHOLDER from the arm's
   # estimated payload margin: Kinova rates the Jaco2 1.6 kg continuous at mid-range (1.3 kg at full
