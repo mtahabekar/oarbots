@@ -1,0 +1,42 @@
+[INFO] [launch]: All log files can be found below /home/taha/.ros/log/2026-11-19-12-13-21-428047-taha-Legion-7-16IAX10-25439
+[INFO] [launch]: Default logging verbosity is set to INFO
+[INFO] [launch.user]: Using nominal grip transforms from /home/taha/ros2_colcon_ws/src/oarbots/experiments/hardware/cell/calibration.yaml (shadow run, no commands).
+[INFO] [calibration_publisher-1]: process started with pid [25443]
+[INFO] [fusion-2]: process started with pid [25444]
+[INFO] [observer-3]: process started with pid [25445]
+[INFO] [twin-4]: process started with pid [25446]
+[INFO] [demo_markers-5]: process started with pid [25447]
+[INFO] [rviz2-6]: process started with pid [25448]
+[INFO] [recorder-7]: process started with pid [25449]
+[INFO] [twin_recorder-8]: process started with pid [25450]
+[rviz2-6] [INFO] [1795108401.773803229] [rviz2]: Stereo is NOT SUPPORTED
+[rviz2-6] [INFO] [1795108401.773879562] [rviz2]: OpenGl version: 4.6 (GLSL 4.6)
+[rviz2-6] [INFO] [1795108401.798319445] [rviz2]: Stereo is NOT SUPPORTED
+[calibration_publisher-1] [INFO] [1795108401.870856611] [cell_calibration]: published 5 calibration transforms from /home/taha/ros2_colcon_ws/src/oarbots/experiments/hardware/cell/calibration.yaml
+[rviz2-6] [INFO] [1795108401.972199222] [rviz2]: Stereo is NOT SUPPORTED
+[twin-4] Traceback (most recent call last):
+[twin-4]   File "/home/taha/ros2_colcon_ws/install/fabric_twin/lib/fabric_twin/twin", line 33, in <module>
+[twin-4]     sys.exit(load_entry_point('fabric-twin==0.1.0', 'console_scripts', 'twin')())
+[twin-4]              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[twin-4]   File "/home/taha/ros2_colcon_ws/install/fabric_twin/lib/fabric_twin/twin", line 25, in importlib_load_entry_point
+[twin-4]     return next(matches).load()
+[twin-4]            ^^^^^^^^^^^^^^^^^^^^
+[twin-4]   File "/usr/lib/python3.12/importlib/metadata/__init__.py", line 205, in load
+[twin-4]     module = import_module(match.group('module'))
+[twin-4]              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[twin-4]   File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+[twin-4]     return _bootstrap._gcd_import(name[level:], package, level)
+[twin-4]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[twin-4]   File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+[twin-4]   File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+[twin-4]   File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+[twin-4]   File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+[twin-4]   File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+[twin-4]   File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+[twin-4]   File "/home/taha/ros2_colcon_ws/install/fabric_twin/lib/python3.12/site-packages/fabric_twin/node.py", line 37, in <module>
+[twin-4]     from .cloth import Obstacle, TwinCloth, TwinSpec
+[twin-4]   File "/home/taha/ros2_colcon_ws/install/fabric_twin/lib/python3.12/site-packages/fabric_twin/cloth.py", line 17, in <module>
+[twin-4]     import warp as wp
+[twin-4] ModuleNotFoundError: No module named 'warp'
+[ERROR] [twin-4]: process has died [pid 25446, exit code 1, cmd '/home/taha/ros2_colcon_ws/install/fabric_twin/lib/fabric_twin/twin --ros-args -r __node:=fabric_twin --params-file /tmp/launch_params_qshxosmv'].
+[observer-3] [INFO] [1795108403.124906602] [fabric_state_estimator]: Preparing physics backend before accepting live captures

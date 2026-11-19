@@ -7,6 +7,11 @@
 #   fabric_run.sh bridges start|stop    the joint-mode CBF bridges with the cell's bridge.yaml (start disarmed)
 #   fabric_run.sh twin [run_dir]        estimator + twin + CBF + RViz, commands OFF, recording into run_dir
 #                                       (default: a new experiments/hardware/sessions/<today>_fabric_run/live_<time>)
+#   fabric_run.sh go [run_dir]          for an operator away from the screen: perception and bridges must run;
+#                                       starts the twin (commands off) in the background, then switches commands
+#                                       on and arms the bridges at the FIRST DEADMAN PRESS once the twin is
+#                                       ready; speaks what happens (scripts/hw/auto_start.py). Ctrl+C: commands
+#                                       off, bridges disarmed (the twin keeps running: stop-twin, then save)
 #   fabric_run.sh status [seconds]      go/no-go readout (scripts/hw/twin_monitor.py)
 #   fabric_run.sh watch [seconds]       readout every 5 s during a commanded run
 #   fabric_run.sh enable                twin commands on (formation captured now) + both bridges armed
@@ -17,6 +22,8 @@
 #                                       cap), bridges (state, force/box stop), perception output, camera frame age
 #   fabric_run.sh review <run_dir>      after a run: per arm, commanded vs delivered speed, box faces, where it
 #                                       stopped; the twin's faults while enabled (scripts/hw/run_review.py)
+#   fabric_run.sh build-laptop          rebuild the laptop's fabric packages with ~/venvs/fabric_ros (Newton,
+#                                       Warp); plain colcon gives the twin /usr/bin/python3 and it dies at start
 #   fabric_run.sh deploy-helpers        both helpers to the fork's branch head: sessions stopped (arms hold
 #                                       their pose), rebuilt, started again with scripts/hw/cell_up.sh;
 #                                       then perception and bridges must be started again
@@ -74,16 +81,29 @@ case "$cmd" in
             stop) for r in blue silver; do scripts/hw/lab.sh session "$r" exec systemctl --user stop fabric-bridge && echo "$r bridge stopped"; done ;;
             *) echo "bridges start|stop"; exit 2 ;;
         esac ;;
-    twin)
+    twin|go)
         if [ -n "$(twin_pids)" ]; then echo "A compute launch is already running (pid $(twin_pids | tr '\n' ' ')): fabric_run.sh stop-twin first" >&2; exit 1; fi
+        launcher="$repo/../../install/fabric_twin/lib/fabric_twin/twin"
+        if ! head -1 "$launcher" | grep -q venvs/fabric_ros; then
+            echo "The twin's launcher does not use ~/venvs/fabric_ros (it would die: no warp). Run: fabric_run.sh build-laptop" >&2; exit 1; fi
         run="${1:-$repo/experiments/hardware/sessions/$(date +%F)_fabric_run/live_$(date +%H%M%S)}"
         mkdir -p "$run"; echo "$run" > "$state/last_run"
         git rev-parse HEAD > "$run/commit.txt"; cp experiments/hardware/cell/*.yaml "$run/" 2>/dev/null; mkdir -p "$run/cell"; mv "$run"/*.yaml "$run/cell/"
         echo "Run folder: $run"
         echo "The twin starts once both hands and both robot grips are measured (the estimator needs ~2 min first)."
         ros_env
-        ros2 launch "$repo/src/fabric_cell/launch/compute.launch.py" cell_dir:="$repo/experiments/hardware/cell" \
-            nominal_grips:=true twin:=true bank:=false commands:=false rviz:=true record:="$run" 2>&1 | tee "$run/compute.log" ;;
+        launch=(ros2 launch "$repo/src/fabric_cell/launch/compute.launch.py" cell_dir:="$repo/experiments/hardware/cell"
+                nominal_grips:=true twin:=true bank:=false commands:=false rviz:=true record:="$run")
+        if [ "$cmd" = twin ]; then "${launch[@]}" 2>&1 | tee "$run/compute.log"; exit; fi
+        setsid nohup "${launch[@]}" > "$run/compute.log" 2>&1 < /dev/null &
+        sleep 20
+        if grep -q "process has died" "$run/compute.log"; then
+            grep -B3 "process has died" "$run/compute.log" | tail -8; spd-say "twin failed to start" 2>/dev/null
+            echo "A node died at start (log above, $run/compute.log). fabric_run.sh stop-twin, fix, retry." >&2; exit 1
+        fi
+        echo "Twin running in the background (log $run/compute.log, RViz open). Go to the robots: the laptop speaks."
+        python3 "$here/auto_start.py" --run-dir "$run"
+        echo "Commands off. Then: fabric_run.sh stop-twin; fabric_run.sh save $run; fabric_run.sh review $run" ;;
     status) ros_env; python3 "$here/twin_monitor.py" "${1:-15}" ;;
     watch)  ros_env; python3 "$here/twin_monitor.py" "${1:-60}" --every 5 ;;
     enable)
@@ -130,6 +150,14 @@ case "$cmd" in
         for cam in nuc:/nuc blue:/oarbot_blue/azure_kinect silver:/oarbot_silver/azure_kinect; do
             echo "  ${cam%%:*}: $(scripts/hw/lab.sh session "${cam%%:*}" exec python3 fabric_ws/scripts/hw/frame_age.py "${cam#*:}" 3 2>/dev/null | grep '^image' || echo 'NO images')"
         done ;;
+    build-laptop)
+        # Test guide section 5. The venv's python must run colcon: the installed launchers get its shebang.
+        (   set +u; cd "$repo/../.." && source /opt/ros/jazzy/setup.bash
+            ~/venvs/fabric_ros/bin/python -m colcon build --packages-select fabric_state_msgs | tail -1
+            source install/setup.bash
+            ~/venvs/fabric_ros/bin/python -m colcon build --packages-select fabric_perception human_hand_tracking \
+                fabric_state_estimator fabric_reference_reconstruction fabric_sim_cell fabric_twin fabric_cell | tail -1
+            echo "twin launcher: $(head -1 install/fabric_twin/lib/fabric_twin/twin)" ) ;;
     review) ros_env; python3 "$here/run_review.py" "${1:?review <run_dir>}" ;;
     deploy-helpers)
         git fetch -q fork; echo "deploying fork/jazzy-platform-hardening $(git rev-parse --short fork/jazzy-platform-hardening) to both helpers"
