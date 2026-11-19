@@ -9,6 +9,9 @@
 #   9 what to run next (scripts/hw/fabric_run.sh)
 # Physical prerequisites (not checkable from here): robots, helpers, NUC, tablet powered; arms powered and
 # not in fault; Blue's Rokubi USB on Silver's riser hub (ground loop, lab log 2026-11-18); camera cables slack.
+# The whole script is one block, so bash reads all of it before running any: editing this file while a run
+# from it is still going (2026-11-19 16:13: a go then executed part of deploy-helpers) cannot change that run.
+{
 set -uo pipefail
 here="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 repo="$(cd -- "$here/../.." && pwd)"
@@ -171,3 +174,5 @@ Next (scripts/hw/fabric_run.sh; procedure: experiments/hardware/sessions/2026-11
   scripts/hw/fabric_run.sh disable             # commands off + bridges disarmed
   Ctrl+C in the twin terminal, then: scripts/hw/fabric_run.sh save <run folder>
 EOF
+exit
+}

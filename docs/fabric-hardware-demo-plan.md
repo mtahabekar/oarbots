@@ -2,6 +2,16 @@
 
 **Date:** 12 November 2026.
 
+> **Status, 19 November 2026.** Closed loop repeated with the twin driving both arms, started by the operator's
+> first deadman press (`fabric_run.sh go`, spoken steps). No arm stops on box, force or virtual-collision limits
+> any more (the deadman is the stop; fault stops kept); speeds from the arm (36 deg/s per joint, 15 cm/s grip);
+> MoveIt-checked boxes 6x larger, used almost fully in the 12:36 run. A real obstacle is now detected from depth
+> on all three cameras and modelled as a 20-face prism (the twin sheet's collider) with the CBF's capsule
+> (cylinder + spherical cap) fitted to it for smallest volume (D4's obstacle, real instead of virtual). Hand input remains the
+> weak point (a grip measurement missing 63 % of the commanded time). See the
+> [2026-11-19 lab log](../experiments/hardware/sessions/2026-11-19_lab_log.md) and the
+> [runbook](../scripts/hw/README.md#test-day-start-here).
+>
 > **Status, 18 November 2026 (end of day).** Real-sensor estimation (S2) ran on all three cameras. The
 > overhead outages were found and fixed (full-resolution images viewed on the laptop saturated the NUC's
 > link; a preview relay replaced them). Kinova refuses Cartesian velocity at the grasp pose, so the arms

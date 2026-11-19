@@ -4,6 +4,7 @@
 For each robot: where the arm is against its grasp pose (grasp.yaml) and its box (bridge.yaml), the fingers,
 the command guard's state and joint cap, and the fabric bridge's state and settings (force stop, box stop).
     python3 scripts/hw/cell_check.py [seconds]
+    python3 scripts/hw/cell_check.py --arm-offsets   # one line per arm: <robot> <largest joint offset, deg> (or "none")
 """
 import math
 import subprocess
@@ -28,7 +29,28 @@ def param(node, name):
         return '?'
 
 
+def arm_offsets():
+    grasp = yaml.safe_load((CELL / 'grasp.yaml').read_text())
+    rclpy.init()
+    n = Node('arm_offsets')
+    q = {}
+    for r in ('blue', 'silver'):
+        n.create_subscription(JointState, f'/oarbot_{r}/joint_states', lambda m, r=r: q.__setitem__(r, list(m.position)), 10)
+    end = time.time() + 5.
+    while time.time() < end and len(q) < 2:
+        rclpy.spin_once(n, timeout_sec=0.05)
+    for r in ('blue', 'silver'):
+        if r in q:
+            print(r, round(max(math.degrees(abs(math.atan2(math.sin(a - b), math.cos(a - b)))) for a, b in zip(q[r][:6], grasp[r])), 2))
+        else:
+            print(r, 'none')
+    n.destroy_node()
+    rclpy.shutdown()
+
+
 def main():
+    if sys.argv[1:2] == ['--arm-offsets']:
+        return arm_offsets()
     seconds = float(sys.argv[1]) if len(sys.argv) > 1 else 4.
     grasp = yaml.safe_load((CELL / 'grasp.yaml').read_text())
     bridge_cfg = yaml.safe_load((CELL / 'bridge.yaml').read_text())

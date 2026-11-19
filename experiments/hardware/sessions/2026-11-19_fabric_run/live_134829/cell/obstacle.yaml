@@ -1,0 +1,31 @@
+# Detected by scripts/hw/obstacle_detect.py. `obstacle`: the box for the twin and its CBF (the capsule encloses
+# it), resting on the floor. `shape`: the rough shape (octagonal prism) for display and the record.
+obstacle:
+  center: [0.0562, 0.2522, 0.3217]
+  half_extents: [0.3968, 0.259, 0.3217]
+  yaw: 0.4652
+shape:
+  footprint:
+  - [0.1425, 0.5854]
+  - [-0.3492, 0.3386]
+  - [-0.3818, 0.2401]
+  - [-0.2359, -0.0505]
+  - [-0.0754, -0.1037]
+  - [0.3927, 0.1313]
+  - [0.4596, 0.333]
+  - [0.371, 0.5096]
+  z: [0.0, 0.6434]
+source:
+  cameras:
+    blue_wrist: {changed_pixels: 46429, points_in_roi: 44511, floor_z_corrected_m: -0.0262,
+      floor_points: 53959}
+    overhead: {changed_pixels: 10565, points_in_roi: 9019, floor_z_corrected_m: 0.0051,
+      floor_points: 35841}
+    silver_wrist: {changed_pixels: 40341, points_in_roi: 39480, floor_z_corrected_m: -0.0597,
+      floor_points: 22765}
+  points: 92570
+  roi: [-0.7, 0.7, -0.75, 0.7, 0.02, 1.3]
+  min_step_m: 0.03
+  pad_m: 0.01
+  background: /home/taha/ros2_colcon_ws/src/oarbots/experiments/hardware/sessions/2026-11-19_obstacle/background_134411
+  object: /home/taha/ros2_colcon_ws/src/oarbots/experiments/hardware/sessions/2026-11-19_obstacle/box1_134649

@@ -5,26 +5,93 @@ other people use. Run them from the compute laptop, from the repository root.
 
 ## Test day: start here
 
+The procedure as run on 2026-11-19 (lab log `experiments/hardware/sessions/2026-11-19_lab_log.md`). Every step
+is a script; nothing needs typing into ROS by hand. The laptop speaks the steps that need the deadman
+(`spd-say`), so the person at the robots does not need the screen.
+
+**0. Physical** (people at the robots): power robots, helpers, NUC, tablet; laptop USB Ethernet to the switch;
+Blue's Rokubi USB on Silver's riser hub; wrist camera cables with slack and strain relief (both wrist cameras
+have dropped off USB during motion; joint 6 turns up to ~120 deg in the box); tablet: fabric GUI, Fabric Follow
+(CBF) on for both robots, deadman released.
+
+**1. Bring-up and checks**
 ```bash
-scripts/hw/cell_up.sh              # bring-up and checks (asks for the lab password once); --check, --deploy
-scripts/hw/fabric_run.sh recentre  # arms to their grasp joints (deadman held)
-scripts/hw/fabric_run.sh perception 3600
-scripts/hw/fabric_run.sh bridges start
-scripts/hw/fabric_run.sh twin      # own terminal: estimator + twin + RViz, commands off
-scripts/hw/fabric_run.sh status    # until the twin follows with both hands seen
-scripts/hw/fabric_run.sh enable    # then the deadman: release, press, hold
-scripts/hw/fabric_run.sh check     # read-only: arms, guards, bridges, perception, camera ages
-scripts/hw/fabric_run.sh disable; scripts/hw/fabric_run.sh stop-twin; scripts/hw/fabric_run.sh save <run folder>
-scripts/hw/fabric_run.sh review <run folder>   # per arm: commanded vs delivered, faces, stops
-scripts/hw/fabric_run.sh deploy-helpers        # new code to both helpers (sessions stopped, arms hold)
+scripts/hw/cell_up.sh                   # lab address, hosts, clocks, code, stock services stopped, sessions, streams,
+                                        # camera ages, arms; asks for the lab password once (or LAB_PASSWORD=...)
+scripts/hw/fabric_run.sh build-laptop   # only after changing laptop packages: builds with ~/venvs/fabric_ros
+                                        # (plain colcon breaks the twin: "No module named 'warp'")
+scripts/hw/fabric_run.sh deploy-helpers # only after changing robot-side code: helpers to the fork's branch head
 ```
+
+**2. Perception** (each run lasts the given seconds; restart it when it has expired: `check` shows its age)
+```bash
+scripts/hw/fabric_run.sh perception 3600
+```
+
+**3. A real obstacle (optional; without it the twin uses twin.yaml's virtual box)**
+```bash
+scripts/hw/fabric_run.sh start-pose              # arms at the start pose first (wrist camera poses must match)
+scripts/hw/fabric_run.sh obstacle background     # work area empty, sheet off or still, nobody in view
+#   place the object under where the sheet's centre will be
+scripts/hw/fabric_run.sh obstacle detect box1    # writes obstacle.yaml/.png/.urdf/.obj; look at obstacle.png
+scripts/hw/fabric_run.sh obstacle use            # the twin's obstacle from the next run on (clear: back to the box)
+```
+The object becomes a rough **prism** (18-sided footprint, 20 faces, from the floor to its top; sides on its
+outline, 1 cm out) and the CBF **capsule fitted to it** (capsule_cbf's cylinder + spherical cap, smallest volume
+containing every prism corner). The twin's sheet collides with the prism, the CBF keeps it clear of the capsule,
+RViz draws both (prism orange, capsule blue). A wrist camera whose arm moved since the
+background is skipped (the overhead alone still works); retake the background after a start-pose move.
+
+**4. The run**
+```bash
+scripts/hw/fabric_run.sh go
+```
+In order: restarts both arms' Kinova velocity API (clears the driver's silent latch); if either arm is more
+than 1.5 deg off the start pose, says "release, then press and hold the deadman" and brings both back (MoveIt-
+checked joint path), "arms at the start pose, release the deadman"; starts the bridges (disarmed) and the twin
+(commands off, RViz); says "twin ready" when it follows the measured grips; at the **first deadman press** after
+that, commands on and both bridges armed ("commands on"; the formation is captured then: hold the sheet as it
+should stay). Releasing the deadman stops both arms ("stopped"), pressing resumes ("moving"). **Ctrl+C** in that
+terminal (or closing it, or `fabric_run.sh stop-go` from another terminal): commands off, bridges disarmed, twin stopped, the run saved (large files to
+`/home/taha/fabric_hw_data`) and reviewed (`<run>/review.txt`).
+
+**5. Checks at any time** (read-only)
+```bash
+scripts/hw/fabric_run.sh check               # arms vs start pose, guards (joint cap), bridges (stops), perception, camera ages
+scripts/hw/fabric_run.sh start-pose --check  # how far each arm is from the start pose
+scripts/hw/fabric_run.sh review <run folder> # per arm: commanded vs delivered speed, box faces, held/stopped windows
+scripts/hw/fabric_run.sh obstacle show       # which obstacle the twin will use
+```
+
+**Step by step instead of `go`** (screen visible): `start-pose`, `bridges start`, `twin` (own terminal),
+`status` until ready, `enable` + deadman, `watch 60`, `disable`, `stop-twin`, `save <run>`, `review <run>`.
+`recentre` moves to the start pose whatever the offset; `arm-start` restarts the Kinova API alone.
+
+**Limits in use** (since 2026-11-19, `experiments/hardware/cell/`): no arm stops on the box or the wrist force
+(the box is a wall, the force is reported only); the twin reports a virtual collision but keeps commanding;
+fault stops only (stale data, invalid commands, missing grips) and the deadman. Speeds from the arm: 36 deg/s
+per joint (guard and bridge), 15 cm/s grip (bridge, twin). Boxes x +/-15, y +/-12, z -33/+9 cm around each
+grasp grip (MoveIt sweep, `workspace_sweep.py`).
 
 `cell_up.sh` re-adds the laptop's lab address, checks every host, the clocks (5 ms target), the code
 deployed on each machine, stops the stock services (with sudo, password over ssh stdin), starts the fabric
 sessions, then checks every stream, each camera's frame age on its own host and where the arms are; each
-line says OK, WARN or FAIL and what to do. The full closed-loop procedure from a cold start, its settings
-and results: `experiments/hardware/sessions/2026-11-18_s5_closed_loop/README.md`. The lab passwords
-are asked, not stored: `lab_ssh.sh` keeps them in `$XDG_RUNTIME_DIR/fabric_lab` for the login session.
+line says OK, WARN or FAIL and what to do. The first closed-loop procedure (2026-11-18), its settings and
+results: `experiments/hardware/sessions/2026-11-18_s5_closed_loop/README.md`. The lab passwords are asked, not
+stored: `lab_ssh.sh` keeps them in `$XDG_RUNTIME_DIR/fabric_lab` for the login session.
+
+## Known problems and their fixes
+
+| Symptom | Cause | Fix |
+| --- | --- | --- |
+| An arm does not move although its bridge says "Following" | Kinova driver latch "Velocity stream timed out: API stopped" after a >0.2 s gap | `fabric_run.sh arm-start` (`go` and `start-pose` do it) |
+| The twin dies at start: `No module named 'warp'` | laptop packages built with plain colcon | `fabric_run.sh build-laptop` |
+| A wrist camera stops publishing (`check`: no images) | USB drop during motion (cable strain) | fix the cable; `lab.sh session <robot> stop` and `start`, then `perception` and `bridges start` |
+| `go` refuses: "A compute launch is already running" | a twin left running | `fabric_run.sh stop-twin` (`go` now stops a leftover twin itself) |
+| The overhead's frames are 0.4-0.6 s old | full-resolution images viewed on the laptop fill the NUC link | view only the preview; restart the NUC session |
+| Laptop has no 192.168.1.200 | USB Ethernet replugged or laptop rebooted | `cell_up.sh` re-adds it |
+| A run executed code that was not part of it (2026-11-19 16:13: a `go` ran part of `deploy-helpers` and rebuilt Silver) | `fabric_run.sh` edited while a run from it was going; bash reads scripts as it runs them | fixed: `fabric_run.sh`, `start_pose.sh`, `cell_up.sh` are one `{ ... }` block, read whole before running |
+| `start-pose` aborts: "already has a publisher" | the bridges publish on the arms' joint input | fixed: it stops the bridges before its preflight |
 
 ## What stays untouched
 

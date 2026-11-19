@@ -19,18 +19,27 @@ import newton
 from newton.solvers import style3d
 from scipy.sparse import csr_matrix
 
+from .obstacle_shape import capsule_args, prism_mesh
 from .vendor import use_capsule_cbf
 
 use_capsule_cbf()
+from capsule_cbf.capsule import Capsule  # noqa: E402
 from capsule_cbf.newton_runtime import ClothRuntime  # noqa: E402
 
 
 @dataclass(frozen=True)
 class Obstacle:
-    """A box standing on or above the floor: centre and half extents in metres, yaw in radians (world)."""
+    """A box standing on or above the floor: centre and half extents in metres, yaw in radians (world).
+
+    A detected real obstacle (scripts/hw/obstacle_detect.py, obstacle_shape.py) adds, in the world frame:
+    `prism` {footprint: [[x, y], ...] (counter-clockwise), top: m} the rough shape, the twin sheet's collider; and
+    `capsule` {center, radius, cylinder_height, cap_sphere_radius} the CBF capsule fitted to it (also the clearance
+    report). The box fields then only bound them."""
     center: tuple = (0., 0., .16)
     half_extents: tuple = (.22, .22, .16)
     yaw: float = 0.
+    prism: dict = None
+    capsule: dict = None
 
 
 @dataclass(frozen=True)
@@ -147,10 +156,11 @@ def material_lift(uv, rows, columns):
     return csr_matrix((weights.ravel(), (np.repeat(index, 4), columns_index.ravel())), shape=(len(uv), rows*columns))
 
 
-def build_model(spec, obstacle_twin=None):
-    """Newton model of one axis-aligned sheet, with the ground and (optionally) the obstacle box.
+def build_model(spec, obstacle_twin=None, prism=None):
+    """Newton model of one axis-aligned sheet, with the ground and (optionally) the obstacle.
 
-    `obstacle_twin`: (center, half_extents, yaw) in the twin frame, or None for no obstacle.
+    `obstacle_twin`: (center, half_extents, yaw) in the twin frame, or None for no obstacle. `prism`: (vertices,
+    triangles) of a detected obstacle's prism in the twin frame; when given, that mesh is the collider instead.
     Returns (model, rest, corner particles, patch indices, patch corner ids, patch offsets).
     """
     spec.validate()
@@ -158,7 +168,10 @@ def build_model(spec, obstacle_twin=None):
     newton.solvers.SolverStyle3D.register_custom_attributes(builder)
     shape = newton.ModelBuilder.ShapeConfig(density=0., mu=.8, ke=5.e5, kd=10.)
     builder.add_ground_plane(cfg=shape)
-    if obstacle_twin is not None:
+    if prism is not None:
+        vertices, triangles = prism
+        builder.add_shape_mesh(body=-1, cfg=shape, mesh=newton.Mesh(vertices.astype(np.float32), triangles.reshape(-1).astype(np.int32)))
+    elif obstacle_twin is not None:
         center, half, yaw = obstacle_twin
         builder.add_shape_box(body=-1, cfg=shape, hx=float(half[0]), hy=float(half[1]), hz=float(half[2]),
                               xform=wp.transform(wp.vec3(*map(float, center)),
@@ -191,12 +204,24 @@ class TwinCloth:
         self.spec = spec
         self.A, self.origin = twin_frame(grips)
         o = spec.obstacle
-        # Conjugating a yaw by the frame (a rotation or a reflection) is again a yaw.
-        yaw = np.array([[np.cos(o.yaw), -np.sin(o.yaw), 0.], [np.sin(o.yaw), np.cos(o.yaw), 0.], [0., 0., 1.]])
-        local = self.A @ yaw @ self.A.T
-        self.obstacle_twin = (self.to_twin(o.center), np.asarray(o.half_extents, float), float(np.arctan2(local[1, 0], local[0, 0])))
+        # The box's x axis, mapped into the twin frame (a box is symmetric about its axes, so a reflection keeps it a
+        # box with the same half extents). Was A R A^T, the conjugated rotation: right only when the twin's x axis is
+        # world x (true in this cell, robots' edge along x; wrong for a turned or mirrored frame), fixed 2026-11-19.
+        axis = self.A @ np.array([np.cos(o.yaw), np.sin(o.yaw), 0.])
+        self.obstacle_twin = (self.to_twin(o.center), np.asarray(o.half_extents, float), float(np.arctan2(axis[1], axis[0])))
+        # A detected obstacle: the prism (collider) and its fitted capsule (CBF), both into the twin frame. The
+        # capsule is round, so only its axis moves; a mirroring frame reverses the mesh's winding.
+        self.obstacle_capsule, prism = None, None
+        if o.capsule:
+            center, half, scale = capsule_args(o.capsule)
+            self.obstacle_capsule = Capsule(self.to_twin(center), half, 'centered_sphere', scale)
+        if o.prism:
+            vertices, triangles = prism_mesh(o.prism['footprint'], 0., o.prism['top'])
+            if np.linalg.det(self.A) < 0:
+                triangles = triangles[:, ::-1]
+            prism = (self.to_twin(vertices), triangles)
         (self.model, self.rest, self.corner_particles, self.patch, self.patch_corners,
-         self.patch_offsets) = build_model(spec, self.obstacle_twin)
+         self.patch_offsets) = build_model(spec, self.obstacle_twin, prism)
         self.runtime = NudgedRuntime(self.model, self.patch, self.patch_corners, self.patch_offsets, spec.substeps,
                                      spec.frame_dt/spec.substeps, spec.iterations, spec.linear_iterations,
                                      capture=wp.get_device(spec.device).is_cuda)
@@ -321,7 +346,10 @@ class TwinCloth:
 
     # ---------------------------------------------------------------- obstacle
     def obstacle_clearance(self, q=None):
-        """Smallest distance (m) from any particle surface to the obstacle box; negative inside."""
+        """Smallest distance (m) from any particle surface to the obstacle; negative inside."""
+        if self.obstacle_capsule is not None:
+            twin = self.state_twin()[0] if q is None else self.to_twin(q)
+            return float(self.obstacle_capsule.distances(twin, self.spec.particle_radius)[0].min())
         center, half, yaw = self.obstacle_twin
         points = (self.state_twin()[0] if q is None else self.to_twin(q))-center
         c, s = np.cos(yaw), np.sin(yaw)

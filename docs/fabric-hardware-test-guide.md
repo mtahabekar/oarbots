@@ -379,6 +379,24 @@ The [lab log](../experiments/hardware/sessions/2026-11-18_lab_log.md) records th
 The [grasp-pose capture record](../experiments/hardware/sessions/2026-11-18_sheet_capture/README.md)
 holds the data, image comparisons, Cartesian diagnosis and last service check.
 
+### 9.0 Changes on 19 November 2026
+
+The [2026-11-19 lab log](../experiments/hardware/sessions/2026-11-19_lab_log.md) has the evidence; the procedure
+is the [runbook's test day](../scripts/hw/README.md#test-day-start-here).
+
+| Item | Before | Since 2026-11-19 |
+| --- | --- | --- |
+| Stops on limits | bridge: latched stop 2 cm past its box and at a 6 N force change; twin: zero commands on a virtual collision | none: the box is a wall (outward motion held, slowed near the face), the force and a virtual collision are reported; fault stops and the deadman remain (user) |
+| Speeds | 15 deg/s per joint, 10 cm/s grip | 36 deg/s (Jaco2 joints 1-3 limit) in guard and bridge; 15 cm/s in bridge and twin (16 cm/s deliverable in every direction at the grasp); CBF margin 4.5 cm and stretch slack 3.5 cm from their own formulas |
+| Workspace boxes (H3 travel) | x +/-8, y -6/+12, z -12/+6 cm | x +/-15, y +/-12, z -33/+9 cm: `workspace_sweep.py` (bridge kinematics, URDF limits, MoveIt collisions, >= 4 cm/s in every direction, one 3 cm step beyond each face) |
+| Starting a run | a second person enables at the screen | `fabric_run.sh go`: start pose (if > 1.5 deg off), twin, commands on at the first deadman press, spoken steps; Ctrl+C saves and reviews |
+| Obstacle (D4) | virtual box, circular capsule around it | optionally a real object from depth on all three cameras (`fabric_run.sh obstacle`), modelled as a 20-face prism (18-sided footprint on its outline) with capsule_cbf's capsule (cylinder + spherical cap) fitted to it for smallest volume; the twin sheet collides with the prism, the CBF keeps clear of the capsule (an elliptic-capsule version was tried the same day and removed at the user's request) |
+| Kinova driver latch (H1/H2) | cleared by hand | `go`/`start-pose` restart both arms' velocity API every time (`arm-start`) |
+
+Results: 12:36 run, both arms followed over nearly the whole new boxes (x -14/+16, y -12/+13, z -32/+4 cm),
+at most 0.9 cm past a face, 5-11 cm/s delivered; the twin lacked a grip measurement 63 % of the commanded time
+(hand input). Blue's wrist camera dropped off USB during that run's motion (cable strain). Capsule of a 79 x 52 x 64 cm object fitted to its 20-face prism: 337 L, against 822 L for the earlier capsule around its box.
+
 ### 9.1 Where each gate and session stands
 
 | Gate or session | Verified | Still open |

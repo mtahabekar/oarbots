@@ -18,6 +18,10 @@ right hand is the weak input: the overhead often misses its tag, and only Blue's
 
 ## How to reproduce, from a cold start
 
+> **Current procedure (2026-11-19 on):** the [runbook's test day](../../../../scripts/hw/README.md#test-day-start-here)
+> (`fabric_run.sh go`: start pose, twin, commands on at the first deadman press; real obstacles; no limit stops).
+> The steps below reproduce the 2026-11-18 runs with their settings (`git checkout ac283d4`).
+
 Everything runs from the compute laptop, repository root, branch `jazzy-platform-hardening`. Scripts:
 `scripts/hw/cell_up.sh` (bring-up and checks), `scripts/hw/fabric_run.sh` (the run), `scripts/hw/twin_monitor.py`
 (go/no-go readout). Background: `scripts/hw/README.md`, `docs/fabric-hardware-test-guide.md` §8-9.

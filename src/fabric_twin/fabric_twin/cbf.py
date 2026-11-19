@@ -47,7 +47,9 @@ class TwinCbf:
         self.cloth, self.period = cloth, period
         self.control_dt = period*cloth.spec.frame_dt
         center, half, _ = cloth.obstacle_twin
-        self.capsule = Capsule(center, half, cfg.top_cap_mode, cfg.top_cap_radius_scale)
+        # A detected obstacle brings its capsule fitted to its prism; otherwise the capsule around the configured box.
+        self.capsule = (cloth.obstacle_capsule if getattr(cloth, 'obstacle_capsule', None) is not None
+                        else Capsule(center, half, cfg.top_cap_mode, cfg.top_cap_radius_scale))
         self.rest_corners = cloth.targets.copy()
         self.build()
 

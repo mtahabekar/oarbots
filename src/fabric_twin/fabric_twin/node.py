@@ -12,6 +12,7 @@ otherwise zero is published. The command guard and the bridge on each robot comp
 the authority on whether an arm may move.
 """
 from collections import deque
+import dataclasses
 import json
 from pathlib import Path
 import time
@@ -35,6 +36,7 @@ from human_hand_tracking.fusion import HandTrack
 
 from .cbf import TwinCbf, default_settings_path, load_settings
 from .cloth import Obstacle, TwinCloth, TwinSpec
+from .obstacle_shape import capsule_mesh, prism_mesh
 from .feedback import FeedbackSpec, Nudger
 from .vendor import fabric_sim_root
 from .stretch import StretchGuard, StretchSpec
@@ -92,6 +94,25 @@ class FabricTwinNode(Node):
         default = str(Path(get_package_share_directory('fabric_twin'))/'config'/'twin.yaml')
         (self.spec, self.feedback_spec, self.cbf_options, self.runtime, warmup, stretch,
          self.force_options) = load_twin_config(self.declare_parameter('config_file', default).value)
+        # A detected real obstacle (scripts/hw/obstacle_detect.py) replaces the configured box: its `obstacle`
+        # box, or (shape prism_capsule) a 20-face prism (the twin sheet's collider) with the CBF capsule fitted to it.
+        self.obstacle_shape = None
+        obstacle_file = self.declare_parameter('obstacle_file', '').value
+        if obstacle_file:
+            detected = yaml.safe_load(Path(obstacle_file).read_text())['obstacle']
+            if detected.get('shape') == 'prism_capsule':
+                prism, capsule = detected['prism'], detected['capsule']
+                foot = np.asarray(prism['footprint'], float)
+                lo, hi = np.r_[foot.min(0), 0.], np.r_[foot.max(0), prism['top']]   # the box fields only bound it
+                box = Obstacle(center=tuple((lo+hi)/2), half_extents=tuple((hi-lo)/2), yaw=0., prism=prism, capsule=capsule)
+                self.obstacle_shape = (prism, capsule)
+                what = (f"{len(foot)}-sided prism to {prism['top']:.3f} m; capsule center {capsule['center']}, radius "
+                        f"{capsule['radius']:.3f} m, cylinder {capsule['cylinder_height']:.3f} m, cap sphere {capsule['cap_sphere_radius']:.3f} m")
+            else:
+                box = Obstacle(**{k: tuple(v) if isinstance(v, list) else v for k, v in detected.items()})
+                what = f'box center {box.center}, half extents {box.half_extents}, yaw {box.yaw:.3f}'
+            self.spec = dataclasses.replace(self.spec, obstacle=box)
+            self.get_logger().warn(f'obstacle from {obstacle_file}: {what} (replaces twin.yaml)')
         self.guard = StretchGuard(self.spec.width_m, self.spec.height_m, stretch)
         self.forces = [None, None]  # newest cloth pull on each robot: (receipt monotonic s, world vector)
         if stretch.force_feedback:
@@ -497,7 +518,19 @@ class FabricTwinNode(Node):
         envelope.pose.position.x, envelope.pose.position.y, envelope.pose.position.z = (float(c) for c in o.center)
         corners = marker(3, Marker.SPHERE_LIST, (.03, .03, .03), (1., 1., 1., 1.))
         corners.points = [Point(x=float(p[0]), y=float(p[1]), z=float(p[2])) for p in self.cloth.corners()]
-        self.marker_pub.publish(MarkerArray(markers=[wire, box, envelope, corners]))
+        markers = [wire, box, envelope, corners]
+        if self.obstacle_shape is not None:
+            # a detected obstacle: its prism (orange, the twin sheet's collider) and the CBF capsule fitted to it (blue)
+            # instead of the box and its envelope
+            prism, capsule = self.obstacle_shape
+            for ident, (vertices, triangles), color in (
+                    (4, prism_mesh(prism['footprint'], 0., prism['top']), (.85, .35, .2, .85)),
+                    (5, capsule_mesh(capsule), (.2, .5, 1., .25))):
+                shape = marker(ident, Marker.TRIANGLE_LIST, (1., 1., 1.), color)
+                shape.points = [Point(x=float(x), y=float(y), z=float(z)) for x, y, z in vertices[triangles.reshape(-1)]]
+                markers.append(shape)
+            box.action = envelope.action = Marker.DELETE
+        self.marker_pub.publish(MarkerArray(markers=markers))
 
     def diagnostics(self):
         values = dict(fault=self.fault, commands_enabled=self.commands_enabled, frame=self.frame,

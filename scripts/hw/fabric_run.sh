@@ -1,7 +1,10 @@
 #!/usr/bin/env bash
 # One fabric run on the real cell, from the compute laptop (repo root), after scripts/hw/cell_up.sh:
-#   fabric_run.sh recentre              both arms to their grasp joints (grasp.yaml), joint space, deadman held;
-#                                       stops the bridges first (they share the arm's joint input)
+#   fabric_run.sh start-pose [--check]  both arms to the experiment's start pose (grasp.yaml) if either is more
+#                                       than 1.5 deg off; deadman held; bridges restarted (scripts/hw/start_pose.sh)
+#   fabric_run.sh recentre              the same move whatever the offset
+#   fabric_run.sh stop-go               end a running go from another terminal (as Ctrl+C there)
+#   fabric_run.sh arm-start             restart both arms' Kinova velocity API (the driver's silent latch); start-pose does it
 #   fabric_run.sh perception [seconds]  perception on all three cameras (workspace profile), default 3600 s
 #   fabric_run.sh perception-stop
 #   fabric_run.sh bridges start|stop    the joint-mode CBF bridges with the cell's bridge.yaml (start disarmed)
@@ -11,7 +14,14 @@
 #                                       starts the twin (commands off) in the background, then switches commands
 #                                       on and arms the bridges at the FIRST DEADMAN PRESS once the twin is
 #                                       ready; speaks what happens (scripts/hw/auto_start.py). Ctrl+C: commands
-#                                       off, bridges disarmed (the twin keeps running: stop-twin, then save)
+#                                       off, bridges disarmed, twin stopped, run saved and reviewed
+#   fabric_run.sh obstacle background   depth of the empty work area from all three cameras (arms at the grasp
+#                                       pose, sheet off or held away, nobody in view), on each camera's host
+#   fabric_run.sh obstacle detect [name] [detector options]   the same with the object placed: finds it,
+#                                       writes obstacle.yaml/.urdf/.obj/.png (scripts/hw/obstacle_detect.py)
+#   fabric_run.sh obstacle use [dir]    make a detected obstacle the twin's (cell/obstacle.yaml; the next
+#                                       twin/go uses it); default: the last detect
+#   fabric_run.sh obstacle clear | show back to twin.yaml's virtual box | what the twin will use
 #   fabric_run.sh status [seconds]      go/no-go readout (scripts/hw/twin_monitor.py)
 #   fabric_run.sh watch [seconds]       readout every 5 s during a commanded run
 #   fabric_run.sh enable                twin commands on (formation captured now) + both bridges armed
@@ -30,6 +40,9 @@
 # The arms move only while the tablet deadman is held with Fabric Follow (CBF) on for that robot; the person
 # holding the sheet cannot hold it, so a second person does. Procedure and evidence:
 # experiments/hardware/sessions/2026-11-18_s5_closed_loop/README.md.
+# The whole script is one block, so bash reads all of it before running any: editing this file while a run
+# from it is still going (2026-11-19 16:13: a go then executed part of deploy-helpers) cannot change that run.
+{
 set -uo pipefail
 here="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 repo="$(cd -- "$here/../.." && pwd)"
@@ -49,21 +62,37 @@ ros_env() {
 pub_bool() { timeout 15 ros2 topic pub --once "$1" std_msgs/msg/Bool "{data: $2}" >/dev/null 2>&1; }
 twin_pids() { pgrep -f "ros2 launch .*compute.launch.py"; }
 
+stop_twin() {
+        launch="$(twin_pids | head -1)"
+        [ -z "$launch" ] && { echo "no compute launch running"; return 0; }
+        kids="$(pgrep -P "$launch" | tr '\n' ' ')"
+        kill -INT "$launch"; sleep 10
+        for p in $kids; do kill -0 "$p" 2>/dev/null && kill -INT "$p"; done; sleep 8
+        for p in $launch $kids; do kill -0 "$p" 2>/dev/null && kill -TERM "$p"; done; sleep 2
+        [ -n "$(twin_pids)" ] && echo "still running: $(twin_pids | tr '\n' ' ')" || echo "compute launch stopped; recordings in $(cat "$state/last_run" 2>/dev/null)"
+}
+save_run() {
+        local run="${1:?save <run_dir>}" name data; name="$(basename "$(dirname "$run")")_$(basename "$run")"
+        data="/home/taha/fabric_hw_data/$name"; mkdir -p "$data" "$run/cameras"
+        for f in "$run"/*.npz; do [ -e "$f" ] && mv "$f" "$data/"; done
+        [ -e "$run/twin.cbf.jsonl" ] && gzip -9 -f "$run/twin.cbf.jsonl"
+        (cd "$data" && sha256sum ./* > MANIFEST.sha256 2>/dev/null)
+        cp "$data/MANIFEST.sha256" "$run/large_files.sha256" 2>/dev/null
+        for m in nuc blue silver; do
+            "$LAB_SSH" "${HOST[$m]}" 'cd /dev/shm && tar -czf - run_* 2>/dev/null' > "$run/cameras/${m}_perception_logs.tar.gz"
+        done
+        echo "Large files: $data (checksums also in $run/large_files.sha256); camera logs: $run/cameras"
+}
+
 cmd="${1:-}"; shift || true
 case "$cmd" in
-    recentre)
-        for r in blue silver; do scripts/hw/lab.sh session "$r" exec systemctl --user stop fabric-bridge >/dev/null 2>&1; done
-        for r in blue silver; do
-            scripts/hw/lab.sh session "$r" exec python3 fabric_ws/scripts/hw/grasp_joints.py --robot "$r" --check-only 2>&1 |
-                grep -E 'Preflight|ABORT' | sed -E 's/.*"joint_change_deg": (\[[^]]*\]).*"closest_to_other_arm_m": ([0-9.]*).*/joint change \1 deg, other arm \2 m away/' | sed "s/^/$r: /"
-        done
-        echo "Both arms move together once the deadman is held (Fabric Follow on for both): release, press, hold ~5 s."
-        for r in blue silver; do
-            scripts/hw/lab.sh session "$r" exec python3 fabric_ws/scripts/hw/grasp_joints.py --robot "$r" --wait 600 > "$state/recentre_$r.log" 2>&1 &
-        done
-        wait
-        for r in blue silver; do grep -E 'Done|ABORT' "$state/recentre_$r.log" | sed "s/^/$r: /"; done
-        echo "Bridges are stopped: fabric_run.sh bridges start" ;;
+    recentre) "$here/start_pose.sh" --force ;;   # both arms to grasp.yaml now, whatever their offset
+    start-pose) "$here/start_pose.sh" "$@" ;;
+    stop-go)     # end a running `go` from another terminal: same as Ctrl+C there (commands off, bridges disarmed,
+                 # then that go stops the twin, saves and reviews the run)
+        pkill -INT -f "scripts/hw/auto_start.py" && echo "go is ending: commands off; the twin stops and the run is saved" || echo "no go running" ;;
+    arm-start)   # clear the Kinova driver's silent "Velocity stream timed out: API stopped" latch on both arms
+        for r in blue silver; do echo "$r: $(timeout 40 scripts/hw/lab.sh session "$r" exec ros2 service call "/oarbot_$r/kinova/j2n6s300_driver/in/start" kinova_msgs/srv/Start 2>&1 | grep -o "start_result='[^']*'")"; done ;;
     perception)
         seconds="${1:-3600}"; tag="$(date +%Y%m%d_%H%M%S)"
         for m in nuc blue silver; do
@@ -82,10 +111,16 @@ case "$cmd" in
             *) echo "bridges start|stop"; exit 2 ;;
         esac ;;
     twin|go)
+        if [ "$cmd" = go ] && [ -n "$(twin_pids)" ]; then
+            echo "Stopping the compute launch still running from before (its recordings are written first)"; stop_twin; fi
         if [ -n "$(twin_pids)" ]; then echo "A compute launch is already running (pid $(twin_pids | tr '\n' ' ')): fabric_run.sh stop-twin first" >&2; exit 1; fi
         launcher="$repo/../../install/fabric_twin/lib/fabric_twin/twin"
         if ! head -1 "$launcher" | grep -q venvs/fabric_ros; then
             echo "The twin's launcher does not use ~/venvs/fabric_ros (it would die: no warp). Run: fabric_run.sh build-laptop" >&2; exit 1; fi
+        if [ "$cmd" = go ] && [ "${NO_START_POSE:-0}" != 1 ]; then
+            "$here/start_pose.sh" || { echo "Not at the start pose: fix it or rerun (NO_START_POSE=1 skips this)" >&2; exit 1; }
+            for r in blue silver; do scripts/hw/lab.sh session "$r" start-cell-bridge "/home/oarbot_$r/fabric_ws/experiments/hardware/cell" >/dev/null 2>&1; done
+        fi
         run="${1:-$repo/experiments/hardware/sessions/$(date +%F)_fabric_run/live_$(date +%H%M%S)}"
         mkdir -p "$run"; echo "$run" > "$state/last_run"
         git rev-parse HEAD > "$run/commit.txt"; cp experiments/hardware/cell/*.yaml "$run/" 2>/dev/null; mkdir -p "$run/cell"; mv "$run"/*.yaml "$run/cell/"
@@ -102,8 +137,12 @@ case "$cmd" in
             echo "A node died at start (log above, $run/compute.log). fabric_run.sh stop-twin, fix, retry." >&2; exit 1
         fi
         echo "Twin running in the background (log $run/compute.log, RViz open). Go to the robots: the laptop speaks."
+        trap 'true' INT TERM HUP   # a handler, not '' (ignored would be inherited: Ctrl+C would not reach auto_start); bash runs the wrap-up after it
         python3 "$here/auto_start.py" --run-dir "$run"
-        echo "Commands off. Then: fabric_run.sh stop-twin; fabric_run.sh save $run; fabric_run.sh review $run" ;;
+        echo "Stopping the twin (writes the recordings), saving, reviewing ..."
+        stop_twin; save_run "$run"
+        python3 "$here/run_review.py" "$run" > "$run/review.txt" 2>&1; grep -E '^(blue|silver|twin)' "$run/review.txt"
+        echo "Done. Full review: $run/review.txt. fabric_run.sh go to run again." ;;
     status) ros_env; python3 "$here/twin_monitor.py" "${1:-15}" ;;
     watch)  ros_env; python3 "$here/twin_monitor.py" "${1:-60}" --every 5 ;;
     enable)
@@ -117,25 +156,8 @@ case "$cmd" in
         pub_bool /fabric/twin/enable_commands false &
         for r in blue silver; do pub_bool "/oarbot_$r/fabric_cbf/arm" false & done
         wait; sleep 1; python3 "$here/twin_monitor.py" 5 | tail -1 ;;
-    stop-twin)
-        launch="$(twin_pids | head -1)"
-        [ -z "$launch" ] && { echo "no compute launch running"; exit 0; }
-        kids="$(pgrep -P "$launch" | tr '\n' ' ')"
-        kill -INT "$launch"; sleep 10
-        for p in $kids; do kill -0 "$p" 2>/dev/null && kill -INT "$p"; done; sleep 8
-        for p in $launch $kids; do kill -0 "$p" 2>/dev/null && kill -TERM "$p"; done; sleep 2
-        [ -n "$(twin_pids)" ] && echo "still running: $(twin_pids | tr '\n' ' ')" || echo "compute launch stopped; recordings in $(cat "$state/last_run" 2>/dev/null)" ;;
-    save)
-        run="${1:?save <run_dir>}"; name="$(basename "$(dirname "$run")")_$(basename "$run")"
-        data="/home/taha/fabric_hw_data/$name"; mkdir -p "$data" "$run/cameras"
-        for f in "$run"/*.npz; do [ -e "$f" ] && mv "$f" "$data/"; done
-        [ -e "$run/twin.cbf.jsonl" ] && gzip -9 -f "$run/twin.cbf.jsonl"
-        (cd "$data" && sha256sum ./* > MANIFEST.sha256 2>/dev/null)
-        cp "$data/MANIFEST.sha256" "$run/large_files.sha256" 2>/dev/null
-        for m in nuc blue silver; do
-            "$LAB_SSH" "${HOST[$m]}" 'cd /dev/shm && tar -czf - run_* 2>/dev/null' > "$run/cameras/${m}_perception_logs.tar.gz"
-        done
-        echo "Large files: $data (checksums also in $run/large_files.sha256); camera logs: $run/cameras" ;;
+    stop-twin) stop_twin ;;
+    save) save_run "${1:?save <run_dir>}" ;;
     check)
         ros_env; python3 "$here/cell_check.py"
         echo "== perception (latest run on each camera host)"
@@ -158,6 +180,43 @@ case "$cmd" in
             ~/venvs/fabric_ros/bin/python -m colcon build --packages-select fabric_perception human_hand_tracking \
                 fabric_state_estimator fabric_reference_reconstruction fabric_sim_cell fabric_twin fabric_cell | tail -1
             echo "twin launcher: $(head -1 install/fabric_twin/lib/fabric_twin/twin)" ) ;;
+    obstacle)
+        sub="${1:-show}"; shift || true
+        obs_root="$repo/experiments/hardware/sessions/$(date +%F)_obstacle"
+        snapshot() {   # all three cameras into $1, in parallel, each on its own host
+            mkdir -p "$1"
+            for c in nuc:/nuc:nuc/camera_base:overhead blue:/oarbot_blue/azure_kinect:oarbot_blue/base_link:blue_wrist \
+                     silver:/oarbot_silver/azure_kinect:oarbot_silver/base_link:silver_wrist; do
+                IFS=: read -r m prefix root name <<< "$c"
+                ( scripts/hw/lab.sh session "$m" exec python3 - "$prefix" "$root" 2 < "$here/depth_snapshot.py" 2>"$1/$name.err" |
+                    sed -n 's/^DEPTHNPZ://p' | base64 -d > "$1/$name.npz"
+                  [ -s "$1/$name.npz" ] && { echo "  $name ok"; rm -f "$1/$name.err"; } || { echo "  $name FAILED: $(tail -1 "$1/$name.err")"; rm -f "$1/$name.npz"; } ) &
+            done
+            wait
+        }
+        case "$sub" in
+            background)
+                dir="$obs_root/background_$(date +%H%M%S)"; echo "Empty work area -> $dir"; snapshot "$dir"
+                echo "$dir" > "$state/obstacle_background" ;;
+            detect)
+                bg="$(cat "$state/obstacle_background" 2>/dev/null)"
+                [ -d "$bg" ] || { echo "No background yet: fabric_run.sh obstacle background (work area empty)" >&2; exit 1; }
+                name="${1:-object}"; shift || true
+                dir="$obs_root/${name}_$(date +%H%M%S)"; echo "Object -> $dir (background $bg)"; snapshot "$dir"
+                ros_env; python3 "$here/obstacle_detect.py" "$bg" "$dir" "$@" && echo "$dir" > "$state/obstacle_last"
+                echo "Check $dir/obstacle.png, then: fabric_run.sh obstacle use" ;;
+            use)
+                dir="${1:-$(cat "$state/obstacle_last" 2>/dev/null)}"
+                [ -f "$dir/obstacle.yaml" ] || { echo "No obstacle.yaml in '$dir'" >&2; exit 1; }
+                cp "$dir/obstacle.yaml" experiments/hardware/cell/obstacle.yaml
+                echo "Twin obstacle: $dir (experiments/hardware/cell/obstacle.yaml). The next fabric_run.sh go/twin uses it."
+                sed -n '/^obstacle:/,/^source:/p' experiments/hardware/cell/obstacle.yaml | grep -v '^    - \[' | sed '$d' ;;
+            clear) rm -f experiments/hardware/cell/obstacle.yaml; echo "Twin obstacle: twin.yaml's virtual box" ;;
+            show)
+                if [ -f experiments/hardware/cell/obstacle.yaml ]; then echo "Twin obstacle: detected"; sed -n '/^obstacle:/,/^source:/p' experiments/hardware/cell/obstacle.yaml | grep -v '^    - \[' | sed '$d'
+                else echo "Twin obstacle: twin.yaml's virtual box"; sed -n '/^obstacle:/,/^feedback:/p' experiments/hardware/cell/twin.yaml | sed '$d'; fi ;;
+            *) echo "obstacle background | detect [name] | use [dir] | clear | show" >&2; exit 2 ;;
+        esac ;;
     review) ros_env; python3 "$here/run_review.py" "${1:?review <run_dir>}" ;;
     deploy-helpers)
         git fetch -q fork; echo "deploying fork/jazzy-platform-hardening $(git rev-parse --short fork/jazzy-platform-hardening) to both helpers"
@@ -170,3 +229,5 @@ case "$cmd" in
         echo "Now: fabric_run.sh perception 3600; fabric_run.sh bridges start; fabric_run.sh check" ;;
     *) sed -n '2,/^set -uo/p' "$0" | sed '$d'; exit 2 ;;
 esac
+exit
+}

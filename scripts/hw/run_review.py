@@ -45,19 +45,26 @@ def main():
         sel = (tc >= t0 - 1) & (tc <= t1 + 2)
         p, tt = corners[sel, i], tc[sel]
         beyond = np.linalg.norm(np.maximum(lo - p, 0) + np.maximum(p - hi, 0), axis=1)
-        print(f'{r}: commands for {t1 - t0:.0f} s, median {np.median(speed[speed > .002]) * 100:.1f} cm/s; '
+        span = ', '.join(f'{ax} {(p[:, k].min() - p[0, k]) * 100:+.0f}/{(p[:, k].max() - p[0, k]) * 100:+.0f} cm' for k, ax in enumerate('xyz'))
+        print(f'{r}: commands for {t1 - t0:.0f} s, grip range from its start: {span}')
+        print(f'   median {np.median(speed[speed > .002]) * 100:.1f} cm/s; '
               f'grip {np.round(p[0], 3).tolist()} -> {np.round(p[-1], 3).tolist()}; at most {beyond.max() * 100:.1f} cm past the box')
         for s in np.arange(t0, t1, a.window):
             w, wm = (tt >= s) & (tt < s + a.window), (tm >= s) & (tm < s + a.window)
             if w.sum() < 2:
                 continue
-            moved = np.linalg.norm(p[w][-1] - p[w][0]) / a.window * 100
+            # path speed, sampled at 5 Hz (net displacement under-reads motion back and forth)
+            pw, tw = p[w], tt[w]
+            keep = np.searchsorted(tw, np.arange(tw[0], tw[-1] + 1e-9, .2))
+            pw = pw[np.minimum(keep, len(pw) - 1)]
+            moved = np.sum(np.linalg.norm(np.diff(pw, axis=0), axis=1)) / max(tw[-1] - tw[0], 1e-6) * 100
             end = p[w][-1]
             faces = ''.join(ax + ('-' if end[k] <= lo[k] + .003 else '+') for k, ax in enumerate('xyz')
                             if end[k] <= lo[k] + .003 or end[k] >= hi[k] - .003)
             c = np.mean(v[wm], 0) * 100
-            flag = '  <- held/stopped' if np.linalg.norm(c) > 2 and moved < .3 else ''
-            print(f'   t+{s - t0:4.0f} s  commanded {np.linalg.norm(c):4.1f} cm/s {np.round(c, 1).tolist()}  delivered {moved:4.1f} cm/s'
+            cs = np.mean(np.linalg.norm(v[wm], axis=1)) * 100 if wm.any() else 0.
+            flag = '  <- held/stopped' if cs > 2 and moved < .3 else ''
+            print(f'   t+{s - t0:4.0f} s  commanded {cs:4.1f} cm/s (mean vector {np.round(c, 1).tolist()})  delivered {moved:4.1f} cm/s'
                   f'  faces [{faces}]  past {beyond[w].max() * 100:.1f} cm{flag}')
     status = run / 'twin.status.jsonl'
     if status.exists():

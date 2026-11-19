@@ -12,11 +12,13 @@ Ctrl+C (or the end of --seconds): commands off, bridges disarmed. Events go to <
     python3 scripts/hw/auto_start.py [--run-dir DIR] [--seconds 1800] [--quiet]
 """
 import argparse
+import signal
 import subprocess
 import time
 from pathlib import Path
 
 import rclpy
+import rclpy.signals
 from diagnostic_msgs.msg import DiagnosticArray
 from rclpy.node import Node
 from std_msgs.msg import Bool
@@ -102,7 +104,13 @@ def main():
     ap.add_argument('--seconds', type=float, default=1800.)
     ap.add_argument('--quiet', action='store_true', help='no speech')
     a = ap.parse_args()
-    rclpy.init()
+    # A closed terminal (SIGHUP) or a kill (SIGTERM) ends it like Ctrl+C: commands off, bridges disarmed. The 12:46 and
+    # 13:48 runs of 2026-11-19 ended without that and left bridges armed.
+    def interrupt(*_):
+        raise KeyboardInterrupt
+    signal.signal(signal.SIGTERM, interrupt)
+    signal.signal(signal.SIGHUP, interrupt)
+    rclpy.init(signal_handler_options=rclpy.signals.SignalHandlerOptions.NO)
     node = AutoStart(Path(a.run_dir) / 'auto_start.log', a.quiet)
     node.send(False)
     node.event('commands off, bridges disarmed; waiting for the twin and the first deadman press')

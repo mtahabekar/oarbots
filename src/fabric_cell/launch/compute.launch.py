@@ -39,7 +39,10 @@ def nodes(context):
     ]
     if get('twin') == 'true':
         out.append(Node(package='fabric_twin', executable='twin', name='fabric_twin', output='screen',
-                        parameters=[{'config_file': str(cell/'twin.yaml'), 'commands_enabled': get('commands')}]))
+                        # cell_dir/obstacle.yaml (a detected real obstacle, fabric_run.sh obstacle use) replaces
+                        # twin.yaml's box when present
+                        parameters=[{'config_file': str(cell/'twin.yaml'), 'commands_enabled': get('commands'),
+                                     'obstacle_file': str(cell/'obstacle.yaml') if (cell/'obstacle.yaml').exists() else ''}]))
         if get('bank') == 'true':
             out.append(Node(package='fabric_twin', executable='parameter_bank', name='fabric_parameter_bank', output='screen',
                             parameters=[{'config_file': str(cell/'twin.yaml'), 'estimator_config': str(cell/'estimator.yaml'),

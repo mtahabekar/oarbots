@@ -1,0 +1,28 @@
+# Detected by scripts/hw/obstacle_detect.py. `obstacle`: the elliptic capsule (fabric_twin.elliptic_capsule): an
+# elliptic cylinder on the floor (center, yaw, semi_axes, cylinder_height) with an elliptic cap (cap_height,
+# cap_flatness), the smallest containing the points, grown by pad_m. The twin and its CBF use it as is.
+obstacle:
+  shape: elliptic_capsule
+  center: [0.0298, 0.2259]
+  yaw: -2.7348
+  semi_axes: [0.4637, 0.2969]
+  cylinder_height: 0.6372
+  cap_height: 0.015
+  cap_flatness: 1.0
+  floor: 0.0
+fit: {volume_m3: 0.27994, top_m: 0.6522, points_outside: 190, furthest_outside_m: 0.0154,
+  median_depth_inside_m: 0.1759}
+source:
+  cameras:
+    blue_wrist: {changed_pixels: 46429, points_in_roi: 44511, floor_z_corrected_m: -0.0262,
+      floor_points: 53959}
+    overhead: {changed_pixels: 10565, points_in_roi: 9019, floor_z_corrected_m: 0.0051,
+      floor_points: 35841}
+    silver_wrist: {changed_pixels: 40341, points_in_roi: 39480, floor_z_corrected_m: -0.0597,
+      floor_points: 22765}
+  points: 92570
+  roi: [-0.7, 0.7, -0.75, 0.7, 0.02, 1.3]
+  min_step_m: 0.03
+  pad_m: 0.01
+  background: experiments/hardware/sessions/2026-11-19_obstacle/background_134411
+  object: experiments/hardware/sessions/2026-11-19_obstacle/box1_134649
