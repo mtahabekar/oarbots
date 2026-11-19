@@ -63,6 +63,10 @@ scripts/hw/fabric_run.sh review <run folder> # per arm: commanded vs delivered s
 scripts/hw/fabric_run.sh obstacle show       # which obstacle the twin will use
 ```
 
+**Check a change in the Isaac simulated cell first** (needs the ExtermeLinux disk): `src/fabric_sim_cell/scripts/run_twin_check.sh both`
+compares today's settings and obstacle model with the baseline on the true sheet and table
+(`src/fabric_sim_cell/README.md`, "Twin check").
+
 **Step by step instead of `go`** (screen visible): `start-pose`, `bridges start`, `twin` (own terminal),
 `status` until ready, `enable` + deadman, `watch 60`, `disable`, `stop-twin`, `save <run>`, `review <run>`.
 `recentre` moves to the start pose whatever the offset; `arm-start` restarts the Kinova API alone.
@@ -71,7 +75,9 @@ scripts/hw/fabric_run.sh obstacle show       # which obstacle the twin will use
 (the box is a wall, the force is reported only); the twin reports a virtual collision but keeps commanding;
 fault stops only (stale data, invalid commands, missing grips) and the deadman. Speeds from the arm: 36 deg/s
 per joint (guard and bridge), 15 cm/s grip (bridge, twin). Boxes x +/-15, y +/-12, z -33/+9 cm around each
-grasp grip (MoveIt sweep, `workspace_sweep.py`).
+grasp grip (MoveIt sweep, `workspace_sweep.py`). **Caution (Isaac check, 2026-11-19):** at 15 cm/s the CBF did not keep a
+pulled-down sheet off a table in simulation (0.4 cm; touching with the fitted capsule); the margin does not yet
+include the arms' lag. Over a real obstacle, hold the deadman ready; see the lab log before transfer runs. **To do (user, 2026-11-19): raise the CBF margin to 9.5 cm** (2 cm twin error + 0.15 m/s x 0.5 s measured arm lag) in `experiments/hardware/cell/twin.yaml` (`cbf.margin_m: 0.095`), and the same in `src/fabric_sim_cell/config/twin_limits_2026-11-19.yaml`; first check it with `DESCENT_M=0.6 src/fabric_sim_cell/scripts/run_twin_check.sh today` (the true sheet must stay off the table), then on the robots. Not applied yet: both configs still have 0.045.
 
 `cell_up.sh` re-adds the laptop's lab address, checks every host, the clocks (5 ms target), the code
 deployed on each machine, stops the stock services (with sudo, password over ssh stdin), starts the fabric

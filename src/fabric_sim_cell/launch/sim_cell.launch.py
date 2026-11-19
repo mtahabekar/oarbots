@@ -101,7 +101,8 @@ def nodes(context):
         # twin_commands:=true (then its follower commands are published for the robots).
         out.append(Node(package='fabric_twin', executable='twin', name='fabric_twin', output='screen',
                         parameters=[{'config_file': str(config(get('twin_config'), 'twin.yaml')),
-                                     'commands_enabled': get('twin_commands'), **sim}]))
+                                     'commands_enabled': get('twin_commands'),
+                                     'obstacle_file': get('twin_obstacle_file'), **sim}]))
         if get('twin_bank') == 'true':
             out.append(Node(package='fabric_twin', executable='parameter_bank', name='fabric_parameter_bank', output='screen',
                             parameters=[{'config_file': str(config(get('twin_config'), 'twin.yaml')),
@@ -136,6 +137,8 @@ def generate_launch_description():
         DeclareLaunchArgument('twin', default_value='false', description='Run the fabric twin beside the estimator'),
         DeclareLaunchArgument('twin_commands', default_value='', description="'true': the twin's follower commands are sent to the robots"),
         DeclareLaunchArgument('twin_config', default_value='', description='Default: config/twin.yaml'),
+        DeclareLaunchArgument('twin_obstacle_file', default_value='',
+                              description="A detected obstacle (obstacle.yaml, shape prism_capsule) replacing the twin config's box"),
         DeclareLaunchArgument('twin_bank', default_value='false', description='Run the parameter bank (calibration, adaptation)'),
         DeclareLaunchArgument('twin_adapt_period_sec', default_value='0.0', description='Online adaptation period (s); 0 = off'),
         DeclareLaunchArgument('twin_record', default_value='', description='Twin recorder output NPZ; empty = none'),

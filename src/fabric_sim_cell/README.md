@@ -65,6 +65,65 @@ The scorecard compares each experiment with the online targets proposed in
 capture-to-state age p95 <= 100 ms, calibrated coverage). Latency cannot be judged here: the plant
 runs at ~0.23x real time.
 
+## Twin check: the hardware settings in the simulated cell (2026-11-19)
+
+Checks, before robot time, that the twin and its CBF still keep the sheet off the table with the settings changed
+on the real cell on 2026-11-19: no limit stops (a virtual collision no longer zeroes the commands), 15 cm/s, the
+margins derived from it, and a real obstacle described as a prism with the CBF capsule fitted to it.
+
+```bash
+# 0. Prerequisites: the ExtermeLinux disk connected (Isaac Sim 6.2, oarbot_simulation: `mountpoint /media/taha/ExtermeLinux`),
+#    no other sim-cell or twin process, and the laptop packages built with the venv:
+scripts/hw/fabric_run.sh build-laptop
+# 1. Run (from the oarbots repository root; Isaac headless; ~3 min per run):
+src/fabric_sim_cell/scripts/run_twin_check.sh both 1          # baseline then today, one run each; or: baseline|today, REPEATS
+DESCENT_M=0.6 src/fabric_sim_cell/scripts/run_twin_check.sh both 1   # hands pull the sheet toward the table: the CBF must act
+# 2. Read the comparison (also printed at the end):
+cat /media/taha/ExtermeLinux/oarbot_simulation/logs/sim_cell/twin_check_<stamp>/report.md
+```
+
+| Mode | Twin config | Obstacle the twin and its CBF use | Plant follower limit |
+| --- | --- | --- | --- |
+| `baseline` | `config/twin.yaml` (10 cm/s, margin 4 cm, stretch slack 3 cm) | twin.yaml's box: capsule_cbf's capsule around it (radius = half diagonal, cap scale 2: 7.3 cm above the top) | 0.10 m/s |
+| `today` | `config/twin_limits_2026-11-19.yaml` (15 cm/s, margin 4.5 cm, slack 3.5 cm) | `table_obstacle.py`: the table as a detected obstacle, prism (the twin sheet's collider) + capsule fitted to it (`twin_obstacle_file:=`) | 0.15 m/s |
+
+Scenario (both): the live demo's scripted hands, oracle hand input (ideal, so glove detection does not blur the
+comparison), the robots grasp at ~9-10 s, the hands hold to ~11 s, descend `DESCENT_M` (default 0.5 m) at 0.1 m/s
+toward the table and hold to 25 s (from 1.05 m: 0.5 m leaves the sheet ~10 cm above the 0.32 m table, so the CBF
+barely acts; 0.6 m pulls it toward the table); the twin commands both robot grips (`--external-followers`), the plant only clamps them.
+Per run (`<mode>_<n>/`): `run_sim_experiment.sh`'s files (truth.npz, plant.log/json, estimate, stack.log, eval),
+`twin.npz` and `twin_eval.json`. `report.md`/`report.json` (`twin_check_report.py`): the **true** sheet's clearance
+from the **true** table from 10 s (minimum, seconds touching, seconds below the CBF margin), the true robot-grip
+speed and rise, the twin's command speeds and time at its cap. The table cannot be detected from the simulated
+depth (the plant has no empty background), so `today` takes its prism from the plant's geometry.
+
+Results of 2026-11-19 (one run per mode):
+
+| Hands descend | Mode | Speed, CBF margin | Obstacle the CBF uses | True sheet-table min (m) | Touching (s) | Below margin (s) | Lowest robot grips (m) | Twin sheet vs its capsule (m) | CBF relaxed |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 0.5 m | baseline | 10 cm/s, 4 cm | capsule around the box (dome top 0.39 m) | 0.101 | 0 | 0 | 0.548 / 0.547 | +0.023 | 28 % |
+| 0.5 m | today | 15 cm/s, 4.5 cm | fitted to the prism (flat top 0.33 m) | 0.099 | 0 | 0 | 0.544 / 0.543 | +0.090 | 13 % |
+| 0.6 m | baseline | 10 cm/s, 4 cm | capsule around the box | **0.085** | 0 | 0 | 0.569 / 0.569 | +0.029 | 44 % |
+| 0.6 m | obstacle | 10 cm/s, 4 cm | fitted | 0.030 | 0 | 0.57 | 0.508 / 0.467 | +0.024 | 37 % |
+| 0.6 m | limits | 15 cm/s, 4.5 cm | capsule around the box | **0.004** | 0 | 0.97 | 0.481 / 0.448 | -0.022 | 46 % |
+| 0.6 m | today | 15 cm/s, 4.5 cm | fitted | **-0.000** | **0.32** | 2.03 | 0.481 / 0.400 | -0.010 | 45 % |
+
+One run per mode (the scores vary between identical runs: repeat before deciding). Reading:
+
+- With a 0.5 m descent the sheet never comes near the table (~10 cm); the settings make no difference to safety.
+- With 0.6 m the hands pull the sheet toward the table and the CBF must hold the robot grips up. Baseline does
+  (8.5 cm). **The speed is the main cause of the loss:** 15 cm/s with the baseline capsule leaves 0.4 cm and lets the
+  twin's sheet into its capsule (-2.2 cm). The fitted capsule alone (10 cm/s) costs about 5 cm of the true
+  clearance (it is 6 cm lower than the dome) but the CBF still keeps the twin outside it. Together: the true sheet
+  touched the table's edge for 0.32 s.
+- The CBF margin was derived as twin error + speed x 0.15 s (the twin's delay). It ignores the arms' response lag
+  (plant 0.12 s; real arms 0.2-0.8 s, 2026-11-18 joint response): at 15 cm/s, 0.5 s of lag is 7.5 cm. On the real
+  arms the shortfall would be larger than here.
+- Options (not applied): margin from the measured lag (2 cm + 0.15 m/s x 0.5 s = 9.5 cm) with 15 cm/s; or keep
+  10 cm/s for the CBF's planning near an obstacle; or more pad on the fitted capsule. Each can be checked with this
+  script (a new twin config + `twin_config:=`) before robot time.
+- **To do (user, 2026-11-19): raise the CBF margin to 9.5 cm** (2 cm twin error + 0.15 m/s x 0.5 s measured arm lag) in `experiments/hardware/cell/twin.yaml` (`cbf.margin_m: 0.095`), and the same in `src/fabric_sim_cell/config/twin_limits_2026-11-19.yaml`; first check it with `DESCENT_M=0.6 src/fabric_sim_cell/scripts/run_twin_check.sh today` (the true sheet must stay off the table), then on the robots. Not applied yet: both configs still have 0.045.
+
 ## Intermittent validation and lean plant
 
 `PROFILE=monitor scripts/run_demo.sh live gloves` starts fabric checks at 5 Hz, with an

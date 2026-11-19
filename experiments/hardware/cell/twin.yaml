@@ -39,6 +39,8 @@ cbf:
   # against the real sheet (about 2 cm p95 in rehearsal) plus arm speed x delay (0.15 m/s x 0.15 s).
   # The capsule itself already lies outside the box (7.3 cm above the top of the default box).
   # It shapes the command; it never stops the arms (a virtual collision is reported only, 2026-11-19).
+  # TO DO (user, 2026-11-19): 0.095 = 2 cm + 0.15 m/s x 0.5 s measured arm lag (0.2-0.8 s): at 0.045 the Isaac check let a
+  # pulled-down sheet touch the table (lab log 2026-11-19). Check in simulation first (run_twin_check.sh), then apply.
   margin_m: 0.045
 stretch_guard:
   # Model-free stretch guard, the last layer before a command leaves the twin, with priority over

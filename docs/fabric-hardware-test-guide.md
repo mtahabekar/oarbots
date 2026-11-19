@@ -397,6 +397,11 @@ Results: 12:36 run, both arms followed over nearly the whole new boxes (x -14/+1
 at most 0.9 cm past a face, 5-11 cm/s delivered; the twin lacked a grip measurement 63 % of the commanded time
 (hand input). Blue's wrist camera dropped off USB during that run's motion (cable strain). Capsule of a 79 x 52 x 64 cm object fitted to its 20-face prism: 337 L, against 822 L for the earlier capsule around its box.
 
+**Isaac check of these settings** (`src/fabric_sim_cell/scripts/run_twin_check.sh`, lab log 2026-11-19): with the
+hands pulling the sheet toward the table (0.6 m descent), the baseline (10 cm/s, capsule around the box) kept the true
+sheet 8.5 cm off the table; 15 cm/s alone left 0.4 cm; 15 cm/s with the fitted capsule touched the table's edge for
+0.32 s. The CBF margin was derived without the arms' response lag. **To do (user, 2026-11-19): raise the CBF margin to 9.5 cm** (2 cm twin error + 0.15 m/s x 0.5 s measured arm lag) in `experiments/hardware/cell/twin.yaml` (`cbf.margin_m: 0.095`), and the same in `src/fabric_sim_cell/config/twin_limits_2026-11-19.yaml`; first check it with `DESCENT_M=0.6 src/fabric_sim_cell/scripts/run_twin_check.sh today` (the true sheet must stay off the table), then on the robots. Not applied yet: both configs still have 0.045.
+
 ### 9.1 Where each gate and session stands
 
 | Gate or session | Verified | Still open |
