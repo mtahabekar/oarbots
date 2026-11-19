@@ -1,0 +1,19 @@
+[INFO] [launch]: All log files can be found below /home/taha/.ros/log/2026-11-18-22-35-10-182284-taha-Legion-7-16IAX10-167387
+[INFO] [launch]: Default logging verbosity is set to INFO
+[INFO] [launch.user]: Using nominal grip transforms from /home/taha/ros2_colcon_ws/src/oarbots/experiments/hardware/cell/calibration.yaml (shadow run, no commands).
+[INFO] [calibration_publisher-1]: process started with pid [167392]
+[INFO] [fusion-2]: process started with pid [167393]
+[INFO] [observer-3]: process started with pid [167394]
+[INFO] [twin-4]: process started with pid [167395]
+[INFO] [demo_markers-5]: process started with pid [167396]
+[INFO] [rviz2-6]: process started with pid [167397]
+[INFO] [recorder-7]: process started with pid [167398]
+[INFO] [twin_recorder-8]: process started with pid [167399]
+[rviz2-6] [INFO] [1795059310.530496097] [rviz2]: Stereo is NOT SUPPORTED
+[rviz2-6] [INFO] [1795059310.530582607] [rviz2]: OpenGl version: 4.6 (GLSL 4.6)
+[rviz2-6] [INFO] [1795059310.552239049] [rviz2]: Stereo is NOT SUPPORTED
+[calibration_publisher-1] [INFO] [1795059310.662545381] [cell_calibration]: published 5 calibration transforms from /home/taha/ros2_colcon_ws/src/oarbots/experiments/hardware/cell/calibration.yaml
+[rviz2-6] [INFO] [1795059310.689263929] [rviz2]: Stereo is NOT SUPPORTED
+[twin-4] [INFO] [1795059311.857847192] [fabric_twin]: fabric twin waiting for four grips; cloth library at /home/taha/ros2_colcon_ws/src/fabric_sim_isaacsim_newton
+[observer-3] [INFO] [1795059311.879213461] [fabric_state_estimator]: Preparing physics backend before accepting live captures
+[twin-4] [INFO] [1795059466.993219389] [fabric_twin]: twin started from a surface between the grips in 0.9 s: 841 particles, obstacle clearance 0.440 m

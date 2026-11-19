@@ -3,6 +3,26 @@
 These scripts run the fabric cell on the shared OARBots without changing the stock system that
 other people use. Run them from the compute laptop, from the repository root.
 
+## Test day: start here
+
+```bash
+scripts/hw/cell_up.sh              # bring-up and checks (asks for the lab password once); --check, --deploy
+scripts/hw/fabric_run.sh recentre  # arms to their grasp joints (deadman held)
+scripts/hw/fabric_run.sh perception 3600
+scripts/hw/fabric_run.sh bridges start
+scripts/hw/fabric_run.sh twin      # own terminal: estimator + twin + RViz, commands off
+scripts/hw/fabric_run.sh status    # until the twin follows with both hands seen
+scripts/hw/fabric_run.sh enable    # then the deadman: release, press, hold
+scripts/hw/fabric_run.sh disable; scripts/hw/fabric_run.sh stop-twin; scripts/hw/fabric_run.sh save <run folder>
+```
+
+`cell_up.sh` re-adds the laptop's lab address, checks every host, the clocks (5 ms target), the code
+deployed on each machine, stops the stock services (with sudo, password over ssh stdin), starts the fabric
+sessions, then checks every stream, each camera's frame age on its own host and where the arms are; each
+line says OK, WARN or FAIL and what to do. The full closed-loop procedure from a cold start, its settings
+and results: `experiments/hardware/sessions/2026-11-18_s5_closed_loop/README.md`. The lab passwords
+are asked, not stored: `lab_ssh.sh` keeps them in `$XDG_RUNTIME_DIR/fabric_lab` for the login session.
+
 ## What stays untouched
 
 The stock system on each machine is `~/ros2_ws`, the services that start it at boot, the scripts in

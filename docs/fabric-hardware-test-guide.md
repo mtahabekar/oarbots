@@ -391,9 +391,9 @@ holds the data, image comparisons, Cartesian diagnosis and last service check.
 | H9, clocks and sync | Host offsets recorded. At 16:40 the helpers were within 2 ms, the NUC was −7.4 ms and the tablet +6.6 ms. | Verify offsets against the 5 ms target on capture hosts, measure cross-camera skew, and compare depth with one versus all emitters. |
 | H11, carbon | Stand-in tested. | Measure carbon RGB-D observability and the material separately when the ply is available. |
 | H12, sustained load | Individual nodes were checked. | Run the complete stack for 30 minutes in S3. |
-| H15, grip frames | Both robot contact points use binder clips at repeatable places on the fingers. | Measure both clip grip transforms. `calibration.yaml` has `measured: false`, which blocks `compute.launch.py`. |
+| H15, grip frames | Both robot contact points use binder clips at repeatable places on the fingers. | Measure both clip grip transforms. `calibration.yaml` has `measured: false`; runs so far use `nominal_grips:=true` (shadow, and with commands under supervision since 2026-11-18). |
 | S0/S1, bench and platform | Stand-in is 0.84 × 0.84 m, 152 g. Platform evidence above. | Complete the remaining gates for each test mode below. |
-| S2–S6, measured-cell demo | The older command-relay rehearsal in §8.3 used simulated inputs. The grasp-pose capture provides sparse RGB-D. | Run the real-sensor estimator, twin and CBF in shadow, then qualify commanded operation. |
+| S2–S6, measured-cell demo | S2 shadow runs (19:18 onward). S3 shadow 22:35 (starved by an overhead timestamp fault). **First closed-loop runs 23:14 and 23:30: the twin drove both arms through the joint-mode bridges; the 23:30 run was smooth (user), both arms followed until held at their box faces** ([record and procedure](../experiments/hardware/sessions/2026-11-18_s5_closed_loop/README.md)). Nominal grips, 6 N placeholder force stop, small MoveIt-checked boxes. | Hand inputs (the right hand's tag often unseen; jumps), twin vs estimate 21 cm p95, wrist camera cables (USB drops during motion), H5 force limits, H15 grips, wider boxes, the 30-min S3/H12 load run, then the warm-up (S4) and transfer (S6). |
 
 The [nominal S2 shadow run](../experiments/hardware/sessions/2026-11-18_s2_nominal/README.md)
 exercised the real-camera estimator at 9.48 Hz and 273 ms p95 capture-to-recorder age. It used
@@ -430,6 +430,11 @@ overlay at 22:00 (shadow mode, `scripts/hw/live_perception.sh` on each camera ho
 hand-tracking improvements deferred. Parameter identification depends less on the hand gaps (the person
 holds still during the warm-up) than on depth and the four grip positions, and on robot motion at the
 grasp pose for the warm-up insets.
+
+**Running it now.** `scripts/hw/cell_up.sh` brings the cell up and checks it; `scripts/hw/fabric_run.sh` runs
+the closed loop step by step ([runbook](../scripts/hw/README.md#test-day-start-here)). The closed-loop
+procedure from a cold start, with settings and results, is in the
+[closed-loop record](../experiments/hardware/sessions/2026-11-18_s5_closed_loop/README.md).
 
 ### 9.2 Grasp setup and measured geometry
 

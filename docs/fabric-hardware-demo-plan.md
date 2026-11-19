@@ -2,14 +2,14 @@
 
 **Date:** 12 November 2026.
 
-> **Status, 18 November 2026.** The simulated loop was rehearsed and two real arms reached the
-> simulation-derived grasp targets. Stationary S2 ran the real-sensor estimator with nominal grip
-> geometry. The same RViz display used in simulation showed the estimated mesh over the real
-> overhead image during a steady hold and slow motion. The operator repeat exposed hand-corner
-> jumps and recurring overhead timestamp rejection. Stable three-camera S2 and the S3 twin/CBF
-> shadow run are pending. The arms showed zero measurable response to the
-> initial Cartesian commands at grasp. See the
-> [S2 overlay session](../experiments/hardware/sessions/2026-11-18_s2_overlay/README.md) and
+> **Status, 18 November 2026 (end of day).** Real-sensor estimation (S2) ran on all three cameras. The
+> overhead outages were found and fixed (full-resolution images viewed on the laptop saturated the NUC's
+> link; a preview relay replaced them). Kinova refuses Cartesian velocity at the grasp pose, so the arms
+> are driven by joint velocity through the same guard and deadman (both follow 1-3 cm/s, no deadband).
+> The first closed-loop runs had the twin with its CBF driving both arms; the 23:30 run was smooth, with
+> nominal grips and small workspace boxes. Next: hand inputs, grip and force calibration (H15, H5), then the
+> 30-min shadow load run, the warm-up (S4) and the transfer (S6). See the
+> [closed-loop record](../experiments/hardware/sessions/2026-11-18_s5_closed_loop/README.md) and the
 > [hardware test guide](fabric-hardware-test-guide.md#9-the-rest-of-the-hardware-tests-plan-18-november-2026).
 
 **Based on** the [research proposal](fabric-state-estimation-research.md), the
