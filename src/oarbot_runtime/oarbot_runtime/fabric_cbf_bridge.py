@@ -5,13 +5,25 @@ Subscribes to this robot's world-frame grip velocity from the fabric twin
 `commands/fabric_cbf/arm`, which command_guard forwards only in control mode `fabric_cbf` with
 the deadman held. Arm with `fabric_cbf/arm` (std_msgs/Bool true); any stop needs a new arm.
 This is not a hardware E-stop.
+
+`output: joint` sends joint velocities on `commands/joint/arm` instead (the guard forwards them under
+the same conditions). The bridge's limits and stops are unchanged; its safe grip velocity is converted
+with the robot's own model (`robot_description`, `joint_states`, the grip offset from TF), holding the
+tool orientation it had at arming. Use it where Kinova's Cartesian control is refused: at the fabric
+grasp pose both arms report CartesianFaultState 1 and ignore Cartesian velocity (2026-11-18).
 """
 from time import monotonic
 
 import rclpy
 from diagnostic_msgs.msg import DiagnosticArray, DiagnosticStatus, KeyValue
 from geometry_msgs.msg import TwistStamped, WrenchStamped
-from kinova_msgs.msg import PoseVelocity
+from math import degrees, radians
+
+import numpy as np
+from kinova_msgs.msg import JointVelocity, PoseVelocity
+from rclpy.qos import DurabilityPolicy
+from sensor_msgs.msg import JointState
+from std_msgs.msg import String
 from rclpy.duration import Duration
 from rclpy.node import Node
 from rclpy.qos import QoSProfile, qos_profile_sensor_data
@@ -19,6 +31,7 @@ from rclpy.time import Time
 from std_msgs.msg import Bool, Header
 from tf2_ros import Buffer, TransformException, TransformListener
 
+from oarbot_runtime.arm_kinematics import Chain, GripRates
 from oarbot_runtime.cbf_bridge import CbfBridge
 
 FIELDS = ('twist_linear_x', 'twist_linear_y', 'twist_linear_z', 'twist_angular_x', 'twist_angular_y', 'twist_angular_z')
@@ -47,9 +60,25 @@ class FabricCbfBridge(Node):
                                 param('force_timeout_sec', .25), param('workspace_min', [-10., -10., -10.]),
                                 param('workspace_max', [10., 10., 10.]), param('pose_timeout_sec', .25),
                                 param('require_force', True), param('force_window_sec', .25), param('workspace_margin_m', .02))
+        self.output_mode = param('output', 'cartesian')
+        if self.output_mode not in ('cartesian', 'joint'):
+            raise ValueError("output must be 'cartesian' or 'joint'")
         self.tf = Buffer(); self.listener = TransformListener(self.tf, self)
         qos = QoSProfile(depth=1, lifespan=Duration(seconds=self.bridge.command_timeout))
-        self.publisher = self.create_publisher(PoseVelocity, 'commands/fabric_cbf/arm', qos)
+        if self.output_mode == 'joint':
+            # The chain runs from the command frame (the arm base the twin's velocity is rotated into)
+            # to the end effector; the grip offset (end effector -> tool frame) comes from TF.
+            self.end_effector = param('end_effector_frame', prefix+'/j2n6s300_end_effector')
+            self.max_joint_rate = radians(param('max_joint_dps', 10.))
+            self.orientation_gain = param('orientation_gain_per_s', 1.)
+            self.ik_damping = param('ik_damping', .01)
+            self.grip = self.joints = None
+            self.joint_pub = self.create_publisher(JointVelocity, 'commands/joint/arm', qos)
+            self.create_subscription(JointState, 'joint_states', self.joint_states, 10)
+            self.create_subscription(String, 'robot_description', self.description,
+                                     QoSProfile(depth=1, durability=DurabilityPolicy.TRANSIENT_LOCAL))
+        else:
+            self.publisher = self.create_publisher(PoseVelocity, 'commands/fabric_cbf/arm', qos)
         self.diagnostics_pub = self.create_publisher(DiagnosticArray, 'diagnostics', 10)
         self.create_subscription(TwistStamped, 'fabric_cbf/cmd_world', self.command, 10)
         self.create_subscription(WrenchStamped, 'force_torque_calibrated', self.force, qos_profile_sensor_data)
@@ -64,6 +93,21 @@ class FabricCbfBridge(Node):
         age = (self.get_clock().now()-Time.from_msg(msg.header.stamp)).nanoseconds/1e9
         v = msg.twist.linear
         self.bridge.command_update((v.x, v.y, v.z), age, monotonic())
+
+    def description(self, msg):
+        try:
+            chain = Chain(msg.data, self.command_frame, self.end_effector)
+        except Exception as error:  # a description without this chain: stay without a model
+            self.get_logger().error(f'robot_description: {error}')
+            return
+        self.grip = GripRates(chain, self.max_joint_rate, self.orientation_gain, self.ik_damping)
+
+    def joint_states(self, msg):
+        if self.grip is None:
+            return
+        position = dict(zip(msg.name, msg.position))
+        if all(name in position for name in self.grip.chain.names):
+            self.joints = (np.array([position[name] for name in self.grip.chain.names]), monotonic())
 
     def force(self, msg):
         f = msg.wrench.force
@@ -82,7 +126,30 @@ class FabricCbfBridge(Node):
             self.bridge.pose_update((tool.x, tool.y, tool.z), rotation_matrix(frame), monotonic())
         except TransformException:
             pass  # the pose then goes stale and the bridge stops
-        self.publisher.publish(PoseVelocity(**dict(zip(FIELDS, self.bridge.output(monotonic())))))
+        if self.output_mode == 'joint':
+            self.joint_tick()
+        else:
+            self.publisher.publish(PoseVelocity(**dict(zip(FIELDS, self.bridge.output(monotonic())))))
+
+    def joint_tick(self):
+        now = monotonic()
+        out = self.bridge.output(now)
+        rates = np.zeros(6)
+        if self.bridge.tripped or self.grip is None:
+            if self.grip is not None:
+                self.grip.reset()  # the next arming holds the orientation it starts from
+        elif self.joints is None or now-self.joints[1] > self.bridge.pose_timeout:
+            self.bridge.trip('joint states went stale' if self.joints else 'no joint states')
+        elif any(out[:3]):
+            try:
+                offset = self.tf.lookup_transform(self.end_effector, self.tool_frame, Time()).transform
+                tip = np.eye(4)
+                tip[:3, :3] = np.array(rotation_matrix(offset.rotation))
+                tip[:3, 3] = [offset.translation.x, offset.translation.y, offset.translation.z]
+                rates = self.grip.rates(self.joints[0], out[:3], tip)
+            except TransformException:
+                self.bridge.trip(f'no transform {self.end_effector} -> {self.tool_frame}')
+        self.joint_pub.publish(JointVelocity(**{f'joint{i}': float(degrees(v)) for i, v in enumerate(rates, 1)}))
 
     def diagnostics(self):
         tripped = self.bridge.tripped
@@ -90,7 +157,8 @@ class FabricCbfBridge(Node):
             DiagnosticStatus(level=DiagnosticStatus.WARN if tripped else DiagnosticStatus.OK,
                              name=self.get_namespace()+'/fabric_cbf_bridge', hardware_id=self.get_namespace(),
                              message=tripped or 'Following the fabric twin',
-                             values=[KeyValue(key='command_frame', value=self.command_frame),
+                             values=[KeyValue(key='output', value=self.output_mode),
+                                     KeyValue(key='command_frame', value=self.command_frame),
                                      KeyValue(key='force_limit_n', value=str(self.bridge.force_limit)),
                                      KeyValue(key='require_force', value=str(self.bridge.require_force))])]))
 
