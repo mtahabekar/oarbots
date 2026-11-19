@@ -1,0 +1,17 @@
+1795047482.6427925 [INFO] [launch]: All log files can be found below /home/taha/ros2_colcon_ws/src/oarbots/experiments/hardware/sessions/2026-11-18_s2_nominal/ros_log/2026-11-18-19-18-02-642234-taha-Legion-7-16IAX10-97918
+1795047482.6428688 [INFO] [launch]: Default logging verbosity is set to INFO
+1795047482.6740634 [INFO] [launch.user]: Using nominal grip transforms from /home/taha/ros2_colcon_ws/src/oarbots/experiments/hardware/sessions/2026-11-18_s2_nominal/cell/calibration.yaml for S2.
+1795047482.6827850 [INFO] [calibration_publisher-1]: process started with pid [97927]
+1795047482.6828647 [INFO] [fusion-2]: process started with pid [97928]
+1795047482.6829011 [INFO] [observer-3]: process started with pid [97929]
+1795047482.6829314 [INFO] [recorder-4]: process started with pid [97930]
+1795047483.0080969 [calibration_publisher-1] [INFO] [1795047483.007581100] [cell_calibration]: published 5 calibration transforms from /home/taha/ros2_colcon_ws/src/oarbots/experiments/hardware/sessions/2026-11-18_s2_nominal/cell/calibration.yaml
+1795047638.2328243 [WARNING] [launch]: user interrupted with ctrl-c (SIGINT)
+1795047638.2340288 [INFO] [recorder-4]: sending signal 'SIGINT' to process[recorder-4]
+1795047638.2343333 [INFO] [observer-3]: sending signal 'SIGINT' to process[observer-3]
+1795047638.2345378 [INFO] [fusion-2]: sending signal 'SIGINT' to process[fusion-2]
+1795047638.2347107 [INFO] [calibration_publisher-1]: sending signal 'SIGINT' to process[calibration_publisher-1]
+1795047638.4747975 [INFO] [calibration_publisher-1]: process has finished cleanly [pid 97927]
+1795047638.4938531 [ERROR] [fusion-2]: process has died [pid 97928, exit code -2, cmd '/home/taha/ros2_colcon_ws/install/human_hand_tracking/lib/human_hand_tracking/fusion --ros-args -r __node:=hand_fusion --params-file /home/taha/ros2_colcon_ws/src/oarbots/experiments/hardware/sessions/2026-11-18_s2_nominal/cell/fusion.yaml'].
+1795047638.5111337 [INFO] [recorder-4]: process has finished cleanly [pid 97930]
+1795047639.4194074 [ERROR] [observer-3]: process has died [pid 97929, exit code -2, cmd '/home/taha/ros2_colcon_ws/install/fabric_state_estimator/lib/fabric_state_estimator/observer --ros-args -r __node:=fabric_state_estimator --params-file /tmp/launch_params_n63nzlja'].

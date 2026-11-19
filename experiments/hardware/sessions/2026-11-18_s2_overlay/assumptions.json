@@ -1,0 +1,64 @@
+{
+  "grips_measured": false,
+  "robot_grips_from": "src/fabric_sim_cell/config/calibration_exact.yaml",
+  "robot_grips": {
+    "oarbot_blue/fabric_grip": {
+      "parent": "oarbot_blue/j2n6s300_end_effector",
+      "child": "oarbot_blue/fabric_grip",
+      "translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_xyzw": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    "oarbot_silver/fabric_grip": {
+      "parent": "oarbot_silver/j2n6s300_end_effector",
+      "child": "oarbot_silver/fabric_grip",
+      "translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_xyzw": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    }
+  },
+  "nominal_glove_offsets_m": {
+    "overhead": [
+      0.0,
+      -0.06,
+      -0.0155,
+      0.0,
+      -0.06,
+      -0.0155
+    ],
+    "blue_wrist": [
+      0.0,
+      -0.06,
+      -0.0155,
+      0.0,
+      -0.06,
+      -0.0155
+    ],
+    "silver_wrist": [
+      0.0,
+      -0.06,
+      -0.0155,
+      0.0,
+      -0.06,
+      -0.0155
+    ]
+  },
+  "twin": false,
+  "commands": false
+}

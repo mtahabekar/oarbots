@@ -1,0 +1,6 @@
+2026-11-18T18:34:04-05:00
+oarbot-blue-P15
+a1748cc
+fabric-stack.service loaded active running /usr/bin/bash -c "source /opt/ros/jazzy/setup.bash && source \"\$1/install/setup.bash\" && shift && exec \"\$@\"" fabric /home/oarbot_blue/fabric_ws ros2 launch oarbot_launch oarbot_blue_helper_laptop.launch.py ft:=false ft_serial_port:=/dev/serial/by-id/usb-FTDI_FT232R_USB_UART_AK6VFMAU-if00-port0 body_tracking:=false
+                <NetworkInterface address="192.168.1.71" />
+/dev/nvme0n1p3  246G   26G  207G  12% /

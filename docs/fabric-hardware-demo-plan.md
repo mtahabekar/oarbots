@@ -3,10 +3,14 @@
 **Date:** 12 November 2026.
 
 > **Status, 18 November 2026.** The simulated loop was rehearsed and two real arms reached the
-> simulation-derived grasp targets. Initial recordings show the stand-in fabric in all three cameras,
-> with incomplete glove coverage at grasp and an uncalibrated sheet mask. The arms did not respond to
-> short Cartesian commands from that pose. The real-sensor demo proceeds through stationary
-> calibration, S2 estimator shadow and S3 twin/CBF shadow. See the [hardware test guide](fabric-hardware-test-guide.md#9-the-rest-of-the-hardware-tests-plan-18-november-2026).
+> simulation-derived grasp targets. Stationary S2 ran the real-sensor estimator with nominal grip
+> geometry. The same RViz display used in simulation showed the estimated mesh over the real
+> overhead image during a steady hold and slow motion. The operator repeat exposed hand-corner
+> jumps and recurring overhead timestamp rejection. Stable three-camera S2 and the S3 twin/CBF
+> shadow run are pending. The arms showed zero measurable response to the
+> initial Cartesian commands at grasp. See the
+> [S2 overlay session](../experiments/hardware/sessions/2026-11-18_s2_overlay/README.md) and
+> [hardware test guide](fabric-hardware-test-guide.md#9-the-rest-of-the-hardware-tests-plan-18-november-2026).
 
 **Based on** the [research proposal](fabric-state-estimation-research.md), the
 [progress report](fabric-state-estimation-progress-report.md), and the [platform audit](platform-audit.md).
@@ -17,7 +21,7 @@ records the subsequent rehearsal and lab evidence.
 
 | Demo item | Available implementation | Evidence still needed |
 | --- | --- | --- |
-| **D1. Camera state estimation** | Real-cell camera launches, tagged-glove fusion, and the ensemble estimator tested against simulation and replay. The real glove and sheet captures are saved. | Measured grip geometry, sheet masks, real fused coverage and latency, withheld depth and independent marker error in S2. |
+| **D1. Camera state estimation** | Real camera inputs, glove fusion and estimator exercised in stationary S2. The nominal run reached 9.48 Hz at 273 ms p95 capture-to-recorder age. A separate RViz capture shows qualitative mesh fit over the overhead image. | Repeat with three fresh camera inputs, characterize hand gaps, and score withheld depth and independent markers against the proposed thresholds. |
 | **D2. Live fabric twin and virtual obstacle** | Headless Newton twin, estimate feedback, and the shared sensitivity CBF run with the simulated cell. | Twin and CBF from measured grips and estimates in S3, including sustained timing and grip error. |
 | **D3. Warm-up and adaptation** | Existing warm-up trajectory and parameter bank, with a simulation rehearsal and headless update tests. | Held-out improvement and parameter sensitivity for the real material in S4. |
 | **D4. A-to-B transfer** | The guarded bridge ran on real arms with commands derived from the simulated cell. | Qualified Cartesian response at grasp, verified force and stopping limits, followed by measured-sheet transport in S5/S6. |

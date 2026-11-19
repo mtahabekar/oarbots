@@ -1,0 +1,174 @@
+{
+  "perception_only_run": "perception_only_185024",
+  "duration_s": 52,
+  "matched_windows_s_after_cue": {
+    "steady": [
+      2,
+      14
+    ],
+    "movement": [
+      2,
+      11
+    ]
+  },
+  "with_raw_recorder": {
+    "overhead": {
+      "fabric_observations": 207,
+      "fabric_observations_hz": 3.98,
+      "publication_age_ms_p50_p95": [
+        171.58,
+        189.01
+      ],
+      "first_capture_ns": 1795045167462955339,
+      "last_capture_ns": 1795045208612345115,
+      "longest_interobservation_gap_s": 0.2,
+      "longest_gap_start_ns": 1795045206411471481,
+      "longest_gap_end_ns": 1795045206611789181,
+      "glove_observations_hz": 12.77,
+      "both_gloves_messages": 476,
+      "age_limit_diagnostic_samples": 21,
+      "steady_window": {
+        "accepted": 60,
+        "rate_hz": 5.0,
+        "age_ms_p95": 183.91
+      },
+      "movement_window": {
+        "accepted": 45,
+        "rate_hz": 5.0,
+        "age_ms_p95": 184.27
+      }
+    },
+    "blue_wrist": {
+      "fabric_observations": 254,
+      "fabric_observations_hz": 4.88,
+      "publication_age_ms_p50_p95": [
+        138.0,
+        170.82
+      ],
+      "first_capture_ns": 1795045166786268441,
+      "last_capture_ns": 1795045218607080349,
+      "longest_interobservation_gap_s": 1.0,
+      "longest_gap_start_ns": 1795045177257833167,
+      "longest_gap_end_ns": 1795045178258273500,
+      "glove_observations_hz": 14.75,
+      "both_gloves_messages": 4,
+      "age_limit_diagnostic_samples": 2,
+      "steady_window": {
+        "accepted": 60,
+        "rate_hz": 5.0,
+        "age_ms_p95": 154.4
+      },
+      "movement_window": {
+        "accepted": 45,
+        "rate_hz": 5.0,
+        "age_ms_p95": 157.9
+      }
+    },
+    "silver_wrist": {
+      "fabric_observations": 58,
+      "fabric_observations_hz": 1.12,
+      "publication_age_ms_p50_p95": [
+        146.17,
+        246.96
+      ],
+      "first_capture_ns": 1795045166764332786,
+      "last_capture_ns": 1795045217651363822,
+      "longest_interobservation_gap_s": 28.211,
+      "longest_gap_start_ns": 1795045179836933843,
+      "longest_gap_end_ns": 1795045208047915073,
+      "glove_observations_hz": 6.38,
+      "both_gloves_messages": 7,
+      "age_limit_diagnostic_samples": 52,
+      "steady_window": {
+        "accepted": 3,
+        "rate_hz": 0.25,
+        "age_ms_p95": 249.04
+      },
+      "movement_window": {
+        "accepted": 0,
+        "rate_hz": 0.0,
+        "age_ms_p95": null
+      }
+    }
+  },
+  "perception_only": {
+    "overhead": {
+      "fabric_observations": 257,
+      "fabric_observations_hz": 4.94,
+      "publication_age_ms_p50_p95": [
+        144.34,
+        150.83
+      ],
+      "first_capture_ns": 1795045826049400597,
+      "last_capture_ns": 1795045877202453230,
+      "longest_interobservation_gap_s": 0.2,
+      "longest_gap_start_ns": 1795045834052633434,
+      "longest_gap_end_ns": 1795045834252875699,
+      "glove_observations_hz": 14.83,
+      "both_gloves_messages": 583,
+      "age_limit_diagnostic_samples": 1,
+      "steady_window": {
+        "accepted": 60,
+        "rate_hz": 5.0,
+        "age_ms_p95": 149.12
+      },
+      "movement_window": {
+        "accepted": 46,
+        "rate_hz": 5.11,
+        "age_ms_p95": 148.36
+      }
+    },
+    "blue_wrist": {
+      "fabric_observations": 260,
+      "fabric_observations_hz": 5.0,
+      "publication_age_ms_p50_p95": [
+        131.51,
+        193.94
+      ],
+      "first_capture_ns": 1795045825105444133,
+      "last_capture_ns": 1795045876859265979,
+      "longest_interobservation_gap_s": 0.201,
+      "longest_gap_start_ns": 1795045831241711110,
+      "longest_gap_end_ns": 1795045831442293011,
+      "glove_observations_hz": 14.98,
+      "both_gloves_messages": 68,
+      "age_limit_diagnostic_samples": 0,
+      "steady_window": {
+        "accepted": 60,
+        "rate_hz": 5.0,
+        "age_ms_p95": 185.96
+      },
+      "movement_window": {
+        "accepted": 45,
+        "rate_hz": 5.0,
+        "age_ms_p95": 229.66
+      }
+    },
+    "silver_wrist": {
+      "fabric_observations": 236,
+      "fabric_observations_hz": 4.54,
+      "publication_age_ms_p50_p95": [
+        133.75,
+        216.46
+      ],
+      "first_capture_ns": 1795045825017955899,
+      "last_capture_ns": 1795045876839127416,
+      "longest_interobservation_gap_s": 3.601,
+      "longest_gap_start_ns": 1795045826819339646,
+      "longest_gap_end_ns": 1795045830420496146,
+      "glove_observations_hz": 13.9,
+      "both_gloves_messages": 26,
+      "age_limit_diagnostic_samples": 7,
+      "steady_window": {
+        "accepted": 60,
+        "rate_hz": 5.0,
+        "age_ms_p95": 139.99
+      },
+      "movement_window": {
+        "accepted": 44,
+        "rate_hz": 4.89,
+        "age_ms_p95": 218.22
+      }
+    }
+  }
+}

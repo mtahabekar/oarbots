@@ -1,0 +1,31 @@
+{
+  "blue": {
+    "status": "provisional_single_view",
+    "observations": [
+      {
+        "camera_frame": "nuc/rgb_camera_link",
+        "pixel_xy": [
+          1064.0,
+          312.0
+        ],
+        "depth_png": "/media/taha/ExtermeLinux/claude-1000/lab/captures/2026-11-18_stationary_grip_calibration/blue_pointer_191036/overhead/raw/overhead_20261118_191038/frame_001_depth.png",
+        "depth_samples": 25,
+        "depth_m_median": 2.5360000133514404,
+        "depth_m_min_max": [
+          2.5280001163482666,
+          2.5460000038146973
+        ],
+        "clip_world_m": [
+          -0.4332974631119686,
+          -0.3936145666763344,
+          1.0789915981353162
+        ],
+        "clip_in_tool_m": [
+          0.02684672888208716,
+          0.03186837068753645,
+          -0.006378688740390714
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,98 @@
+{
+  "assumed_robot_and_glove_offsets": true,
+  "physical_window_unix_s": [
+    1795047542.0467682,
+    1795047588.030684
+  ],
+  "full_held_window": {
+    "duration_s": 45.984,
+    "analysis_count": 436,
+    "analysis_hz": 9.48,
+    "predicted_outputs": 57,
+    "degraded_analyses": 436,
+    "capture_to_recorder_ms_p50_p95": [
+      212.0,
+      272.7
+    ],
+    "max_analysis_gap_s": 0.37,
+    "both_hand_fusion_messages": 252,
+    "max_both_hand_gap_s": 1.867
+  },
+  "steady_window": {
+    "duration_s": 25.48,
+    "analysis_count": 239,
+    "analysis_hz": 9.38,
+    "predicted_outputs": 0,
+    "degraded_analyses": 239,
+    "capture_to_recorder_ms_p50_p95": [
+      216.0,
+      269.8
+    ],
+    "max_analysis_gap_s": 0.37,
+    "both_hand_fusion_messages": 216,
+    "max_both_hand_gap_s": 1.401
+  },
+  "movement_window": {
+    "duration_s": 15.0,
+    "analysis_count": 145,
+    "analysis_hz": 9.67,
+    "predicted_outputs": 48,
+    "degraded_analyses": 145,
+    "capture_to_recorder_ms_p50_p95": [
+      196.1,
+      283.2
+    ],
+    "max_analysis_gap_s": 0.2,
+    "both_hand_fusion_messages": 19,
+    "max_both_hand_gap_s": 0.667
+  },
+  "cameras": {
+    "overhead": {
+      "camera": "overhead",
+      "observations": 287,
+      "publication_age_ms_p50_p95": [
+        143.72,
+        154.05
+      ],
+      "glove_messages": 863,
+      "last_reason": "",
+      "last_stamp": 1795047588261292761,
+      "first_stamp": 1795047531039165616
+    },
+    "blue_wrist": {
+      "camera": "blue_wrist",
+      "observations": 278,
+      "publication_age_ms_p50_p95": [
+        124.3,
+        178.37
+      ],
+      "glove_messages": 835,
+      "last_reason": "",
+      "last_stamp": 1795047588050062052,
+      "first_stamp": 1795047530293252342
+    },
+    "silver_wrist": {
+      "camera": "silver_wrist",
+      "observations": 273,
+      "publication_age_ms_p50_p95": [
+        130.36,
+        165.34
+      ],
+      "glove_messages": 824,
+      "last_reason": "",
+      "last_stamp": 1795047588030683995,
+      "first_stamp": 1795047530141592762
+    }
+  },
+  "total_saved_estimates": 609,
+  "degraded_estimates_total": 609,
+  "diagnostic_messages_held": {
+    "observations assimilated": 56,
+    "edge strain bound violated": 8,
+    "human grip unobserved": 28
+  },
+  "max_reported_drop_counts": {
+    "ValueError: Missing causal, fresh human grip measurements for both corne": 9,
+    "Late or expired capture dropped": 1
+  }
+}

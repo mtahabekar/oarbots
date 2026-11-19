@@ -1,0 +1,172 @@
+{
+  "training_empty_indices": [
+    0,
+    1,
+    2,
+    4,
+    5,
+    6
+  ],
+  "votes_required": 5,
+  "mask_pixels": 505,
+  "validation": {
+    "empty": {
+      "3": {
+        "workspace_only": {
+          "false_positive_pixels": 623,
+          "recall": null,
+          "supported_boundary_points": 121,
+          "depth_points": 1
+        },
+        "with_exclusion": {
+          "false_positive_pixels": 0,
+          "recall": null,
+          "supported_boundary_points": 0,
+          "depth_points": 0
+        }
+      },
+      "7": {
+        "workspace_only": {
+          "false_positive_pixels": 537,
+          "recall": null,
+          "supported_boundary_points": 119,
+          "depth_points": 0
+        },
+        "with_exclusion": {
+          "false_positive_pixels": 0,
+          "recall": null,
+          "supported_boundary_points": 0,
+          "depth_points": 0
+        }
+      },
+      "8": {
+        "workspace_only": {
+          "false_positive_pixels": 674,
+          "recall": null,
+          "supported_boundary_points": 128,
+          "depth_points": 0
+        },
+        "with_exclusion": {
+          "false_positive_pixels": 0,
+          "recall": null,
+          "supported_boundary_points": 0,
+          "depth_points": 0
+        }
+      },
+      "9": {
+        "workspace_only": {
+          "false_positive_pixels": 602,
+          "recall": null,
+          "supported_boundary_points": 119,
+          "depth_points": 0
+        },
+        "with_exclusion": {
+          "false_positive_pixels": 0,
+          "recall": null,
+          "supported_boundary_points": 0,
+          "depth_points": 0
+        }
+      },
+      "10": {
+        "workspace_only": {
+          "false_positive_pixels": 644,
+          "recall": null,
+          "supported_boundary_points": 123,
+          "depth_points": 0
+        },
+        "with_exclusion": {
+          "false_positive_pixels": 0,
+          "recall": null,
+          "supported_boundary_points": 0,
+          "depth_points": 0
+        }
+      },
+      "11": {
+        "workspace_only": {
+          "false_positive_pixels": 635,
+          "recall": null,
+          "supported_boundary_points": 118,
+          "depth_points": 0
+        },
+        "with_exclusion": {
+          "false_positive_pixels": 0,
+          "recall": null,
+          "supported_boundary_points": 0,
+          "depth_points": 0
+        }
+      },
+      "12": {
+        "workspace_only": {
+          "false_positive_pixels": 671,
+          "recall": null,
+          "supported_boundary_points": 137,
+          "depth_points": 0
+        },
+        "with_exclusion": {
+          "false_positive_pixels": 0,
+          "recall": null,
+          "supported_boundary_points": 0,
+          "depth_points": 0
+        }
+      },
+      "13": {
+        "workspace_only": {
+          "false_positive_pixels": 653,
+          "recall": null,
+          "supported_boundary_points": 122,
+          "depth_points": 0
+        },
+        "with_exclusion": {
+          "false_positive_pixels": 0,
+          "recall": null,
+          "supported_boundary_points": 0,
+          "depth_points": 0
+        }
+      }
+    },
+    "held": {
+      "15": {
+        "workspace_only": {
+          "false_positive_pixels": 1440,
+          "recall": 0.98129,
+          "supported_boundary_points": 140,
+          "depth_points": 256
+        },
+        "with_exclusion": {
+          "false_positive_pixels": 1003,
+          "recall": 0.9773,
+          "supported_boundary_points": 135,
+          "depth_points": 256
+        }
+      },
+      "34": {
+        "workspace_only": {
+          "false_positive_pixels": 7842,
+          "recall": 0.94377,
+          "supported_boundary_points": 157,
+          "depth_points": 256
+        },
+        "with_exclusion": {
+          "false_positive_pixels": 7407,
+          "recall": 0.93802,
+          "supported_boundary_points": 161,
+          "depth_points": 256
+        }
+      },
+      "41": {
+        "workspace_only": {
+          "false_positive_pixels": 4938,
+          "recall": 0.91788,
+          "supported_boundary_points": 194,
+          "depth_points": 256
+        },
+        "with_exclusion": {
+          "false_positive_pixels": 4480,
+          "recall": 0.91166,
+          "supported_boundary_points": 180,
+          "depth_points": 256
+        }
+      }
+    }
+  }
+}

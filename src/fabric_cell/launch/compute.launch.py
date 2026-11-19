@@ -1,7 +1,7 @@
 """Run on the compute machine (one NVIDIA GPU).
 
     ros2 launch fabric_cell compute.launch.py [cell_dir:=/abs/path] [twin:=true] [bank:=true]
-        [commands:=false] [rviz:=true] [record:=/abs/dir]
+        [commands:=false] [rviz:=true] [record:=/abs/dir] [nominal_grips:=false]
 
 Starts the static calibration publisher, tagged-glove hand fusion, the estimator, and optionally
 the fabric twin with its CBF, the parameter bank, RViz and the recorders. `commands:=false`
@@ -10,7 +10,7 @@ the fabric twin with its CBF, the parameter bank, RViz and the recorders. `comma
 from pathlib import Path
 
 from launch import LaunchDescription
-from launch.actions import DeclareLaunchArgument, OpaqueFunction
+from launch.actions import DeclareLaunchArgument, LogInfo, OpaqueFunction
 from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import Node
 from launch_ros.substitutions import FindPackageShare
@@ -20,10 +20,15 @@ def nodes(context):
     get = lambda name: LaunchConfiguration(name).perform(context)  # noqa: E731
     cell = Path(get('cell_dir') or Path(FindPackageShare('fabric_cell').perform(context))/'config')
     import yaml
-    if not yaml.safe_load((cell/'calibration.yaml').read_text()).get('measured', True):
+    nominal = get('nominal_grips') == 'true'
+    if nominal and (get('twin') != 'false' or get('commands') != 'false'):
+        raise RuntimeError('Nominal grips require estimator-only shadow mode (twin:=false commands:=false)')
+    measured = yaml.safe_load((cell/'calibration.yaml').read_text()).get('measured', True)
+    if not measured and not nominal:
         raise RuntimeError(f"{cell/'calibration.yaml'} still holds placeholder transforms (measured: false); "
                            'measure the cell calibration first')
-    out = [
+    out = [LogInfo(msg=f'Using nominal grip transforms from {cell / "calibration.yaml"} for S2.')] if nominal else []
+    out += [
         Node(package='fabric_sim_cell', executable='calibration_publisher', name='cell_calibration',
              parameters=[{'calibration_file': str(cell/'calibration.yaml'), 'errors_file': ''}]),
         Node(package='human_hand_tracking', executable='fusion', name='hand_fusion', output='screen',
@@ -59,6 +64,8 @@ def generate_launch_description():
         DeclareLaunchArgument('bank', default_value='true', description='Warm-up calibration and adaptation'),
         DeclareLaunchArgument('adapt_period_sec', default_value='10.0', description='Online adaptation period; 0 disables it'),
         DeclareLaunchArgument('commands', default_value='false', description="'true': send the twin's commands to the robots"),
+        DeclareLaunchArgument('nominal_grips', default_value='false', choices=['false', 'true'],
+                              description='Allow nominal grip transforms in estimator-only shadow mode'),
         DeclareLaunchArgument('rviz', default_value='true'),
         DeclareLaunchArgument('record', default_value='', description='Directory for estimate.npz and twin.npz; empty = none'),
         OpaqueFunction(function=nodes)])

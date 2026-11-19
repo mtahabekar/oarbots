@@ -1,0 +1,6 @@
+2026-11-18T18:34:04-05:00
+nuc-18
+6fc4c70
+fabric-stack.service loaded active running /usr/bin/bash -c "source /opt/ros/jazzy/setup.bash && source \"\$1/install/setup.bash\" && shift && exec \"\$@\"" fabric /home/nuc/fabric_ws ros2 launch /home/nuc/fabric_ws/scripts/hw/nuc_camera.launch.py
+                <NetworkInterface address="192.168.1.90" />
+/dev/nvme0n1p2  282G   21G  247G   8% /

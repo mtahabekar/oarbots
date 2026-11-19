@@ -39,8 +39,8 @@ def rotation(x, y, z, w):
 
 
 class Recorder(Node):
-    def __init__(self, camera, out):
-        super().__init__('glove_record')
+    def __init__(self, camera, out, *, use_global_arguments=True):
+        super().__init__('glove_record', use_global_arguments=use_global_arguments)
         ns = NAMESPACES[camera]
         self.world = None
         if camera == 'overhead':

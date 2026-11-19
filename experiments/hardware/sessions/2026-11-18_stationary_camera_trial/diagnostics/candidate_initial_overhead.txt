@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/home/nuc/fabric_ws/run/stationary_camera_trial/overlay/measure_live.py", line 105, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/home/nuc/fabric_ws/run/stationary_camera_trial/overlay/measure_live.py", line 72, in main
+    set_overhead_calibration(camera, args.cell / 'calibration.yaml')
+  File "/home/nuc/fabric_ws/run/stationary_camera_trial/overlay/measure_live.py", line 51, in set_overhead_calibration
+    camera.tf.set_transform_static(tf, 'measured_overhead_calibration')
+    ^^^^^^^^^
+AttributeError: 'FabricCamera' object has no attribute 'tf'

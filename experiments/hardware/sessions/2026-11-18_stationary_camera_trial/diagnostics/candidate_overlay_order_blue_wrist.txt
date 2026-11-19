@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/home/oarbot_blue/fabric_ws/run/stationary_camera_trial/overlay/measure_live.py", line 107, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/home/oarbot_blue/fabric_ws/run/stationary_camera_trial/overlay/measure_live.py", line 69, in main
+    if camera.workspace.box is None and camera.workspace.depth_range is None:
+       ^^^^^^^^^^^^^^^^
+AttributeError: 'FabricCamera' object has no attribute 'workspace'

@@ -1,0 +1,6 @@
+2026-11-18T18:34:04-05:00
+tablet20
+13eecb2
+fabric-stack.service loaded active running /usr/bin/bash -c "source /opt/ros/jazzy/setup.bash && source \"\$1/install/setup.bash\" && shift && exec \"\$@\"" fabric /home/tablet/fabric_ws ros2 launch /home/tablet/fabric_ws/src/oarbot_launch/launch/tablet_gui.launch.py gui_python:=/home/tablet/fabric_ws/.venv/bin/python3
+                <NetworkInterface address="192.168.1.99" />
+/dev/nvme0n1p2  233G   23G  199G  11% /

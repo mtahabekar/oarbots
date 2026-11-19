@@ -1,0 +1,36 @@
+[INFO] [1795047529.676800528] [rosbag2_recorder]: Press SPACE for pausing/resuming
+[INFO] [1795047529.676804333] [rosbag2_recorder]: Event publisher thread: Started
+[INFO] [1795047529.680243179] [rosbag2_recorder]: Starting recording to '/home/taha/ros2_colcon_ws/src/oarbots/experiments/hardware/sessions/2026-11-18_s2_nominal/live/compact_bag'
+[INFO] [1795047529.686110029] [rosbag2_recorder]: Overriding subscription profile for /tf_static
+[INFO] [1795047529.687047099] [rosbag2_recorder]: Subscribed to topic '/tf_static'
+[INFO] [1795047529.687198962] [rosbag2_recorder]: Overriding subscription profile for /tf
+[INFO] [1795047529.687357690] [rosbag2_recorder]: Subscribed to topic '/tf'
+[INFO] [1795047529.689674837] [rosbag2_recorder]: Subscribed to topic '/oarbot_silver/joint_states'
+[INFO] [1795047529.690031029] [rosbag2_recorder]: Subscribed to topic '/oarbot_blue/joint_states'
+[INFO] [1795047529.690630875] [rosbag2_recorder]: Overriding subscription profile for /fabric/model
+[INFO] [1795047529.693287045] [rosbag2_recorder]: Subscribed to topic '/fabric/model'
+[INFO] [1795047529.695028342] [rosbag2_recorder]: Subscribed to topic '/fabric/estimator_status'
+[INFO] [1795047529.695516311] [rosbag2_recorder]: Subscribed to topic '/fabric/estimated_state'
+[INFO] [1795047529.695587704] [rosbag2_recorder]: Listening for topics...
+[INFO] [1795047529.695597333] [rosbag2_recorder]: Recording...
+[INFO] [1795047529.695613627] [rosbag2_recorder]: Topics discovery started.
+[INFO] [1795047529.697492959] [rosbag2_recorder]: Subscribed to topic '/fabric/hand_states'
+[INFO] [1795047529.697900082] [rosbag2_recorder]: Subscribed to topic '/fabric/hand_tracking_status'
+[INFO] [1795047529.700041983] [rosbag2_recorder]: Subscribed to topic '/tablet_gui/deadman'
+[INFO] [1795047529.700304044] [rosbag2_recorder]: Subscribed to topic '/tablet_gui/e_stop'
+[INFO] [1795047529.889113617] [rosbag2_recorder]: Subscribed to topic '/oarbot_blue/control_mode'
+[INFO] [1795047529.889536904] [rosbag2_recorder]: Subscribed to topic '/oarbot_silver/control_mode'
+[INFO] [1795047530.167723775] [rosbag2_recorder]: Subscribed to topic '/oarbot_silver/azure_kinect/fabric/observations'
+[INFO] [1795047530.168554485] [rosbag2_recorder]: Subscribed to topic '/oarbot_silver/azure_kinect/fabric/gloves'
+[INFO] [1795047530.170233737] [rosbag2_recorder]: Subscribed to topic '/oarbot_silver/azure_kinect/fabric/diagnostics'
+[INFO] [1795047530.224335430] [rosbag2_recorder]: Subscribed to topic '/oarbot_blue/azure_kinect/fabric/observations'
+[INFO] [1795047530.224650042] [rosbag2_recorder]: Subscribed to topic '/oarbot_blue/azure_kinect/fabric/gloves'
+[INFO] [1795047530.226311361] [rosbag2_recorder]: Subscribed to topic '/oarbot_blue/azure_kinect/fabric/diagnostics'
+[INFO] [1795047530.458736542] [rosbag2_recorder]: Subscribed to topic '/nuc/fabric/observations'
+[INFO] [1795047530.459141027] [rosbag2_recorder]: Subscribed to topic '/nuc/fabric/gloves'
+[INFO] [1795047530.461509925] [rosbag2_recorder]: Subscribed to topic '/nuc/fabric/diagnostics'
+[INFO] [1795047530.461525151] [rosbag2_recorder]: All requested topics are subscribed. Stopping discovery...
+[INFO] [1795047530.461530585] [rosbag2_recorder]: Topics discovery stopped.
+[INFO] [1795047603.421041906] [rosbag2_recorder]: Pausing recording.
+[INFO] [1795047603.421108893] [rosbag2_cpp]: Writing remaining messages from cache to the bag. It may take a while
+[INFO] [1795047603.429424587] [rosbag2_recorder]: Recording stopped

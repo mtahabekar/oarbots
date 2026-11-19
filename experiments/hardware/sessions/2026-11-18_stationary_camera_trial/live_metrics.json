@@ -1,0 +1,144 @@
+{
+  "held": {
+    "overhead": {
+      "duration_s": 52,
+      "raw_pairs": 49,
+      "glove_diagnostic_frames": 97,
+      "glove_messages": 664,
+      "glove_messages_per_s": 12.77,
+      "fabric_observations": 207,
+      "fabric_observations_per_s": 3.98,
+      "publication_age_ms_p50_p95": [
+        171.58,
+        189.01
+      ],
+      "longest_interobservation_gap_s": 0.2,
+      "rgb_depth_stamp_skew_abs_p95_ms": 0.011,
+      "median_depth_points": 256.0,
+      "median_supported_boundary_points": 194.0,
+      "preflight_clock_offset_ms": 3.8,
+      "both_gloves_messages": 476
+    },
+    "blue_wrist": {
+      "duration_s": 52,
+      "raw_pairs": 49,
+      "glove_diagnostic_frames": 98,
+      "glove_messages": 767,
+      "glove_messages_per_s": 14.75,
+      "fabric_observations": 254,
+      "fabric_observations_per_s": 4.88,
+      "publication_age_ms_p50_p95": [
+        138.0,
+        170.82
+      ],
+      "longest_interobservation_gap_s": 1.0,
+      "rgb_depth_stamp_skew_abs_p95_ms": 0.044,
+      "median_depth_points": 256.0,
+      "median_supported_boundary_points": 202.0,
+      "preflight_clock_offset_ms": 2.4,
+      "both_gloves_messages": 4
+    },
+    "silver_wrist": {
+      "duration_s": 52,
+      "raw_pairs": 49,
+      "glove_diagnostic_frames": 98,
+      "glove_messages": 332,
+      "glove_messages_per_s": 6.38,
+      "fabric_observations": 58,
+      "fabric_observations_per_s": 1.12,
+      "publication_age_ms_p50_p95": [
+        146.17,
+        246.96
+      ],
+      "longest_interobservation_gap_s": 28.211,
+      "rgb_depth_stamp_skew_abs_p95_ms": 0.035,
+      "median_depth_points": 256.0,
+      "median_supported_boundary_points": 206.5,
+      "preflight_clock_offset_ms": 2.3,
+      "both_gloves_messages": 7
+    }
+  },
+  "empty": {
+    "overhead": {
+      "duration_s": 24,
+      "raw_pairs": 14,
+      "glove_diagnostic_frames": 28,
+      "glove_messages": 351,
+      "glove_messages_per_s": 14.62,
+      "fabric_observations": 116,
+      "fabric_observations_per_s": 4.83,
+      "publication_age_ms_p50_p95": [
+        233.24,
+        242.91
+      ],
+      "longest_interobservation_gap_s": 0.4,
+      "rgb_depth_stamp_skew_abs_p95_ms": 0.011,
+      "median_depth_points": 0.0,
+      "median_supported_boundary_points": 127.0,
+      "preflight_clock_offset_ms": 3.8,
+      "both_gloves_messages": 0,
+      "while_recording": {
+        "observations": 66,
+        "age_ms_p95": 244.69
+      },
+      "after_recording": {
+        "observations": 45,
+        "age_ms_p95": 229.8
+      }
+    },
+    "blue_wrist": {
+      "duration_s": 24,
+      "raw_pairs": 14,
+      "glove_diagnostic_frames": 28,
+      "glove_messages": 359,
+      "glove_messages_per_s": 14.96,
+      "fabric_observations": 120,
+      "fabric_observations_per_s": 5.0,
+      "publication_age_ms_p50_p95": [
+        144.47,
+        154.53
+      ],
+      "longest_interobservation_gap_s": 0.201,
+      "rgb_depth_stamp_skew_abs_p95_ms": 0.023,
+      "median_depth_points": 0.0,
+      "median_supported_boundary_points": 0.0,
+      "preflight_clock_offset_ms": 2.4,
+      "both_gloves_messages": 0,
+      "while_recording": {
+        "observations": 70,
+        "age_ms_p95": 155.86
+      },
+      "after_recording": {
+        "observations": 45,
+        "age_ms_p95": 136.62
+      }
+    },
+    "silver_wrist": {
+      "duration_s": 24,
+      "raw_pairs": 15,
+      "glove_diagnostic_frames": 29,
+      "glove_messages": 357,
+      "glove_messages_per_s": 14.88,
+      "fabric_observations": 120,
+      "fabric_observations_per_s": 5.0,
+      "publication_age_ms_p50_p95": [
+        166.27,
+        176.43
+      ],
+      "longest_interobservation_gap_s": 0.2,
+      "rgb_depth_stamp_skew_abs_p95_ms": 0.033,
+      "median_depth_points": 0.0,
+      "median_supported_boundary_points": 0.0,
+      "preflight_clock_offset_ms": 2.3,
+      "both_gloves_messages": 0,
+      "while_recording": {
+        "observations": 75,
+        "age_ms_p95": 179.08
+      },
+      "after_recording": {
+        "observations": 41,
+        "age_ms_p95": 157.42
+      }
+    }
+  }
+}

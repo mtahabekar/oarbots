@@ -1,0 +1,32 @@
+1795048116.8120456 [INFO] [launch]: All log files can be found below /home/taha/ros2_colcon_ws/src/oarbots/experiments/hardware/sessions/2026-11-18_s2_overlay/ros_log/2026-11-18-19-28-36-811517-taha-Legion-7-16IAX10-102685
+1795048116.8121207 [INFO] [launch]: Default logging verbosity is set to INFO
+1795048116.8438215 [INFO] [launch.user]: Using nominal grip transforms from /home/taha/ros2_colcon_ws/src/oarbots/experiments/hardware/sessions/2026-11-18_s2_overlay/cell/calibration.yaml for S2.
+1795048116.8548932 [INFO] [calibration_publisher-1]: process started with pid [102688]
+1795048116.8549788 [INFO] [fusion-2]: process started with pid [102689]
+1795048116.8550153 [INFO] [observer-3]: process started with pid [102690]
+1795048116.8550415 [INFO] [demo_markers-4]: process started with pid [102691]
+1795048116.8550644 [INFO] [rviz2-5]: process started with pid [102692]
+1795048116.8550868 [INFO] [recorder-6]: process started with pid [102693]
+1795048117.1803815 [calibration_publisher-1] [INFO] [1795048117.179928534] [cell_calibration]: published 5 calibration transforms from /home/taha/ros2_colcon_ws/src/oarbots/experiments/hardware/sessions/2026-11-18_s2_overlay/cell/calibration.yaml
+1795048117.3386781 [rviz2-5] [INFO] [1795048117.338346521] [rviz2]: Stereo is NOT SUPPORTED
+1795048117.3387814 [rviz2-5] [INFO] [1795048117.338415223] [rviz2]: OpenGl version: 4.6 (GLSL 4.6)
+1795048117.3567615 [rviz2-5] [INFO] [1795048117.356484865] [rviz2]: Stereo is NOT SUPPORTED
+1795048117.4988501 [rviz2-5] [INFO] [1795048117.498455309] [rviz2]: Stereo is NOT SUPPORTED
+1795048365.3634274 [WARNING] [launch]: user interrupted with ctrl-c (SIGINT)
+1795048365.3650935 [INFO] [recorder-6]: sending signal 'SIGINT' to process[recorder-6]
+1795048365.3654113 [INFO] [rviz2-5]: sending signal 'SIGINT' to process[rviz2-5]
+1795048365.3656476 [INFO] [demo_markers-4]: sending signal 'SIGINT' to process[demo_markers-4]
+1795048365.3661625 [INFO] [observer-3]: sending signal 'SIGINT' to process[observer-3]
+1795048365.3664415 [INFO] [fusion-2]: sending signal 'SIGINT' to process[fusion-2]
+1795048365.3667006 [INFO] [calibration_publisher-1]: sending signal 'SIGINT' to process[calibration_publisher-1]
+1795048365.3668258 [rviz2-5] [INFO] [1795048365.365681364] [rclcpp]: signal_handler(SIGINT/SIGTERM)
+1795048365.5407934 [rviz2-5] terminate called after throwing an instance of 'std::system_error'
+1795048365.5409598 [rviz2-5]   what():  Invalid argument
+1795048366.4276035 [INFO] [calibration_publisher-1]: process has finished cleanly [pid 102688]
+1795048366.4491279 [INFO] [demo_markers-4]: process has finished cleanly [pid 102691]
+1795048366.4570622 [ERROR] [fusion-2]: process has died [pid 102689, exit code -2, cmd '/home/taha/ros2_colcon_ws/install/human_hand_tracking/lib/human_hand_tracking/fusion --ros-args -r __node:=hand_fusion --params-file /home/taha/ros2_colcon_ws/src/oarbots/experiments/hardware/sessions/2026-11-18_s2_overlay/cell/fusion.yaml'].
+1795048366.4634871 [INFO] [recorder-6]: process has finished cleanly [pid 102693]
+1795048367.8517435 [ERROR] [observer-3]: process has died [pid 102690, exit code -2, cmd '/home/taha/ros2_colcon_ws/install/fabric_state_estimator/lib/fabric_state_estimator/observer --ros-args -r __node:=fabric_state_estimator --params-file /tmp/launch_params_i5dfhxac'].
+1795048370.3680291 [ERROR] [rviz2-5]: process[rviz2-5] failed to terminate '5' seconds after receiving 'SIGINT', escalating to 'SIGTERM'
+1795048370.3683155 [INFO] [rviz2-5]: sending signal 'SIGTERM' to process[rviz2-5]
+1795048373.4356914 [ERROR] [rviz2-5]: process has died [pid 102692, exit code -6, cmd '/opt/ros/jazzy/lib/rviz2/rviz2 -d /home/taha/ros2_colcon_ws/src/oarbots/experiments/hardware/sessions/2026-11-18_s2_overlay/cell/fabric_cell.rviz --ros-args -r __node:=fabric_cell_rviz'].

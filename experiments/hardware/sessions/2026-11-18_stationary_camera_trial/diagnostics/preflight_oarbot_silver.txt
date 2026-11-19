@@ -1,0 +1,7 @@
+2026-11-18T18:34:04-05:00
+oarbot-silver-P15
+a1748cc
+fabric-ft-blue.service loaded active running /usr/bin/bash -c "source /opt/ros/jazzy/setup.bash && source \"\$1/install/setup.bash\" && shift && exec \"\$@\"" fabric /home/oarbot_silver/fabric_ws ros2 launch /home/oarbot_silver/fabric_ws/scripts/hw/hosted_ft.launch.py robot:=blue serial_port:=/dev/serial/by-id/usb-FTDI_FT232R_USB_UART_AK6VFMAU-if00-port0
+fabric-stack.service   loaded active running /usr/bin/bash -c "source /opt/ros/jazzy/setup.bash && source \"\$1/install/setup.bash\" && shift && exec \"\$@\"" fabric /home/oarbot_silver/fabric_ws ros2 launch oarbot_launch oarbot_silver_helper_laptop.launch.py ft_serial_port:=/dev/serial/by-id/usb-FTDI_FT232R_USB_UART_AK7GN0G1-if00-port0 body_tracking:=false hold_fingers:=100
+                <NetworkInterface address="192.168.1.110" />
+/dev/nvme0n1p3  246G   25G  209G  11% /

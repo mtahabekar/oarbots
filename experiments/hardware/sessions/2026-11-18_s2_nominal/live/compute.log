@@ -1,0 +1,72 @@
+[INFO] [launch]: All log files can be found below /home/taha/ros2_colcon_ws/src/oarbots/experiments/hardware/sessions/2026-11-18_s2_nominal/ros_log/2026-11-18-19-18-02-642234-taha-Legion-7-16IAX10-97918
+[INFO] [launch]: Default logging verbosity is set to INFO
+[INFO] [launch.user]: Using nominal grip transforms from /home/taha/ros2_colcon_ws/src/oarbots/experiments/hardware/sessions/2026-11-18_s2_nominal/cell/calibration.yaml for S2.
+[INFO] [calibration_publisher-1]: process started with pid [97927]
+[INFO] [fusion-2]: process started with pid [97928]
+[INFO] [observer-3]: process started with pid [97929]
+[INFO] [recorder-4]: process started with pid [97930]
+[calibration_publisher-1] [INFO] [1795047483.007581100] [cell_calibration]: published 5 calibration transforms from /home/taha/ros2_colcon_ws/src/oarbots/experiments/hardware/sessions/2026-11-18_s2_nominal/cell/calibration.yaml
+[observer-3] [INFO] [1795047484.013158451] [fabric_state_estimator]: Preparing physics backend before accepting live captures
+[WARNING] [launch]: user interrupted with ctrl-c (SIGINT)
+[INFO] [recorder-4]: sending signal 'SIGINT' to process[recorder-4]
+[INFO] [observer-3]: sending signal 'SIGINT' to process[observer-3]
+[INFO] [fusion-2]: sending signal 'SIGINT' to process[fusion-2]
+[INFO] [calibration_publisher-1]: sending signal 'SIGINT' to process[calibration_publisher-1]
+[observer-3] Warp 1.17.0 initialized:
+[observer-3]    CUDA Toolkit 12.9, Driver 13.0
+[observer-3]    Devices:
+[observer-3]      "cpu"      : "x86_64"
+[observer-3]      "cuda:0"   : "NVIDIA GeForce RTX 5070 Laptop GPU" (8 GiB, sm_120, mempool enabled)
+[observer-3]    Kernel cache:
+[observer-3]      /tmp/oarbots-fabric-audit-gpu/1.17.0
+[observer-3] Module newton._src.utils.mesh 92b663b load on device 'cpu' took 0.76 ms  (cached)
+[observer-3] Module newton._src.geometry.bvh 58a3a49 load on device 'cuda:0' took 0.87 ms  (cached)
+[observer-3] Module newton._src.solvers.style3d.kernels 6e609e0 load on device 'cuda:0' took 1.41 ms  (cached)
+[observer-3] Module newton._src.solvers.style3d.collision.bvh.kernels eed0ece load on device 'cuda:0' took 0.92 ms  (cached)
+[observer-3]     Module newton._src.solvers.style3d.builder eb1b915 load on device 'cpu' took 0.15 ms  (cached)
+[observer-3]     Module newton._src.solvers.style3d.builder 013f25b load on device 'cuda:0' took 1.73 ms  (cached)
+[observer-3] SolverStyle3D::precompute() took 6.83 ms
+[observer-3] Module fabric_state_estimator.newton_backend ac93137 load on device 'cuda:0' took 178.37 ms  (compiled)
+[observer-3] Module newton._src.solvers.style3d.linear_solver f457b3c load on device 'cuda:0' took 1.21 ms  (cached)
+[observer-3] Traceback (most recent call last):
+[observer-3]   File "/home/taha/ros2_colcon_ws/install/fabric_state_estimator/lib/fabric_state_estimator/observer", line 33, in <module>
+[observer-3]     sys.exit(load_entry_point('fabric-state-estimator==0.1.0', 'console_scripts', 'observer')())
+[observer-3]              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[observer-3]   File "/home/taha/ros2_colcon_ws/src/oarbots/src/fabric_state_estimator/fabric_state_estimator/node.py", line 325, in main
+[observer-3]     rclpy.spin(node)
+[observer-3]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/__init__.py", line 247, in spin
+[observer-3]     executor.spin_once()
+[observer-3]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 934, in spin_once
+[observer-3]     self._spin_once_impl(timeout_sec)
+[observer-3]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 915, in _spin_once_impl
+[observer-3]     handler, entity, node = self.wait_for_ready_callbacks(
+[observer-3]                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[observer-3]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 885, in wait_for_ready_callbacks
+[observer-3]     return next(self._cb_iter)
+[observer-3]            ^^^^^^^^^^^^^^^^^^^
+[observer-3]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 789, in _wait_for_ready_callbacks
+[observer-3]     wait_set.wait(timeout_nsec)
+[observer-3] KeyboardInterrupt
+[fusion-2] Traceback (most recent call last):
+[fusion-2]   File "/home/taha/ros2_colcon_ws/install/human_hand_tracking/lib/human_hand_tracking/fusion", line 33, in <module>
+[fusion-2]     sys.exit(load_entry_point('human-hand-tracking==0.1.0', 'console_scripts', 'fusion')())
+[fusion-2]              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[fusion-2]   File "/home/taha/ros2_colcon_ws/src/oarbots/src/human_hand_tracking/human_hand_tracking/node.py", line 193, in main
+[fusion-2]     rclpy.spin(node)
+[fusion-2]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/__init__.py", line 247, in spin
+[fusion-2]     executor.spin_once()
+[fusion-2]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 934, in spin_once
+[fusion-2]     self._spin_once_impl(timeout_sec)
+[fusion-2]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 915, in _spin_once_impl
+[fusion-2]     handler, entity, node = self.wait_for_ready_callbacks(
+[fusion-2]                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[fusion-2]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 885, in wait_for_ready_callbacks
+[fusion-2]     return next(self._cb_iter)
+[fusion-2]            ^^^^^^^^^^^^^^^^^^^
+[fusion-2]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 789, in _wait_for_ready_callbacks
+[fusion-2]     wait_set.wait(timeout_nsec)
+[fusion-2] KeyboardInterrupt
+[INFO] [calibration_publisher-1]: process has finished cleanly [pid 97927]
+[ERROR] [fusion-2]: process has died [pid 97928, exit code -2, cmd '/home/taha/ros2_colcon_ws/install/human_hand_tracking/lib/human_hand_tracking/fusion --ros-args -r __node:=hand_fusion --params-file /home/taha/ros2_colcon_ws/src/oarbots/experiments/hardware/sessions/2026-11-18_s2_nominal/cell/fusion.yaml'].
+[INFO] [recorder-4]: process has finished cleanly [pid 97930]
+[ERROR] [observer-3]: process has died [pid 97929, exit code -2, cmd '/home/taha/ros2_colcon_ws/install/fabric_state_estimator/lib/fabric_state_estimator/observer --ros-args -r __node:=fabric_state_estimator --params-file /tmp/launch_params_n63nzlja'].

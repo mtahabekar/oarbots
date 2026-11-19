@@ -145,18 +145,24 @@ def capture_summary(capture, camera_id):
     return summary, np.hstack(tiles)
 
 
-def workspace_summary(capture):
+def workspace_summary(capture, label_path=None):
     world = json.loads((SESSION.parent / '2026-11-17_world' / 'overhead_extrinsics.json').read_text())
     world = world['world_to_nuc_rgb_camera_link']
     transform = rotation_matrix(world['rotation_xyzw']), world['translation']
-    annotations = json.loads((SESSION / 'workspace_labels.json').read_text())
+    annotations = json.loads((label_path or SESSION / 'workspace_labels.json').read_text())
     profiles = yaml.safe_load((CELL / 'perception_workspace.yaml').read_text())
     summary = {'annotation_margin_px': 12, 'cameras': {}}
     tiles = []
     # Exclude a tolerance band around the hand-drawn outline from pixel scores.
     margin = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (25, 25))
-    for name, path in RUNS.items():
-        run = capture / path
+    for name in RUNS:
+        if label_path is None:
+            run = capture / RUNS[name]
+        else:
+            runs = sorted(path for path in capture.rglob(f'{name}_*') if (path / 'camera_info.json').is_file())
+            if len(runs) != 1:
+                raise ValueError(f'Expected one {name} recording in {capture}, found {len(runs)}')
+            run = runs[0]
         camera = read_camera(run)
         params = load_params(CELL / f'perception_{name}.yaml')
         detector = detector_from(params)
@@ -179,7 +185,8 @@ def workspace_summary(capture):
         for index, polygons in annotations[name].items():
             bgr, depth, hsv, gloves = read_frame(run, int(index), camera, detector, params)
             truth = np.zeros(depth.shape, np.uint8)
-            cv2.fillPoly(truth, [np.asarray(polygon, np.int32) * 4 for polygon in polygons], 255)
+            if polygons:
+                cv2.fillPoly(truth, [np.asarray(polygon, np.int32) * 4 for polygon in polygons], 255)
             inside = cv2.erode(truth, margin) > 0
             outside = cv2.dilate(truth, margin) == 0
             # Warm the ray cache outside the timed measurements.
@@ -211,7 +218,8 @@ def workspace_summary(capture):
                 view = bgr.copy()
                 view[predicted] = (0.4 * view[predicted] + [153, 0, 153]).astype(np.uint8)
                 row.append(cv2.resize(view, (480, 270)))
-            for image, label in zip(row, ('visible cloth outline', *candidates)):
+            reference = 'visible cloth outline' if polygons else 'no cloth (reference)'
+            for image, label in zip(row, (reference, *candidates)):
                 cv2.putText(image, f'{name} {index}  {label}', (7, 260), cv2.FONT_HERSHEY_SIMPLEX,
                             .5, (255, 255, 255), 1)
             tiles.append(np.hstack(row))
@@ -250,10 +258,11 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('capture_dir', type=Path)
     parser.add_argument('--workspace', action='store_true', help='Score the labelled workspace comparison')
+    parser.add_argument('--workspace-labels', type=Path, help='Use new annotations and camera runs for the comparison')
     parser.add_argument('--image', type=Path, help='Optional contact sheet to write')
     args = parser.parse_args()
-    if args.workspace:
-        result, image = workspace_summary(args.capture_dir)
+    if args.workspace or args.workspace_labels:
+        result, image = workspace_summary(args.capture_dir, args.workspace_labels)
     else:
         cameras, tiles = {}, []
         for camera_id in RUNS:

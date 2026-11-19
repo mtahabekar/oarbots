@@ -394,6 +394,20 @@ holds the data, image comparisons, Cartesian diagnosis and last service check.
 | S0/S1, bench and platform | Stand-in is 0.84 × 0.84 m, 152 g. Platform evidence above. | Complete the remaining gates for each test mode below. |
 | S2–S6, measured-cell demo | The older command-relay rehearsal in §8.3 used simulated inputs. The grasp-pose capture provides sparse RGB-D. | Run the real-sensor estimator, twin and CBF in shadow, then qualify commanded operation. |
 
+The [nominal S2 shadow run](../experiments/hardware/sessions/2026-11-18_s2_nominal/README.md)
+exercised the real-camera estimator at 9.48 Hz and 273 ms p95 capture-to-recorder age. It used
+simulation grip offsets and logged hand dropouts. Independent shape scoring and the timing
+target remain open.
+
+The [live S2 camera overlay](../experiments/hardware/sessions/2026-11-18_s2_overlay/README.md)
+reused the simulation RViz display to inspect the real sheet during hold and motion. An overhead
+camera restart restored fresh frames, and the reduced preview held overhead perception at 4.96 Hz
+with 141 ms p95 on the camera host. Verify overhead capture age before the next held run.
+The [operator repeat](../experiments/hardware/sessions/2026-11-18_s2_overlay/repeat_20261118_195112/README.md)
+again lost overhead observations. It recorded hand-corner snaps over 60 cm after tracking gaps
+and 252 ms p95 capture-to-recorder age through the last fused glove sample.
+[Repeat the overlay and save its recordings](../experiments/hardware/sessions/2026-11-18_s2_overlay/README.md#repeat-the-overlay).
+
 ### 9.2 Grasp setup and measured geometry
 
 The targets in `experiments/hardware/cell/grasp.yaml` reuse `grasp_arm` from
@@ -416,13 +430,15 @@ again. The saved joint/FK analysis alone cannot distinguish Silver tool rotation
 
 ### 9.3 Next work on the laptop
 
-1. Use the [labelled workspace trial](../experiments/hardware/sessions/2026-11-18_sheet_capture/README.md#labelled-workspace-trial)
-   to start the next stationary camera run. The candidate settings are opt-in. On new recordings,
-   score precision, recall, raw and accepted depth, supported contours and end-to-end latency
-   by camera. The wrist gates lost the released cloth outside the depth field of view. Check
-   RGB-only boundary evidence on labelled clips in that region before using it in the estimator.
-   Use `static_exclusion_mask` where empty-clip images show persistent robot pixels and compare
-   it against held-out cloth.
+1. Use the [independent stationary camera trial](../experiments/hardware/sessions/2026-11-18_stationary_camera_trial/README.md)
+   to qualify the opt-in settings. The [perception-only repeat](../experiments/hardware/sessions/2026-11-18_stationary_camera_trial/README.md#perception-only-held-sheet-repeat)
+   recovered the sustained rate on Silver once the operator held the sheet. Use compact logging
+   for held timing and review Silver's remaining early publication gap. The
+   [offline overhead exclusion](../experiments/hardware/sessions/2026-11-18_stationary_camera_trial/README.md#overhead-attachment-exclusion)
+   removed the false contours from eight detached validation frames. Verify it at the live
+   grasp pose and use it as a camera-specific `static_exclusion_mask` for the stationary trial.
+   Check any RGB-only wrist boundary evidence outside the
+   registered depth field of view against the labelled clips before using it in the estimator.
 2. Prepare a tag 22 card with a measured tip offset and use the existing tag detector and TF
    transforms to fit each clip grip. For the gloves, use raw tag poses for a fixed-pinch pivot
    fit, then measure scatter on independent hand poses. Add the required pose output to the current
@@ -436,13 +452,12 @@ again. The saved joint/FK analysis alone cannot distinguish Silver tool rotation
 
 #### Block A. Finish the stationary camera baseline
 
-Use the parked grasp pose with arms holding still. Capture independent steady, sagging and slow
-hand-motion clips, an empty scene, and empty clips/fingers for the wrist masks. A missed near-hand
-tag and an out-of-view hand need different labels. Run the production nodes for rate and age
-measurements, with `glove_record.py` for glove output, and run `glove_check.py` in a separate
-capture window. For H9, measure nonzero and accepted registered depth plus depth repeatability
-on the same sheet with one versus all emitters. Record host offsets and cross-camera stamp skew
-with each run. The previous diagnostic capture and its probe labels are the starting evidence.
+The independent stationary trial captured steady cloth, sag changes, slow motion and the detached
+workspace. Both timing conditions are recorded in the stationary trial. Use
+`glove_record.py` or the trial's compact recorder for further held tests.
+A missed near-hand tag and an out-of-view hand need different labels. For H9, measure nonzero
+and accepted registered depth plus depth repeatability on the same sheet with one versus all
+emitters. Record host offsets and cross-camera stamp skew with each run.
 
 #### Block B. Measure the robot grips and hand pinch points
 
@@ -483,6 +498,8 @@ with each run. The previous diagnostic capture and its probe labels are the star
 | **S6** A-to-B transfer | Use the measured operating area and virtual obstacle from the demo plan. | Saved on/off comparison from a replay or simulation and measured hardware clearance, force and CBF status for the guarded transfer. |
 
 Use `record:=/abs/dir` with `compute.launch.py` for the existing estimate and twin NPZ recorders.
+For an exploratory S2 run with simulation-derived grip transforms, use
+`nominal_grips:=true twin:=false commands:=false` and record the assumption with the run.
 Follow the [hardware recording procedure](fabric-estimation/hardware.md#9-recording-offline-reconstruction-and-acceptance)
 for synchronized raw data and TF. Preserve calibration and configuration snapshots alongside each
 session. For S2/S3, keep force factors and force yielding disabled pending H5. Use the measured

@@ -1,0 +1,87 @@
+[INFO] [launch]: All log files can be found below /home/taha/ros2_colcon_ws/src/oarbots/experiments/hardware/sessions/2026-11-18_s2_overlay/ros_log/2026-11-18-19-28-36-811517-taha-Legion-7-16IAX10-102685
+[INFO] [launch]: Default logging verbosity is set to INFO
+[INFO] [launch.user]: Using nominal grip transforms from /home/taha/ros2_colcon_ws/src/oarbots/experiments/hardware/sessions/2026-11-18_s2_overlay/cell/calibration.yaml for S2.
+[INFO] [calibration_publisher-1]: process started with pid [102688]
+[INFO] [fusion-2]: process started with pid [102689]
+[INFO] [observer-3]: process started with pid [102690]
+[INFO] [demo_markers-4]: process started with pid [102691]
+[INFO] [rviz2-5]: process started with pid [102692]
+[INFO] [recorder-6]: process started with pid [102693]
+[calibration_publisher-1] [INFO] [1795048117.179928534] [cell_calibration]: published 5 calibration transforms from /home/taha/ros2_colcon_ws/src/oarbots/experiments/hardware/sessions/2026-11-18_s2_overlay/cell/calibration.yaml
+[rviz2-5] [INFO] [1795048117.338346521] [rviz2]: Stereo is NOT SUPPORTED
+[rviz2-5] [INFO] [1795048117.338415223] [rviz2]: OpenGl version: 4.6 (GLSL 4.6)
+[rviz2-5] [INFO] [1795048117.356484865] [rviz2]: Stereo is NOT SUPPORTED
+[rviz2-5] [INFO] [1795048117.498455309] [rviz2]: Stereo is NOT SUPPORTED
+[observer-3] [INFO] [1795048118.319694000] [fabric_state_estimator]: Preparing physics backend before accepting live captures
+[WARNING] [launch]: user interrupted with ctrl-c (SIGINT)
+[INFO] [recorder-6]: sending signal 'SIGINT' to process[recorder-6]
+[INFO] [rviz2-5]: sending signal 'SIGINT' to process[rviz2-5]
+[INFO] [demo_markers-4]: sending signal 'SIGINT' to process[demo_markers-4]
+[INFO] [observer-3]: sending signal 'SIGINT' to process[observer-3]
+[INFO] [fusion-2]: sending signal 'SIGINT' to process[fusion-2]
+[INFO] [calibration_publisher-1]: sending signal 'SIGINT' to process[calibration_publisher-1]
+[rviz2-5] [INFO] [1795048365.365681364] [rclcpp]: signal_handler(SIGINT/SIGTERM)
+[rviz2-5] terminate called after throwing an instance of 'std::system_error'
+[rviz2-5]   what():  Invalid argument
+[fusion-2] Traceback (most recent call last):
+[fusion-2]   File "/home/taha/ros2_colcon_ws/install/human_hand_tracking/lib/human_hand_tracking/fusion", line 33, in <module>
+[fusion-2]     sys.exit(load_entry_point('human-hand-tracking==0.1.0', 'console_scripts', 'fusion')())
+[fusion-2]              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[fusion-2]   File "/home/taha/ros2_colcon_ws/src/oarbots/src/human_hand_tracking/human_hand_tracking/node.py", line 193, in main
+[fusion-2]     rclpy.spin(node)
+[fusion-2]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/__init__.py", line 247, in spin
+[fusion-2]     executor.spin_once()
+[fusion-2]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 934, in spin_once
+[fusion-2]     self._spin_once_impl(timeout_sec)
+[fusion-2]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 915, in _spin_once_impl
+[fusion-2]     handler, entity, node = self.wait_for_ready_callbacks(
+[fusion-2]                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[fusion-2]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 885, in wait_for_ready_callbacks
+[fusion-2]     return next(self._cb_iter)
+[fusion-2]            ^^^^^^^^^^^^^^^^^^^
+[fusion-2]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 789, in _wait_for_ready_callbacks
+[fusion-2]     wait_set.wait(timeout_nsec)
+[fusion-2] KeyboardInterrupt
+[observer-3] Warp 1.17.0 initialized:
+[observer-3]    CUDA Toolkit 12.9, Driver 13.0
+[observer-3]    Devices:
+[observer-3]      "cpu"      : "x86_64"
+[observer-3]      "cuda:0"   : "NVIDIA GeForce RTX 5070 Laptop GPU" (8 GiB, sm_120, mempool enabled)
+[observer-3]    Kernel cache:
+[observer-3]      /tmp/oarbots-fabric-audit-gpu/1.17.0
+[observer-3] Module newton._src.utils.mesh 92b663b load on device 'cpu' took 0.79 ms  (cached)
+[observer-3] Module newton._src.geometry.bvh 58a3a49 load on device 'cuda:0' took 0.90 ms  (cached)
+[observer-3] Module newton._src.solvers.style3d.kernels 6e609e0 load on device 'cuda:0' took 4.54 ms  (cached)
+[observer-3] Module newton._src.solvers.style3d.collision.bvh.kernels eed0ece load on device 'cuda:0' took 0.85 ms  (cached)
+[observer-3]     Module newton._src.solvers.style3d.builder eb1b915 load on device 'cpu' took 0.17 ms  (cached)
+[observer-3]     Module newton._src.solvers.style3d.builder 013f25b load on device 'cuda:0' took 1.91 ms  (cached)
+[observer-3] SolverStyle3D::precompute() took 7.30 ms
+[observer-3] Module fabric_state_estimator.newton_backend ac93137 load on device 'cuda:0' took 0.38 ms  (cached)
+[observer-3] Module newton._src.solvers.style3d.linear_solver f457b3c load on device 'cuda:0' took 1.46 ms  (cached)
+[observer-3] Traceback (most recent call last):
+[observer-3]   File "/home/taha/ros2_colcon_ws/install/fabric_state_estimator/lib/fabric_state_estimator/observer", line 33, in <module>
+[observer-3]     sys.exit(load_entry_point('fabric-state-estimator==0.1.0', 'console_scripts', 'observer')())
+[observer-3]              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[observer-3]   File "/home/taha/ros2_colcon_ws/src/oarbots/src/fabric_state_estimator/fabric_state_estimator/node.py", line 325, in main
+[observer-3]     rclpy.spin(node)
+[observer-3]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/__init__.py", line 247, in spin
+[observer-3]     executor.spin_once()
+[observer-3]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 934, in spin_once
+[observer-3]     self._spin_once_impl(timeout_sec)
+[observer-3]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 915, in _spin_once_impl
+[observer-3]     handler, entity, node = self.wait_for_ready_callbacks(
+[observer-3]                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[observer-3]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 885, in wait_for_ready_callbacks
+[observer-3]     return next(self._cb_iter)
+[observer-3]            ^^^^^^^^^^^^^^^^^^^
+[observer-3]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 789, in _wait_for_ready_callbacks
+[observer-3]     wait_set.wait(timeout_nsec)
+[observer-3] KeyboardInterrupt
+[INFO] [calibration_publisher-1]: process has finished cleanly [pid 102688]
+[INFO] [demo_markers-4]: process has finished cleanly [pid 102691]
+[ERROR] [fusion-2]: process has died [pid 102689, exit code -2, cmd '/home/taha/ros2_colcon_ws/install/human_hand_tracking/lib/human_hand_tracking/fusion --ros-args -r __node:=hand_fusion --params-file /home/taha/ros2_colcon_ws/src/oarbots/experiments/hardware/sessions/2026-11-18_s2_overlay/cell/fusion.yaml'].
+[INFO] [recorder-6]: process has finished cleanly [pid 102693]
+[ERROR] [observer-3]: process has died [pid 102690, exit code -2, cmd '/home/taha/ros2_colcon_ws/install/fabric_state_estimator/lib/fabric_state_estimator/observer --ros-args -r __node:=fabric_state_estimator --params-file /tmp/launch_params_i5dfhxac'].
+[ERROR] [rviz2-5]: process[rviz2-5] failed to terminate '5' seconds after receiving 'SIGINT', escalating to 'SIGTERM'
+[INFO] [rviz2-5]: sending signal 'SIGTERM' to process[rviz2-5]
+[ERROR] [rviz2-5]: process has died [pid 102692, exit code -6, cmd '/opt/ros/jazzy/lib/rviz2/rviz2 -d /home/taha/ros2_colcon_ws/src/oarbots/experiments/hardware/sessions/2026-11-18_s2_overlay/cell/fabric_cell.rviz --ros-args -r __node:=fabric_cell_rviz'].
