@@ -162,6 +162,14 @@ class FabricTwinNode(Node):
             self.nudger = Nudger(self.cloth, msg.rows, msg.columns, self.feedback_spec)
 
     def enable(self, msg):
+        if msg.data and self.cloth is not None:
+            # Follow from where everyone is now: the formation captured at the twin's start may be minutes
+            # old (S5, 2026-11-18: the robots then chased that offset at the speed cap).
+            grips, _ = self.grips_at(self.get_clock().now().nanoseconds, starting=True)
+            if not np.isfinite(grips).all():
+                self.get_logger().error('robot commands NOT enabled: a grip is not measured now')
+                return
+            self.set_formation(grips)
         self.commands_enabled = bool(msg.data)
         self.get_logger().warn(f'robot commands {"ENABLED" if self.commands_enabled else "disabled"}')
 
@@ -297,6 +305,21 @@ class FabricTwinNode(Node):
             command[k] = velocity+r['formation_gain_per_s']*(hand['position']+self.formation[k]-np.array([t.x, t.y, t.z]))
         return command
 
+    def set_formation(self, grips):
+        # Formation: each robot grip keeps its starting offset from its human grip, shortened by
+        # `formation_slack_m`. A taut sheet turns every centimetre of following lag into tens of
+        # newtons (the first closed-loop rehearsal stretched the true sheet by 17 mm); with a few
+        # centimetres of slack the lag only changes the sag.
+        offset = grips[:2]-grips[2:]
+        horizontal = offset.copy(); horizontal[:, 2] = 0.
+        length = np.linalg.norm(horizontal, axis=1, keepdims=True)
+        self.formation = offset-self.runtime['formation_slack_m']*horizontal/np.maximum(length, 1e-9)
+        # The same along the robots' own edge: each robot grip sits this much toward the other.
+        across = grips[1]-grips[0]; across[2] = 0.
+        across /= max(np.linalg.norm(across), 1e-9)
+        self.formation[0] += self.runtime['formation_lateral_slack_m']*across
+        self.formation[1] -= self.runtime['formation_lateral_slack_m']*across
+
     def start(self, time_ns):
         grips, _ = self.grips_at(time_ns, starting=True)
         if not np.isfinite(grips).all():
@@ -324,19 +347,7 @@ class FabricTwinNode(Node):
             settings.controller = self.cbf_options['controller']  # 'none': the nominal command, unfiltered
             self.cbf = TwinCbf(self.cloth, settings, self.cbf_options['period'],
                                self.cbf_options['max_speed_mps'], self.cbf_options['margin_m'])
-        # Formation: each robot grip keeps its starting offset from its human grip, shortened by
-        # `formation_slack_m`. A taut sheet turns every centimetre of following lag into tens of
-        # newtons (the first closed-loop rehearsal stretched the true sheet by 17 mm); with a few
-        # centimetres of slack the lag only changes the sag.
-        offset = grips[:2]-grips[2:]
-        horizontal = offset.copy(); horizontal[:, 2] = 0.
-        length = np.linalg.norm(horizontal, axis=1, keepdims=True)
-        self.formation = offset-self.runtime['formation_slack_m']*horizontal/np.maximum(length, 1e-9)
-        # The same along the robots' own edge: each robot grip sits this much toward the other.
-        across = grips[1]-grips[0]; across[2] = 0.
-        across /= max(np.linalg.norm(across), 1e-9)
-        self.formation[0] += self.runtime['formation_lateral_slack_m']*across
-        self.formation[1] -= self.runtime['formation_lateral_slack_m']*across
+        self.set_formation(grips)
         self.twin_time, self.fault = time_ns, ''
         self.get_logger().info(f'twin started from {source} in {time.perf_counter()-started:.1f} s: '
                                f'{self.cloth.count} particles, obstacle clearance {self.cloth.obstacle_clearance():.3f} m')

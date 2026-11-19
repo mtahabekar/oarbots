@@ -36,6 +36,11 @@ class HandFusion(Node):
         self.fusion_floor = param('fusion_floor_m', .01)
         self.max_speed = param('hand_max_speed_mps', 1.)
         self.spatial_gate = param('view_spatial_gate_m', .15)
+        # Optional world box for hand measurements (m). A glove pose seen wrongly can land a hand on the floor
+        # or behind the robots (S5, 2026-11-18: fused hands at z -0.03 m, single steps of 95 cm); the twin's
+        # formation then chases it. Measurements outside are dropped. Both zero: off.
+        low, high = param('hand_workspace_min', [0.]*3), param('hand_workspace_max', [0.]*3)
+        self.hand_box = None if low == high else (np.asarray(low, float), np.asarray(high, float))
         jerk = param('jerk_stddev', 3.)
         gap = param('filter_max_gap_sec', .5)
         # The person's left hand, then right: tags 21 and 20, sheet corners (1, 1) and (0, 1) (the person
@@ -147,6 +152,9 @@ class HandFusion(Node):
                         view_measurements.append(transform_measurement(m, rotation,
                             [t.x, t.y, t.z], self.extrinsic_noise))
                     for m in view_measurements:
+                        if self.hand_box is not None and not np.all((m.position >= self.hand_box[0]) & (m.position <= self.hand_box[1])):
+                            failures.append(f'{m.hand_id} from {m.camera_id}: outside the hand workspace')
+                            continue
                         measurements[m.hand_id].append(m)
                 except (TransformException, ValueError) as error:
                     failures.append(str(error))
