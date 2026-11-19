@@ -6,12 +6,17 @@ launch runs only the camera driver, at 15 fps, on the session domain, through th
 `azure_kinect_bringup.launch.py` (launched by path: `oarbot_launch` is not built on the NUC because
 colcon would require every robot driver it lists). Frames: `nuc/...`, topics `/nuc/...` as stock.
 
-    fabric_session.sh start [fps:=15] [depth_mode:=NFOV_UNBINNED] [color_resolution:=1080P]
+    fabric_session.sh start [fps:=15] [depth_mode:=NFOV_UNBINNED] [color_resolution:=1080P] [preview:=true]
+
+preview:=true (default) also runs preview_relay.py: RViz on the laptop must show the 640 x 360 preview
+(/nuc/preview/rgb/image_raw), never the full-resolution image, which saturates the NUC's link and
+leaves the camera's frames 0.4-0.6 s old until it is restarted (see preview_relay.py).
 """
 from pathlib import Path
 
 from launch import LaunchDescription
-from launch.actions import DeclareLaunchArgument, IncludeLaunchDescription
+from launch.actions import DeclareLaunchArgument, ExecuteProcess, IncludeLaunchDescription
+from launch.conditions import IfCondition
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import LaunchConfiguration
 
@@ -27,4 +32,7 @@ def generate_launch_description():
         launch_arguments={'azure_kinect_namespace': 'nuc', 'frame_prefix': 'nuc/', 'required': 'true',
                           'point_cloud': 'false', 'rgb_point_cloud': 'false', 'body_tracking_enabled': 'false',
                           **{name: LaunchConfiguration(name) for name in SETTINGS}}.items())
-    return LaunchDescription(arguments + [camera])
+    preview = ExecuteProcess(cmd=['python3', str(Path(__file__).resolve().parent / 'preview_relay.py')],
+                             name='fabric_overhead_preview', output='screen',
+                             condition=IfCondition(LaunchConfiguration('preview')))
+    return LaunchDescription(arguments + [DeclareLaunchArgument('preview', default_value='true'), camera, preview])

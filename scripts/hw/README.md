@@ -55,6 +55,24 @@ fabric GUI on the tablet screen. Only one GUI can hold the deadman Arduino at a 
 On the tablet itself, open the file manager, go to `fabric_ws/scripts/hw`, right-click
 `tablet_gui.sh` and choose *Run as a Program*. Closing the GUI window ends it.
 
+### Camera images stay on their hosts
+
+**Never subscribe to a full-resolution camera image from the laptop** (RViz Image or Camera display,
+`ros2 topic echo/hz`, a recorder). One 1080p BGRA stream at 15 Hz is about 110 MB/s and fills the camera
+host's gigabit link. The camera driver's publish then blocks, captures back up in the Azure SDK, and the
+frames stay 0.4-0.6 s old **until the camera is restarted**, even after the subscriber has gone. Perception
+rejects frames older than 0.25 s, so that camera then publishes no sheet and no gloves. Measured
+2026-11-18 21:40 on the overhead camera: 63 ms -> 564 ms while the laptop subscribed, 437 ms after; this
+was why the overhead published nothing in the S2 overlay runs.
+
+- The NUC session runs `preview_relay.py` (640 x 360, 5 Hz, `/nuc/preview/rgb/image_raw`); the cell's
+  `fabric_cell.rviz` shows that, and its full-resolution wrist display is off.
+- Before every recorded run, check each camera on its own host; the image age should be under 0.1 s:
+  `lab.sh session nuc exec python3 fabric_ws/scripts/hw/frame_age.py /nuc 6` (and
+  `/oarbot_blue/azure_kinect`, `/oarbot_silver/azure_kinect` on the helpers).
+- A stale camera recovers only by restarting it: `lab.sh session nuc stop`, then `start` (a helper's
+  session restart also restarts its arm driver: arms hold their pose, Silver's fingers stay closed).
+
 ## First arm motion (gate H3, translation)
 
 `first_motion.py` moves one arm 1.5 cm along one Kinova command axis and back at 1 cm/s, with zero

@@ -59,7 +59,7 @@ Visualization Manager:
       Name: Overhead camera + estimate
       Enabled: true
       Topic:
-        Value: /nuc/rgb/image_raw
+        Value: /nuc/preview/rgb/image_raw
         Depth: 2
         Durability Policy: Volatile
         History Policy: Keep Last
@@ -76,7 +76,7 @@ Visualization Manager:
         Value: true
     - Class: rviz_default_plugins/Camera
       Name: Blue wrist camera + estimate
-      Enabled: true
+      Enabled: false
       Topic:
         Value: /oarbot_blue/azure_kinect/rgb/image_raw
         Depth: 2

@@ -34,7 +34,7 @@ within 2 ms of the compute laptop. Restarting just the NUC's overhead camera ser
 fresh input. The source of the accumulated camera timestamp age remains open.
 [Frame age](live/preview/timestamp_age.txt) · [Host clocks](live/preview/clock_offsets.txt)
 
-The optional [NUC preview relay](preview_relay.py) decimates RGB to 640 × 360 at up to 5 Hz. It
+The optional [NUC preview relay](preview_relay.py) (now `scripts/hw/preview_relay.py`, started by the NUC session) decimates RGB to 640 × 360 at up to 5 Hz. It
 preserves the capture stamp and rescales the intrinsics for the same
 [RViz Camera display](cell/fabric_cell_preview.rviz). Overhead perception still consumes full
 resolution on the NUC.
