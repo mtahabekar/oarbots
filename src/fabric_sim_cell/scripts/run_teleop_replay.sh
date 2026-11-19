@@ -10,6 +10,7 @@
 set -o pipefail
 HERE=$(dirname "$(realpath "$0")")
 SIM=${OARBOT_SIM:-/media/taha/ExtermeLinux/oarbot_simulation}
+[ -d "$SIM" ] || { echo "Simulation not found at $SIM: connect the ExtermeLinux disk (mounted at /media/taha/ExtermeLinux) or set OARBOT_SIM" >&2; exit 2; }
 REPO=$(realpath "$HERE/../../..")
 TRUTH=$(realpath "$1"); OUT=$(realpath -m "$2"); HANDS=${3:-gloves}; LAUNCH_EXTRA=${4:-}; PLANT_EXTRA=${5:-}
 [[ -f "$TRUTH" ]] || { echo "no truth file $TRUTH" >&2; exit 2; }

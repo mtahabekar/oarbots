@@ -12,6 +12,7 @@ set -eo pipefail
 here="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 repo="$(cd -- "$here/../.." && pwd)"
 SIM=${OARBOT_SIM:-/media/taha/ExtermeLinux/oarbot_simulation}
+[ -d "$SIM" ] || { echo "Simulation not found at $SIM: connect the ExtermeLinux disk (mounted at /media/taha/ExtermeLinux) or set OARBOT_SIM" >&2; exit 2; }
 DURATION=${1:-600}
 HANDS=${2:-oracle}
 [[ "$DURATION" =~ ^[0-9]+$ && "$DURATION" -ge 30 ]] || { echo "SIM_SECONDS must be a whole number, at least 30" >&2; exit 2; }

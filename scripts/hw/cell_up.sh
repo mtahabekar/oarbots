@@ -40,6 +40,9 @@ else
     else nmcli device modify "$IFACE" +ipv4.addresses "$LAB_ADDR/24" >/dev/null && sleep 2 && ok "$LAB_ADDR re-added (it is lost at every replug)" || fail "could not add $LAB_ADDR"; fi
 fi
 
+if mountpoint -q /media/taha/ExtermeLinux; then ok "simulation disk mounted (/media/taha/ExtermeLinux: Isaac Sim, oarbot_simulation)"
+else warn "simulation disk not mounted (/media/taha/ExtermeLinux): hardware runs do not need it; the simulated cell, Isaac Sim and oarbot_simulation do. Plug it in (or: udisksctl mount -b /dev/disk/by-label/ExtermeLinux)"; fi
+
 step "2 Hosts"
 for h in 192.168.1.1:router 192.168.1.71:blue-helper-wired 192.168.1.102:blue-helper-wifi 192.168.1.110:silver-helper-wired \
          192.168.1.104:silver-helper-wifi 192.168.1.90:nuc 192.168.1.99:tablet 192.168.1.101:blue-dingo 192.168.1.103:silver-dingo; do

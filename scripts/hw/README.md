@@ -91,6 +91,7 @@ stored: `lab_ssh.sh` keeps them in `$XDG_RUNTIME_DIR/fabric_lab` for the login s
 | The overhead's frames are 0.4-0.6 s old | full-resolution images viewed on the laptop fill the NUC link | view only the preview; restart the NUC session |
 | Laptop has no 192.168.1.200 | USB Ethernet replugged or laptop rebooted | `cell_up.sh` re-adds it |
 | A run executed code that was not part of it (2026-11-19 16:13: a `go` ran part of `deploy-helpers` and rebuilt Silver) | `fabric_run.sh` edited while a run from it was going; bash reads scripts as it runs them | fixed: `fabric_run.sh`, `start_pose.sh`, `cell_up.sh` are one `{ ... }` block, read whole before running |
+| Simulated-cell scripts: "Simulation not found"; full_sim: "Isaac Sim python.sh not found" | the ExtermeLinux disk (Isaac Sim, oarbot_simulation) is not connected; hardware runs do not need it | connect it (`cell_up.sh` reports it) |
 | `start-pose` aborts: "already has a publisher" | the bridges publish on the arms' joint input | fixed: it stops the bridges before its preflight |
 
 ## What stays untouched

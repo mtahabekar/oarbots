@@ -24,6 +24,7 @@
 set -o pipefail
 HERE=$(dirname "$(realpath "$0")")
 SIM=${OARBOT_SIM:-/media/taha/ExtermeLinux/oarbot_simulation}
+[ -d "$SIM" ] || { echo "Simulation not found at $SIM: connect the ExtermeLinux disk (mounted at /media/taha/ExtermeLinux) or set OARBOT_SIM" >&2; exit 2; }
 WS=${COLCON_WS:-/home/taha/ros2_colcon_ws}
 STAMP=$(date +%Y%m%d_%H%M%S)
 MODE=${1:-live}

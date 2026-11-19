@@ -5,6 +5,7 @@
 set -o pipefail  # not -u: ROS setup scripts read unset variables
 OUT=$(realpath -m "$1"); PLANT_ARGS=$2; LAUNCH_ARGS=$3; shift 3
 SIM=${OARBOT_SIM:-/media/taha/ExtermeLinux/oarbot_simulation}
+[ -d "$SIM" ] || { echo "Simulation not found at $SIM: connect the ExtermeLinux disk (mounted at /media/taha/ExtermeLinux) or set OARBOT_SIM" >&2; exit 2; }
 WS=${COLCON_WS:-/home/taha/ros2_colcon_ws}
 
 # A consumer stack left from an earlier run shares every topic and TF frame with this one (its
