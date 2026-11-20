@@ -1,0 +1,29 @@
+Testing wrist calibration from experiments/hardware/sessions/2026-11-19_wrist_calibration_paper on the saved depth poses
+{
+ "overhead": {
+  "changed_pixels": 1745,
+  "points_in_roi": 1496,
+  "floor_z_corrected_m": 0.0028,
+  "floor_points": 36557,
+  "floor_tilt_error_deg": 0.722
+ },
+ "blue_wrist": {
+  "changed_pixels": 10234,
+  "points_in_roi": 10221,
+  "floor_z_corrected_m": -0.0011,
+  "floor_points": 62189,
+  "floor_tilt_error_deg": 0.124
+ },
+ "silver_wrist": {
+  "changed_pixels": 10455,
+  "points_in_roi": 9437,
+  "floor_z_corrected_m": -0.0009,
+  "floor_points": 53735,
+  "floor_tilt_error_deg": 0.4
+ }
+}
+21154 foreground points, 1 supported clusters; the selected obstacle has 21088 points (100 %)
+overhead: 1473 points in the selected obstacle
+blue_wrist: 10201 points in the selected obstacle
+silver_wrist: 9414 points in the selected obstacle
+Scan size [0.227, 0.329, 0.348] m disagrees with supplied [0.13, 0.22, 0.33] m (short side, long side, height)

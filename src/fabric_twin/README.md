@@ -17,6 +17,9 @@ PYTHONPATH=src/fabric_twin ~/venvs/fabric_ros/bin/python -m pytest -q src/fabric
 
 ## Obstacle
 
+To capture, refit or select a physical object for the next twin launch, follow the
+[hardware obstacle workflow](../../scripts/hw/README.md#3-capture-and-select-a-real-obstacle).
+
 The twin's obstacle comes from `twin.yaml` (`obstacle:` a box: center, half_extents, yaw; the CBF uses capsule_cbf's
 circular capsule around it) unless the node gets `obstacle_file` (the compute launch passes `cell_dir/obstacle.yaml`
 when it exists; `scripts/hw/fabric_run.sh obstacle use|clear` manages it). That file's `obstacle:` is either a box or a detected

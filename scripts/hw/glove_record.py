@@ -45,7 +45,7 @@ class Recorder(Node):
         self.world = None
         if camera == 'overhead':
             self.world = (rotation(*OVERHEAD_WORLD['rotation_xyzw']), np.array(OVERHEAD_WORLD['translation']))
-        self.out = open(out, 'w') if out else None
+        self.out = open(out, 'w', buffering=1) if out else None
         self.rows, self.diag = [], []
         self.create_subscription(GloveObservations, ns + '/fabric/gloves', self.on_gloves, qos_profile_sensor_data)
         self.create_subscription(DiagnosticArray, ns + '/fabric/diagnostics', self.on_diag, 10)

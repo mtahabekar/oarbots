@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<robot name="cell_obstacle">
+  <link name="world"/>
+  <link name="obstacle">
+    <visual><geometry><mesh filename="file:///home/taha/ros2_colcon_ws/src/oarbots/experiments/hardware/sessions/2026-11-19_obstacle/obstacle2_174949/obstacle.obj"/></geometry></visual>
+    <collision><geometry><mesh filename="file:///home/taha/ros2_colcon_ws/src/oarbots/experiments/hardware/sessions/2026-11-19_obstacle/obstacle2_174949/obstacle.obj"/></geometry></collision>
+  </link>
+  <joint name="world_to_obstacle" type="fixed"><parent link="world"/><child link="obstacle"/></joint>
+</robot>

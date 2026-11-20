@@ -1,0 +1,5 @@
+Preflight passed: {"robot": "silver", "target": "joints given", "start_joints": [0.5159, 3.3492, 1.5352, -1.5161, 1.4232, -1.8683], "target_joints": [0.5157, 3.3563, 1.5452, 4.7644, 1.4248, -2.0031], "speed_deg_s": 5.0, "preflight": {"joint_change_deg": [-0.0, 0.4, 0.6, -0.2, 0.1, -7.7], "checks": 9, "seconds_at_speed": 3.5, "closest_to_other_arm_m": 0.834, "closest_where": "j2n6s300_end_effector at 0 %", "tool_start_world": [0.41, -0.427, 1.058], "tool_end_world": [0.411, -0.423, 1.059], "tool_lowest_z": 1.058, "tool_x_range": [0.41, 0.411]}}
+Moving silver to joints given: Fabric Follow (CBF) on for silver, release and press the deadman, then hold it
+Arrived. Release the deadman now.
+Done: largest joint error 0.32 deg
+Saved /home/oarbot_silver/fabric_ws/run/grasp_joints/silver_20261119_194049.json

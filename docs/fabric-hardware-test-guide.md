@@ -188,7 +188,9 @@ Operating the twin:
 | Select the guard mode | "Fabric Follow (CBF)" toggle in the tablet GUI, deadman held |
 | Watch | `/fabric/twin/status`, `/fabric/twin/cbf_debug`, `/fabric/bank/status`, `/fabric/material_parameters`, RViz `/fabric/twin/markers` |
 
-The obstacle is the `obstacle` section of `twin.yaml` (centre, half extents, yaw in the world frame). The twin sends zero whenever a grip measurement is missing, the estimator is stale, the CBF fails, or the simulated sheet touches the obstacle.
+The virtual default comes from the `obstacle` section of `twin.yaml` (centre, half extents, yaw in the world frame).
+To model a physical object for the next launch, follow the [hardware obstacle workflow](../scripts/hw/README.md#3-capture-and-select-a-real-obstacle).
+The launch loads the selected model from `cell/obstacle.yaml`. See §9 for the current twin fault and collision behaviour.
 
 ## 6. What is left
 
@@ -387,7 +389,7 @@ is the [runbook's test day](../scripts/hw/README.md#test-day-start-here).
 | Item | Before | Since 2026-11-19 |
 | --- | --- | --- |
 | Stops on limits | bridge: latched stop 2 cm past its box and at a 6 N force change; twin: zero commands on a virtual collision | none: the box is a wall (outward motion held, slowed near the face), the force and a virtual collision are reported; fault stops and the deadman remain (user) |
-| Speeds | 15 deg/s per joint, 10 cm/s grip | 36 deg/s (Jaco2 joints 1-3 limit) in guard and bridge; 15 cm/s in bridge and twin (16 cm/s deliverable in every direction at the grasp); CBF margin 4.5 cm and stretch slack 3.5 cm from their own formulas |
+| Speeds | 15 deg/s per joint, 10 cm/s grip | 36 deg/s (Jaco2 joints 1-3 limit) in guard and bridge; 15 cm/s in bridge and twin (16 cm/s deliverable in every direction at the grasp); CBF margin 9.5 cm and stretch slack 3.5 cm |
 | Workspace boxes (H3 travel) | x +/-8, y -6/+12, z -12/+6 cm | x +/-15, y +/-12, z -33/+9 cm: `workspace_sweep.py` (bridge kinematics, URDF limits, MoveIt collisions, >= 4 cm/s in every direction, one 3 cm step beyond each face) |
 | Starting a run | a second person enables at the screen | `fabric_run.sh go`: start pose (if > 1.5 deg off), twin, commands on at the first deadman press, spoken steps; Ctrl+C saves and reviews |
 | Obstacle (D4) | virtual box, circular capsule around it | optionally a real object from depth on all three cameras (`fabric_run.sh obstacle`), modelled as a 20-face prism (18-sided footprint on its outline) with capsule_cbf's capsule (cylinder + spherical cap) fitted to it for smallest volume; the twin sheet collides with the prism, the CBF keeps clear of the capsule (an elliptic-capsule version was tried the same day and removed at the user's request) |
@@ -400,7 +402,9 @@ at most 0.9 cm past a face, 5-11 cm/s delivered; the twin lacked a grip measurem
 **Isaac check of these settings** (`src/fabric_sim_cell/scripts/run_twin_check.sh`, lab log 2026-11-19): with the
 hands pulling the sheet toward the table (0.6 m descent), the baseline (10 cm/s, capsule around the box) kept the true
 sheet 8.5 cm off the table; 15 cm/s alone left 0.4 cm; 15 cm/s with the fitted capsule touched the table's edge for
-0.32 s. The CBF margin was derived without the arms' response lag. **To do (user, 2026-11-19): raise the CBF margin to 9.5 cm** (2 cm twin error + 0.15 m/s x 0.5 s measured arm lag) in `experiments/hardware/cell/twin.yaml` (`cbf.margin_m: 0.095`), and the same in `src/fabric_sim_cell/config/twin_limits_2026-11-19.yaml`; first check it with `DESCENT_M=0.6 src/fabric_sim_cell/scripts/run_twin_check.sh today` (the true sheet must stay off the table), then on the robots. Not applied yet: both configs still have 0.045.
+0.32 s with the original 4.5 cm margin. The 9.5 cm margin adds 0.5 s of measured arm lag at 15 cm/s to 2 cm
+of twin error. The 0.6 m Isaac descent with that setting cleared the table by 6.25 cm without contact.
+Both twin configs now use 9.5 cm. The commanded Box1 test on the robots is pending.
 
 ### 9.1 Where each gate and session stands
 
@@ -512,6 +516,8 @@ emitters. Record host offsets and cross-camera stamp skew with each run.
 
 #### Block B. Measure the robot grips and hand pinch points
 
+- For a remounted wrist, follow the [wrist camera calibration runbook](../scripts/hw/README.md#calibrate-the-wrist-cameras-with-the-glove-tags).
+  It captures the glove tags and time-aligned arm poses together and validates each candidate transform on held-out poses.
 - Start H15 with a rigid tagged fixture attached at each clip position at the stationary grasp.
   Measure the tip in the overhead camera and the opposite wrist view and fit the grip offset
   in the tool frame. Confirm repeatability on repeated attachments. Use the tagged fixture

@@ -1,0 +1,5 @@
+Preflight passed: {"robot": "blue", "target": "joints given", "start_joints": [-0.5159, 2.9264, 4.7365, 1.5184, -1.4244, 2.0087], "target_joints": [-0.5157, 2.9269, 4.738, 1.5188, 4.9631, 1.8635], "speed_deg_s": 5.0, "preflight": {"joint_change_deg": [0.0, 0.0, 0.1, 0.0, 6.0, -8.3], "checks": 10, "seconds_at_speed": 3.7, "closest_to_other_arm_m": 0.853, "closest_where": "j2n6s300_end_effector at 0 %", "tool_start_world": [-0.426, -0.413, 1.053], "tool_end_world": [-0.442, -0.395, 1.06], "tool_lowest_z": 1.053, "tool_x_range": [-0.442, -0.426]}}
+Moving blue to joints given: Fabric Follow (CBF) on for blue, release and press the deadman, then hold it
+Arrived. Release the deadman now.
+Done: largest joint error 0.34 deg
+Saved /home/oarbot_blue/fabric_ws/run/grasp_joints/blue_20261119_200940.json

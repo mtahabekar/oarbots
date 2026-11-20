@@ -13,6 +13,7 @@ import os
 from pathlib import Path
 
 import numpy as np
+import yaml
 
 PARTICLE_RADIUS = 0.008
 
@@ -76,11 +77,16 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__.split('\n')[0])
     ap.add_argument('root')
     ap.add_argument('--start', type=float, default=10., help='seconds of simulated time before scoring (the grasp)')
+    ap.add_argument('--limits-config', type=Path, help='twin YAML used for the today and limits modes')
     a = ap.parse_args()
     root = Path(a.root)
     sim = Path(os.environ.get('OARBOT_SIM', '/media/taha/ExtermeLinux/oarbot_simulation'))
     half = np.array(json.loads((sim / 'config' / 'fabric_layout.json').read_text())['table_half_extents'], float)
-    modes = dict(baseline=dict(margin=.04, cap=.10), today=dict(margin=.045, cap=.15), limits=dict(margin=.045, cap=.15),
+    hardware_margin = .045  # Original Nov. 19 settings for reports without an explicit config.
+    if a.limits_config:
+        hardware_margin = float(yaml.safe_load(a.limits_config.read_text())['cbf']['margin_m'])
+    modes = dict(baseline=dict(margin=.04, cap=.10), today=dict(margin=hardware_margin, cap=.15),
+                 limits=dict(margin=hardware_margin, cap=.15),
                  obstacle=dict(margin=.04, cap=.10))
     runs = []
     for run in sorted(p for p in root.iterdir() if p.is_dir()):

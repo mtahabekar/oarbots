@@ -1,9 +1,4 @@
-Panels:
-  - Class: rviz_common/Displays
-    Name: Displays
-    Help Height: 0
-  - Class: rviz_common/Views
-    Name: Views
+Panels: []
 Visualization Manager:
   Class: ""
   Displays:
@@ -81,26 +76,6 @@ Visualization Manager:
         oarbot_blue: false
         oarbot_silver: false
         Estimated sheet (sensors only): true
-        Blue wrist camera + estimate: false
-        Value: true
-    - Class: rviz_default_plugins/Camera
-      Name: Blue wrist camera + estimate
-      Enabled: false
-      Topic:
-        Value: /oarbot_blue/azure_kinect/rgb/image_raw
-        Depth: 2
-        Durability Policy: Volatile
-        History Policy: Keep Last
-        Reliability Policy: Best Effort
-      Image Rendering: background and overlay
-      Overlay Alpha: 0.6
-      Zoom Factor: 1
-      Visibility:
-        Floor grid: false
-        oarbot_blue: false
-        oarbot_silver: false
-        Estimated sheet (sensors only): true
-        Overhead camera + estimate: false
         Value: true
   Enabled: true
   Global Options:
@@ -128,7 +103,5 @@ Visualization Manager:
 Window Geometry:
   Width: 1700
   Height: 1000
-  Displays:
-    collapsed: false
-  Views:
-    collapsed: true
+  # Qt dock state: overhead preview on the left (2/3), 3D twin on the right (1/3).
+  QMainWindow State: 000000ff00000000fd00000001000000000000046d0000035dfc0200000001fb00000034004f0076006500720068006500610064002000630061006d0065007200610020002b00200065007300740069006d006100740065010000005a0000035d0000002401000003000002360000035d00000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000

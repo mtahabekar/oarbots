@@ -23,3 +23,8 @@ __pycache__/
 experiments/material_*/estimate.npz
 experiments/material_*/truth.npz
 experiments/material_*/twin.npz
+
+# Raw hardware estimator and twin recordings. Keep summaries and compressed logs.
+experiments/hardware/sessions/*_fabric_run/**/estimate.npz
+experiments/hardware/sessions/*_fabric_run/**/twin.npz
+experiments/hardware/sessions/*_fabric_run/**/twin.cbf.jsonl

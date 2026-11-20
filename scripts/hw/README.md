@@ -28,19 +28,169 @@ scripts/hw/fabric_run.sh deploy-helpers # only after changing robot-side code: h
 scripts/hw/fabric_run.sh perception 3600
 ```
 
-**3. A real obstacle (optional; without it the twin uses twin.yaml's virtual box)**
+The launcher stages the current cell profile and camera runner from this checkout on all three hosts.
+The wrist sheet crop uses the world workspace at the depth capture time. Keep the wrist views running
+for diagnostics. The hardware fusion and estimator profiles currently use overhead and Blue. Silver's
+remounted view needs hand–eye validation before it can contribute world-frame measurements again.
+
+#### Calibrate the wrist cameras with the glove tags
+
+Use this after adjusting a wrist mount. The existing glove diagnostic processes the registered RGB-D
+streams on each camera host. The calibration measures the centres of glove tags 20 and 21. It uses
+the surveyed overhead and robot-base poses, plus the wrist's end-effector pose at each image stamp
+from TF. Both wrists can use the same overhead capture when they see the same tag.
+
+For paper tags, tape the print flat to a rigid board with the white margins visible. Measure
+the outer black square on each tag and record the widths in millimetres. Start near the centre
+of the work area on a stable surface about 60 cm above the floor. Use a fresh session directory
+for the paper captures and append `--paper TAG20_MM TAG21_MM` to each capture command below.
+Paper mode searches the full RGB frame for IDs 20 and 21, estimates their centres from the
+registered depth plane, and checks their recovered widths against the ruler measurements.
+The normal glove colour settings remain in use for live hand tracking.
+
 ```bash
-scripts/hw/fabric_run.sh start-pose              # arms at the start pose first (wrist camera poses must match)
-scripts/hw/fabric_run.sh obstacle background     # work area empty, sheet off or still, nobody in view
-#   place the object under where the sheet's centre will be
-scripts/hw/fabric_run.sh obstacle detect box1    # writes obstacle.yaml/.png/.urdf/.obj; look at obstacle.png
-scripts/hw/fabric_run.sh obstacle use            # the twin's obstacle from the next run on (clear: back to the box)
+paper_session="experiments/hardware/sessions/$(date +%F)_wrist_calibration_paper"
+scripts/hw/wrist_calibrate.sh capture both "$paper_session" fit_01 --paper 80 80
 ```
-The object becomes a rough **prism** (18-sided footprint, 20 faces, from the floor to its top; sides on its
-outline, 1 cm out) and the CBF **capsule fitted to it** (capsule_cbf's cylinder + spherical cap, smallest volume
-containing every prism corner). The twin's sheet collides with the prism, the CBF keeps it clear of the capsule,
-RViz draws both (prism orange, capsule blue). A wrist camera whose arm moved since the
-background is skipped (the overhead alone still works); retake the background after a start-pose move.
+
+The example uses the cell's 80 mm tags. Keep the same widths for every hold in that session.
+After collecting the paper fitting and check holds, use a saved empty capture from the same physical
+camera mounts for the floor check. Run these commands from the repository root.
+
+```bash
+background="$(cat experiments/hardware/cell/obstacle_background.txt)"
+scripts/hw/wrist_calibrate.sh fit silver "$paper_session" --floor-reference "$background"
+scripts/hw/wrist_calibrate.sh fit blue "$paper_session" --floor-reference "$background"
+```
+
+The paper result also needs floor agreement within 2° and 3 cm at the search centre.
+If tag centres alone leave a floor tilt error, add `--fit-floor <empty_capture>` to fit the floor
+alongside the tag centres. Use a separate empty capture at a different arm pose for
+`--floor-reference`. The calibration still has to pass the reserved paper placements.
+
+For the measured-box check, record a fresh empty reference at the start pose, then place the
+box in view of all three cameras. Substitute its actual outside dimensions in metres for
+`WIDTH DEPTH HEIGHT`.
+
+```bash
+scripts/hw/fabric_run.sh obstacle background
+scripts/hw/fabric_run.sh obstacle detect wrist_check --wrist-calibration "$paper_session" \
+    --expected-size-m WIDTH DEPTH HEIGHT --check-box-registration
+```
+
+`--wrist-calibration` uses the qualified transforms for the captured point clouds. Use it for
+matching captures made while the nominal wrist mounts were still in TF. Use a flat-topped upright
+box for `--check-box-registration`. Each of the three views must recover the measured size from
+the common top surface. Each wrist's top centre must be within 2 cm of overhead. The report also
+records the full-cloud dimensions, which can be affected by foreground returns near the floor.
+This check writes `box_registration.json` and creates no obstacle model. Omit
+`--check-box-registration` to run the usual full-cloud size gate and model fit. Use `obstacle fit`
+with the same options to repeat either check with saved depth.
+
+```bash
+session="experiments/hardware/sessions/$(date +%F)_wrist_calibration"
+scripts/hw/wrist_calibrate.sh capture both "$session" fit_01
+# Repeat with new fit_02, fit_03, ... labels, then use check_01, check_02, ... for held-out placements.
+scripts/hw/wrist_calibrate.sh fit silver "$session"
+scripts/hw/wrist_calibrate.sh fit blue "$session"
+```
+
+1. With the arms stationary and the deadman released, hold a glove tag flat and visible to overhead and
+   the wrist being calibrated. Brace the glove on a stable surface if possible and keep it steady for
+   the shared 8-second capture. The script reads sensors and TF. Arm positioning is a separate
+   supervised operation using the [guarded joint-space procedure](#grasp-pose-and-silvers-fingers).
+2. Collect at least five usable `fit_*` holds and three usable `check_*` holds per wrist. Spread the
+   glove positions across width, depth and height. Use different positions for validation and include
+   at least one different stationary arm pose, reached under the cell's supervised movement procedure
+   with people, the sheet and the target support clear. Use `capture silver` or `capture blue` if the common
+   view is too small.
+   For paper, collect the fitting holds across at least two arm poses and keep a third pose for validation.
+   Use several board placements at different heights and angles. A ground placement is useful as one check.
+3. Each hold saves a log and timestamped tag and TF samples per camera. If a view reports too few pairs,
+   inspect its log for tag visibility, depth or TF errors, then try a new label.
+4. `fit` reports the residual per tag and hold and saves a candidate `right_mount` → `camera_base`
+   transform in the session's `<robot>_result.json`. Qualification requires held-out p95 error at most
+   2 cm and data from a different arm pose. The result is a candidate for review before changing the live
+   TF. Check a measured obstacle before changing live TF.
+   Rerecord the empty background after applying the transforms.
+
+### 3. Capture and select a real obstacle
+
+The same workflow handles one stationary, floor-supported object at a time. The detector fits a
+convex footprint extruded from the floor to the top, so curved and irregular shapes are approximated
+by that envelope. Clear the sheet and people from the camera views before capturing depth.
+
+```bash
+scripts/hw/fabric_run.sh start-pose --check
+# If needed, return with start-pose and a tablet operator holding the deadman during the move.
+scripts/hw/fabric_run.sh obstacle background  # optional if the saved reference still matches the empty cell
+# Place the object under the sheet's intended centre and step out of view.
+scripts/hw/fabric_run.sh obstacle detect new_object
+# Review obstacle.png and fit.log at the printed path, then copy the printed use command.
+scripts/hw/fabric_run.sh obstacle show
+```
+
+The empty reference in `experiments/hardware/cell/obstacle_background.txt` survives restarts and can
+be reused when swapping objects. Refresh it after a change to the empty workspace, a camera mount,
+or the camera calibration. Only a validated set of all three captures replaces the saved reference.
+Both capture commands check the arm offsets before and after taking depth. They report when a guarded
+return to the start pose is needed.
+
+Each fit writes `obstacle.yaml`, a preview plot, OBJ and URDF files, the filtered point cloud, and
+`fit.log` under `experiments/hardware/sessions/<date>_obstacle/`. The log records which views contributed,
+why a view was skipped, and the reason for a failed fit. The twin sheet collides with the prism
+(up to 18 footprint sides, with 1 cm of padding by default). The CBF uses the capsule that encloses it.
+Check the pose and height against the physical object before running the printed
+`scripts/hw/fabric_run.sh obstacle use <candidate_dir>` command. Selection takes effect at the
+next `twin` or `go` launch. With no directory, `use` selects the last successful fit in this runtime.
+Use the explicit directory to choose a particular scan or after a restart. Run `obstacle clear` to
+restore the virtual box from `twin.yaml`.
+
+#### Check dimensions or refit a saved scan
+
+```bash
+# Reject an automatic fit whose dimensions disagree with the tape measure.
+scripts/hw/fabric_run.sh obstacle detect new_object --expected-size-m 0.1778 0.127 0.60
+
+# Set scan to the raw capture directory printed by detect.
+scan=experiments/hardware/sessions/2026-11-19_obstacle/obstacle2_remounted_180724
+scripts/hw/fabric_run.sh obstacle fit "$scan"
+
+# For this upright rectangular object, fit the pose from its visible top and use measured dimensions.
+scripts/hw/fabric_run.sh obstacle fit "$scan" --measured-box-m 0.1778 0.127 0.60
+
+scripts/hw/fabric_run.sh obstacle detect --help
+```
+
+Both size options take width, depth and height in metres. `--expected-size-m` checks the automatic
+fit before padding, with a per-axis tolerance of 3 cm or 10%, whichever is larger.
+`--measured-box-m` is for an upright rectangular object with a fully visible top. It uses only
+filtered overhead depth for centre and heading and rejects an incompatible visible top. Both modes
+apply the same padding. For an irregular shape, use the automatic fit.
+
+`fit` runs offline and writes a new candidate directory. New scans store the matching background
+path and the capture-time camera calibration. A legacy scan can recover its background from
+`obstacle.yaml`. If the reference moved or the legacy capture has no record, supply the matching
+empty capture as `obstacle fit "$scan" --background <directory> [detector options]`. The detector
+reports when an older reference uses the current cell calibration. Capture a fresh pair if that
+calibration cannot place the older cameras reliably.
+
+#### If a fit fails
+
+- **Camera moved or floor disagrees.** Check the mount and start pose. The detector compares pose,
+  intrinsics, and floor between captures. Wrist views must agree with the reference floor within
+  2° and 3 cm at the search centre to contribute. After a mount change, record a fresh empty reference
+  and scan the object again.
+- **Too few supported points.** Clear the view and check the camera diagnostics. The detector rejects
+  unstable pixels, isolated returns, weak trails and unsupported changes in background depth holes.
+  The defaults use a 3 cm depth change and 2 cm voxels. For a small object with reliable depth,
+  use `fit` to try a smaller `--min-step` or `--voxel` and compare the result with the object.
+- **Multiple objects or a clipped object.** Clear the sheet and clutter, then recapture. Use
+  `--roi XMIN XMAX YMIN YMAX ZMIN ZMAX` in world metres to isolate the object or extend the search
+  bounds. Leave visible floor for the alignment check.
+
+A failed capture or fit leaves the selected twin model in place. Use `obstacle show` to distinguish
+the selected model from the latest successful candidate before launching the twin.
 
 **4. The run**
 ```bash
@@ -75,9 +225,10 @@ compares today's settings and obstacle model with the baseline on the true sheet
 (the box is a wall, the force is reported only); the twin reports a virtual collision but keeps commanding;
 fault stops only (stale data, invalid commands, missing grips) and the deadman. Speeds from the arm: 36 deg/s
 per joint (guard and bridge), 15 cm/s grip (bridge, twin). Boxes x +/-15, y +/-12, z -33/+9 cm around each
-grasp grip (MoveIt sweep, `workspace_sweep.py`). **Caution (Isaac check, 2026-11-19):** at 15 cm/s the CBF did not keep a
-pulled-down sheet off a table in simulation (0.4 cm; touching with the fitted capsule); the margin does not yet
-include the arms' lag. Over a real obstacle, hold the deadman ready; see the lab log before transfer runs. **To do (user, 2026-11-19): raise the CBF margin to 9.5 cm** (2 cm twin error + 0.15 m/s x 0.5 s measured arm lag) in `experiments/hardware/cell/twin.yaml` (`cbf.margin_m: 0.095`), and the same in `src/fabric_sim_cell/config/twin_limits_2026-11-19.yaml`; first check it with `DESCENT_M=0.6 src/fabric_sim_cell/scripts/run_twin_check.sh today` (the true sheet must stay off the table), then on the robots. Not applied yet: both configs still have 0.045.
+grasp grip (MoveIt sweep, `workspace_sweep.py`). The CBF margin is 9.5 cm, based on 2 cm of twin error plus
+0.5 s of measured arm lag at 15 cm/s. In the 0.6 m Isaac descent, the true sheet cleared the table by at least
+6.25 cm with this margin. The earlier 4.5 cm setting produced contact. See the lab log for the rehearsal and
+Box1 preflight.
 
 `cell_up.sh` re-adds the laptop's lab address, checks every host, the clocks (5 ms target), the code
 deployed on each machine, stops the stock services (with sudo, password over ssh stdin), starts the fabric

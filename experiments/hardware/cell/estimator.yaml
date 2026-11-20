@@ -61,8 +61,8 @@ runtime:
   world_frame: world
   observation_topics:
   - /oarbot_blue/azure_kinect/fabric/observations
-  - /oarbot_silver/azure_kinect/fabric/observations
   - /nuc/fabric/observations
+  # Keep this source list aligned with fusion.yaml. Re-enable Silver after hand–eye validation.
   hand_topic: /fabric/hand_states
   robot_grip_frames:
   - oarbot_blue/fabric_grip

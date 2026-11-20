@@ -1,0 +1,14 @@
+{
+ "overhead": {
+  "changed_pixels": 1745,
+  "points_in_roi": 1496,
+  "floor_z_corrected_m": 0.0028,
+  "floor_points": 36557,
+  "floor_tilt_error_deg": 0.722
+ },
+ "blue_wrist": "skipped: floor disagrees with reference by 1.89 deg, 3.0 cm",
+ "silver_wrist": "skipped: floor disagrees with reference by 3.19 deg, 7.0 cm"
+}
+1496 foreground points, 1 supported clusters; the selected obstacle has 1434 points (96 %)
+overhead: 1434 points in the selected obstacle
+Scan size [0.17, 0.215, 0.35] m disagrees with supplied [0.13, 0.22, 0.33] m (short side, long side, height)

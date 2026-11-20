@@ -7,8 +7,9 @@
     world_frame: world
     observation_topics:
     - /oarbot_blue/azure_kinect/fabric/gloves
-    - /oarbot_silver/azure_kinect/fabric/gloves
     - /nuc/fabric/gloves
+    # Silver still publishes camera-local diagnostics. Its remounted wrist failed the
+    # world-alignment check (2026-11-19); restore this topic after hand–eye validation.
     glove_tag_ids:
     - 21
     - 20

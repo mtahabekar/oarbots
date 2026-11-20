@@ -1,0 +1,155 @@
+{
+  "robot": "silver",
+  "qualified": false,
+  "candidate": {
+    "parent": "oarbot_silver/right_mount",
+    "child": "oarbot_silver/camera_base",
+    "translation": [
+      -0.04777542581167001,
+      0.013595764483082924,
+      -0.04522936640419085
+    ],
+    "rotation_xyzw": [
+      -0.014125006869612386,
+      0.6668512000278128,
+      -0.06208266449616745,
+      0.7424659614901249
+    ]
+  },
+  "fit": [
+    {
+      "pose": "fit_01",
+      "tag": 21,
+      "pairs": 12,
+      "available_pairs": 16,
+      "wrist_change_from_first_fit_m": 0.0,
+      "wrist_change_from_first_fit_deg": 0.0,
+      "error_m": 0.010632318689384542,
+      "nominal_error_m": 0.10666333192803343
+    },
+    {
+      "pose": "fit_02",
+      "tag": 21,
+      "pairs": 6,
+      "available_pairs": 8,
+      "wrist_change_from_first_fit_m": 2.2887833992611187e-16,
+      "wrist_change_from_first_fit_deg": 0.0,
+      "error_m": 0.02056693210744587,
+      "nominal_error_m": 0.12282838893204213
+    },
+    {
+      "pose": "fit_04",
+      "tag": 20,
+      "pairs": 5,
+      "available_pairs": 5,
+      "wrist_change_from_first_fit_m": 2.2887833992611187e-16,
+      "wrist_change_from_first_fit_deg": 0.0,
+      "error_m": 0.012177199910902792,
+      "nominal_error_m": 0.14879020427276174
+    },
+    {
+      "pose": "fit_04",
+      "tag": 21,
+      "pairs": 21,
+      "available_pairs": 23,
+      "wrist_change_from_first_fit_m": 2.2887833992611187e-16,
+      "wrist_change_from_first_fit_deg": 0.0,
+      "error_m": 0.015133408129445065,
+      "nominal_error_m": 0.10714354061300214
+    },
+    {
+      "pose": "fit_06",
+      "tag": 21,
+      "pairs": 19,
+      "available_pairs": 19,
+      "wrist_change_from_first_fit_m": 2.2887833992611187e-16,
+      "wrist_change_from_first_fit_deg": 0.0,
+      "error_m": 0.007687305644333066,
+      "nominal_error_m": 0.10249756746382499
+    },
+    {
+      "pose": "fit_07",
+      "tag": 21,
+      "pairs": 16,
+      "available_pairs": 22,
+      "wrist_change_from_first_fit_m": 2.2887833992611187e-16,
+      "wrist_change_from_first_fit_deg": 0.0,
+      "error_m": 0.0201801747609241,
+      "nominal_error_m": 0.12825990845283955
+    }
+  ],
+  "held_out": [
+    {
+      "pose": "check_01",
+      "tag": 20,
+      "pairs": 8,
+      "available_pairs": 8,
+      "wrist_change_from_first_fit_m": 2.2887833992611187e-16,
+      "wrist_change_from_first_fit_deg": 0.0,
+      "error_m": 0.016137361494423432,
+      "nominal_error_m": 0.1566696643693134
+    },
+    {
+      "pose": "check_01",
+      "tag": 21,
+      "pairs": 22,
+      "available_pairs": 22,
+      "wrist_change_from_first_fit_m": 2.2887833992611187e-16,
+      "wrist_change_from_first_fit_deg": 0.0,
+      "error_m": 0.024295345340873593,
+      "nominal_error_m": 0.11789320738949796
+    },
+    {
+      "pose": "check_02",
+      "tag": 20,
+      "pairs": 26,
+      "available_pairs": 26,
+      "wrist_change_from_first_fit_m": 2.2887833992611187e-16,
+      "wrist_change_from_first_fit_deg": 0.0,
+      "error_m": 0.017992038324459694,
+      "nominal_error_m": 0.11281180510798454
+    },
+    {
+      "pose": "check_02",
+      "tag": 21,
+      "pairs": 32,
+      "available_pairs": 32,
+      "wrist_change_from_first_fit_m": 2.2887833992611187e-16,
+      "wrist_change_from_first_fit_deg": 0.0,
+      "error_m": 0.030031862314161047,
+      "nominal_error_m": 0.08158252770712887
+    },
+    {
+      "pose": "check_03",
+      "tag": 21,
+      "pairs": 19,
+      "available_pairs": 21,
+      "wrist_change_from_first_fit_m": 0.004326904256788957,
+      "wrist_change_from_first_fit_deg": 7.915308414446097,
+      "error_m": 0.022484675656917884,
+      "nominal_error_m": 0.10415116945304781
+    },
+    {
+      "pose": "check_04",
+      "tag": 20,
+      "pairs": 5,
+      "available_pairs": 5,
+      "wrist_change_from_first_fit_m": 0.004326904256788957,
+      "wrist_change_from_first_fit_deg": 7.915308414446097,
+      "error_m": 0.026534113691088403,
+      "nominal_error_m": 0.14360487299778496
+    },
+    {
+      "pose": "check_04",
+      "tag": 21,
+      "pairs": 18,
+      "available_pairs": 21,
+      "wrist_change_from_first_fit_m": 0.004326904256788957,
+      "wrist_change_from_first_fit_deg": 7.915308414446097,
+      "error_m": 0.0268878254424024,
+      "nominal_error_m": 0.11026589856484906
+    }
+  ],
+  "held_out_p95_m": 0.029088651252633452,
+  "held_out_at_different_arm_pose": true
+}

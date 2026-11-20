@@ -35,13 +35,11 @@ cbf:
   # What the arms deliver: 16 cm/s in every direction at the grasp at 36 deg/s per joint (2026-11-19 sweep;
   # was 0.1). Never plan faster than that; the bridge caps at the same 0.15.
   max_speed_mps: 0.15
-  # Clearance kept from the obstacle's capsule. It covers what the twin does not know: its error
-  # against the real sheet (about 2 cm p95 in rehearsal) plus arm speed x delay (0.15 m/s x 0.15 s).
+  # Clearance target around the capsule: 2 cm of twin error plus 0.15 m/s x 0.5 s of measured arm lag.
   # The capsule itself already lies outside the box (7.3 cm above the top of the default box).
   # It shapes the command; it never stops the arms (a virtual collision is reported only, 2026-11-19).
-  # TO DO (user, 2026-11-19): 0.095 = 2 cm + 0.15 m/s x 0.5 s measured arm lag (0.2-0.8 s): at 0.045 the Isaac check let a
-  # pulled-down sheet touch the table (lab log 2026-11-19). Check in simulation first (run_twin_check.sh), then apply.
-  margin_m: 0.045
+  # The 0.6 m Isaac descent rehearsal at this setting cleared the table by 6.25 cm (lab log 2026-11-19).
+  margin_m: 0.095
 stretch_guard:
   # Model-free stretch guard, the last layer before a command leaves the twin, with priority over
   # obstacle clearance: every grip pair through a robot stays at least this much shorter than the

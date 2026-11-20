@@ -1,0 +1,29 @@
+# Measured footprint with pose from the overhead depth scan and 1 cm padding.
+obstacle:
+  shape: prism_capsule
+  prism:
+    sides: 4
+    top: 0.61
+    footprint:
+    - [-0.00738, 0.06226]
+    - [0.12549, 0.20879]
+    - [0.01659, 0.30753]
+    - [-0.11627, 0.161]
+  capsule:
+    center: [0.0046, 0.1849]
+    radius: 0.1233
+    cylinder_height: 0.61
+    cap_sphere_radius: 100.0001
+    cap_height: 0.0001
+    volume_m3: 0.0291
+source:
+  footprint_size_in: [7, 5]
+  height_approx_m: 0.6
+  pad_m: 0.01
+  pose_camera: overhead
+  pose_center_xy_m: [0.00461, 0.18489]
+  pose_heading_deg: 47.8
+  overhead_top_p99_m: 0.5347
+  overhead_top_band_points: 422
+  background: experiments/hardware/sessions/2026-11-19_obstacle/background_174555
+  object: experiments/hardware/sessions/2026-11-19_obstacle/obstacle2_175138

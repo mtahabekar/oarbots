@@ -40,15 +40,17 @@ class ObservationLog:
         }) + '\n')
 
 
-def set_overhead_calibration(camera, file):
+def set_workspace_calibration(camera, file, root):
+    """Add this camera host's world anchor to its local buffer."""
     settings = yaml.safe_load(file.read_text())
-    record = next(t for t in settings['transforms'] if t['child'] == 'nuc/camera_base')
+    record = next(t for t in settings['transforms']
+                  if t['parent'] == camera.workspace_frame and t['child'] == root)
     tf = TransformStamped()
     tf.header.frame_id, tf.child_frame_id = record['parent'], record['child']
     t, q = tf.transform.translation, tf.transform.rotation
     t.x, t.y, t.z = record['translation']
     q.x, q.y, q.z, q.w = record['rotation_xyzw']
-    camera.tf.set_transform_static(tf, 'measured_overhead_calibration')
+    camera.tf.set_transform_static(tf, 'fabric_workspace_calibration')
 
 
 def main():
@@ -68,15 +70,16 @@ def main():
     camera = FabricCamera()
     if camera.workspace.box is None and camera.workspace.depth_range is None:
         raise RuntimeError(f'Workspace overlay was not loaded for {camera.get_fully_qualified_name()}')
-    if args.camera == 'overhead':
-        # Add only the surveyed transform to this node's buffer. The driver supplies
-        # the factory camera links via its existing static TF publisher.
-        set_overhead_calibration(camera, args.cell / 'calibration.yaml')
+    if camera.workspace.box is not None:
+        # The camera driver and robot state publisher already supply the rest of the chain.
+        namespace = NAMESPACES[args.camera].lstrip('/')
+        root = 'nuc/camera_base' if args.camera == 'overhead' else f"{namespace.split('/')[0]}/base_link"
+        set_workspace_calibration(camera, args.cell / 'calibration.yaml', root)
     glove_log = Recorder(args.camera, str(args.out / 'gloves.jsonl'), use_global_arguments=False)
     executor = SingleThreadedExecutor()
     executor.add_node(camera)
     executor.add_node(glove_log)
-    with (args.out / 'observations.jsonl').open('w') as output:
+    with (args.out / 'observations.jsonl').open('w', buffering=1) as output:
         fabric_log = ObservationLog(camera, output)
         camera.observations_pub = fabric_log
         started = monotonic()

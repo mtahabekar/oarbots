@@ -1,5 +1,6 @@
-# Opt-in parameters for stationary tests with the stand-in sheet.
-# Source: 2026-11-18_sheet_capture/workspace_results.json.
+# Workspace profile for the stand-in sheet. The fixed overhead image settings come from
+# 2026-11-18_sheet_capture/workspace_results.json. Wrist crops use the world-frame arm and
+# hand envelope at capture time so moving the camera no longer changes the selected volume.
 /nuc/fabric_perception:
   ros__parameters:
     workspace_roi: [0.48, 0.25, 0.80, 0.65]
@@ -13,12 +14,14 @@
     cloth_max_saturation: 70
     cloth_max_value: 150
     cloth_dark_value: 60
-    workspace_depth_range_m: [0.10, 1.25]
+    workspace_box_frame: world
+    workspace_box_m: [-0.90, -0.60, 0.25, 0.90, 1.20, 1.60]
     workspace_depth_fill_px: 31
 /oarbot_silver/azure_kinect/fabric_perception:
   ros__parameters:
     cloth_max_saturation: 70
     cloth_max_value: 150
     cloth_dark_value: 60
-    workspace_depth_range_m: [0.10, 1.25]
+    workspace_box_frame: world
+    workspace_box_m: [-0.90, -0.60, 0.25, 0.90, 1.20, 1.60]
     workspace_depth_fill_px: 31

@@ -1,0 +1,35 @@
+Input background: experiments/hardware/sessions/2026-11-19_obstacle/background_180455
+Input obstacle: experiments/hardware/sessions/2026-11-19_obstacle/obstacle2_remounted_180724
+Transforms: silver_result.json, blue_result.json
+Expected size: .1778 .127 .60 m
+Detector exit: 1
+
+Background predates saved calibration. Using the current cell calibration.
+{
+ "overhead": {
+  "changed_pixels": 2234,
+  "points_in_roi": 2185,
+  "floor_z_corrected_m": 0.0025,
+  "floor_points": 36734,
+  "floor_tilt_error_deg": 0.785
+ },
+ "blue_wrist": {
+  "changed_pixels": 12735,
+  "points_in_roi": 12329,
+  "floor_z_corrected_m": -0.0009,
+  "floor_points": 60621,
+  "floor_tilt_error_deg": 0.091
+ },
+ "silver_wrist": {
+  "changed_pixels": 13909,
+  "points_in_roi": 13896,
+  "floor_z_corrected_m": -0.0015,
+  "floor_points": 53858,
+  "floor_tilt_error_deg": 0.402
+ }
+}
+28410 foreground points, 1 supported clusters; the selected obstacle has 28346 points (100 %)
+overhead: 2151 points in the selected obstacle
+blue_wrist: 12306 points in the selected obstacle
+silver_wrist: 13889 points in the selected obstacle
+Scan size [0.193, 0.25, 0.541] m disagrees with supplied [0.127, 0.178, 0.6] m (short side, long side, height)

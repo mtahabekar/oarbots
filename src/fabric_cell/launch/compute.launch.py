@@ -56,8 +56,13 @@ def nodes(context):
         out.append(Node(package='fabric_sim_cell', executable='recorder', name='estimate_recorder', output='screen',
                         parameters=[{'output': str(record/'estimate.npz')}]))
         if get('twin') == 'true':
+            recorder = {'output': str(record/'twin.npz')}
+            observer_settings = yaml.safe_load((cell/'estimator.yaml').read_text())
+            observation_topics = observer_settings.get('runtime', {}).get('observation_topics')
+            if observation_topics:
+                recorder['depth_topics'] = observation_topics
             out.append(Node(package='fabric_twin', executable='twin_recorder', name='twin_recorder', output='screen',
-                            parameters=[{'output': str(record/'twin.npz')}]))
+                            parameters=[recorder]))
     return out
 
 

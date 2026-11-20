@@ -15,12 +15,15 @@
 #                                       on and arms the bridges at the FIRST DEADMAN PRESS once the twin is
 #                                       ready; speaks what happens (scripts/hw/auto_start.py). Ctrl+C: commands
 #                                       off, bridges disarmed, twin stopped, run saved and reviewed
-#   fabric_run.sh obstacle background   depth of the empty work area from all three cameras (arms at the grasp
-#                                       pose, sheet off or held away, nobody in view), on each camera's host
-#   fabric_run.sh obstacle detect [name] [detector options]   the same with the object placed: finds it,
+#   fabric_run.sh obstacle background   refresh the reusable empty-work-area reference from all three cameras
+#                                       at the grasp pose (sheet off or held away, nobody in view)
+#   fabric_run.sh obstacle detect [name] [detector options]   reuse the saved background with the object placed,
+#                                       with the arms at the grasp pose: finds the object and
 #                                       writes obstacle.yaml/.urdf/.obj/.png (scripts/hw/obstacle_detect.py)
+#   fabric_run.sh obstacle fit <capture_dir> [--background dir] [detector options]
+#                                       rebuild a model from saved depth without connecting to the cell
 #   fabric_run.sh obstacle use [dir]    make a detected obstacle the twin's (cell/obstacle.yaml; the next
-#                                       twin/go uses it); default: the last detect
+#                                       twin/go uses it); default: the last successful detect or fit
 #   fabric_run.sh obstacle clear | show back to twin.yaml's virtual box | what the twin will use
 #   fabric_run.sh status [seconds]      go/no-go readout (scripts/hw/twin_monitor.py)
 #   fabric_run.sh watch [seconds]       readout every 5 s during a commanded run
@@ -47,8 +50,10 @@ set -uo pipefail
 here="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 repo="$(cd -- "$here/../.." && pwd)"
 cd "$repo"
-# shellcheck source=lab_ssh.sh
-source "$here/lab_ssh.sh"; lab_ssh_setup
+if [ "${1:-}" != obstacle ]; then
+    # shellcheck source=lab_ssh.sh
+    source "$here/lab_ssh.sh"; lab_ssh_setup
+fi
 declare -A HOST=([nuc]=nuc@192.168.1.90 [blue]=oarbot_blue@192.168.1.71 [silver]=oarbot_silver@192.168.1.110)
 declare -A CAMERA=([nuc]=overhead [blue]=blue_wrist [silver]=silver_wrist)
 state="${XDG_RUNTIME_DIR:-/tmp}/fabric_lab"; mkdir -p "$state"
@@ -95,12 +100,39 @@ case "$cmd" in
         for r in blue silver; do echo "$r: $(timeout 40 scripts/hw/lab.sh session "$r" exec ros2 service call "/oarbot_$r/kinova/j2n6s300_driver/in/start" kinova_msgs/srv/Start 2>&1 | grep -o "start_result='[^']*'")"; done ;;
     perception)
         seconds="${1:-3600}"; tag="$(date +%Y%m%d_%H%M%S)"
+        trial="$repo/experiments/hardware/sessions/2026-11-18_stationary_camera_trial"
+        # Keep all hosts on the compute laptop's cell profile even when their installed
+        # packages were deployed at different commits. Stage everything before stopping
+        # any existing perception process.
         for m in nuc blue silver; do
-            "$LAB_SSH" "${HOST[$m]}" 'pkill -INT -f "measure_live[.]py"; true'
-            nohup scripts/hw/lab.sh session "$m" exec bash fabric_ws/scripts/hw/live_perception.sh "${CAMERA[$m]}" "$seconds" \
-                "/dev/shm/run_${CAMERA[$m]}_$tag" > "$state/perception_$m.log" 2>&1 &
+            out="/dev/shm/run_${CAMERA[$m]}_$tag"
+            if ! tar -cf - -C "$repo/experiments/hardware/cell" calibration.yaml perception_workspace.yaml \
+                    "perception_${CAMERA[$m]}.yaml" -C "$trial" measure_live.py \
+                    -C "$here" live_perception.sh glove_record.py |
+                    "$LAB_SSH" "${HOST[$m]}" "mkdir -p '$out/config' && tar -xf - -C '$out/config'"; then
+                echo "$m: could not stage perception config" >&2
+                exit 1
+            fi
         done
-        sleep 12; head -qn1 "$state"/perception_*.log
+        for m in nuc blue silver; do
+            "$LAB_SSH" "${HOST[$m]}" 'pkill -INT -f "measure_live[.]py"; true' || exit 1
+            out="/dev/shm/run_${CAMERA[$m]}_$tag"
+            nohup scripts/hw/lab.sh session "$m" exec bash "$out/config/live_perception.sh" \
+                "${CAMERA[$m]}" "$seconds" "$out" "$out/config" > "$state/perception_$m.log" 2>&1 &
+        done
+        for m in nuc blue silver; do
+            out="/dev/shm/run_${CAMERA[$m]}_$tag"
+            if "$LAB_SSH" "${HOST[$m]}" "for i in \$(seq 1 15); do
+                    if test -s '$out/observations.jsonl' && test -s '$out/gloves.jsonl'; then exit 0; fi
+                    sleep 2
+                done; exit 1"; then
+                echo "$m perception publishing"
+            else
+                tail -12 "$state/perception_$m.log" >&2
+                echo "$m perception has no output in $out" >&2
+                exit 1
+            fi
+        done
         echo "Logs on each host in /dev/shm/run_<camera>_$tag (fabric_run.sh save copies them)" ;;
     perception-stop)
         for m in nuc blue silver; do "$LAB_SSH" "${HOST[$m]}" 'pkill -INT -f "measure_live[.]py"; true'; done; echo stopped ;;
@@ -183,39 +215,149 @@ case "$cmd" in
     obstacle)
         sub="${1:-show}"; shift || true
         obs_root="$repo/experiments/hardware/sessions/$(date +%F)_obstacle"
+        cell="$repo/experiments/hardware/cell"
+        background_ref="$cell/obstacle_background.txt"
+        active="$cell/obstacle.yaml"
+        detector="$here/obstacle_detect.py"
+        obstacle_help() {
+            cat <<'EOF'
+fabric_run.sh obstacle background   Capture the reusable empty reference at the start pose.
+fabric_run.sh obstacle detect [name] [detector options]
+                                    Capture depth at the start pose and fit an obstacle candidate.
+fabric_run.sh obstacle fit <capture_dir> [--background dir] [detector options]
+                                    Fit a saved depth capture offline, using its original background by default.
+fabric_run.sh obstacle use [dir]    Select a successful candidate for the next twin launch.
+fabric_run.sh obstacle show         Show the selected model, background and latest candidate.
+fabric_run.sh obstacle clear        Switch back to the virtual box in twin.yaml.
+fabric_run.sh obstacle detect --help
+                                    List fit options such as --roi, --expected-size-m and --measured-box-m.
+EOF
+        }
+        replace_file() {
+            local tmp
+            tmp="$(mktemp "$1.XXXXXX")" || return 1
+            if cat > "$tmp" && { [ ! -f "$1" ] || chmod --reference="$1" "$tmp"; } && mv -f "$tmp" "$1"; then
+                return 0
+            fi
+            rm -f -- "$tmp"
+            return 1
+        }
+        saved_background() {
+            if [ -f "$background_ref" ]; then
+                cat "$background_ref"
+            else
+                cat "$state/obstacle_background" 2>/dev/null
+            fi
+        }
         snapshot() {   # all three cameras into $1, in parallel, each on its own host
-            mkdir -p "$1"
+            local c m prefix root name
             for c in nuc:/nuc:nuc/camera_base:overhead blue:/oarbot_blue/azure_kinect:oarbot_blue/base_link:blue_wrist \
                      silver:/oarbot_silver/azure_kinect:oarbot_silver/base_link:silver_wrist; do
                 IFS=: read -r m prefix root name <<< "$c"
-                ( scripts/hw/lab.sh session "$m" exec python3 - "$prefix" "$root" 2 < "$here/depth_snapshot.py" 2>"$1/$name.err" |
-                    sed -n 's/^DEPTHNPZ://p' | base64 -d > "$1/$name.npz"
-                  [ -s "$1/$name.npz" ] && { echo "  $name ok"; rm -f "$1/$name.err"; } || { echo "  $name FAILED: $(tail -1 "$1/$name.err")"; rm -f "$1/$name.npz"; } ) &
+                ( if { scripts/hw/lab.sh session "$m" exec python3 - "$prefix" "$root" 2 < "$here/depth_snapshot.py" |
+                       sed -n 's/^DEPTHNPZ://p' | base64 -d > "$1/$name.npz"; } 2>"$1/$name.err" &&
+                      [ -s "$1/$name.npz" ]; then
+                      echo "  $name ok"
+                      rm -f "$1/$name.err"
+                  else
+                      echo "  $name FAILED (see $1/$name.err)" >&2
+                      rm -f "$1/$name.npz"
+                  fi ) &
             done
             wait
         }
+        capture_folder() {
+            mkdir -p "$obs_root" && mkdir "$1" && cp "$cell/calibration.yaml" "$1/calibration.yaml"
+        }
+        summarize_model() {
+            sed -n '/^obstacle:/,/^source:/{ /^source:/d; /^    footprint:/d; /^    - /d; p; }' "$active"
+        }
+        fit_candidate() {
+            local capture="$1" bg="$2" output="$3"; shift 3
+            if ! python3 -u "$detector" "$bg" "$capture" "$@" --output-dir "$output" 2>&1 | tee "$output/fit.log"; then
+                echo "Obstacle fit failed. See $output/fit.log" >&2
+                return 1
+            fi
+            if [ -f "$output/box_registration.json" ]; then
+                echo "Wrist registration check passed. Report: $output/box_registration.json"
+                return 0
+            fi
+            printf '%s\n' "$output" | replace_file "$state/obstacle_last" || return 1
+            echo "Review $output/obstacle.png and fit.log, then select it with:"
+            printf '  scripts/hw/fabric_run.sh obstacle use %q\n' "$output"
+        }
         case "$sub" in
+            help|-h|--help) obstacle_help ;;
             background)
-                dir="$obs_root/background_$(date +%H%M%S)"; echo "Empty work area -> $dir"; snapshot "$dir"
-                echo "$dir" > "$state/obstacle_background" ;;
+                [ "$#" -eq 0 ] || { obstacle_help >&2; exit 2; }
+                "$here/start_pose.sh" --check || exit 1
+                dir="$obs_root/background_$(date +%H%M%S)"; echo "Empty work area -> $dir"
+                capture_folder "$dir" || exit 1
+                snapshot "$dir" || exit 1
+                "$here/start_pose.sh" --check || exit 1
+                python3 -u "$detector" "$dir" --check-background 2>&1 | tee "$dir/validation.log" || exit 1
+                printf '%s\n' "${dir#"$repo"/}" | replace_file "$background_ref" || exit 1
+                echo "Reusable obstacle background: $dir" ;;
             detect)
-                bg="$(cat "$state/obstacle_background" 2>/dev/null)"
+                name=object
+                if [[ "${1:-}" && "$1" != -* ]]; then name="$1"; shift; fi
+                if [[ " $* " == *' --help '* || " $* " == *' -h '* ]]; then
+                    python3 "$detector" --help
+                    exit
+                fi
+                [[ "$name" =~ ^[a-zA-Z0-9_-]+$ ]] || { echo "Use letters, digits, dashes or underscores in the capture name." >&2; exit 2; }
+                bg="$(saved_background)"
                 [ -d "$bg" ] || { echo "No background yet: fabric_run.sh obstacle background (work area empty)" >&2; exit 1; }
-                name="${1:-object}"; shift || true
-                dir="$obs_root/${name}_$(date +%H%M%S)"; echo "Object -> $dir (background $bg)"; snapshot "$dir"
-                ros_env; python3 "$here/obstacle_detect.py" "$bg" "$dir" "$@" && echo "$dir" > "$state/obstacle_last"
-                echo "Check $dir/obstacle.png, then: fabric_run.sh obstacle use" ;;
+                "$here/start_pose.sh" --check || exit 1
+                dir="$obs_root/${name}_$(date +%H%M%S)"; echo "Object -> $dir (background $bg)"
+                capture_folder "$dir" || exit 1
+                printf '%s\n' "${bg#"$repo"/}" > "$dir/background.txt" || exit 1
+                snapshot "$dir" || exit 1
+                "$here/start_pose.sh" --check || exit 1
+                fit_candidate "$dir" "$bg" "$dir" "$@" ;;
+            fit)
+                if [[ "${1:-}" == --help || "${1:-}" == -h ]]; then
+                    obstacle_help
+                    python3 "$detector" --help
+                    exit
+                fi
+                capture="${1:?obstacle fit needs an object capture directory}"; shift
+                capture="$(realpath -e -- "$capture")" && [ -d "$capture" ] || exit 2
+                if [ "${1:-}" = --background ]; then
+                    bg="${2:?--background needs a directory}"; shift 2
+                elif [ -s "$capture/background.txt" ]; then
+                    bg="$(cat "$capture/background.txt")"
+                elif [ -f "$capture/obstacle.yaml" ]; then
+                    bg="$(python3 -c 'import sys, yaml; print(yaml.safe_load(sys.stdin).get("source", {}).get("background", ""))' \
+                        < "$capture/obstacle.yaml")" || exit 1
+                else
+                    bg=
+                fi
+                [ -d "$bg" ] || { echo "Original background unavailable. Pass --background <matching capture directory>." >&2; exit 1; }
+                mkdir -p "$obs_root" || exit 1
+                output="$(mktemp -d "$obs_root/refit_${capture##*/}_$(date +%H%M%S)_XXXXXX")" || exit 1
+                fit_candidate "$capture" "$bg" "$output" "$@" ;;
             use)
                 dir="${1:-$(cat "$state/obstacle_last" 2>/dev/null)}"
-                [ -f "$dir/obstacle.yaml" ] || { echo "No obstacle.yaml in '$dir'" >&2; exit 1; }
-                cp "$dir/obstacle.yaml" experiments/hardware/cell/obstacle.yaml
+                [ -n "$dir" ] && [ -f "$dir/obstacle.yaml" ] || { echo "No candidate in '${dir:-latest}'. Pass the output directory from detect or fit." >&2; exit 1; }
+                replace_file "$active" < "$dir/obstacle.yaml" || exit 1
                 echo "Twin obstacle: $dir (experiments/hardware/cell/obstacle.yaml). The next fabric_run.sh go/twin uses it."
-                sed -n '/^obstacle:/,/^source:/p' experiments/hardware/cell/obstacle.yaml | grep -v '^    - \[' | sed '$d' ;;
-            clear) rm -f experiments/hardware/cell/obstacle.yaml; echo "Twin obstacle: twin.yaml's virtual box" ;;
+                summarize_model ;;
+            clear) rm -f "$active" && echo "Twin obstacle: twin.yaml's virtual box" ;;
             show)
-                if [ -f experiments/hardware/cell/obstacle.yaml ]; then echo "Twin obstacle: detected"; sed -n '/^obstacle:/,/^source:/p' experiments/hardware/cell/obstacle.yaml | grep -v '^    - \[' | sed '$d'
-                else echo "Twin obstacle: twin.yaml's virtual box"; sed -n '/^obstacle:/,/^feedback:/p' experiments/hardware/cell/twin.yaml | sed '$d'; fi ;;
-            *) echo "obstacle background | detect [name] | use [dir] | clear | show" >&2; exit 2 ;;
+                bg="$(saved_background)"
+                latest="$(cat "$state/obstacle_last" 2>/dev/null)"
+                echo "Reusable background: ${bg:-none}"
+                echo "Latest candidate: ${latest:-none in this runtime}"
+                if [ -f "$active" ]; then
+                    echo "Twin obstacle: $active"
+                    summarize_model
+                    sed -n '/^  object: /s/^  object: /Capture: /p' "$active"
+                else
+                    echo "Twin obstacle: twin.yaml's virtual box"
+                    sed -n '/^obstacle:/,/^feedback:/p' "$cell/twin.yaml" | sed '$d'
+                fi ;;
+            *) obstacle_help >&2; exit 2 ;;
         esac ;;
     review) ros_env; python3 "$here/run_review.py" "${1:?review <run_dir>}" ;;
     deploy-helpers)

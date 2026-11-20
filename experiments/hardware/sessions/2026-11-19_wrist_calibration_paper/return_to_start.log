@@ -1,0 +1,15 @@
+  blue driver: Arm started
+  silver driver: Arm started
+  off the start pose (largest joint, deg): blue 6.22
+  off the start pose (largest joint, deg): silver 6.09
+  blue preflight: joint change [0.0, 0.0, 0.1, 0.0, -6.2, 0.3] deg, other arm 0.852 m away
+  silver preflight: joint change [-0.0, -0.0, -0.0, 0.0, 6.1, -0.3] deg, other arm 0.854 m away
+Arms are off the start pose. Release, then press and hold the deadman to bring them back.
+Arms at the start pose. Release the deadman.
+  blue: Done: largest joint error 0.32 deg
+  silver: Done: largest joint error 0.32 deg
+  blue: fabric-bridge started on enp11s0 192.168.1.71, domain 17. Log: /home/oarbot_blue/fabric_ws/run/fabric-bridge.log
+  silver: fabric-bridge started on enp11s0 192.168.1.110, domain 17. Log: /home/oarbot_silver/fabric_ws/run/fabric-bridge.log
+  now off the start pose (deg): blue 0.32
+  now off the start pose (deg): silver 0.32
+Start pose reached

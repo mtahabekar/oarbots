@@ -1,0 +1,95 @@
+Testing wrist calibration from experiments/hardware/sessions/2026-11-19_wrist_calibration_paper on the saved depth poses
+{
+ "overhead": {
+  "changed_pixels": 1745,
+  "points_in_roi": 1496,
+  "floor_z_corrected_m": 0.0028,
+  "floor_points": 36557,
+  "floor_tilt_error_deg": 0.722
+ },
+ "blue_wrist": {
+  "changed_pixels": 10234,
+  "points_in_roi": 10221,
+  "floor_z_corrected_m": -0.0011,
+  "floor_points": 62189,
+  "floor_tilt_error_deg": 0.124
+ },
+ "silver_wrist": {
+  "changed_pixels": 10455,
+  "points_in_roi": 9437,
+  "floor_z_corrected_m": -0.0009,
+  "floor_points": 53735,
+  "floor_tilt_error_deg": 0.4
+ }
+}
+21154 foreground points, 1 supported clusters; the selected obstacle has 21088 points (100 %)
+overhead: 1473 points in the selected obstacle
+blue_wrist: 10201 points in the selected obstacle
+silver_wrist: 9414 points in the selected obstacle
+{
+  "qualified": true,
+  "views": {
+    "overhead": {
+      "points": 691,
+      "size_m": [
+        0.1414,
+        0.2007,
+        0.3311
+      ],
+      "center_m": [
+        -0.0035,
+        0.3614,
+        0.3311
+      ],
+      "center_error_m": 0.0,
+      "size_passed": true,
+      "passed": true
+    },
+    "blue_wrist": {
+      "points": 3950,
+      "size_m": [
+        0.1221,
+        0.2268,
+        0.3342
+      ],
+      "center_m": [
+        -0.0112,
+        0.3512,
+        0.3342
+      ],
+      "center_error_m": 0.0132,
+      "size_passed": true,
+      "passed": true
+    },
+    "silver_wrist": {
+      "points": 3691,
+      "size_m": [
+        0.1273,
+        0.2151,
+        0.3379
+      ],
+      "center_m": [
+        -0.0026,
+        0.3624,
+        0.3379
+      ],
+      "center_error_m": 0.0069,
+      "size_passed": true,
+      "passed": true
+    }
+  },
+  "measured_size_m": [
+    0.13,
+    0.22,
+    0.33
+  ],
+  "full_cloud_size_m": [
+    0.227,
+    0.3289,
+    0.3482
+  ],
+  "full_cloud_size_passed": false,
+  "background": "experiments/hardware/sessions/2026-11-19_obstacle/background_201824",
+  "object": "/home/taha/ros2_colcon_ws/src/oarbots/experiments/hardware/sessions/2026-11-19_obstacle/wrist_check_box_22x13x33_202122",
+  "wrist_calibration": "experiments/hardware/sessions/2026-11-19_wrist_calibration_paper"
+}

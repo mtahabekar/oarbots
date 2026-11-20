@@ -30,12 +30,15 @@ from cv_bridge import CvBridge
 from message_filters import ApproximateTimeSynchronizer, Subscriber
 from rclpy.node import Node
 from rclpy.qos import qos_profile_sensor_data
+from rclpy.time import Time
 from sensor_msgs.msg import CameraInfo, Image
+from tf2_ros import Buffer, TransformException, TransformListener
 
 from human_hand_tracking.tags import GloveDetector
 
 NAMESPACES = {'blue_wrist': '/oarbot_blue/azure_kinect', 'silver_wrist': '/oarbot_silver/azure_kinect',
               'overhead': '/nuc'}
+PAPER_TAG_IDS = (20, 21)
 # world -> nuc/rgb_camera_link (optical), experiments/hardware/sessions/2026-11-17_world/overhead_extrinsics.json
 OVERHEAD_WORLD = {'translation': [1.7049, -0.6535, 2.5971], 'rotation_xyzw': [0.666265, 0.66164, -0.249466, -0.236837]}
 
@@ -134,6 +137,87 @@ def analyse(det, bgr, depth, k, dist, use_depth, world=None):
             'detected': sorted(found), 'tags': tags}, mask, corners, ids
 
 
+def paper_tag_measurement(corners, depth, k, distortion, width):
+    """Locate the tag centre on a fitted registered-depth plane and check its printed size."""
+    unit = np.float32([[0, 0], [1, 0], [1, 1], [0, 1]])
+    warp = cv2.getPerspectiveTransform(unit, corners.astype(np.float32))
+    grid = np.stack(np.meshgrid(np.linspace(-.08, 1.08, 11), np.linspace(-.08, 1.08, 11)),
+                    axis=-1).reshape(-1, 1, 2)
+    pixels = cv2.perspectiveTransform(grid, warp)[:, 0]
+    pixels = np.unique(np.rint(pixels).astype(int), axis=0)
+    h, w = depth.shape
+    pixels = pixels[np.all((pixels >= 0) & (pixels < [w, h]), axis=1)]
+    z = depth[pixels[:, 1], pixels[:, 0]]
+    good = np.isfinite(z) & (z > 0)
+    if np.count_nonzero(good) < 16:
+        raise ValueError('too little registered depth on the target')
+    pixels, z = pixels[good], z[good]
+    rays = cv2.undistortPoints(pixels.astype(float).reshape(-1, 1, 2), k, distortion)[:, 0]
+    design = np.c_[rays, np.ones(len(rays))]
+    # Fit inverse depth, which is linear in undistorted image coordinates for a plane.
+    # Select by the number of points within 15 mm, so the backing or a stray return
+    # cannot pull a least-squares fit away from the printed surface.
+    rng = np.random.default_rng(17)
+    triples = rng.choice(len(z), size=(72, 3))
+    triples = triples[np.abs(np.linalg.det(design[triples])) > 1e-6]
+    if not len(triples):
+        raise ValueError('depth samples do not span the tag')
+    planes = np.linalg.solve(design[triples], (1 / z[triples])[..., None]).squeeze(-1)
+    inverse = design @ planes.T
+    err = np.abs(inverse * z[:, None] - 1) * z[:, None]
+    agrees = err < .015
+    keep = agrees[:, np.argmax(agrees.sum(axis=0))]
+    if keep.sum() < max(16, .7 * len(z)):
+        raise ValueError('registered depth does not agree on one target plane')
+    plane = np.linalg.lstsq(design[keep], 1 / z[keep], rcond=None)[0]
+    corner_xy = cv2.undistortPoints(corners.reshape(-1, 1, 2), k, distortion)[:, 0]
+    covered_area = cv2.contourArea(cv2.convexHull(rays[keep].astype(np.float32)))
+    if covered_area < .45 * cv2.contourArea(corner_xy.astype(np.float32)):
+        raise ValueError('registered depth covers too little of the target')
+    corner_rays = np.c_[corner_xy, np.ones(4)]
+    inverse = corner_rays @ plane
+    if np.any(inverse <= 0):
+        raise ValueError('invalid target depth at the corners')
+    points = corner_rays / inverse[:, None]
+    sides = np.linalg.norm(points - np.roll(points, 1, axis=0), axis=1)
+    observed = float(np.median(sides))
+    if np.max(np.abs(sides - width)) > max(.012, .12 * width):
+        raise ValueError(f'depth gives a {1000*observed:.0f} mm tag, measured width {1000*width:.0f} mm')
+    normal = -plane / np.linalg.norm(plane)
+    return points.mean(axis=0), dict(depth_points=int(keep.sum()), depth_width_mm=round(1000*observed, 1),
+                                     normal_camera=normal.tolist(),
+                                     corners_px=corners.round(3).tolist())
+
+
+def analyse_paper(det, bgr, depth, k, distortion, widths):
+    gray = cv2.cvtColor(bgr, cv2.COLOR_BGR2GRAY)
+    corners, ids = det._aruco(gray)
+    missing = widths.keys() - set(ids)
+    if missing and det.roi_upscale > 1:
+        scale = det.roi_upscale
+        resized = cv2.resize(gray, None, fx=scale, fy=scale, interpolation=cv2.INTER_CUBIC)
+        more_corners, more_ids = det._aruco(resized)
+        for quad, tag in zip(more_corners, more_ids):
+            if tag in missing:
+                corners.append((quad + .5) / scale - .5)
+                ids.append(tag)
+    tags = []
+    for quad, tag in zip(corners, ids):
+        if tag not in widths or ids.count(tag) != 1:
+            continue
+        points = np.asarray(quad[0], dtype=float)
+        entry = dict(id=tag, detected=False, side_px=round(float(np.mean(
+            np.linalg.norm(points - np.roll(points, 1, axis=0), axis=1))), 1))
+        try:
+            centre, quality = paper_tag_measurement(points, depth, k, distortion, widths[tag])
+        except ValueError as exc:
+            entry['why'] = str(exc)
+        else:
+            entry.update(detected=True, grip_camera_m=centre.tolist(), **quality)
+        tags.append(entry)
+    return dict(detected=[t['id'] for t in tags if t['detected']], tags=tags)
+
+
 def annotate(bgr, mask, corners, ids, frame):
     view = bgr.copy()
     view[mask > 0] = (0.5 * view[mask > 0] + [0, 127, 0]).astype(np.uint8)
@@ -154,6 +238,11 @@ class Check(Node):
         self.args, self.params = args, params
         self.det = detector_from(params)
         self.use_depth = bool(params.get('tag_use_depth', False))
+        self.calibration = args.calibration
+        self.paper_widths = dict(zip(PAPER_TAG_IDS, np.asarray(args.paper_tag_width_mm or []) * .001))
+        if self.calibration:
+            self.tf = Buffer()
+            self.tf_listener = TransformListener(self.tf, self)
         self.bridge = CvBridge()
         self.info = None
         self.world = None
@@ -174,6 +263,30 @@ class Check(Node):
         sync.registerCallback(self.on_images)
         self.start = time.monotonic()
 
+    def calibration_transforms(self, header):
+        """Record the independent surveyed-root and arm chains at the RGB capture time."""
+        camera = self.args.camera
+        ns = 'nuc' if camera == 'overhead' else 'oarbot_' + camera.split('_')[0]
+        rgb, base = header.frame_id, f'{ns}/camera_base'
+        edges = {'base_from_rgb': (base, rgb),
+                 'base_from_depth': (base, f'{ns}/depth_camera_link')}
+        if camera != 'overhead':
+            tool, mount = f'{ns}/j2n6s300_end_effector', f'{ns}/right_mount'
+            edges.update(root_from_tool=(f'{ns}/base_link', tool),
+                         tool_from_mount=(tool, mount), mount_from_base=(mount, base))
+        stamp = Time.from_msg(header.stamp)
+        if stamp.nanoseconds == 0:
+            raise ValueError('RGB camera has a zero capture stamp')
+        matrices = {}
+        for name, (parent, child) in edges.items():
+            tf = self.tf.lookup_transform(parent, child, stamp).transform
+            t, q = tf.translation, tf.rotation
+            matrix = np.eye(4)
+            matrix[:3, :3] = rotation_matrix(q.x, q.y, q.z, q.w)
+            matrix[:3, 3] = [t.x, t.y, t.z]
+            matrices[name] = matrix.tolist()
+        return matrices
+
     def on_info(self, msg):
         if self.info is None:
             (self.out / 'camera_info.json').write_text(json.dumps(
@@ -183,7 +296,8 @@ class Check(Node):
 
     def on_images(self, rgb, depth_msg):
         now = time.monotonic()
-        if self.info is None or now - self.last_processed < 1.0 / self.args.rate:
+        if (self.info is None or now - self.last_processed < 1.0 / self.args.rate
+                or time.time() < self.args.start_at):
             return
         self.last_processed = now
         bgr = self.bridge.imgmsg_to_cv2(rgb, 'bgr8')
@@ -192,10 +306,30 @@ class Check(Node):
         k = np.array(self.info.k, np.float64).reshape(3, 3)
         dist = np.array(self.info.d, np.float64)
         t0 = time.monotonic()
-        frame, mask, corners, ids = analyse(self.det, bgr, depth, k, dist, self.use_depth, self.world)
+        if self.paper_widths:
+            frame = analyse_paper(self.det, bgr, depth, k, dist, self.paper_widths)
+        else:
+            frame, mask, corners, ids = analyse(self.det, bgr, depth, k, dist, self.use_depth, self.world)
         frame['t'] = round(now - self.start, 2)
         frame['stamp'] = rgb.header.stamp.sec + rgb.header.stamp.nanosec * 1e-9
         frame['analysis_ms'] = round((time.monotonic() - t0) * 1000)
+        if self.calibration and frame['detected']:
+            if (rgb.header.frame_id != self.info.header.frame_id or
+                    depth_msg.header.frame_id != rgb.header.frame_id or depth.shape != bgr.shape[:2]):
+                frame['calibration_error'] = 'RGB, CameraInfo and registered depth disagree on image geometry'
+            else:
+                try:
+                    record = dict(camera=self.args.camera, stamp=frame['stamp'], frame=rgb.header.frame_id,
+                                  tag_size_m=self.params['glove_tag_size_m'],
+                                  positions_m={t['id']: t['grip_camera_m'] for t in frame['tags'] if t['detected']},
+                                  transforms=self.calibration_transforms(rgb.header))
+                    if self.paper_widths:
+                        record.update(paper_widths_m=self.paper_widths, paper_measurements=frame['tags'])
+                    print('CALIBRATION_JSON:' + json.dumps(record, separators=(',', ':')), flush=True)
+                except (TransformException, ValueError) as exc:
+                    frame['calibration_error'] = str(exc)
+            if 'calibration_error' in frame:
+                print('Calibration TF or camera error: ' + frame['calibration_error'], file=sys.stderr, flush=True)
         self.frames += 1
         for tag in frame['detected']:
             self.counts[tag] = self.counts.get(tag, 0) + 1
@@ -212,6 +346,11 @@ class Check(Node):
             self.saved += 1
         self.log.write(json.dumps(frame) + '\n')
         self.log.flush()
+        if self.paper_widths:
+            print(f'[{frame["t"]:6.1f}s] paper tags: ' + ', '.join(
+                f'{t["id"]} ' + (f'{t["depth_width_mm"]} mm, {t["depth_points"]} depth points'
+                                if t['detected'] else t['why']) for t in frame['tags']), flush=True)
+            return
         tags = '; '.join(
             f"{t['id']} {'OK' if t['detected'] else 'missed: ' + t.get('why', '')} side {t['side_px']} px"
             f" support {t['support']:.2f} around tag (p10,p50,p90) "
@@ -223,6 +362,8 @@ class Check(Node):
               flush=True)
 
     def done(self):
+        if self.args.start_at:
+            return time.time() >= self.args.start_at + self.args.seconds
         return time.monotonic() - self.start >= self.args.seconds
 
 
@@ -235,8 +376,20 @@ def main():
     parser.add_argument('--rate', type=float, default=3.0, help='frames analysed per second (full-frame ArUco is slow)')
     parser.add_argument('--save-every', type=float, default=2.0, help='seconds between saved frames; 0 saves none')
     parser.add_argument('--out', default='~/fabric_ws/run/glove_check')
+    parser.add_argument('--calibration', action='store_true',
+                        help='emit timestamped tag centres and TF for wrist calibration')
+    parser.add_argument('--paper-tag-width-mm', type=float, nargs=2, metavar=('TAG20', 'TAG21'),
+                        help='measure bare printed tags with the given black-square widths')
+    parser.add_argument('--start-at', type=float, default=0., help='start a shared capture at this Unix time')
     args = parser.parse_args()
+    if args.paper_tag_width_mm:
+        if not np.isfinite(args.paper_tag_width_mm).all() or min(args.paper_tag_width_mm) <= 0:
+            parser.error('each printed tag needs a positive measured width')
+        args.calibration = True
+        args.save_every = 0
     params = load_params(args.params or Path(args.cell_dir) / f'perception_{args.camera}.yaml')
+    if args.calibration:
+        params.update(tag_to_grip_offsets_m=[0.] * 6, tag_use_depth=True)
     rclpy.init()
     node = Check(args, params)
     print(f'{args.camera}: tags {params.get("glove_tag_ids")} {params.get("glove_tag_size_m")} m, HSV '

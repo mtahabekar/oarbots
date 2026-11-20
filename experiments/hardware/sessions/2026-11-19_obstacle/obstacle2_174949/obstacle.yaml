@@ -1,0 +1,49 @@
+# Detected by scripts/hw/obstacle_detect.py (fabric_twin/obstacle_shape.py). `prism`: the rough shape, an
+# n-sided footprint (n + 2 faces) from the floor to `top`, every side pad out from the points; the twin sheet
+# collides with it. `capsule`: capsule_cbf's cylinder + spherical cap, fitted to the prism (smallest volume
+# containing every prism corner); the CBF keeps the sheet clear of it.
+obstacle:
+  shape: prism_capsule
+  prism:
+    sides: 18
+    top: 1.2766
+    footprint:
+    - [0.3234, 0.519]
+    - [0.3211, 0.5242]
+    - [0.0854, 0.71]
+    - [-0.2897, 0.71]
+    - [-0.4524, 0.667]
+    - [-0.4616, 0.6629]
+    - [-0.5142, 0.584]
+    - [-0.3391, 0.1864]
+    - [-0.3215, 0.1735]
+    - [-0.0982, 0.0608]
+    - [-0.0696, 0.0569]
+    - [-0.0171, 0.0684]
+    - [-0.0158, 0.0689]
+    - [0.0706, 0.1159]
+    - [0.3078, 0.2674]
+    - [0.3546, 0.3103]
+    - [0.358, 0.3289]
+    - [0.3589, 0.3588]
+  capsule:
+    center: [-0.0798, 0.4472]
+    radius: 0.4555
+    cylinder_height: 1.2766
+    cap_sphere_radius: 100.0
+    cap_height: 0.001
+    volume_m3: 0.83224
+source:
+  cameras:
+    blue_wrist: {changed_pixels: 81190, points_in_roi: 80834, floor_z_corrected_m: -0.0327,
+      floor_points: 63851}
+    overhead: {changed_pixels: 10949, points_in_roi: 10399, floor_z_corrected_m: 0.0052,
+      floor_points: 37790}
+    silver_wrist: {changed_pixels: 83928, points_in_roi: 71387, floor_z_corrected_m: -0.0837,
+      floor_points: 39981}
+  points: 161919
+  roi: [-0.7, 0.7, -0.75, 0.7, 0.02, 1.3]
+  min_step_m: 0.03
+  pad_m: 0.01
+  background: experiments/hardware/sessions/2026-11-19_obstacle/background_174555
+  object: /home/taha/ros2_colcon_ws/src/oarbots/experiments/hardware/sessions/2026-11-19_obstacle/obstacle2_174949

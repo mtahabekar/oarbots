@@ -33,10 +33,12 @@ say() { echo "$*"; spd-say -r -10 "$*" >/dev/null 2>&1 || true; }
 # The patched Kinova driver latches "Velocity stream timed out: API stopped; explicit start service required" after
 # any gap over 0.2 s in the guard's stream, and from then on ignores commands while bridge and guard look normal
 # (Silver at 14:08 on 2026-11-19). Start both arms' API every time: it answers "Arm started" either way.
-for r in blue silver; do
-    echo "  $r driver: $(timeout 40 scripts/hw/lab.sh session "$r" exec ros2 service call "/oarbot_$r/kinova/j2n6s300_driver/in/start" kinova_msgs/srv/Start 2>&1 | sed -n "s/.*start_result='\([^']*\)'.*/\1/p")"
-done
-offsets="$(python3 "$here/cell_check.py" --arm-offsets)"
+if [ "$check" = 0 ]; then
+    for r in blue silver; do
+        echo "  $r driver: $(timeout 40 scripts/hw/lab.sh session "$r" exec ros2 service call "/oarbot_$r/kinova/j2n6s300_driver/in/start" kinova_msgs/srv/Start 2>&1 | sed -n "s/.*start_result='\([^']*\)'.*/\1/p")"
+    done
+fi
+offsets="$(python3 "$here/cell_check.py" --arm-offsets)" || exit 1
 echo "$offsets" | sed 's/^/  off the start pose (largest joint, deg): /'
 if echo "$offsets" | grep -q none; then echo "No joint states from an arm: is its session running? (cell_up.sh)" >&2; exit 1; fi
 if [ $force = 0 ] && echo "$offsets" | awk -v t="$tol" '$2 > t {bad=1} END {exit bad}'; then
