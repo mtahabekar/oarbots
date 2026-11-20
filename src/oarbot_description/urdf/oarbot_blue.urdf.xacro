@@ -54,7 +54,8 @@
     <!-- Azure Kinect -->
     <xacro:include filename="$(find oarbot_description)/urdf/microsoft/azure_kinect.urdf.xacro"/>
     <xacro:azure_kinect prefix="${prefix}" parent_link="${prefix}right_mount">
-        <origin xyz="0.006 0 -0.07" rpy="0 ${PI/2} 0" />
+        <!-- Measured wrist mount from the 2026-11-19 printed-tag calibration. -->
+        <origin xyz="0.025412126 -0.004055556 -0.073691810" rpy="0.688600020 1.549227704 0.731215808" />
     </xacro:azure_kinect>
 
     <!-- Hokuyo LiDAR Sensors -->

@@ -56,7 +56,7 @@ def nodes(context):
         out.append(Node(package='fabric_sim_cell', executable='recorder', name='estimate_recorder', output='screen',
                         parameters=[{'output': str(record/'estimate.npz')}]))
         if get('twin') == 'true':
-            recorder = {'output': str(record/'twin.npz')}
+            recorder = {'output': str(record/'twin.npz'), 'depth': get('record_depth') == 'true'}
             observer_settings = yaml.safe_load((cell/'estimator.yaml').read_text())
             observation_topics = observer_settings.get('runtime', {}).get('observation_topics')
             if observation_topics:
@@ -79,4 +79,6 @@ def generate_launch_description():
                               description='Allow nominal grip transforms in estimator-only shadow mode'),
         DeclareLaunchArgument('rviz', default_value='true'),
         DeclareLaunchArgument('record', default_value='', description='Directory for estimate.npz and twin.npz; empty = none'),
+        DeclareLaunchArgument('record_depth', default_value='false', choices=['false', 'true'],
+                              description='Save per-camera depth observations for replay'),
         OpaqueFunction(function=nodes)])
