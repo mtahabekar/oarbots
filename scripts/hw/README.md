@@ -9,6 +9,32 @@ The procedure as run on 2026-11-19 (lab log `experiments/hardware/sessions/2026-
 is a script; nothing needs typing into ROS by hand. The laptop speaks the steps that need the deadman
 (`spd-say`), so the person at the robots does not need the screen.
 
+### Full run, current procedure (2026-11-21; first done 13:57-14:10, lab log)
+
+Two people: one holds the sheet's free corners with the tagged gloves, one has the tablet. The deadman is a toggle
+(press once to start, once to stop). Every step is a script; the laptop speaks the steps that need people.
+```bash
+scripts/hw/cell_up.sh                                  # bring-up and checks (bases, clocks, streams, cameras, arms)
+scripts/hw/fabric_run.sh clocks --fix                  # only if a clock is over 5 ms
+scripts/hw/fabric_run.sh perception 7200               # 2 h; check shows its age
+scripts/hw/fabric_run.sh warmup-start                  # arms to the 77 cm start pose, one at a time (sheet unclipped)
+#   clip the sheet; area under it empty
+BANK_MAX_SECONDS=30 scripts/hw/fabric_run.sh warmup-auto --nominal   # warm-up at the twin's material: still hold + motion
+scripts/hw/fabric_run.sh fit-apply experiments/hardware/sessions/<day>_fabric_run/warmup_1_1_<time>
+#   ~40 s: grip points (corner-weighted LM) then stretch on the still hold, at the twin's numerics; written to the cell
+#   (backup in <run>/fit_apply/cell_before); refused if stretch moves outside x0.3-x3
+scripts/hw/fabric_run.sh obstacle clear                # the virtual box of twin.yaml (or: obstacle detect / use <dir>)
+scripts/hw/fabric_run.sh go                            # twin + CBF + stretch guard; first press after "twin ready" =
+                                                       # commands on; press = stop / resume
+scripts/hw/fabric_run.sh stop-go                       # end: commands off, saved, reviewed, audited
+scripts/hw/fabric_run.sh results                       # all audited runs -> experiments/hardware/results/runs.csv
+```
+Saved per run: the run folder (cell snapshot, commit, review.txt, audit.json, status/CBF logs, auto_start or warm-up
+log, fit_apply results) and in /home/taha/fabric_hw_data/<day>_fabric_run_<run>/ the bag (forces, joints, TF,
+gloves, hands, observations, twin and estimator topics, commands to bridge/guard/driver, deadman, e-stop, overhead
+preview images), twin.npz, twin.depth.npz, estimate.npz and the camera logs, with checksums (MANIFEST.sha256).
+Twin since 2026-11-21: 28 x 28, 8 x 6, point grips, self-contact off, stretch fitted (twin.yaml).
+
 **0. Physical** (people at the robots): power robots, helpers, NUC, tablet; laptop USB Ethernet to the switch;
 Blue's Rokubi USB on Silver's riser hub; wrist camera cables with slack and strain relief (both wrist cameras
 have dropped off USB during motion; joint 6 turns up to ~120 deg in the box); tablet: fabric GUI, Fabric Follow
