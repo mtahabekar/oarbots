@@ -7,9 +7,9 @@
 # `fabric_run.sh go` runs this first; `fabric_run.sh recentre` runs it without the tolerance check.
 # The move: scripts/hw/grasp_joints.py on each helper, ONE ARM AT A TIME (both at once hit each other on
 # 2026-11-21), a straight line in joint space, MoveIt-checked against the other arm's actual pose and kept 15 cm
-# from it. An arm moves only while the tablet deadman is held with Fabric Follow (CBF) on: release, press, hold
-# for each arm; releasing stops it, pressing again resumes. Each arm holds still at the start pose until the
-# deadman is released. The laptop speaks the steps (spd-say).
+# from it. An arm moves only while the tablet deadman is on with Fabric Follow (CBF) on. Toggle deadman (since
+# 2026-11-21): press once to start each arm, press again to stop (the next press resumes); each arm holds still at
+# the start pose until the deadman is pressed off. The laptop speaks the steps (spd-say).
 # The CBF bridges share the arms' joint input: they are stopped for the move and started again (disarmed).
 # First it restarts both arms' Kinova velocity API (the driver's silent latch, see below).
 # The whole script is one block, so bash reads all of it before running any: editing this file while a run
@@ -79,11 +79,11 @@ preflight() {  # preflight <robot>: prints the clearance to the other arm (m); f
 }
 move_arm() {  # move_arm <robot>: deadman-supervised move of one arm; fails on an abort
     local r="$1" name="${1^}" pid told=0
-    say "Moving $name only. Release, then press and hold the deadman."
+    say "Moving $name only. Press the deadman once to start. Press again to stop."
     scripts/hw/lab.sh session "$r" exec python3 fabric_ws/scripts/hw/grasp_joints.py --robot "$r" --to ${target[$r]} --wait 600 > "$state/start_pose_$r.log" 2>&1 &
     pid=$!
     while kill -0 "$pid" 2>/dev/null; do
-        if [ $told = 0 ] && grep -q Arrived "$state/start_pose_$r.log" 2>/dev/null; then say "$name at the start pose. Release the deadman."; told=1; fi
+        if [ $told = 0 ] && grep -q Arrived "$state/start_pose_$r.log" 2>/dev/null; then say "$name at the start pose. Press the deadman once to end."; told=1; fi
         sleep 0.5
     done
     wait "$pid"

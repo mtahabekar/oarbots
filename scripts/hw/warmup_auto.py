@@ -11,11 +11,12 @@ For an operator who holds the sheet and cannot type. Run it, then walk to the sh
   2. Waits until the twin follows the measured grips and both hands are seen steadily, saying which glove
      is unseen. Turns commands on (formation captured now: hold the sheet as it should stay; retried while a
      hand drops out), arms both bridges.
-  3. Deadman operator: "press and hold". Starts the warm-up (twin.yaml `warmup`, since 2026-11-21: 24 labelled
+  3. Deadman operator: "press once" (toggle deadman since 2026-11-21; a press during the motion stops the run and
+     the sequence). Starts the warm-up (twin.yaml `warmup`, since 2026-11-21: 24 labelled
      holds, ~194 s; robots first while the hands stay still, then spoken hand moves for the person, robots
      still). If the deadman is released during it, the run is incomplete: commands off, the run is
      stopped, saved and repeated from step 1.
-  4. "Release the deadman": commands off, bridges disarmed. The bank fits until convergence (progress spoken).
+  4. "Press the deadman once to end": commands off, bridges disarmed. The bank fits until convergence (progress spoken).
      Speaks the fit (start -> result, search edge, released), stops the twin, saves, writes review.txt.
 
 Perception on the cameras runs for a set time and then stops silently (2026-11-20 08:50: the twin waited
@@ -258,13 +259,26 @@ def enable(node):
     log('commands on, both bridges armed')
 
 
+def deadman_off(node):
+    """Toggle deadman (since 2026-11-21): a deadman left on from an earlier step is turned off first, so the
+    warm-up starts only on a deliberate press."""
+    if node.deadman:
+        say('The deadman is still on. Press it once to turn it off.')
+        asked = time.monotonic()
+        while not node.spin(10, lambda: node.deadman is False):
+            if time.monotonic() - asked > 60:
+                raise Abort('the deadman was not turned off within a minute')
+            say('Deadman: press once to turn it off.', wait=False)
+
+
 def excite(node):
-    say('Deadman: press and hold the deadman now, and keep holding until I say release.')
+    deadman_off(node)
+    say('Deadman: press once to start the warm-up. Press again only to stop it.')
     asked = time.monotonic()
     while not node.spin(10, lambda: bool(node.deadman)):
         if time.monotonic() - asked > 60:
             raise Abort('the deadman was not pressed within a minute')
-        say('Deadman: press and hold.', wait=False)
+        say('Deadman: press once to start.', wait=False)
     node.spin(1)
     if 'hands' in (node.twin.get('warmup_plan') or ''):
         say('Warm-up starting. Keep both hands still until I call a hand move. Move only when I say, '
@@ -272,7 +286,8 @@ def excite(node):
     else:
         say('Warm-up starting. Keep both hands completely still.')
     if not node.deadman:
-        raise Retry('the deadman was released before the warm-up started')
+        node.commands(False)
+        raise Abort('stopped with the deadman before the warm-up started')
     node.window, node.bank = None, []
     # The twin reports its warm-up plan: (move starts s, hold starts s, label) per hold, and the duration.
     try:
@@ -290,10 +305,10 @@ def excite(node):
         t = time.monotonic() - started
         for r in ROBOTS:
             peak[r] = max(peak[r], node.cmd[r])
-        if node.deadman is False:
+        if node.deadman is False:   # the second press of the toggle deadman ends the run
             node.commands(False)
-            say('Deadman released. This warm-up is incomplete; I will repeat it.', wait=False)
-            raise Retry('deadman released during the excitation')
+            say('Deadman pressed: warm-up stopped. Commands are off.', wait=False)
+            raise Abort('stopped with the deadman during the excitation')
         for k, (at, label) in enumerate(cues or [(4., 'slack 2 cm'), (10., 'slack 4 cm'), (15.5, 'return')]):
             if t >= at and k not in spoken:
                 spoken.add(k); say(label.replace(' cm', ' centimetres'), wait=False)
@@ -306,7 +321,7 @@ def excite(node):
     log(f'excitation over; peak commanded ' + ', '.join(f'{r} {peak[r]:.1f} cm/s' for r in ROBOTS))
     if max(peak.values()) == 0:
         raise Retry('no robot was commanded during the excitation')
-    say('Release the deadman. You can relax; keep the sheet off the floor.')
+    say('Warm-up motion done. Press the deadman once to end. You can relax; keep the sheet off the floor.')
 
 
 def check_start_pose(restore=False):

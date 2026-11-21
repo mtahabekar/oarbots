@@ -1,0 +1,9 @@
+# Grasp pose per robot: arm joint angles in rad, in the driver's and the URDF's convention (as
+# /oarbot_<robot>/joint_states reports them). Source: the simulated cell's layout
+# (oarbot_simulation config/fabric_layout.json, `grasp_arm`), built on the same base layout as the real
+# cell (bases at x = -/+0.42, y = -1.065, facing +y): each corner 0.645 m ahead of its base, 1.05 m above
+# the floor, tool pitched 30 deg down and turned 45 deg inward. Checked on the real robots' models with
+# scripts/hw/grasp_target.py; replace with the joints actually reached on site.
+source: simulated layout
+blue: [-0.5156501996563352, 2.9268687155353117, 4.737986408645095, 1.5187738172460028, 4.858428238171332, 1.863472124484075]
+silver: [0.5156503973716522, 3.356315427352053, 1.5451999825611302, 4.764408703168017, 1.4247682413191143, -1.8634742823941934]

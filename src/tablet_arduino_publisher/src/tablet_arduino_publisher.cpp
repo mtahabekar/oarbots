@@ -10,6 +10,17 @@ ArduinoReadNode::ArduinoReadNode(): Node("tablet_arduino_talker"), serial_fd_(-1
     com_port_ = this->declare_parameter<std::string>("com_port", "");
 
     timeout_ = declare_parameter<double>("serial_timeout_sec", 0.2);
+    const std::string mode = declare_parameter<std::string>("deadman_mode", "hold");
+    if (mode != "hold" && mode != "toggle") {
+        throw std::invalid_argument("deadman_mode must be hold or toggle");
+    }
+    toggle_ = mode == "toggle";
+    stable_samples_ = static_cast<int>(declare_parameter<int>("toggle_stable_samples", 3));
+    min_interval_ = declare_parameter<double>("toggle_min_interval_sec", 0.3);
+    if (stable_samples_ < 1 || !std::isfinite(min_interval_) || min_interval_ < 0) {
+        throw std::invalid_argument("toggle_stable_samples >= 1 and toggle_min_interval_sec >= 0");
+    }
+    RCLCPP_INFO(get_logger(), "deadman mode: %s", mode.c_str());
     if (deadman_topic_.empty() || estop_topic_.empty() || com_port_.empty() ||
         !std::isfinite(timeout_) || timeout_ <= 0) {
         throw std::invalid_argument("Serial topics/device must be nonempty; timeout must be positive");
@@ -60,8 +71,36 @@ void ArduinoReadNode::readSerial()
         publish_stop();
 }
 
+bool ArduinoReadNode::toggleDeadman(bool pressed, bool estop)
+{
+    if (estop) {
+        latched_ = false;
+    }
+    if (pressed == candidate_pressed_) {
+        ++candidate_count_;
+    } else {
+        candidate_pressed_ = pressed;
+        candidate_count_ = 1;
+    }
+    if (candidate_count_ >= stable_samples_ && candidate_pressed_ != stable_pressed_) {
+        stable_pressed_ = candidate_pressed_;
+        const auto now = std::chrono::steady_clock::now();
+        if (stable_pressed_ && !estop &&
+            std::chrono::duration<double>(now - last_toggle_).count() >= min_interval_) {
+            latched_ = !latched_;
+            last_toggle_ = now;
+            RCLCPP_INFO(get_logger(), "deadman %s (toggle)", latched_ ? "ON" : "OFF");
+        }
+    }
+    return latched_;
+}
+
 void ArduinoReadNode::publish_stop()
 {
+    // Any stop ends a toggled run, and a switch held through it must be released before it can start one.
+    latched_ = false;
+    stable_pressed_ = candidate_pressed_ = true;
+    candidate_count_ = 0;
     std_msgs::msg::Bool deadman, estop;
     deadman.data = false;
     estop.data = true;
@@ -162,6 +201,9 @@ void ArduinoReadNode::handleSerialData(uint8_t raw_byte)
     }
 
     last_valid_ = std::chrono::steady_clock::now();
+    if (toggle_) {
+        deadman_msg.data = toggleDeadman(deadman_msg.data, estop_msg.data);
+    }
     deadman_pub_->publish(deadman_msg);
     estop_pub_->publish(estop_msg);
 }

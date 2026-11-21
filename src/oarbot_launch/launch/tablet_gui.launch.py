@@ -20,6 +20,8 @@ def generate_launch_description() -> LaunchDescription:
     return LaunchDescription([
         # Override generated console-script shebang so an activated GUI venv is honored.
         DeclareLaunchArgument("gui_python", default_value="python3"),
+        # hold: the deadman is the switch (stock); toggle: press once to start, again to stop (fabric sessions).
+        DeclareLaunchArgument("deadman_mode", default_value="hold"),
         tablet_gui_node,
         Node(
             package="spacenav",
@@ -35,7 +37,8 @@ def generate_launch_description() -> LaunchDescription:
             parameters=[{
                 "com_port": "/dev/ttyACM0",
                 "arduino_deadman_switch_topic": "deadman",
-                "arduino_e_stop_topic": "e_stop"
+                "arduino_e_stop_topic": "e_stop",
+                "deadman_mode": LaunchConfiguration("deadman_mode"),
             }]
         ),
         RegisterEventHandler(

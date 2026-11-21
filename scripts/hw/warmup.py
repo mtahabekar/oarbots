@@ -198,7 +198,7 @@ def run_warmup(node, shadow, wait, nominal=False):
             say('NO GO: '+'; '.join(problems)+'. The robots would not move and the fit would be meaningless.')
             return 2
         if not node.deadman:
-            say('Waiting up to 30 s: tablet operator, PRESS AND HOLD the deadman for the whole warm-up.')
+            say('Waiting up to 30 s: tablet operator, press the deadman once to start; press again only to stop.')
             if not node.spin(30, lambda: bool(node.deadman)):
                 say('NO GO: deadman not held.')
                 return 2
@@ -293,7 +293,7 @@ def main():
     try:
         code = cmd_start(node, a.shadow, a.wait, a.nominal) if a.cmd == 'start' else cmd_enabled(node, a.timeout)
     except KeyboardInterrupt:
-        say('interrupted: warm-up commands disabled and bridges disarmed. Release the deadman.')
+        say('interrupted: warm-up commands disabled and bridges disarmed. Press the deadman once to turn it off.')
         code = 130
     finally:
         node.destroy_node()

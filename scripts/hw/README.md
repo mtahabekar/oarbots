@@ -12,7 +12,16 @@ is a script; nothing needs typing into ROS by hand. The laptop speaks the steps 
 **0. Physical** (people at the robots): power robots, helpers, NUC, tablet; laptop USB Ethernet to the switch;
 Blue's Rokubi USB on Silver's riser hub; wrist camera cables with slack and strain relief (both wrist cameras
 have dropped off USB during motion; joint 6 turns up to ~120 deg in the box); tablet: fabric GUI, Fabric Follow
-(CBF) on for both robots, deadman released.
+(CBF) on for both robots, deadman off.
+
+**The deadman is a toggle in fabric sessions** (user, 2026-11-21; `deadman_mode:=toggle` in the tablet's
+`tablet_arduino_publisher`, set by `fabric_session.sh`; the stock tablet keeps hold-to-run): **press once to start,
+press again to stop** (the next press resumes). No holding. A press counts only after 3 steady readings (~60 ms)
+and 0.3 s after the last toggle (contact bounce); the e-stop, a serial fault or a silent Arduino switch it off, and a
+switch held through any of those must be released before a press turns it on. The guards are unchanged: they need
+its 50 Hz stream fresh (0.25 s), so a tablet or Wi-Fi failure still stops the arms. Every motion script starts only
+on a press made after it started; a deadman left on is turned off first ("press once to turn it off"). Tested
+against a fake Arduino: `src/tablet_arduino_publisher/test/toggle_deadman_pty_check.py`.
 
 **1. Bring-up and checks**
 ```bash
@@ -224,11 +233,11 @@ config (copy `sessions/2026-11-20_grip_calibration/cell_before_apply` back) and 
 scripts/hw/fabric_run.sh go
 ```
 In order: restarts both arms' Kinova velocity API (clears the driver's silent latch); if either arm is more
-than 1.5 deg off the start pose, says "release, then press and hold the deadman" and brings both back (MoveIt-
-checked joint path), "arms at the start pose, release the deadman"; starts the bridges (disarmed) and the twin
+than 1.5 deg off the start pose, brings them back one arm at a time (MoveIt-checked joint path; "Moving Blue only.
+Press the deadman once to start", "... at the start pose. Press the deadman once to end"); starts the bridges (disarmed) and the twin
 (commands off, RViz); says "twin ready" when it follows the measured grips; at the **first deadman press** after
 that, commands on and both bridges armed ("commands on"; the formation is captured then: hold the sheet as it
-should stay). Releasing the deadman stops both arms ("stopped"), pressing resumes ("moving"). **Ctrl+C** in that
+should stay). The next press stops both arms ("stopped"), the one after resumes ("moving"). **Ctrl+C** in that
 terminal (or closing it, or `fabric_run.sh stop-go` from another terminal): commands off, bridges disarmed, twin stopped, the run saved (large files to
 `/home/taha/fabric_hw_data`) and reviewed (`<run>/review.txt`).
 
@@ -282,10 +291,11 @@ scripts/hw/fabric_run.sh save <run>; scripts/hw/fabric_run.sh review <run>
 every step. Run it after `check`/`bridges start`. It restores the dedicated warm-up pose if needed, asking
 for the supervised deadman movement first. It stops any running twin and starts the distorted one.
 After 15 s it asks you to hold the corners, names a glove the overhead camera
-does not see, turns commands on once both hands are steady, and asks the deadman operator to press and hold.
-It runs the warm-up, turns commands off and disarms the bridges, then says "release". It speaks the fit when the search ends, saves and
-reviews the run, and starts the second one. A deadman release during the motion repeats that run (at most
-3 times). Ctrl+C turns commands off and stops and saves the run. The tablet deadman still needs a second
+does not see, turns commands on once both hands are steady, and asks the deadman operator to press once. It runs the
+warm-up, turns commands off and disarms the bridges, then says "press the deadman once to end". It speaks the fit
+when the search ends, saves and reviews the run, and starts the second one. A deadman press during the motion
+stops the run and the sequence (saved). If the sheet is too tight for the hand cues it says how far to step closer
+and waits. Ctrl+C turns commands off and stops and saves the run. The tablet deadman still needs a second
 person.
 
 The search stops after a refinement has stable coefficients (within 10%) and RMS residual improvement

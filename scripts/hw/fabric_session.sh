@@ -110,7 +110,9 @@ case "$cmd" in
         elif [ "$role" = camera ]; then
             launch_unit fabric-stack ros2 launch "$here/nuc_camera.launch.py" "$@"
         else
-            launch_unit fabric-stack ros2 launch "$ws/src/oarbot_launch/launch/tablet_gui.launch.py" "gui_python:=$ws/.venv/bin/python3" "$@"
+            # Fabric sessions use the toggle deadman (user, 2026-11-21): press once to start, press again to stop.
+            # The guards still need its 50 Hz stream fresh; e-stop, serial faults and a stale Arduino turn it off.
+            launch_unit fabric-stack ros2 launch "$ws/src/oarbot_launch/launch/tablet_gui.launch.py" "gui_python:=$ws/.venv/bin/python3" "deadman_mode:=toggle" "$@"
         fi
         record start "$@" ;;
     start-cell)

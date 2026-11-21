@@ -4,10 +4,11 @@
 A straight Cartesian move from Kinova Home to the grasp pose crosses a wrist singularity (joint 5 near
 0; lab log 2026-11-18), so the approach is a straight line in joint space instead: every joint moves
 in proportion, the largest at --speed deg/s. Commands go to the guard's joint input
-(commands/joint/arm), which forwards them only in the fabric_cbf mode with the tablet deadman held:
-releasing the deadman stops the arm, and the path resumes where it stopped when the deadman is held
-again (release and press). After arriving the script keeps the arm still until the deadman is released,
-so Silver's guard does not close its fingers before the corner is in them.
+(commands/joint/arm), which forwards them only in the fabric_cbf mode with the tablet deadman on. Since
+2026-11-21 the fabric tablet runs the toggle deadman: press once to start, press again to stop; the path resumes
+where it stopped at the next press. The move starts only on a press made after this script started (a deadman
+left on from an earlier step must be turned off first). After arriving the script keeps the arm still until the
+deadman is pressed off, so Silver's guard does not close its fingers before the corner is in them.
 
 Run on the robot's helper inside a fabric session; both robots' sessions running (the other arm's
 position is checked against the path):
@@ -111,7 +112,8 @@ class GraspJoints(Node):
         self.create_subscription(JointState, self.ns + '/joint_states', self.on_joints, 10)
         self.driver_topic = self.ns + '/kinova/j2n6s300_driver/in/joint_velocity'
         self.create_subscription(JointVelocity, self.driver_topic, self.on_forwarded, 10)
-        self.create_subscription(Bool, '/tablet_gui/deadman', lambda m: setattr(self, 'deadman', m.data), 10)
+        self.create_subscription(Bool, '/tablet_gui/deadman', self.on_deadman, 10)
+        self.deadman_seen_off = self.fresh_press = False
         self.create_subscription(WrenchStamped, self.ns + '/force_torque_calibrated', self.on_force, qos_profile_sensor_data)
         self.command_topic = self.ns + '/commands/joint/arm'
         self.fk = self.create_client(GetPositionFK, self.ns + '/compute_fk')
@@ -265,6 +267,14 @@ class GraspJoints(Node):
                     tool_lowest_z=round(float(tool_path[:, 2].min()), 3),
                     tool_x_range=[round(float(tool_path[:, 0].min()), 3), round(float(tool_path[:, 0].max()), 3)])
 
+    def on_deadman(self, msg):
+        # Toggle deadman: only a press made after this script started may start the move (off, then on).
+        if not msg.data:
+            self.deadman_seen_off = True
+        elif self.deadman_seen_off:
+            self.fresh_press = True
+        self.deadman = msg.data
+
     def send(self, v_deg):
         self.publisher.publish(JointVelocity(**{f'joint{i}': float(v) for i, v in enumerate(v_deg, 1)}))
 
@@ -296,11 +306,11 @@ class GraspJoints(Node):
             forwarding = (self.forwarded_time is not None and tick - self.forwarded_time < 0.1)
             # the path advances only while the guard forwards (deadman held); it ramps up and down
             remaining = 1.0 - s
-            target_rate = rate if forwarding and not done else 0.0
+            target_rate = rate if forwarding and self.fresh_press and not done else 0.0
             target_rate = min(target_rate, math.sqrt(2 * remaining * rate / ACCEL_SEC)) if remaining > 0 else 0.0
             sdot += max(-rate / ACCEL_SEC * period, min(rate / ACCEL_SEC * period, target_rate - sdot))
             sdot = max(0.0, sdot)
-            if not forwarding:
+            if not forwarding or not self.fresh_press:
                 sdot = 0.0
             s = min(1.0, s + sdot * period)
             ref = q0 + d * s
@@ -338,8 +348,12 @@ class GraspJoints(Node):
                 last_progress = tick
             if done and (self.deadman is False or not forwarding):
                 return q
-            if not forwarding and tick - waiting_note > 5.0:
-                print(f'    waiting for the deadman ({100*s:.0f} % of the path done)', flush=True)
+            if (not forwarding or not self.fresh_press) and tick - waiting_note > 5.0:
+                if self.deadman and not self.fresh_press:
+                    print('    the deadman is still on from before: press it once to turn it off, then once to start',
+                          flush=True)
+                else:
+                    print(f'    waiting for a deadman press ({100*s:.0f} % of the path done)', flush=True)
                 waiting_note = tick
             if tick - last_progress > self.args.wait and not done:
                 raise Abort(f'No deadman for {self.args.wait:.0f} s')
@@ -347,7 +361,7 @@ class GraspJoints(Node):
                 return q
             if done and not arrived_note:
                 arrived_note = True
-                print('Arrived. Release the deadman now.', flush=True)
+                print('Arrived. Press the deadman once to end.', flush=True)
             self.spin_for(max(0.0, period - (time.monotonic() - tick)))
 
     def run(self):
@@ -367,8 +381,8 @@ class GraspJoints(Node):
         if self.args.check_only:
             return report
         self.publisher = self.create_publisher(JointVelocity, self.command_topic, 10)
-        print(f'Moving {self.robot} to {label}: Fabric Follow (CBF) on for {self.robot}, release and press the deadman, '
-              'then hold it', flush=True)
+        print(f'Moving {self.robot} to {label}: Fabric Follow (CBF) on for {self.robot}; press the deadman once to start, '
+              'press again to stop', flush=True)
         try:
             q = self.drive(q0, q1)
         finally:

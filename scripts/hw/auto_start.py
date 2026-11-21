@@ -7,7 +7,8 @@ commands off, then waits. The laptop speaks (spd-say):
   - at the first deadman press while the twin is ready, it switches the twin's commands on (the formation is
     captured at that moment: hold the sheet as you want it kept) and arms both bridges: "commands on";
   - a press while the twin is not ready does nothing but say why;
-  - after that, "moving" / "stopped" at each press / release, and any bridge that stops, with its reason.
+  - after that, "moving" / "stopped" at each press (toggle deadman since 2026-11-21: press once to stop, once to
+    resume), and any bridge that stops, with its reason.
 Ctrl+C (or the end of --seconds): commands off, bridges disarmed. Events go to <run_dir>/auto_start.log.
     python3 scripts/hw/auto_start.py [--run-dir DIR] [--seconds 1800] [--quiet]
 """
@@ -64,8 +65,9 @@ class AutoStart(Node):
     def on_twin(self, msg):
         for s in msg.status:
             if s.message != self.twin:
-                self.event(f'twin: {s.message}', 'twin ready. Press the deadman when you hold the sheet'
-                           if s.message == READY and not self.started else None)
+                ready_say = ('twin ready. The deadman is on: press it once to turn it off, then once to start'
+                             if self.deadman else 'twin ready. Press the deadman once when you hold the sheet')
+                self.event(f'twin: {s.message}', ready_say if s.message == READY and not self.started else None)
             self.twin, self.twin_seen = s.message, time.monotonic()
 
     def on_bridge(self, robot, msg):
@@ -90,7 +92,8 @@ class AutoStart(Node):
                 why = self.twin or 'no twin status'
                 self.event(f'deadman pressed, twin not ready: {why}', f'not ready. {why}')
         elif self.started:
-            self.event('deadman ' + ('pressed: moving' if pressed else 'released: arms stopped'), 'moving' if pressed else 'stopped')
+            # toggle deadman (2026-11-21): each press switches between moving and stopped
+            self.event('deadman ' + ('on: moving' if pressed else 'off: arms stopped'), 'moving' if pressed else 'stopped')
 
     def tick(self):
         if not self.started and not self.ready() and time.monotonic() - self.last_wait_say > 30.:

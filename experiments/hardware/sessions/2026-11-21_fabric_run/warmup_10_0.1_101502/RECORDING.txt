@@ -1,0 +1,13 @@
+Recorded in this run (fabric_run.sh warmup-twin, 2026-11-21 10:15:03); fabric_run.sh save moves the large files to
+/home/taha/fabric_hw_data/2026-11-21_fabric_run_warmup_10_0.1_101502:
+  cell/               twin.yaml (sheet, CBF, stretch guard), estimator.yaml, grasp.yaml, calibration.yaml, bridge.yaml,
+                      obstacle.yaml as used (+ obstacle_capture/: mesh, URDF, picture of the detected obstacle)
+  twin.npz            twin sheet state (positions, velocities), the four grips, commands sent
+  twin.depth.npz      every camera depth point on the sheet (world frame), for offline scoring
+  twin.cbf.jsonl.gz   per CBF frame: clearance, barrier h, model tension and strain, violation, slacks, correction,
+                      stretch-guard state, box clearance, nominal and sent commands, timings
+  twin.status.jsonl   twin diagnostics (faults, commands on/off, material, frame times, lag)
+  estimate.npz        estimated sheet state (positions, velocities, covariance, visibility); estimate.hands.npy
+  bag/ (mcap)         measured force/torque at both grips, joint states, bridge/guard/camera diagnostics, deadman,
+                      e-stops, TF, gloves, hands, camera observations, all /fabric topics, commands and arming
+  compute.log, commit.txt; after the run review.txt and cameras/ (perception logs from the hosts)

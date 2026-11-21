@@ -164,9 +164,9 @@ case "$cmd" in
         echo "  $r preflight: $pre"
         rc=1
         if grep -q 'Preflight passed' <<< "$pre" && ! grep -q ABORT <<< "$pre"; then
-            spd-say -r -10 "Moving ${r^} only. Release, then press and hold the deadman." >/dev/null 2>&1
+            spd-say -r -10 "Moving ${r^} only. Press the deadman once to start. Press again to stop." >/dev/null 2>&1
             scripts/hw/lab.sh session "$r" exec python3 fabric_ws/scripts/hw/grasp_joints.py --robot "$r" --to "${target[@]}" "${retreat[@]}" --wait 600 |
-                while IFS= read -r line; do echo "  $line"; [[ "$line" == Arrived* ]] && spd-say -r -10 "${r^} arrived. Release the deadman." >/dev/null 2>&1; done
+                while IFS= read -r line; do echo "  $line"; [[ "$line" == Arrived* ]] && spd-say -r -10 "${r^} arrived. Press the deadman once to end." >/dev/null 2>&1; done
             rc=${PIPESTATUS[0]}
         else spd-say -r -10 "${r^} failed its check" >/dev/null 2>&1; fi
         for b in blue silver; do scripts/hw/lab.sh session "$b" start-cell-bridge "/home/oarbot_$b/fabric_ws/experiments/hardware/cell" 2>&1 | tail -1 | sed "s/^/  $b: /"; done

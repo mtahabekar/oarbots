@@ -1,0 +1,186 @@
+[INFO] [launch]: All log files can be found below /home/taha/.ros/log/2026-11-21-10-15-04-336852-taha-Legion-7-16IAX10-358344
+[INFO] [launch]: Default logging verbosity is set to INFO
+[INFO] [launch.user]: Using nominal grip transforms from /home/taha/ros2_colcon_ws/src/oarbots/experiments/hardware/sessions/2026-11-21_fabric_run/warmup_10_0.1_101502/cell/calibration.yaml (shadow run, no commands).
+[INFO] [calibration_publisher-1]: process started with pid [358348]
+[INFO] [fusion-2]: process started with pid [358349]
+[INFO] [observer-3]: process started with pid [358350]
+[INFO] [twin-4]: process started with pid [358351]
+[INFO] [parameter_bank-5]: process started with pid [358352]
+[INFO] [demo_markers-6]: process started with pid [358353]
+[INFO] [rviz2-7]: process started with pid [358354]
+[INFO] [recorder-8]: process started with pid [358355]
+[INFO] [twin_recorder-9]: process started with pid [358356]
+[INFO] [run_bag-10]: process started with pid [358357]
+[rviz2-7] [INFO] [1795274104.755257146] [rviz2]: Stereo is NOT SUPPORTED
+[rviz2-7] [INFO] [1795274104.755353925] [rviz2]: OpenGl version: 4.6 (GLSL 4.6)
+[rviz2-7] [INFO] [1795274104.781528645] [rviz2]: Stereo is NOT SUPPORTED
+[run_bag-10] stdin is not a terminal device. Keyboard handling disabled.[INFO] [1795274104.791083387] [rosbag2_recorder]: Press SPACE for pausing/resuming
+[run_bag-10] [INFO] [1795274104.791096161] [rosbag2_recorder]: Event publisher thread: Started
+[run_bag-10] [INFO] [1795274104.797601543] [rosbag2_recorder]: Starting recording to '/home/taha/ros2_colcon_ws/src/oarbots/experiments/hardware/sessions/2026-11-21_fabric_run/warmup_10_0.1_101502/bag'
+[run_bag-10] [INFO] [1795274104.799688631] [rosbag2_recorder]: Listening for topics...
+[run_bag-10] [INFO] [1795274104.799718200] [rosbag2_recorder]: Recording...
+[run_bag-10] [INFO] [1795274104.799729012] [rosbag2_recorder]: Topics discovery started.
+[run_bag-10] [INFO] [1795274104.805257740] [rosbag2_recorder]: Subscribed to topic '/fabric/twin/enable_commands'
+[run_bag-10] [INFO] [1795274104.810764243] [rosbag2_recorder]: Subscribed to topic '/fabric/twin/warmup'
+[calibration_publisher-1] [INFO] [1795274104.832315000] [cell_calibration]: published 5 calibration transforms from /home/taha/ros2_colcon_ws/src/oarbots/experiments/hardware/sessions/2026-11-21_fabric_run/warmup_10_0.1_101502/cell/calibration.yaml
+[run_bag-10] [INFO] [1795274104.835903805] [rosbag2_recorder]: Subscribed to topic '/oarbot_blue/fabric_cbf/arm'
+[run_bag-10] [INFO] [1795274104.865243092] [rosbag2_recorder]: Subscribed to topic '/oarbot_silver/fabric_cbf/arm'
+[run_bag-10] [WARN] [1795274104.868607465] [ROSBAG2_TRANSPORT]: Topic '/oarbot_silver/commands/fabric_cbf/arm' has unknown type 'kinova_msgs/msg/PoseVelocity' . Only topics with known type are supported. Reason: 'package 'kinova_msgs' not found, searching: [/home/taha/ros2_colcon_ws/install/fabric_cell, /home/taha/ros2_colcon_ws/install/fabric_sim_cell, /home/taha/ros2_colcon_ws/install/rokubi_force_torque_publisher, /home/taha/ros2_colcon_ws/install/oarbot_runtime, /home/taha/ros2_colcon_ws/install/oarbot_description, /home/taha/ros2_colcon_ws/install/joint_state_renamer, /home/taha/ros2_colcon_ws/install/fabric_twin, /home/taha/ros2_colcon_ws/install/fabric_reference_reconstruction, /home/taha/ros2_colcon_ws/install/fabric_state_estimator, /home/taha/ros2_colcon_ws/install/fabric_perception, /home/taha/ros2_colcon_ws/install/human_hand_tracking, /home/taha/ros2_colcon_ws/install/fabric_sim_experiments, /home/taha/ros2_colcon_ws/install/fabric_sim_bringup, /home/taha/ros2_colcon_ws/install/fabric_teleop, /home/taha/ros2_colcon_ws/install/fabric_state_msgs, /opt/ros/jazzy]
+[run_bag-10] [INFO] [1795274104.883498887] [rosbag2_recorder]: Subscribed to topic '/oarbot_silver/azure_kinect/fabric/observations'
+[run_bag-10] [INFO] [1795274104.896284883] [rosbag2_recorder]: Subscribed to topic '/nuc/fabric/observations'
+[run_bag-10] [INFO] [1795274104.903625237] [rosbag2_recorder]: Subscribed to topic '/tf_static'
+[run_bag-10] [INFO] [1795274104.909082188] [rosbag2_recorder]: Subscribed to topic '/tf'
+[run_bag-10] [INFO] [1795274104.912133676] [rosbag2_recorder]: Subscribed to topic '/oarbot_silver/force_torque_raw'
+[run_bag-10] [INFO] [1795274104.918892675] [rosbag2_recorder]: Subscribed to topic '/oarbot_silver/force_torque_calibrated'
+[run_bag-10] [INFO] [1795274104.926914386] [rosbag2_recorder]: Subscribed to topic '/oarbot_blue/force_torque_raw'
+[run_bag-10] [INFO] [1795274104.933749676] [rosbag2_recorder]: Subscribed to topic '/nuc/fabric/diagnostics'
+[run_bag-10] [INFO] [1795274104.941579921] [rosbag2_recorder]: Subscribed to topic '/oarbot_silver/diagnostics'
+[run_bag-10] [INFO] [1795274104.948281037] [rosbag2_recorder]: Subscribed to topic '/oarbot_blue/force_torque_calibrated'
+[run_bag-10] [INFO] [1795274104.954447715] [rosbag2_recorder]: Subscribed to topic '/oarbot_silver/azure_kinect/fabric/diagnostics'
+[rviz2-7] [INFO] [1795274104.962260579] [rviz2]: Stereo is NOT SUPPORTED
+[run_bag-10] [INFO] [1795274104.970364363] [rosbag2_recorder]: Subscribed to topic '/nuc/fabric/gloves'
+[run_bag-10] [INFO] [1795274104.977060969] [rosbag2_recorder]: Subscribed to topic '/oarbot_silver/joint_states'
+[run_bag-10] [INFO] [1795274104.981092371] [rosbag2_recorder]: Subscribed to topic '/oarbot_silver/azure_kinect/fabric/gloves'
+[run_bag-10] [INFO] [1795274104.990275757] [rosbag2_recorder]: Subscribed to topic '/oarbot_blue/diagnostics'
+[run_bag-10] [INFO] [1795274105.009094971] [rosbag2_recorder]: Subscribed to topic '/oarbot_blue/dingo/platform/emergency_stop'
+[run_bag-10] [INFO] [1795274105.028386113] [rosbag2_recorder]: Subscribed to topic '/oarbot_blue/azure_kinect/fabric/diagnostics'
+[run_bag-10] [INFO] [1795274105.033849380] [rosbag2_recorder]: Subscribed to topic '/oarbot_blue/azure_kinect/fabric/observations'
+[run_bag-10] [INFO] [1795274105.038350499] [rosbag2_recorder]: Subscribed to topic '/oarbot_blue/azure_kinect/fabric/gloves'
+[run_bag-10] [INFO] [1795274105.043926940] [rosbag2_recorder]: Subscribed to topic '/oarbot_blue/joint_states'
+[run_bag-10] [INFO] [1795274105.047737404] [rosbag2_recorder]: Subscribed to topic '/oarbot_silver/dingo/platform/emergency_stop'
+[run_bag-10] [INFO] [1795274105.071963730] [rosbag2_recorder]: Subscribed to topic '/tablet_gui/deadman'
+[run_bag-10] [INFO] [1795274105.106104302] [rosbag2_recorder]: Subscribed to topic '/fabric/hand_tracking_status'
+[run_bag-10] [INFO] [1795274105.113108669] [rosbag2_recorder]: Subscribed to topic '/fabric/hand_states'
+[run_bag-10] [INFO] [1795274106.015515411] [rosbag2_recorder]: Subscribed to topic '/fabric/material_parameters'
+[run_bag-10] [INFO] [1795274106.016017845] [rosbag2_recorder]: Subscribed to topic '/fabric/bank/status'
+[twin-4] [WARN] [1795274106.056652987] [fabric_twin]: starting material DISTORTED: bend x10, shear x0.1 of twin.yaml
+[run_bag-10] [INFO] [1795274106.065259454] [rosbag2_recorder]: Subscribed to topic '/fabric/twin/corners'
+[run_bag-10] [INFO] [1795274106.065709405] [rosbag2_recorder]: Subscribed to topic '/fabric/twin/state'
+[run_bag-10] [INFO] [1795274106.072338377] [rosbag2_recorder]: Subscribed to topic '/oarbot_blue/fabric_cbf/cmd_world'
+[run_bag-10] [INFO] [1795274106.072738705] [rosbag2_recorder]: Subscribed to topic '/fabric/twin/follower_cmd/blue'
+[run_bag-10] [INFO] [1795274106.076276715] [rosbag2_recorder]: Subscribed to topic '/fabric/twin/follower_cmd/silver'
+[twin-4] [INFO] [1795274106.077273030] [fabric_twin]: fabric twin waiting for four grips; cloth library at /home/taha/ros2_colcon_ws/src/fabric_sim_isaacsim_newton
+[run_bag-10] [INFO] [1795274106.079987294] [rosbag2_recorder]: Subscribed to topic '/fabric/twin/status'
+[run_bag-10] [INFO] [1795274106.081915333] [rosbag2_recorder]: Subscribed to topic '/fabric/twin/cbf_debug'
+[run_bag-10] [INFO] [1795274106.082246350] [rosbag2_recorder]: Subscribed to topic '/fabric/twin/warmup_window'
+[run_bag-10] [INFO] [1795274106.083984993] [rosbag2_recorder]: Subscribed to topic '/oarbot_silver/fabric_cbf/cmd_world'
+[observer-3] [INFO] [1795274106.210878864] [fabric_state_estimator]: Preparing physics backend before accepting live captures
+[parameter_bank-5] [INFO] [1795274106.210891234] [fabric_parameter_bank]: parameter bank ready; depth from 2 cameras; starting scales bend x10, shear x0.1; search reach x19.9
+[run_bag-10] [INFO] [1795274106.966451841] [rosbag2_recorder]: Subscribed to topic '/fabric/estimated_state'
+[run_bag-10] [INFO] [1795274106.966988462] [rosbag2_recorder]: Subscribed to topic '/fabric/model'
+[run_bag-10] [INFO] [1795274106.967454768] [rosbag2_recorder]: Subscribed to topic '/fabric/predicted_states'
+[run_bag-10] [INFO] [1795274106.967795830] [rosbag2_recorder]: Subscribed to topic '/fabric/estimator_status'
+[twin-4] [INFO] [1795274118.260133138] [fabric_twin]: twin started from a surface between the grips in 1.1 s: 225 particles, obstacle clearance 50.498 m
+[twin-4] [WARN] [1795274147.978901128] [fabric_twin]: robot commands ENABLED
+[twin-4] [INFO] [1795274165.383686975] [fabric_twin]: warm-up excitation started: insets [0.04, 0.08] m, narrow 8 cm, lift 6 cm, shift 8 cm, hands up 25 cm, hands down 25 cm, hands toward 25 cm, hands together 20 cm, hands side 15 cm at 0.03 m/s, 194 s, started at 1795274165.21 s
+[twin-4] [WARN] [1795274279.817280988] [fabric_twin]: robot commands disabled
+[twin-4] [WARN] [1795274280.049599607] [fabric_twin]: robot commands disabled
+[twin-4] [WARN] [1795274280.245131076] [fabric_twin]: robot commands disabled
+[twin-4] [WARN] [1795274280.427144204] [fabric_twin]: robot commands disabled
+[twin-4] [WARN] [1795274280.649430239] [fabric_twin]: robot commands disabled
+[twin-4] [WARN] [1795274280.840959339] [fabric_twin]: robot commands disabled
+[WARNING] [launch]: user interrupted with ctrl-c (SIGINT)
+[INFO] [run_bag-10]: sending signal 'SIGINT' to process[run_bag-10]
+[INFO] [twin_recorder-9]: sending signal 'SIGINT' to process[twin_recorder-9]
+[INFO] [recorder-8]: sending signal 'SIGINT' to process[recorder-8]
+[INFO] [rviz2-7]: sending signal 'SIGINT' to process[rviz2-7]
+[INFO] [demo_markers-6]: sending signal 'SIGINT' to process[demo_markers-6]
+[INFO] [parameter_bank-5]: sending signal 'SIGINT' to process[parameter_bank-5]
+[INFO] [twin-4]: sending signal 'SIGINT' to process[twin-4]
+[INFO] [observer-3]: sending signal 'SIGINT' to process[observer-3]
+[INFO] [fusion-2]: sending signal 'SIGINT' to process[fusion-2]
+[INFO] [calibration_publisher-1]: sending signal 'SIGINT' to process[calibration_publisher-1]
+[run_bag-10] [INFO] [1795274281.088026278] [rosbag2_recorder]: Topics discovery stopped.
+[run_bag-10] [INFO] [1795274281.088320508] [rosbag2_recorder]: Pausing recording.
+[run_bag-10] [INFO] [1795274281.088363382] [rosbag2_cpp]: Writing remaining messages from cache to the bag. It may take a while
+[rviz2-7] [INFO] [1795274281.088800593] [rclcpp]: signal_handler(SIGINT/SIGTERM)
+[run_bag-10] [INFO] [1795274281.100921637] [rosbag2_recorder]: Recording stopped
+[INFO] [rviz2-7]: process has finished cleanly [pid 358354]
+[run_bag-10] [INFO] [1795274281.270106178] [rosbag2_recorder]: Event publisher thread: Exited
+[INFO] [calibration_publisher-1]: process has finished cleanly [pid 358348]
+[fusion-2] Traceback (most recent call last):
+[fusion-2]   File "/home/taha/ros2_colcon_ws/install/human_hand_tracking/lib/human_hand_tracking/fusion", line 33, in <module>
+[fusion-2]     sys.exit(load_entry_point('human-hand-tracking==0.1.0', 'console_scripts', 'fusion')())
+[fusion-2]              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[fusion-2]   File "/home/taha/ros2_colcon_ws/src/oarbots/src/human_hand_tracking/human_hand_tracking/node.py", line 214, in main
+[fusion-2]     rclpy.spin(node)
+[fusion-2]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/__init__.py", line 247, in spin
+[fusion-2]     executor.spin_once()
+[fusion-2]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 934, in spin_once
+[fusion-2]     self._spin_once_impl(timeout_sec)
+[fusion-2]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 915, in _spin_once_impl
+[fusion-2]     handler, entity, node = self.wait_for_ready_callbacks(
+[fusion-2]                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[fusion-2]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 885, in wait_for_ready_callbacks
+[fusion-2]     return next(self._cb_iter)
+[fusion-2]            ^^^^^^^^^^^^^^^^^^^
+[fusion-2]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 789, in _wait_for_ready_callbacks
+[fusion-2]     wait_set.wait(timeout_nsec)
+[fusion-2] KeyboardInterrupt
+[INFO] [demo_markers-6]: process has finished cleanly [pid 358353]
+[observer-3] Warp 1.17.0 initialized:
+[observer-3]    CUDA Toolkit 12.9, Driver 13.0
+[observer-3]    Devices:
+[observer-3]      "cpu"      : "x86_64"
+[observer-3]      "cuda:0"   : "NVIDIA GeForce RTX 5070 Laptop GPU" (8 GiB, sm_120, mempool enabled)
+[observer-3]    Kernel cache:
+[observer-3]      /tmp/oarbots-fabric-audit-gpu/1.17.0
+[observer-3] Module newton._src.utils.mesh 92b663b load on device 'cpu' took 0.75 ms  (cached)
+[observer-3] Module newton._src.geometry.bvh 58a3a49 load on device 'cuda:0' took 0.94 ms  (cached)
+[observer-3] Module newton._src.solvers.style3d.kernels 6e609e0 load on device 'cuda:0' took 1.49 ms  (cached)
+[observer-3] Module newton._src.solvers.style3d.collision.bvh.kernels eed0ece load on device 'cuda:0' took 0.86 ms  (cached)
+[observer-3]     Module newton._src.solvers.style3d.builder eb1b915 load on device 'cpu' took 0.13 ms  (cached)
+[observer-3]     Module newton._src.solvers.style3d.builder 013f25b load on device 'cuda:0' took 1.65 ms  (cached)
+[observer-3] SolverStyle3D::precompute() took 6.65 ms
+[observer-3] Module fabric_state_estimator.newton_backend ac93137 load on device 'cuda:0' took 0.47 ms  (cached)
+[observer-3] Module newton._src.solvers.style3d.linear_solver f457b3c load on device 'cuda:0' took 1.58 ms  (cached)
+[observer-3] Traceback (most recent call last):
+[observer-3]   File "/home/taha/ros2_colcon_ws/install/fabric_state_estimator/lib/fabric_state_estimator/observer", line 33, in <module>
+[observer-3]     sys.exit(load_entry_point('fabric-state-estimator==0.1.0', 'console_scripts', 'observer')())
+[observer-3]              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[observer-3]   File "/home/taha/ros2_colcon_ws/src/oarbots/src/fabric_state_estimator/fabric_state_estimator/node.py", line 325, in main
+[observer-3]     rclpy.spin(node)
+[observer-3]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/__init__.py", line 247, in spin
+[observer-3]     executor.spin_once()
+[observer-3]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 934, in spin_once
+[observer-3]     self._spin_once_impl(timeout_sec)
+[observer-3]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 915, in _spin_once_impl
+[observer-3]     handler, entity, node = self.wait_for_ready_callbacks(
+[observer-3]                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[observer-3]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 885, in wait_for_ready_callbacks
+[observer-3]     return next(self._cb_iter)
+[observer-3]            ^^^^^^^^^^^^^^^^^^^
+[observer-3]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 789, in _wait_for_ready_callbacks
+[observer-3]     wait_set.wait(timeout_nsec)
+[observer-3] KeyboardInterrupt
+[ERROR] [fusion-2]: process has died [pid 358349, exit code -2, cmd '/home/taha/ros2_colcon_ws/install/human_hand_tracking/lib/human_hand_tracking/fusion --ros-args -r __node:=hand_fusion --params-file /home/taha/ros2_colcon_ws/src/oarbots/experiments/hardware/sessions/2026-11-21_fabric_run/warmup_10_0.1_101502/cell/fusion.yaml'].
+[INFO] [recorder-8]: process has finished cleanly [pid 358355]
+[twin-4] Warp 1.17.0 initialized:
+[twin-4]    CUDA Toolkit 12.9, Driver 13.0
+[twin-4]    Devices:
+[twin-4]      "cpu"      : "x86_64"
+[twin-4]      "cuda:0"   : "NVIDIA GeForce RTX 5070 Laptop GPU" (8 GiB, sm_120, mempool enabled)
+[twin-4]    Kernel cache:
+[twin-4]      /tmp/oarbots-fabric-audit-gpu/1.17.0
+[twin-4] Module newton._src.utils.mesh 92b663b load on device 'cpu' took 0.81 ms  (cached)
+[twin-4] Module newton._src.geometry.bvh 58a3a49 load on device 'cuda:0' took 0.96 ms  (cached)
+[twin-4] Module newton._src.solvers.style3d.kernels 6e609e0 load on device 'cuda:0' took 1.75 ms  (cached)
+[twin-4] Module newton._src.solvers.style3d.collision.bvh.kernels eed0ece load on device 'cuda:0' took 1.06 ms  (cached)
+[twin-4]     Module newton._src.solvers.style3d.builder eb1b915 load on device 'cpu' took 0.20 ms  (cached)
+[twin-4]     Module newton._src.solvers.style3d.builder 013f25b load on device 'cuda:0' took 2.15 ms  (cached)
+[twin-4] SolverStyle3D::precompute() took 5.48 ms
+[twin-4] Module fabric_twin.cloth 2b29def load on device 'cuda:0' took 0.30 ms  (cached)
+[twin-4] Module capsule_cbf.newton_runtime 8379e06 load on device 'cuda:0' took 0.27 ms  (cached)
+[twin-4] Module newton._src.sim.collide f369c1a load on device 'cuda:0' took 0.68 ms  (cached)
+[twin-4] Module narrow_phase_primitive_write_contact_False_False_False 6b2fd5c load on device 'cuda:0' took 0.72 ms  (cached)
+[twin-4] Module newton._src.geometry.narrow_phase 3519ebf load on device 'cuda:0' took 0.92 ms  (cached)
+[twin-4] Module newton._src.geometry.kernels d546c9d load on device 'cuda:0' took 5.97 ms  (cached)
+[twin-4] Module newton._src.solvers.style3d.collision.bvh.kernels ebf1724 load on device 'cuda:0' took 0.89 ms  (cached)
+[twin-4] Module newton._src.solvers.style3d.collision.kernels f54ca9e load on device 'cuda:0' took 1.63 ms  (cached)
+[twin-4] Module newton._src.solvers.style3d.linear_solver f457b3c load on device 'cuda:0' took 1.45 ms  (cached)
+[twin-4] SolverStyle3D::precompute() took 5.69 ms
+[INFO] [twin_recorder-9]: process has finished cleanly [pid 358356]
+[INFO] [run_bag-10]: process has finished cleanly [pid 358357]
+[INFO] [parameter_bank-5]: process has finished cleanly [pid 358352]
+[ERROR] [observer-3]: process has died [pid 358350, exit code -2, cmd '/home/taha/ros2_colcon_ws/install/fabric_state_estimator/lib/fabric_state_estimator/observer --ros-args -r __node:=fabric_state_estimator --params-file /tmp/launch_params_ftkr2x5o'].
+[INFO] [twin-4]: process has finished cleanly [pid 358351]
