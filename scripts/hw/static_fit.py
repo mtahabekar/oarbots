@@ -31,9 +31,10 @@ def _spec(config, override):
     return dataclasses.replace(spec, **{k: (int(v) if k in ints else float(v)) for k, v in override.items()})
 
 
-def _init(config, override, run, window):
+def _init(config, override, run, window, point_grips=True):
     import identify_replay as ir
-    _state.update(spec=_spec(config, override), window=ir.load(Path(run), window, 1, 128, 1.), forwards={})
+    _state.update(spec=_spec(config, override), window=ir.load(Path(run), window, 1, 128, 1.), forwards={},
+                  point=point_grips)
 
 
 def _raw(task):
@@ -42,7 +43,7 @@ def _raw(task):
     names, fixed, theta = task
     key = (tuple(names), tuple(sorted(fixed.items())))
     if key not in _state['forwards']:
-        f = Forward(_state['spec'], _state['window'], names, point_grips=True)
+        f = Forward(_state['spec'], _state['window'], names, point_grips=_state['point'])
         f.set_fixed(**fixed)
         _state['forwards'] = {key: f}          # one model per worker (memory)
     return _state['forwards'][key].raw(np.asarray(theta, float)[None])[0]
@@ -53,7 +54,8 @@ def fit_run(run, a, override, workers):
     from fabric_twin.identify import PARAMETERS
     from fabric_twin.static_fit import corner_weights, levenberg_marquardt
     window = ir.load(Path(run), a.window, 1, 128, 1.)
-    pool = mp.get_context('spawn').Pool(workers, initializer=_init, initargs=(a.config, override, str(run), a.window))
+    pool = mp.get_context('spawn').Pool(workers, initializer=_init,
+                                        initargs=(a.config, override, str(run), a.window, not a.patch_grips))
     out = {}
     try:
         def stage(names, fixed, weights, theta0, steps, label):
@@ -109,6 +111,9 @@ def main():
     ap.add_argument('--stretch-range', type=float, nargs=2, default=[-2.5, .5], help='log10 search range of the stretch scale')
     ap.add_argument('--max-iterations', type=int, default=8)
     ap.add_argument('--reuse-grips', action='store_true', help="take stage 1 from the run's static_fit/result.json")
+    ap.add_argument('--patch-grips', action='store_true',
+                    help="square patch grips (nodes within patch_m of the corner; e.g. --override patch_m=0.06 = 3 x 3 nodes "
+                         "on 28 x 28) instead of one particle per corner")
     ap.add_argument('--tag', default='static_fit', help='output folder name inside each run (default static_fit)')
     a = ap.parse_args()
     override = dict(item.split('=') for item in a.override)
