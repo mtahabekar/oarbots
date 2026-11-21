@@ -58,6 +58,8 @@
 #                                       (a host that booted without the lab link falls back to campus NTP, 2026-11-21)
 #   fabric_run.sh deadman-watch [seconds]   read-only: print every change of /tablet_gui/deadman and e-stop and their
 #                                       rate (check the toggle deadman: press once -> ON stays, press again -> OFF)
+#   fabric_run.sh results [--since YYYY-MM-DD]   every audited run in one table for the paper
+#                                       (experiments/hardware/results/runs.csv; scripts/hw/results_table.py)
 #   fabric_run.sh bases [seconds]       read-only: each Dingo base from its roof marker (overhead camera, on the NUC)
 #                                       against calibration.yaml; OK/WARN/FAIL by the grip shift it causes
 #                                       (scripts/hw/base_check.py; also cell_up.sh step 7)
@@ -165,6 +167,9 @@ save_run() {
         [ -e "$run/twin.cbf.jsonl" ] && gzip -9 -f "$run/twin.cbf.jsonl"
         cp "$data/MANIFEST.sha256" "$run/large_files.sha256" 2>/dev/null
         echo "Large files and camera logs: $data (checksums also in $run/large_files.sha256)"
+        # Every saved run is audited against the cameras (paper: the measured clearance, not the twin's; 2026-11-21).
+        ( offline_env; ~/venvs/fabric_ros/bin/python "$here/twin_audit.py" "$run" > "$run/audit.log" 2>&1 ) \
+            && echo "Audit: $run/audit.json" || echo "Audit failed: $run/audit.log" >&2
 }
 
 cmd="${1:-}"; shift || true
@@ -593,6 +598,7 @@ while time.time() < end:
 print('rates: ' + ', '.join(f'{k} {v / (time.time() - t0):.1f} Hz' for k, v in count.items()))
 PY
         ;;
+    results) offline_env; ~/venvs/fabric_ros/bin/python "$here/results_table.py" "$@" ;;
     bases) python3 "$here/base_check.py" "${1:-10}" ;;
     review) ros_env; python3 "$here/run_review.py" "${1:?review <run_dir>}" ;;
     audit) offline_env; ~/venvs/fabric_ros/bin/python "$here/twin_audit.py" "${1:?audit <run_dir>}" "${@:2}" ;;

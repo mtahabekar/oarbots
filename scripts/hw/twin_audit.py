@@ -149,7 +149,8 @@ def main():
         # CBF built (capsule_cbf.Capsule with the twin's cap settings), and the box itself as the "inside" check.
         twin_cfg = yaml.safe_load((run / 'cell' / 'twin.yaml').read_text()) if (run / 'cell' / 'twin.yaml').exists() else {}
         box = twin_cfg.get('obstacle') or {}
-        if box.get('half_extents'):
+        # A box parked far below the floor is the "no obstacle" setting (NO_OBSTACLE / empty work area): nothing to audit.
+        if box.get('half_extents') and float(box.get('center', [0, 0, 0])[2]) > -1.:
             from fabric_twin.vendor import use_capsule_cbf
             use_capsule_cbf()
             from capsule_cbf.capsule import Capsule

@@ -75,6 +75,7 @@ def nodes(context):
         if get('record_bag') == 'true':
             # Everything else a report needs, raw: measured arm force/torque (the real sheet tension), joint states,
             # bridge/guard/camera diagnostics, deadman and e-stops, TF, gloves and hands, camera observations (depth),
+            # the overhead preview images, the joint commands to the guard and to the driver,
             # the estimator's and twin's topics (state, status, CBF stream, corners), commands and arming.
             # Starts and stops with this launch (SIGINT closes the bag cleanly).
             out.append(ExecuteProcess(cmd=['ros2', 'bag', 'record', '-s', 'mcap', '--storage-preset-profile', 'zstd_fast',
@@ -83,9 +84,13 @@ def nodes(context):
     return out
 
 
-BAG_TOPICS = ('^/(fabric/.*|tf|tf_static|tablet_gui/deadman|nuc/fabric/(gloves|diagnostics|observations)'
+# 2026-11-21 (paper): + the tablet e-stop, the overhead preview (640 x 360, 5 Hz: visual check of near-contacts, figures),
+# the bridges' joint commands to the guard and the guard's output to the driver (commanded vs executed).
+BAG_TOPICS = ('^/(fabric/.*|tf|tf_static|tablet_gui/(deadman|e_stop)|nuc/fabric/(gloves|diagnostics|observations)'
+              '|nuc/preview/rgb/(image_raw|camera_info)'
               '|oarbot_(blue|silver)/(joint_states|force_torque_calibrated|force_torque_raw|diagnostics'
-              '|fabric_cbf/.*|commands/fabric_cbf/.*|dingo/platform/emergency_stop'
+              '|fabric_cbf/.*|commands/fabric_cbf/.*|commands/joint/arm|kinova/j2n6s300_driver/in/joint_velocity'
+              '|dingo/platform/emergency_stop'
               '|azure_kinect/fabric/(gloves|diagnostics|observations)))$')
 BAG_EXCLUDE = '^/fabric/.*markers.*$'   # RViz drawings only
 
