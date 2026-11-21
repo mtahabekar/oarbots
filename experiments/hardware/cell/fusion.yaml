@@ -31,3 +31,9 @@
     # head height. S5 (2026-11-18) fused hands reached z -0.03 m with 95 cm single steps.
     hand_workspace_min: [-0.9, -0.35, 0.4]
     hand_workspace_max: [0.9, 1.2, 1.6]
+    # World-frame correction from each glove's grip estimate to the real pinch (m): left hand xyz, then right hand
+    # xyz, applied before fusion, so twin, estimator and stretch guard share it. Identified on 2026-11-21 from the
+    # 11:11 warm-up with each corner fitted on its own (scripts/hw/grip_point_search.py, grip-apply): both pinches
+    # 4.3 cm below the glove estimate, the right hand's also 2 cm toward Silver (+x). Replace by a measured
+    # tag_to_grip_offsets_m (pivot calibration, test guide Block B) when that is done.
+    world_grip_offset_m: [0.0, 0.0, -0.043, 0.02, -0.0003, -0.043]

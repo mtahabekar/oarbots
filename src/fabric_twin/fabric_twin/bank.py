@@ -14,6 +14,7 @@ candidates actually disagree with each other; if they do not, the data carry no 
 nothing is changed.
 """
 from dataclasses import dataclass, replace
+import time
 import numpy as np
 from scipy.spatial import cKDTree
 
@@ -81,37 +82,117 @@ class Bank:
         self.evaluations += 1
         return float(np.mean(costs)), ends
 
-    def calibrate(self, cases, start=(1., 1.), span=4., rounds=3, bounds=(1/16, 16.)):
+    def calibrate(self, cases, start=(1., 1.), span=4., rounds=3, bounds=(1/16, 16.),
+                  cost_tolerance_m=.0001, parameter_tolerance=.1, max_seconds=None,
+                  max_evaluations=None, progress=None):
         """Coarse-to-fine search in log scale around `start`.
+
+        `rounds` is a maximum. Stop when a refinement changes the coefficients by at most
+        `parameter_tolerance` and the RMS residual by at most `cost_tolerance_m`, verified
+        by probing both axes at that relative coefficient scale. Boundary optima and exhausted
+        budgets are reported as not converged. Time limits are checked between simulations.
 
         Returns dict(bend, shear, cost_m, start_cost_m, sensitivity_m, table). `sensitivity_m`
         is the largest RMS difference between any candidate's end shape and the best one's: if
         it is below the depth noise, the cases cannot tell the candidates apart.
         """
-        table, best, best_cost, best_ends = {}, tuple(float(s) for s in start), None, None
+        start = tuple(float(s) for s in start)
+        if (len(start) != 2 or not np.isfinite(start).all() or min(start) <= 0
+                or not np.isfinite([span, *bounds, cost_tolerance_m, parameter_tolerance]).all()
+                or span <= 1 or rounds < 1 or int(rounds) != rounds or not 0 < bounds[0] < bounds[1]
+                or min(start) < bounds[0] or max(start) > bounds[1]
+                or cost_tolerance_m < 0 or not 0 < parameter_tolerance < 1
+                or (max_seconds is not None and (not np.isfinite(max_seconds) or max_seconds <= 0))
+                or (max_evaluations is not None and max_evaluations < 1)):
+            raise ValueError('Invalid calibration search bounds, tolerances or budgets')
+        table, best, best_cost, best_ends = {}, start, None, None
         factor = float(span)
+        begun, history, completed, converged, reason = time.perf_counter(), [], 0, False, 'max_rounds'
+
+        class BudgetReached(Exception):
+            pass
 
         def evaluate(scales):
+            nonlocal best, best_cost, best_ends, reason
             key = tuple(round(float(np.log(s)), 6) for s in scales)
             if key not in table:
+                if max_evaluations is not None and len(table) >= max_evaluations:
+                    reason = 'evaluation_limit'
+                    raise BudgetReached
+                if table and max_seconds is not None and time.perf_counter()-begun >= max_seconds:
+                    reason = 'time_limit'
+                    raise BudgetReached
                 table[key] = self.cost(scales, cases)
+                cost, ends = table[key]
+                if np.isfinite(cost) and (best_cost is None or cost < best_cost):
+                    best, best_cost, best_ends = tuple(scales), cost, ends
+                if progress:
+                    progress(dict(evaluations=len(table), seconds=time.perf_counter()-begun,
+                                  rounds_completed=completed, bend=best[0], shear=best[1],
+                                  cost_m=float(np.sqrt(best_cost)) if best_cost is not None else None))
             return table[key]
         start_cost, _ = evaluate(best)
         sensitivity = 0.
-        for round_index in range(rounds):
-            steps = (1/factor, 1/np.sqrt(factor), 1., np.sqrt(factor), factor) if round_index == 0 else (1/factor, 1., factor)
-            for b in steps:
-                for s in steps:
-                    scales = tuple(float(np.clip(x, *bounds)) for x in (best[0]*b, best[1]*s))
-                    cost, ends = evaluate(scales)
-                    if best_cost is None or cost < best_cost:
-                        candidate, best_cost, best_ends = scales, cost, ends
-            best = candidate
-            factor = factor**.25 if round_index == 0 else np.sqrt(factor)
-        for cost, ends in table.values():
-            sensitivity = max(sensitivity, max(float(np.sqrt(np.mean(np.sum((a-b)**2, axis=1)))) for a, b in zip(ends, best_ends)))
+        try:
+            for round_index in range(int(rounds)):
+                center = best
+                previous_cost = best_cost
+                steps = (1/factor, 1/np.sqrt(factor), 1., np.sqrt(factor), factor) if round_index == 0 else (1/factor, 1., factor)
+                for b in steps:
+                    for s in steps:
+                        evaluate(tuple(float(np.clip(x, *bounds)) for x in (center[0]*b, center[1]*s)))
+                completed += 1
+                if best_cost is None:
+                    reason = 'no_valid_surface_fit'
+                    break
+                absolute_edge = any(x <= bounds[0]*(1+1e-6) or x >= bounds[1]*(1-1e-6) for x in best)
+                edge = absolute_edge or any(abs(np.log(x/c)) >= np.log(factor)-1e-5 for x, c in zip(best, center))
+                gain = (np.sqrt(previous_cost)-np.sqrt(best_cost)) if previous_cost is not None else np.inf
+                change = float(np.max(np.abs(np.log(np.array(best)/center))))
+                history.append(dict(round=completed, factor=factor, bend=best[0], shear=best[1],
+                                    cost_m=float(np.sqrt(best_cost)), improvement_m=float(gain),
+                                    parameter_log_change=change, at_boundary=bool(edge)))
+                if (round_index >= 1 and not edge and gain <= cost_tolerance_m
+                        and change <= np.log1p(parameter_tolerance)):
+                    # A stable coarse grid alone can miss a nearby optimum. Verify the
+                    # declared coefficient tolerance before accepting the early stop.
+                    probe_center, probe_cost = best, best_cost
+                    for axis in range(2):
+                        for direction in (-1, 1):
+                            trial = list(probe_center)
+                            trial[axis] *= (1+parameter_tolerance)**direction
+                            trial[axis] = float(np.clip(trial[axis], *bounds))
+                            evaluate(tuple(trial))
+                    probe_gain = float(np.sqrt(probe_cost)-np.sqrt(best_cost))
+                    probe_change = float(np.max(np.abs(np.log(np.array(best)/probe_center))))
+                    total_gain = float(np.sqrt(previous_cost)-np.sqrt(best_cost))
+                    total_change = float(np.max(np.abs(np.log(np.array(best)/center))))
+                    history[-1].update(probe_improvement_m=probe_gain, final_cost_m=float(np.sqrt(best_cost)),
+                                       final_bend=best[0], final_shear=best[1])
+                    if (probe_gain <= cost_tolerance_m and probe_change <= np.log1p(parameter_tolerance)+1e-12
+                            and total_gain <= cost_tolerance_m and total_change <= np.log1p(parameter_tolerance)+1e-12
+                            and all(bounds[0]*(1+1e-6) < x < bounds[1]*(1-1e-6) for x in best)):
+                        converged, reason = True, 'converged'
+                        break
+                factor = factor**.25 if round_index == 0 else np.sqrt(factor)
+        except BudgetReached:
+            pass
+        if not converged and reason == 'max_rounds' and best_cost is not None:
+            if any(x <= bounds[0]*(1+1e-6) or x >= bounds[1]*(1-1e-6) for x in best):
+                reason = 'parameter_bound'
+            elif history and history[-1]['at_boundary']:
+                reason = 'search_edge'
+        if best_ends is not None:
+            for cost, ends in table.values():
+                if np.isfinite(cost):
+                    sensitivity = max(sensitivity, max(float(np.sqrt(np.mean(np.sum((a-b)**2, axis=1))))
+                                                       for a, b in zip(ends, best_ends)))
+        best_cost = np.inf if best_cost is None else best_cost
+        reach = span**(1+sum(.25*.5**k for k in range(max(completed-1, 0))))
         return dict(bend=best[0], shear=best[1], cost_m=float(np.sqrt(best_cost)), start_cost_m=float(np.sqrt(start_cost)),
                     sensitivity_m=sensitivity, evaluations=len(table),
+                    converged=converged, stop_reason=reason, rounds_completed=completed, reach=reach,
+                    cost_tolerance_m=cost_tolerance_m, parameter_tolerance=parameter_tolerance, history=history,
                     table=[dict(bend=float(np.exp(k[0])), shear=float(np.exp(k[1])), cost_m=float(np.sqrt(v[0])))
                            for k, v in sorted(table.items())])
 

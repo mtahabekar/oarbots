@@ -22,10 +22,12 @@ physics:
   - 30000.0
   - 30000.0
   - 6000.0
+  # Measured stand-in bending (cantilever, 2026-11-17: G = 1.4e-5 N m, isotropic), as twin.yaml since 2026-11-20.
+  # Was the carbon placeholder [0.002, 0.001, 0.0005], ~140x stiffer.
   newton_bend:
-  - 0.002
-  - 0.001
-  - 0.0005
+  - 1.4e-5
+  - 1.4e-5
+  - 1.4e-5
   iterations: 4
 observer:
   # Relaxation to prior spread: half of the spread an analysis removes is put back. On the

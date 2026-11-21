@@ -35,7 +35,7 @@ from fabric_state_msgs.msg import FabricModel, FabricState, HandStates
 from human_hand_tracking.fusion import HandTrack
 
 from .cbf import TwinCbf, default_settings_path, load_settings
-from .cloth import Obstacle, TwinCloth, TwinSpec
+from .cloth import Obstacle, TwinCloth, TwinSpec, inset_grip_spans
 from .obstacle_shape import capsule_mesh, prism_mesh
 from .feedback import FeedbackSpec, Nudger
 from .vendor import fabric_sim_root
@@ -58,7 +58,7 @@ def load_twin_config(path):
     if unknown:
         raise ValueError(f'Unknown twin configuration sections: {sorted(unknown)}')
     sheet = dict(value.get('sheet', {}))
-    for key in ('stretch', 'bend'):
+    for key in ('stretch', 'bend', 'grip_insets_m'):
         if key in sheet:
             sheet[key] = tuple(sheet[key])
     obstacle = Obstacle(**{k: tuple(v) if isinstance(v, list) else v for k, v in value.get('obstacle', {}).items()})
@@ -68,7 +68,7 @@ def load_twin_config(path):
                    max_catch_up_frames=4, initial_sag_m=.03, commands_enabled=False, hand_floor_m=.01,
                    leader_speed_limit_mps=.5, leader_smoothing_sec=.1, collision_clearance_m=0.,
                    formation_slack_m=.04, formation_lateral_slack_m=.02, formation_gain_per_s=2.,
-                   warmup_at_sec=-1.)
+                   warmup_at_sec=-1., warmup_only=False)
     unknown = set(value.get('runtime', {}))-set(runtime)
     if unknown:
         raise ValueError(f'Unknown twin runtime settings: {sorted(unknown)}')
@@ -113,7 +113,9 @@ class FabricTwinNode(Node):
                 what = f'box center {box.center}, half extents {box.half_extents}, yaw {box.yaw:.3f}'
             self.spec = dataclasses.replace(self.spec, obstacle=box)
             self.get_logger().warn(f'obstacle from {obstacle_file}: {what} (replaces twin.yaml)')
-        self.guard = StretchGuard(self.spec.width_m, self.spec.height_m, stretch)
+        # Calibrated grip points inset from the corners leave less sheet between the grips: the guard's limits follow.
+        self.guard = StretchGuard(self.spec.width_m, self.spec.height_m, stretch,
+                                  spans=inset_grip_spans(self.spec) if self.spec.grip_insets_m else None)
         self.forces = [None, None]  # newest cloth pull on each robot: (receipt monotonic s, world vector)
         if stretch.force_feedback:
             for k, topic in enumerate(self.force_options['topics']):
@@ -133,8 +135,20 @@ class FabricTwinNode(Node):
         self.commands_enabled = bool(r['commands_enabled']) if override == '' else override in ('true', '1')
         self.frame_ms, self.cbf_ms = deque(maxlen=600), deque(maxlen=150)
         self.skipped, self.stale_grips, self.replaced = 0, 0, 0
-        self.fault, self.material, self.pending_material = 'waiting for grips', dict(version=0, bend=1., shear=1.), None
+        # Starting material scales (of twin.yaml's bend and shear). A warm-up test starts them deliberately wrong:
+        # from the nominal values a fit that keeps them cannot be told from one that learned nothing.
+        start = (float(self.declare_parameter('start_bend', 1.).value), float(self.declare_parameter('start_shear', 1.).value))
+        if not np.isfinite(start).all() or min(start) < 1/16 or max(start) > 16:
+            raise ValueError(f'start_bend and start_shear must lie in 1/16-16 (the bank search bounds), not {start}')
+        self.fault, self.material, self.pending_material = 'waiting for grips', dict(version=0, bend=start[0], shear=start[1]), None
+        if start != (1., 1.):
+            self.get_logger().warn(f'starting material DISTORTED: bend x{start[0]:g}, shear x{start[1]:g} of twin.yaml')
         self.warmup = WarmupScript(**warmup)
+        # A calibration session must never fall through to hand following, even while
+        # enabled and waiting for the operator to start its trajectory.
+        self.warmup_only = bool(r['warmup_only'])
+        self.direct_warmup = self.warmup_only and not self.cbf_options['enabled']
+        self.warmup_stop_after = self.warmup_only
         self.state_pub = self.create_publisher(PointCloud2, '/fabric/twin/state', qos_profile_sensor_data)
         self.corner_pub = self.create_publisher(PointCloud2, '/fabric/twin/corners', 50)
         self.marker_pub = self.create_publisher(MarkerArray, '/fabric/twin/markers', 5)
@@ -183,6 +197,14 @@ class FabricTwinNode(Node):
             self.nudger = Nudger(self.cloth, msg.rows, msg.columns, self.feedback_spec)
 
     def enable(self, msg):
+        if msg.data and self.warmup_only:
+            problem = self.warmup_geometry_problem()
+            if problem:
+                self.commands_enabled = False
+                self.command = np.zeros((2, 3))
+                self.publish_commands(self.twin_time)
+                self.get_logger().error(f'robot commands NOT enabled: {problem}')
+                return
         if msg.data and self.cloth is not None:
             # Follow from where everyone is now: the formation captured at the twin's start may be minutes
             # old (S5, 2026-11-18: the robots then chased that offset at the speed cap).
@@ -192,14 +214,80 @@ class FabricTwinNode(Node):
                 return
             self.set_formation(grips)
         self.commands_enabled = bool(msg.data)
+        if not self.commands_enabled:
+            self.command = np.zeros((2, 3))
+            self.publish_commands(self.twin_time)
         self.get_logger().warn(f'robot commands {"ENABLED" if self.commands_enabled else "disabled"}')
 
     def start_warmup(self, msg):
         if self.cloth is None:
             return
+        if self.warmup_only or msg.data != 'scheduled':
+            problem = self.warmup_geometry_problem()
+            if problem:
+                self.commands_enabled = False
+                self.command = np.zeros((2, 3))
+                self.publish_commands(self.twin_time)
+                self.get_logger().error(f'warm-up NOT started: {problem}')
+                return
         self.warmup.start(self.twin_time, self.cloth.corners(), msg.data)
+        # Manual warm-ups end with commands disabled. Scheduled simulation warm-ups
+        # may intentionally continue into the rehearsal's carry trajectory.
+        self.warmup_stop_after = self.warmup_only or msg.data != 'scheduled'
+        self.command = np.zeros((2, 3))
         self.warmup_announced = False
         self.get_logger().info(f'warm-up excitation started: {self.warmup.describe()}')
+
+    def warmup_geometry_problem(self):
+        """A trajectory cannot return to an origin that the stretch guard forbids (when the guard is on), and no
+        hold target may stretch a grip pair beyond both its start length and the guard's limit (always: the
+        warm-up profile runs with the guard off, and its excursions must only ever slacken the sheet)."""
+        robots, hands, _ = self.measured_now()
+        if not np.isfinite(robots).all():
+            return 'warm-up needs measured robot grip positions' if self.guard.spec.enabled else ''
+        points = np.vstack((robots, hands))
+        names = ('Blue', 'Silver', 'right hand', 'left hand')
+        if self.guard.spec.enabled:
+            for first, second, limit in self.guard.pairs:
+                if not np.isfinite(points[[first, second]]).all():
+                    continue  # hand freshness is checked independently before enabling
+                distance = float(np.linalg.norm(points[first]-points[second]))
+                if distance > limit + 1e-6:
+                    pair = 'robot-to-robot grip span' if (first, second) == (0, 1) else f'grip-pair {first}-{second} span'
+                    return (f'{pair} {distance:.3f} m exceeds stretch-guard limit {limit:.3f} m; '
+                            'use the warm-up start pose and hold the hands with slack')
+        try:   # the directions the script will use: from the twin's corners, as in start_warmup
+            corners = self.cloth.corners() if self.cloth is not None else points
+            targets, hands = self.warmup.hold_targets(corners), self.warmup.hand_targets(corners)
+        except ValueError as error:
+            return f'warm-up geometry: {error}'
+        for k, (offset, hand) in enumerate(zip(targets, hands)):
+            moved = points.copy()
+            moved[:2] += offset
+            moved[2:] += hand       # where the person is asked to put the hands (person cues)
+            for first, second, limit in self.guard.pairs:
+                if not np.isfinite(points[[first, second]]).all():
+                    continue
+                before = float(np.linalg.norm(points[first]-points[second]))
+                after = float(np.linalg.norm(moved[first]-moved[second]))
+                if after > max(before, limit) + 1e-6:
+                    return (f'warm-up hold "{self.warmup.labels[k]}" would stretch {names[first]} to {names[second]} to '
+                            f'{after:.3f} m (start {before:.3f} m, stretch-guard limit {limit:.3f} m); reduce the excursions')
+        return ''
+
+    def finish_warmup(self, time_ns):
+        if self.warmup_announced or self.warmup.active(time_ns):
+            return
+        self.warmup_announced = True
+        if self.warmup_stop_after:
+            self.commands_enabled = False
+            self.command = np.zeros((2, 3))
+            # Stop in the controller, before publishing the completion event. Operator
+            # speech, ROS delivery and bank fitting must not extend the motion window.
+            self.publish_commands(time_ns)
+            self.get_logger().warn('warm-up excitation complete: robot commands disabled; no hand following')
+        self.window_pub.publish(String(data=json.dumps(dict(start_ns=self.warmup.start_ns, holds=self.warmup.holds(),
+                                                            plan=self.warmup.plan()))))
 
     def material_release(self, msg):
         try:
@@ -296,6 +384,8 @@ class FabricTwinNode(Node):
 
     def guarded(self, command):
         """The CBF command after the stretch guard (priority over clearance); zero without measurements."""
+        if not self.guard.spec.enabled:
+            return command, dict(enabled=False)
         robots, hands, velocity = self.measured_now()
         if not (np.isfinite(robots).all() and np.isfinite(hands).all()):
             return np.zeros((2, 3)), dict(status='missing grips')
@@ -350,6 +440,7 @@ class FabricTwinNode(Node):
             return
         started = time.perf_counter()
         self.cloth = TwinCloth(self.spec, grips)
+        self.cloth.set_material(self.material['bend'], self.material['shear'])  # before the CBF copies the stiffness
         estimate = self.estimate
         if (self.feedback_spec.enabled and estimate is not None and self.model is not None
                 and estimate.model_id == self.model.model_id
@@ -417,13 +508,23 @@ class FabricTwinNode(Node):
         self.virtual_collision = bool(collision)
         self.fault = ('a grip measurement is missing' if stale.any() else
                       'estimator output is stale' if estimate_age is None or estimate_age > r['estimate_stale_sec'] else '')
-        if self.cbf is not None and self.frame % self.cbf_options['period'] == 0:
-            nominal = self.warmup.command(time_ns, held[:2]) if self.warmup.active(time_ns) else self.follow_command()
+        self.finish_warmup(time_ns)
+        if (self.cbf is not None or self.direct_warmup) and self.frame % self.cbf_options['period'] == 0:
+            nominal = (self.warmup.command(time_ns, held[:2]) if self.warmup.active(time_ns) else
+                       np.zeros((2, 3)) if self.warmup_only else self.follow_command())
             try:
-                self.command, self.debug = self.cbf.update(self.leader_velocity, nominal)
+                if self.direct_warmup:
+                    # Calibration uses only its measured-position trajectory. No obstacle
+                    # model, formation recovery, CBF smoothing or previous CBF command.
+                    self.command = np.array(nominal, copy=True)
+                    self.debug = dict(status='direct_warmup', mode='warmup_direct',
+                                      cbf_enabled=False, nominal_velocity=nominal.tolist(), correction=0.)
+                else:
+                    self.command, self.debug = self.cbf.update(self.leader_velocity, nominal)
                 self.command, self.debug['stretch_guard'] = self.guarded(self.command)
-                self.cbf.applied(self.command, self.leader_velocity)
-                self.cbf_ms.append(self.debug.get('controller_ms', 0.))
+                if self.cbf is not None:
+                    self.cbf.applied(self.command, self.leader_velocity)
+                    self.cbf_ms.append(self.debug.get('controller_ms', 0.))
                 if self.debug.get('status') == 'solver_failure':
                     self.fault = self.fault or 'CBF solver failure'
             except (ValueError, FloatingPointError, np.linalg.LinAlgError) as error:
@@ -431,10 +532,6 @@ class FabricTwinNode(Node):
             self.publish_debug(clearance)
         if 0 <= r['warmup_at_sec'] <= time_ns/1e9 and self.warmup.start_ns is None:
             self.start_warmup(String(data='scheduled'))  # rehearsal convenience: start at a set clock time
-        if not self.warmup_announced and not self.warmup.active(time_ns):
-            # The excitation is over: tell the parameter bank which stretches were holds.
-            self.warmup_announced = True
-            self.window_pub.publish(String(data=json.dumps(dict(start_ns=self.warmup.start_ns, holds=self.warmup.holds()))))
         self.publish_commands(time_ns)
         self.publish_corners(time_ns, grips)
         if self.frame % r['state_every_frames'] == 0:
@@ -455,7 +552,9 @@ class FabricTwinNode(Node):
     # ---------------------------------------------------------------- outputs
     def publish_commands(self, time_ns):
         stamp = self.get_clock().now().to_msg()
-        sent = self.command if (self.commands_enabled and not self.fault and self.cbf is not None) else np.zeros((2, 3))
+        permitted = not self.warmup_only or self.warmup.active(time_ns)
+        controller_ready = self.cbf is not None or self.direct_warmup
+        sent = self.command if (permitted and self.commands_enabled and not self.fault and controller_ready) else np.zeros((2, 3))
         for publishers, values in ((self.shadow_pubs, self.command), (self.command_pubs, sent)):
             for publisher, value in zip(publishers, values):
                 msg = TwistStamped(header=Header(stamp=stamp, frame_id=self.runtime['world_frame']))
@@ -533,10 +632,20 @@ class FabricTwinNode(Node):
         self.marker_pub.publish(MarkerArray(markers=markers))
 
     def diagnostics(self):
-        values = dict(fault=self.fault, commands_enabled=self.commands_enabled, frame=self.frame,
+        values = dict(fault=self.fault, commands_enabled=self.commands_enabled, warmup_only=self.warmup_only, frame=self.frame,
+                      cbf_enabled=bool(self.cbf_options['enabled']), stretch_guard_enabled=self.guard.spec.enabled,
+                      command_mode='warmup_direct' if self.direct_warmup else 'cbf' if self.cbf is not None else 'shadow',
                       virtual_collision=getattr(self, 'virtual_collision', False),
                       material=json.dumps(self.material), skipped_frames=self.skipped, stale_grip_frames=self.stale_grips,
-                      replaced=self.replaced, warmup=self.warmup.describe())
+                      replaced=self.replaced, warmup=self.warmup.describe(), warmup_profile=self.warmup.summary(),
+                      warmup_duration_sec=round(self.warmup.duration, 2),
+                      warmup_plan=json.dumps([(round(a['end'], 2), round(b['start'], 2), b['label'])   # move, arrive, label
+                                              for a, b in zip(self.warmup.plan()[:-1], self.warmup.plan()[1:])]))
+        if self.warmup_only:
+            values['warmup_start_problem'] = self.warmup_geometry_problem()
+            # The operator must restart an older compute launch rather than reuse a
+            # bank that predates convergence-based termination.
+            values['warmup_protocol_version'] = 3   # 3 (2026-11-21): warmup_plan, warmup_duration_sec, person cues
         if self.cloth is not None and self.frame_ms:
             lag = (self.get_clock().now().nanoseconds-self.twin_time)/1e9
             values.update(frame_ms_p50=float(np.percentile(self.frame_ms, 50)), frame_ms_p95=float(np.percentile(self.frame_ms, 95)),

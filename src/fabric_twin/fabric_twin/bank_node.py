@@ -54,7 +54,19 @@ class ParameterBankNode(Node):
         self.min_sensitivity = float(self.declare_parameter('min_sensitivity_m', 0.0015).value)
         self.tf = Buffer(); self.listener = TransformListener(self.tf, self)
         self.states, self.corners, self.depth, self.pending = deque(maxlen=4500), deque(maxlen=18000), deque(maxlen=13500), deque(maxlen=300)
-        self.bank, self.scales, self.version, self.request = None, (1., 1.), 0, None
+        # The same starting scales as the twin (launch start_bend/start_shear): the search is centred on them.
+        start = (float(self.declare_parameter('start_bend', 1.).value), float(self.declare_parameter('start_shear', 1.).value))
+        self.bank, self.scales, self.version, self.request = None, start, 0, None
+        # Warm-up search: the first round spans start x/÷ span, each later round a finer factor. Its reach
+        # (span^(1 + 1/4 + 1/8 + ...)) must exceed a deliberate start error: span 4, 3 rounds reach x6.73;
+        # span 8, 4 rounds reach x19.8 (fabric_run.sh warmup-twin, one-decade distortions).
+        self.span = float(self.declare_parameter('search_span', 4.).value)
+        self.rounds = int(self.declare_parameter('search_rounds', 3).value)
+        self.cost_tolerance = float(self.declare_parameter('search_cost_tolerance_m', .0001).value)
+        self.parameter_tolerance = float(self.declare_parameter('search_parameter_tolerance', .1).value)
+        self.max_search_seconds = float(self.declare_parameter('search_max_seconds', 600.).value)
+        self.max_evaluations = int(self.declare_parameter('search_max_evaluations', 80).value)
+        self.reach = self.span**(1+sum(.25*.5**k for k in range(self.rounds-1)))
         self.random = np.random.default_rng(0)
         self.release_pub = self.create_publisher(String, '/fabric/material_parameters', LATCHED)
         self.status_pub = self.create_publisher(String, '/fabric/bank/status', 10)
@@ -65,7 +77,8 @@ class ParameterBankNode(Node):
             self.create_subscription(FabricObservations, topic, self.observation, qos_profile_sensor_data)
         self.create_timer(.2, self.work)
         self.last_adapt = None
-        self.get_logger().info(f'parameter bank ready; depth from {len(topics)} cameras')
+        self.get_logger().info(f'parameter bank ready; depth from {len(topics)} cameras; '
+                               f'starting scales bend x{start[0]:g}, shear x{start[1]:g}; search reach x{self.reach:.3g}')
 
     # ---------------------------------------------------------------- buffers
     def state(self, msg):
@@ -156,14 +169,22 @@ class ParameterBankNode(Node):
             return
         self.status("calibration started", cases=len(cases))
         started = time.perf_counter()
-        result = self.bank.calibrate(cases, self.scales)
+        start = self.scales
+        result = self.bank.calibrate(cases, start, span=self.span, rounds=self.rounds,
+                                     cost_tolerance_m=self.cost_tolerance, parameter_tolerance=self.parameter_tolerance,
+                                     max_seconds=self.max_search_seconds, max_evaluations=self.max_evaluations,
+                                     progress=lambda search: self.status('calibration progress', search=search))
         table = result.pop('table')
-        result.update(cases=len(cases), seconds=round(time.perf_counter()-started, 1),
+        result.update(cases=len(cases), seconds=round(time.perf_counter()-started, 1), start=list(start),
+                      span=self.span, rounds=result['rounds_completed'], max_rounds=self.rounds,
                       informative=bool(result['sensitivity_m'] >= self.min_sensitivity))
-        self.status('calibrated', result=result, table=table)
-        if result['informative']:
+        result['release_expected'] = bool(result['converged'] and result['informative'])
+        self.status('calibrated' if result['converged'] else 'calibration stopped', result=result, table=table)
+        if result['release_expected']:
             self.release((result['bend'], result['shear']), 'warmup', **{k: result[k] for k in (
-                'cost_m', 'start_cost_m', 'sensitivity_m', 'cases', 'seconds', 'evaluations')})
+                'cost_m', 'start_cost_m', 'sensitivity_m', 'cases', 'seconds', 'evaluations', 'converged', 'stop_reason')})
+        elif not result['converged']:
+            self.get_logger().warn(f'calibration did not converge ({result["stop_reason"]}); coefficients kept')
         else:
             self.get_logger().warn(f'warm-up was not informative (candidates differ by {result["sensitivity_m"]*1e3:.1f} mm); coefficients kept')
 

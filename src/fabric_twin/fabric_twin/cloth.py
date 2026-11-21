@@ -65,6 +65,14 @@ class TwinSpec:
     contact_mu: float = 2.
     contact_margin: float = .012
     max_grip_speed_mps: float = 1.       # a grip target may not jump faster than this
+    # Style3D cloth-cloth contact (vertex-face, edge-edge, edge-face). Obstacle and ground contact are separate
+    # and stay on. On the 2026-11-20 warm-up replay two identical runs of the twin drifted 21-44 mm apart within
+    # 9 s with it on and stayed within 0.2 mm with it off: in the hanging-sheet regime it adds noise, not physics.
+    self_collision: bool = True
+    # Calibrated grip points (blue, silver, right hand, left hand): each corner is held by ONE particle, the mesh
+    # node nearest the point this far in from the sheet's corner along both edges (m). Empty: the square patch_m
+    # patches at the corner tips (the old behaviour). See scripts/hw/grip_point_search.py.
+    grip_insets_m: tuple = ()
     device: str = 'cuda:0'
     obstacle: Obstacle = field(default_factory=Obstacle)
 
@@ -119,6 +127,33 @@ class NudgedRuntime(ClothRuntime):
             self._advance()
         self.graph = scope.graph
         self.state.assign(saved); self.scratch.assign(saved)
+
+
+def inverse_bilinear(quad, points, iterations=20):
+    """(s, t) with points = (1-s)(1-t) q0 + s(1-t) q1 + (1-s) t q2 + s t q3 for a 2-D quad q (4, 2), by Newton's
+    method; exact on the quad's corners, extrapolates outside it. Returns the bilinear weights (P, 4)."""
+    q = np.asarray(quad, float)
+    p = np.atleast_2d(np.asarray(points, float))
+    st = np.full((len(p), 2), .5)
+    for _ in range(iterations):
+        s, t = st[:, :1], st[:, 1:]
+        f = (1-s)*(1-t)*q[0]+s*(1-t)*q[1]+(1-s)*t*q[2]+s*t*q[3]-p
+        ds = (1-t)*(q[1]-q[0])+t*(q[3]-q[2])
+        dt = (1-s)*(q[2]-q[0])+s*(q[3]-q[1])
+        det = ds[:, 0]*dt[:, 1]-ds[:, 1]*dt[:, 0]
+        st[:, 0] -= (f[:, 0]*dt[:, 1]-f[:, 1]*dt[:, 0])/det
+        st[:, 1] -= (ds[:, 0]*f[:, 1]-ds[:, 1]*f[:, 0])/det
+    s, t = st.T
+    return np.column_stack(((1-s)*(1-t), s*(1-t), (1-s)*t, s*t))
+
+
+def inset_grip_spans(spec):
+    """Rest length (m) of the sheet between each pair of held points for `spec.grip_insets_m` (corner tips when
+    empty), before the twin snaps them to mesh nodes. Used by the stretch guard, which exists before the twin."""
+    w, h = spec.width_m, spec.height_m
+    b, s, r, l = (tuple(spec.grip_insets_m) or (0., 0., 0., 0.))
+    points = np.array([[b, b], [w-s, s], [r, h-r], [w-l, h-l]], float)
+    return {(i, j): float(np.linalg.norm(points[i]-points[j])) for i in range(4) for j in range(i+1, 4)}
 
 
 def twin_frame(grips):
@@ -185,12 +220,23 @@ def build_model(spec, obstacle_twin=None, prism=None):
         edge_aniso_ke=wp.vec3(*spec.bend), edge_kd=spec.edge_kd, particle_radius=spec.particle_radius)
     rest = np.asarray(builder.particle_q, dtype=float)
     tips = np.array([[-w/2, -h/2], [w/2, -h/2], [-w/2, h/2], [w/2, h/2]])
-    corners = np.array([np.argmin(np.linalg.norm(rest[:, :2]-tip, axis=1)) for tip in tips])
     patch, ids, offsets = [], [], []
-    for corner, tip in enumerate(tips):
-        for index in np.flatnonzero(np.all(np.abs(rest[:, :2]-tip) <= spec.patch_m+1e-5, axis=1)):
-            patch.append(int(index)); ids.append(corner); offsets.append(rest[index]-rest[corners[corner]])
+    if spec.grip_insets_m:
+        inset = np.asarray(spec.grip_insets_m, float)
+        if inset.shape != (4,) or not np.isfinite(inset).all() or inset.min() < 0 or inset.max() > .2:
+            raise ValueError('grip_insets_m needs four insets (blue, silver, right, left) between 0 and 0.2 m')
+        inward = np.array([[1., 1.], [-1., 1.], [1., -1.], [-1., -1.]])
+        corners = np.array([np.argmin(np.linalg.norm(rest[:, :2]-(tip+d*s), axis=1))
+                            for tip, d, s in zip(tips, inset, inward)])
+        for corner, index in enumerate(corners):
+            patch.append(int(index)); ids.append(corner); offsets.append(np.zeros(3))
             builder.particle_flags[int(index)] &= ~int(newton.ParticleFlags.ACTIVE)
+    else:
+        corners = np.array([np.argmin(np.linalg.norm(rest[:, :2]-tip, axis=1)) for tip in tips])
+        for corner, tip in enumerate(tips):
+            for index in np.flatnonzero(np.all(np.abs(rest[:, :2]-tip) <= spec.patch_m+1e-5, axis=1)):
+                patch.append(int(index)); ids.append(corner); offsets.append(rest[index]-rest[corners[corner]])
+                builder.particle_flags[int(index)] &= ~int(newton.ParticleFlags.ACTIVE)
     model = builder.finalize(device=spec.device)
     model.set_gravity((0., 0., -9.81))
     model.soft_contact_ke, model.soft_contact_kd, model.soft_contact_mu = spec.contact_ke, spec.contact_kd, spec.contact_mu
@@ -225,10 +271,19 @@ class TwinCloth:
         self.runtime = NudgedRuntime(self.model, self.patch, self.patch_corners, self.patch_offsets, spec.substeps,
                                      spec.frame_dt/spec.substeps, spec.iterations, spec.linear_iterations,
                                      capture=wp.get_device(spec.device).is_cuda)
+        if not spec.self_collision and self.runtime.solver.collision is not None:
+            contact = self.runtime.solver.collision
+            contact.stiff_vf = contact.stiff_ee = contact.stiff_ef = 0.
+            self.runtime.recapture()
         self.count = len(self.rest)
         self.mass = self.model.particle_mass.numpy().astype(float)
         self.free = np.ones(self.count, bool); self.free[self.patch] = False
         self.uv = (self.rest[:, :2]+[spec.width_m/2, spec.height_m/2])/[spec.width_m, spec.height_m]
+        # Material coordinates of the four held points and the sheet's rest length between each pair of them.
+        self.grip_uv = self.uv[self.corner_particles]
+        scale = np.array([spec.width_m, spec.height_m])
+        self.grip_spans = {(i, j): float(np.linalg.norm((self.grip_uv[i]-self.grip_uv[j])*scale))
+                           for i in range(4) for j in range(i+1, 4)}
         self.nominal_stretch = self.model.style3d.tri_aniso_ke.numpy().copy()
         self.nominal_bend = self.model.edge_bending_properties.numpy().copy()
         self.scales = dict(bend=1., shear=1.)
@@ -274,7 +329,8 @@ class TwinCloth:
         """A bilinear surface between four grips (world), optionally sagging in the middle, at rest."""
         grips = np.asarray(grips, float)
         u, v = self.uv.T
-        q = np.column_stack(((1-u)*(1-v), u*(1-v), (1-u)*v, u*v)) @ grips
+        # Bilinear between the held points (extrapolated over any flap outside them).
+        q = inverse_bilinear(self.grip_uv, self.uv) @ grips
         q[:, 2] -= sag_m*16*u*(1-u)*v*(1-v)
         self.targets = self.to_twin(grips)
         self.set_state(q)
@@ -292,8 +348,7 @@ class TwinCloth:
         is measurement error; millimetres of it against the stretch stiffness are tens of newtons
         of false tension. Robot grips (TF) are not moved."""
         grips = np.array(grips, float)
-        w, h = self.spec.width_m, self.spec.height_m
-        reach = {(0, 1): w, (2, 3): w, (0, 2): h, (1, 3): h, (0, 3): np.hypot(w, h), (1, 2): np.hypot(w, h)}
+        reach = self.grip_spans
         for _ in range(4):
             for (i, j), rest in reach.items():
                 delta = grips[j]-grips[i]

@@ -327,6 +327,14 @@ def measure(world_path, seconds=10.0):
         out[robot] = {'n': len(rows), 'how': hows, 'x': round(m[0], 4), 'y': round(m[1], 4), 'yaw_deg': round(m[2], 2),
                       'sd_mm': [round(1000 * sd[0], 1), round(1000 * sd[1], 1)], 'sd_yaw_deg': round(sd[2], 2),
                       'to_target_mm': round(1000 * math.hypot(dx, dy), 1), 'to_target_deg': round((tyaw - m[2] + 180) % 360 - 180, 2)}
+        # Corners and edge fits separately: on Blue's tilted plate the fit reads +5.4 mm x, -1.12 deg yaw from the
+        # corners (lab log 2026-11-18), so a mixed mean depends on how often Silver's arm hid the marker.
+        out[robot]['by_method'] = {}
+        for method in hows:
+            sel = np.array([r[:3] for r in rows if r[3].split(' ')[0] == method], float)
+            mm, ss = sel.mean(0), sel.std(0)
+            out[robot]['by_method'][method] = {'n': len(sel), 'x': round(mm[0], 4), 'y': round(mm[1], 4), 'yaw_deg': round(mm[2], 2),
+                                               'sd_mm': [round(1000 * ss[0], 1), round(1000 * ss[1], 1)], 'sd_yaw_deg': round(ss[2], 2)}
         print(json.dumps({'robot': robot, **out[robot]}))
     rclpy.try_shutdown()
     return out

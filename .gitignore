@@ -30,3 +30,18 @@ experiments/hardware/sessions/*_fabric_run/**/twin.npz
 experiments/hardware/sessions/*_fabric_run/**/twin.cbf.jsonl
 experiments/hardware/sessions/*_fabric_run/**/twin.depth.npz
 experiments/hardware/sessions/*_fabric_run/**/*.tmp.npz
+
+# Per-run camera perception logs (3-9 MB each, three per run): kept with the run's other large files in
+# /home/taha/fabric_hw_data/<day>_fabric_run_<run>/cameras/ (fabric_run.sh save writes them there).
+experiments/hardware/sessions/**/cameras/*_perception_logs.tar.gz
+# Run bags (mcap) and other raw recordings: fabric_run.sh save moves them to /home/taha/fabric_hw_data.
+experiments/**/bag/
+experiments/**/*.mcap
+experiments/**/*.db3
+experiments/hardware/sessions/**/twin.npz
+experiments/hardware/sessions/**/estimate.npz
+experiments/hardware/sessions/**/twin.depth.npz
+# Simulation recordings (Isaac cell, headless twin, warm-up design and calibration sweeps): raw arrays and videos.
+experiments/sim_eval/**/*.npz
+experiments/**/*.mp4
+experiments/**/*.usd

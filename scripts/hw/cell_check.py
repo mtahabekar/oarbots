@@ -6,6 +6,7 @@ the command guard's state and joint cap, and the fabric bridge's state and setti
     python3 scripts/hw/cell_check.py [seconds]
     python3 scripts/hw/cell_check.py --arm-offsets   # one line per arm: <robot> <largest joint offset, deg> (or "none")
 """
+import argparse
 import math
 import subprocess
 import sys
@@ -29,8 +30,8 @@ def param(node, name):
         return '?'
 
 
-def arm_offsets():
-    grasp = yaml.safe_load((CELL / 'grasp.yaml').read_text())
+def arm_offsets(pose):
+    grasp = yaml.safe_load(pose.read_text())
     rclpy.init()
     n = Node('arm_offsets')
     q = {}
@@ -49,10 +50,17 @@ def arm_offsets():
 
 
 def main():
-    if sys.argv[1:2] == ['--arm-offsets']:
-        return arm_offsets()
-    seconds = float(sys.argv[1]) if len(sys.argv) > 1 else 4.
-    grasp = yaml.safe_load((CELL / 'grasp.yaml').read_text())
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('seconds', type=float, nargs='?', default=4.)
+    parser.add_argument('--arm-offsets', action='store_true')
+    parser.add_argument('--pose', type=Path, default=CELL / 'grasp.yaml')
+    args = parser.parse_args()
+    if args.arm_offsets:
+        return arm_offsets(args.pose)
+    seconds = args.seconds
+    grasp = yaml.safe_load(args.pose.read_text())
+    warmup = CELL / 'warmup_grasp.yaml'
+    warmup = yaml.safe_load(warmup.read_text()) if warmup.is_file() else None
     bridge_cfg = yaml.safe_load((CELL / 'bridge.yaml').read_text())
     rclpy.init()
     n = Node('cell_check')
@@ -77,6 +85,10 @@ def main():
             fingers = [round(v, 2) for v in q[r][6:9]]
             where = 'at the grasp pose' if max(d) < 3 else f'{max(d):.0f} deg from the grasp pose (fabric_run.sh recentre)'
             print(f'  arm: {where}; fingers {fingers} ({"closed" if max(fingers or [0]) > 1. else "open / not driven"})')
+            if warmup:
+                error = max(math.degrees(abs(math.atan2(math.sin(a-b), math.cos(a-b))))
+                            for a, b in zip(q[r][:6], warmup[r]))
+                print(f'  warm-up start pose: {error:.2f} deg off (limit 1.5 deg; fabric_run.sh warmup-start)')
         else:
             print('  arm: NO joint states')
         print(f'  guard: {guard.get(r, "NO diagnostics")}; joint cap {param(f"/oarbot_{r}/command_guard", "max_arm_joint_dps")} deg/s')

@@ -1,9 +1,11 @@
 # Grasp pose per robot: arm joint angles in rad, in the driver's and the URDF's convention (as
-# /oarbot_<robot>/joint_states reports them). Source: the simulated cell's layout
-# (oarbot_simulation config/fabric_layout.json, `grasp_arm`), built on the same base layout as the real
-# cell (bases at x = -/+0.42, y = -1.065, facing +y): each corner 0.645 m ahead of its base, 1.05 m above
-# the floor, tool pitched 30 deg down and turned 45 deg inward. Checked on the real robots' models with
-# scripts/hw/grasp_target.py; replace with the joints actually reached on site.
-source: simulated layout
-blue: [-0.5156501996563352, 2.9268687155353117, 4.737986408645095, 1.5187738172460028, 4.858428238171332, 1.863472124484075]
-silver: [0.5156503973716522, 3.356315427352053, 1.5451999825611302, 4.764408703168017, 1.4247682413191143, -1.8634742823941934]
+# /oarbot_<robot>/joint_states reports them). The experiment's start pose since 2026-11-20: robot grips 77 cm
+# apart, 3.5 cm inside the stretch guard's limit (84 cm sheet - 3.5 cm slack = 80.5 cm). The previous pose
+# (grasp_wide_84cm.yaml, simulated layout, 84.2 cm) exceeded that limit, so the guard pulled both arms ~1.9 cm
+# inward as soon as commands went on (2026-11-20 09:56). Same tool heights and orientations, each grip ~3.3 cm
+# inward; MoveIt-checked (experiments/hardware/sessions/2026-11-20_warmup_pose/validation.json) and reached on hardware 2026-11-20 10:31-11:12
+# (identical to warmup_grasp.yaml).
+source: 77 cm pose (warmup_grasp.yaml), 2026-11-20
+robot_span_m: 0.7700
+blue: [-0.4247664337817387, 2.9608303288681137, 4.782727782028094, 1.4908087338206122, 4.963159932563633, 1.8576622384929906]
+silver: [0.4230421853437068, 3.3250362054575855, 1.5038754991629122, 4.793130222573375, 1.3185695649998668, -1.8586965013998984]

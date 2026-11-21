@@ -82,9 +82,11 @@ class Monitor(Node):
         except ValueError:
             stale_txt = '-'
         short = lambda key: (t.get(key) or '')[:5]  # noqa: E731
+        cbf = 'off' if t.get('cbf_enabled') == 'False' else t.get('cbf_status')
+        stretch = 'off' if t.get('stretch_guard_enabled') == 'False' else t.get('stretch_guard_enabled', '?')
         print(f"twin: {t.get('message', 'no status')} | {stale_txt} | commands {t.get('commands_enabled')} | "
               f"frame p95 {short('frame_ms_p95')} ms, error p95 {short('error_p95_m')} m, box clearance "
-              f"{short('box_clearance_m')} m, CBF {t.get('cbf_status')}", flush=True)
+              f"{short('box_clearance_m')} m, CBF {cbf}, stretch guard {stretch}, mode {t.get('command_mode', '?')}", flush=True)
         cams = ', '.join(f"{cam} {self.gloves[cam] / seconds:.1f} Hz (left {100 * self.glove_hands[cam + ':human_left'] / max(self.gloves[cam], 1):.0f} %, "
                          f"right {100 * self.glove_hands[cam + ':human_right'] / max(self.gloves[cam], 1):.0f} %)" for _, cam in CAMERAS)
         n = max(self.hands['messages'], 1)

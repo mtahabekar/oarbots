@@ -41,6 +41,14 @@ class HandFusion(Node):
         # formation then chases it. Measurements outside are dropped. Both zero: off.
         low, high = param('hand_workspace_min', [0.]*3), param('hand_workspace_max', [0.]*3)
         self.hand_box = None if low == high else (np.asarray(low, float), np.asarray(high, float))
+        # World-frame correction from the glove's estimated grip to the real pinch point (m), added to every
+        # view before fusion, so the twin, the estimator and the stretch guard all get the corrected corner.
+        # It stands in for a measured tag_to_grip_offsets_m (pivot calibration, in the tag frame) while that is
+        # a template. 2026-11-20 identification (scripts/hw/identify_replay.py, docs report): the real pinch sat
+        # 4.3 +- 0.3 cm below the glove estimate, i.e. [0, 0, -0.043]. Zero: off. Three values apply to both hands;
+        # six are the left hand's xyz then the right hand's (scripts/hw/grip_point_search.py fits each hand).
+        offsets = np.asarray(param('world_grip_offset_m', [0., 0., 0.]), float)
+        self.grip_offset = offsets
         jerk = param('jerk_stddev', 3.)
         gap = param('filter_max_gap_sec', .5)
         # The person's left hand, then right: tags 21 and 20, sheet corners (1, 1) and (0, 1) (the person
@@ -52,10 +60,14 @@ class HandFusion(Node):
         if (not topics or len(topics) > 8 or len(set(topics)) != len(topics) or not self.world
                 or not np.isfinite(numeric).all() or min(numeric) <= 0
                 or self.sync_tolerance >= self.max_wait or self.max_wait >= self.max_age
+                or self.grip_offset.shape not in ((3,), (6,)) or not np.isfinite(self.grip_offset).all()
+                or np.abs(self.grip_offset).max() > .15
                 or len(tags) != 2 or len(set(tags)) != 2 or len(uvs) != 4
                 or not np.isfinite(uvs).all() or min(uvs) < 0 or max(uvs) > 1):
             raise ValueError('Invalid camera topics, timing, calibration or hand identity settings')
         self.tags = dict(zip(('human_left', 'human_right'), tags))
+        both = np.tile(self.grip_offset, 2) if self.grip_offset.shape == (3,) else self.grip_offset
+        self.grip_offsets = dict(zip(('human_left', 'human_right'), both.reshape(2, 3)))
         self.uvs = dict(zip(self.tags, np.asarray(uvs).reshape(2, 2)))
         self.filters = {hand: HandFilter(jerk, gap, floor=self.fusion_floor) for hand in self.tags}
         self.tf = Buffer()
@@ -152,6 +164,7 @@ class HandFusion(Node):
                         view_measurements.append(transform_measurement(m, rotation,
                             [t.x, t.y, t.z], self.extrinsic_noise))
                     for m in view_measurements:
+                        m.position = m.position+self.grip_offsets[m.hand_id]
                         if self.hand_box is not None and not np.all((m.position >= self.hand_box[0]) & (m.position <= self.hand_box[1])):
                             failures.append(f'{m.hand_id} from {m.camera_id}: outside the hand workspace')
                             continue

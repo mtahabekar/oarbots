@@ -3,12 +3,15 @@
 #   fabric_run.sh start-pose [--check]  both arms to the experiment's start pose (grasp.yaml) if either is more
 #                                       than 1.5 deg off; deadman held; bridges restarted (scripts/hw/start_pose.sh)
 #   fabric_run.sh recentre              the same move whatever the offset
+#   fabric_run.sh warmup-start [--check]  separate, narrower warm-up pose (warmup_grasp.yaml), through the deadman
 #   fabric_run.sh stop-go               end a running go from another terminal (as Ctrl+C there)
 #   fabric_run.sh arm-start             restart both arms' Kinova velocity API (the driver's silent latch); start-pose does it
 #   fabric_run.sh perception [seconds]  perception on all three cameras (workspace profile), default 3600 s
 #   fabric_run.sh perception-stop
 #   fabric_run.sh bridges start|stop    the joint-mode CBF bridges with the cell's bridge.yaml (start disarmed)
-#   fabric_run.sh twin [run_dir]        estimator + twin + CBF + RViz, commands OFF, recording into run_dir
+#   fabric_run.sh twin [run_dir]        estimator + twin + CBF + RViz, commands OFF, recording into run_dir;
+#                                       BANK=true also starts the parameter bank (needed for `warmup`);
+#                                       MATERIAL="10 0.1" starts twin and bank at bend x10, shear x0.1 (warm-up test)
 #                                       (default: a new experiments/hardware/sessions/<today>_fabric_run/live_<time>)
 #   fabric_run.sh go [run_dir]          for an operator away from the screen: perception and bridges must run;
 #                                       starts the twin (commands off) in the background, then switches commands
@@ -25,16 +28,56 @@
 #   fabric_run.sh obstacle use [dir]    make a detected obstacle the twin's (cell/obstacle.yaml; the next
 #                                       twin/go uses it); default: the last successful detect or fit
 #   fabric_run.sh obstacle clear | show back to twin.yaml's virtual box | what the twin will use
+#   NO_OBSTACLE=1 fabric_run.sh go      baseline with no obstacle at all (no model, no virtual box; CBF and stretch guard on)
 #   fabric_run.sh status [seconds]      go/no-go readout (scripts/hw/twin_monitor.py)
 #   fabric_run.sh watch [seconds]       readout every 5 s during a commanded run
-#   fabric_run.sh enable                twin commands on (formation captured now) + both bridges armed
+#   fabric_run.sh enable                twin commands on (formation captured now) + both bridges armed; checks that
+#                                       the twin accepted it (it refuses while a hand is unseen) and retries twice
+#   MATERIAL="10 0.1" fabric_run.sh warmup-twin [run_dir]  the twin for a warm-up (own terminal): bank on,
+#                                       twin and bank start at the given wrong bend/shear scales, empty work
+#                                       area (collider 50 m below; the area under the sheet must be clear),
+#                                       bank search widened to x19.9 (span 8, 4 rounds) to undo one decade
+#   fabric_run.sh warmup-auto ["10 0.1" "10 10"]   the whole warm-up test, spoken (scripts/hw/warmup_auto.py):
+#                                       run it and walk to the sheet; each run: twin restarted distorted, 15 s
+#                                       to reach the sheet, hands checked, commands on, deadman prompt, warm-up,
+#                                       fit, saved and reviewed. Ctrl+C: commands off, twin stopped and saved
+#   fabric_run.sh warmup [--shadow]     warm-up calibration (scripts/hw/warmup.py): refuses unless commands are on,
+#                                       both bridges armed and the deadman held; robots step 2 and 4 cm toward
+#                                       the hands and back (21 s); waits for search convergence, then prints the fit
 #   fabric_run.sh disable               twin commands off + both bridges disarmed
 #   fabric_run.sh stop-twin             end the compute launch and every node it started (writes the recordings)
 #   fabric_run.sh save <run_dir>        large recordings to /home/taha/fabric_hw_data, camera logs from the hosts
 #   fabric_run.sh check                 read-only readiness: arms vs grasp and box, fingers, guards (state, joint
 #                                       cap), bridges (state, force/box stop), perception output, camera frame age
+#   fabric_run.sh bases [seconds]       read-only: each Dingo base from its roof marker (overhead camera, on the NUC)
+#                                       against calibration.yaml; OK/WARN/FAIL by the grip shift it causes
+#                                       (scripts/hw/base_check.py; also cell_up.sh step 7)
 #   fabric_run.sh review <run_dir>      after a run: per arm, commanded vs delivered speed, box faces, where it
 #                                       stopped; the twin's faults while enabled (scripts/hw/run_review.py)
+#   fabric_run.sh audit <run_dir>       offline: twin and estimator against raw depth, and the real sheet's clearance
+#                                       to the obstacle from depth vs the twin's (scripts/hw/twin_audit.py -> audit.json)
+#   fabric_run.sh identify <run_dir> [options]   offline, GPU: which twin parameters a recording informs
+#                                       (--mode sensitivity) and their fit by ES-MDA over parallel worlds (--mode fit),
+#                                       or a residual check (--mode evaluate); see scripts/hw/identify_replay.py --help
+#   fabric_run.sh grip-search <run_dir> --out <dir> [options]   offline, GPU: each corner's grip point (pinch
+#                                       offset from TF/glove and inset from the sheet corner) fitted on its own to raw
+#                                       depth with the strip-measured material (scripts/hw/grip_point_search.py)
+#   fabric_run.sh grip-apply <result.json> --bag <bag_dir> [--write]   write those grip points into the cell config:
+#                                       fabric_grip transforms, hand offsets, twin grip insets (scripts/hw/grip_point_apply.py)
+#   fabric_run.sh warmup-calibrate <warmup_run> --grips <result.json> --out <dir> [--validate run:window ...]
+#                                       offline, GPU: from a warm-up, detect the required mesh, bending and shear, then
+#                                       test resolution, grip points, bending and shear alone and in every combination
+#                                       on held-out runs (scripts/hw/warmup_calibrate.py)
+#   fabric_run.sh warmup-design --out <dir> [--candidates name ...] [--anchors live:<run>:<a>:<b>]
+#                                       offline, GPU: simulate candidate warm-up motions and report which can tell
+#                                       shear, bending and stretch apart from grip-point errors (scripts/hw/warmup_design.py)
+#   fabric_run.sh twin-timing [mesh:substeps:iterations ...]   GPU ms per twin frame at candidate numerics
+#                                       (run alone on the GPU; scripts/hw/twin_timing.py)
+#   fabric_run.sh mps start|stop|restart|status   CUDA MPS daemon so parallel offline GPU workers (grip-search,
+#                                       warmup-calibrate, twin-compare) share the GPU; restart it after killing a run
+#                                       (its server is left unusable: "Failed to acquire primary context")
+#   fabric_run.sh twin-compare --windows run:a:b ... --configs name:mesh:k=v,... --out x.json   named twin
+#                                       configurations scored on recorded windows (scripts/hw/twin_compare.py)
 #   fabric_run.sh build-laptop          rebuild the laptop's fabric packages with ~/venvs/fabric_ros (Newton,
 #                                       Warp); plain colcon gives the twin /usr/bin/python3 and it dies at start
 #   fabric_run.sh deploy-helpers        both helpers to the fork's branch head: sessions stopped (arms hold
@@ -50,7 +93,7 @@ set -uo pipefail
 here="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 repo="$(cd -- "$here/../.." && pwd)"
 cd "$repo"
-if [ "${1:-}" != obstacle ]; then
+if [ "${1:-}" != obstacle ] && [ "${1:-}" != audit ] && [ "${1:-}" != identify ] && [ "${1:-}" != grip-search ] && [ "${1:-}" != grip-apply ] && [ "${1:-}" != warmup-calibrate ] && [ "${1:-}" != warmup-design ] && [ "${1:-}" != twin-timing ] && [ "${1:-}" != twin-compare ] && [ "${1:-}" != mps ]; then
     # shellcheck source=lab_ssh.sh
     source "$here/lab_ssh.sh"; lab_ssh_setup
 fi
@@ -63,6 +106,14 @@ ros_env() {
     source "$here/laptop_env.sh" >/dev/null 2>&1
     export QT_QPA_PLATFORM=xcb WARP_CACHE_PATH=/tmp/oarbots-fabric-audit-gpu DISPLAY="${DISPLAY:-:0}"
     export PYTHONPATH="$repo/src/fabric_state_estimator:$repo/src/human_hand_tracking:$repo/src/fabric_sim_cell:${PYTHONPATH:-}"
+}
+export CUDA_MPS_PIPE_DIRECTORY="${CUDA_MPS_PIPE_DIRECTORY:-$HOME/.cache/mps/pipe}" CUDA_MPS_LOG_DIRECTORY="${CUDA_MPS_LOG_DIRECTORY:-$HOME/.cache/mps/log}"
+offline_env() {  # offline analysis: no lab network or session domain needed; the fabric venv has Newton and Warp
+    set +u
+    # shellcheck disable=SC1091
+    source /opt/ros/jazzy/setup.bash; source "$repo/../../install/setup.bash" 2>/dev/null
+    export WARP_CACHE_PATH=/tmp/oarbots-fabric-audit-gpu
+    export PYTHONPATH="$repo/src/fabric_twin:$repo/src/fabric_state_estimator:$repo/src/human_hand_tracking:${PYTHONPATH:-}"
 }
 pub_bool() { timeout 15 ros2 topic pub --once "$1" std_msgs/msg/Bool "{data: $2}" >/dev/null 2>&1; }
 twin_pids() { pgrep -f "ros2 launch .*compute.launch.py"; }
@@ -78,21 +129,24 @@ stop_twin() {
 }
 save_run() {
         local run="${1:?save <run_dir>}" name data; name="$(basename "$(dirname "$run")")_$(basename "$run")"
-        data="/home/taha/fabric_hw_data/$name"; mkdir -p "$data" "$run/cameras"
+        data="/home/taha/fabric_hw_data/$name"; mkdir -p "$data/cameras"
         for f in "$run"/*.npz; do [ -e "$f" ] && mv "$f" "$data/"; done
-        [ -e "$run/twin.cbf.jsonl" ] && gzip -9 -f "$run/twin.cbf.jsonl"
-        (cd "$data" && sha256sum ./* > MANIFEST.sha256 2>/dev/null)
-        cp "$data/MANIFEST.sha256" "$run/large_files.sha256" 2>/dev/null
+        if [ -d "$run/bag" ]; then if [ -e "$data/bag" ]; then echo "bag already saved in $data/bag" >&2; else mv "$run/bag" "$data/bag"; fi; fi
+        # Camera perception logs (3-9 MB each) go with the large files, not into git (2026-11-21, .gitignore).
         for m in nuc blue silver; do
-            "$LAB_SSH" "${HOST[$m]}" 'cd /dev/shm && tar -czf - run_* 2>/dev/null' > "$run/cameras/${m}_perception_logs.tar.gz"
+            "$LAB_SSH" "${HOST[$m]}" 'cd /dev/shm && tar -czf - run_* 2>/dev/null' > "$data/cameras/${m}_perception_logs.tar.gz"
         done
-        echo "Large files: $data (checksums also in $run/large_files.sha256); camera logs: $run/cameras"
+        (cd "$data" && find . -type f ! -name MANIFEST.sha256 -exec sha256sum {} + > MANIFEST.sha256 2>/dev/null)
+        [ -e "$run/twin.cbf.jsonl" ] && gzip -9 -f "$run/twin.cbf.jsonl"
+        cp "$data/MANIFEST.sha256" "$run/large_files.sha256" 2>/dev/null
+        echo "Large files and camera logs: $data (checksums also in $run/large_files.sha256)"
 }
 
 cmd="${1:-}"; shift || true
 case "$cmd" in
     recentre) "$here/start_pose.sh" --force ;;   # both arms to grasp.yaml now, whatever their offset
     start-pose) "$here/start_pose.sh" "$@" ;;
+    warmup-start) "$here/start_pose.sh" --pose "$repo/experiments/hardware/cell/warmup_grasp.yaml" "$@" ;;
     stop-go)     # end a running `go` from another terminal: same as Ctrl+C there (commands off, bridges disarmed,
                  # then that go stops the twin, saves and reviews the run)
         pkill -INT -f "scripts/hw/auto_start.py" && echo "go is ending: commands off; the twin stops and the run is saved" || echo "no go running" ;;
@@ -142,7 +196,16 @@ case "$cmd" in
             stop) for r in blue silver; do scripts/hw/lab.sh session "$r" exec systemctl --user stop fabric-bridge && echo "$r bridge stopped"; done ;;
             *) echo "bridges start|stop"; exit 2 ;;
         esac ;;
-    twin|go)
+    twin|go|warmup-twin)
+        if [ "$cmd" = warmup-twin ]; then
+            # The warm-up session: parameter bank on, deliberately wrong starting material, and an empty work area
+            # (no real obstacle model; the virtual collider 50 m below the cell, as in the 2026-11-20 07:53 session)
+            # so the CBF does not reshape the warm-up motion. Needs the area under the sheet clear.
+            if [ -z "${MATERIAL:-}" ] || { [ "$MATERIAL" = "1 1" ] && [ "${NOMINAL:-0}" != 1 ]; }; then
+                echo "warmup-twin needs a distorted start: MATERIAL=\"10 0.1\" (then \"10 10\"); NOMINAL=1 MATERIAL=\"1 1\" on purpose" >&2
+                exit 1; fi
+            BANK=true
+        fi
         if [ "$cmd" = go ] && [ -n "$(twin_pids)" ]; then
             echo "Stopping the compute launch still running from before (its recordings are written first)"; stop_twin; fi
         if [ -n "$(twin_pids)" ]; then echo "A compute launch is already running (pid $(twin_pids | tr '\n' ' ')): fabric_run.sh stop-twin first" >&2; exit 1; fi
@@ -153,15 +216,83 @@ case "$cmd" in
             "$here/start_pose.sh" || { echo "Not at the start pose: fix it or rerun (NO_START_POSE=1 skips this)" >&2; exit 1; }
             for r in blue silver; do scripts/hw/lab.sh session "$r" start-cell-bridge "/home/oarbot_$r/fabric_ws/experiments/hardware/cell" >/dev/null 2>&1; done
         fi
-        run="${1:-$repo/experiments/hardware/sessions/$(date +%F)_fabric_run/live_$(date +%H%M%S)}"
+        if [ "$cmd" = warmup-twin ]; then
+            "$here/start_pose.sh" --pose "$repo/experiments/hardware/cell/warmup_grasp.yaml" --check || {
+                echo "Warm-up requires its narrower start pose: fabric_run.sh warmup-start" >&2; exit 1; }
+        fi
+        prefix=live; [ "$cmd" = warmup-twin ] && prefix="warmup_$(echo "${MATERIAL:-1 1}" | tr ' ' '_')"
+        run="${1:-$repo/experiments/hardware/sessions/$(date +%F)_fabric_run/${prefix}_$(date +%H%M%S)}"
         mkdir -p "$run"; echo "$run" > "$state/last_run"
         git rev-parse HEAD > "$run/commit.txt"; cp experiments/hardware/cell/*.yaml "$run/" 2>/dev/null; mkdir -p "$run/cell"; mv "$run"/*.yaml "$run/cell/"
+        cell="$repo/experiments/hardware/cell"
+        if [ "$cmd" = warmup-twin ]; then
+            cell="$run/cell"; rm -f "$cell/obstacle.yaml"; cp experiments/hardware/cell/fabric_cell.rviz "$cell/"
+            python3 - "$cell/twin.yaml" <<'PY' || exit 1
+import sys, yaml
+path = sys.argv[1]
+config = yaml.safe_load(open(path))
+config['obstacle'] = dict(config['obstacle'], center=[0.0, 0.0, -50.0], half_extents=[0.1, 0.1, 0.1])
+config.setdefault('runtime', {})['warmup_only'] = True
+config.setdefault('cbf', {})['enabled'] = False
+config.setdefault('stretch_guard', {})['enabled'] = False
+open(path, 'w').write('# Empty work area for the warm-up: virtual collider 50 m below the cell (fabric_run.sh warmup-twin).\n'
+                      + yaml.safe_dump(config, sort_keys=False))
+PY
+            echo "Warm-up profile: $cell (CBF OFF, stretch guard OFF; scripted trajectory only). The area under the sheet must be clear."
+        elif [ "${NO_OBSTACLE:-0}" = 1 ]; then
+            # Baseline run with no obstacle: the detected obstacle is not used and twin.yaml's virtual box goes 50 m
+            # below the cell (it would otherwise be a 44 x 44 x 32 cm box at the cell centre). CBF and stretch guard ON.
+            cell="$run/cell"; rm -f "$cell/obstacle.yaml"; cp experiments/hardware/cell/fabric_cell.rviz "$cell/"
+            python3 - "$cell/twin.yaml" <<'PY' || exit 1
+import sys, yaml
+path = sys.argv[1]
+config = yaml.safe_load(open(path))
+config['obstacle'] = dict(config['obstacle'], center=[0.0, 0.0, -50.0], half_extents=[0.1, 0.1, 0.1])
+open(path, 'w').write('# No-obstacle baseline: virtual collider 50 m below the cell (NO_OBSTACLE=1 fabric_run.sh).\n'
+                      + yaml.safe_dump(config, sort_keys=False))
+PY
+            echo "No-obstacle run: $cell (no obstacle model; CBF and stretch guard ON). Keep the work area clear."
+        fi
+        if [ -f "$cell/obstacle.yaml" ]; then   # the obstacle this run uses: its model plus the capture's mesh and picture
+            obj="$(cat "$repo/experiments/hardware/cell/obstacle_source.txt" 2>/dev/null)"
+            [ -d "$obj" ] && [ -f "$obj/obstacle.yaml" ] && cmp -s "$obj/obstacle.yaml" "$cell/obstacle.yaml" || obj="$(sed -n 's/^  object: //p' "$cell/obstacle.yaml")"
+            mkdir -p "$run/cell/obstacle_capture"
+            case "$obj" in /*) ;; *) obj="$repo/$obj" ;; esac   # the detector writes absolute paths, older models relative
+            for f in obstacle.yaml obstacle.obj obstacle.urdf obstacle.png fit.log; do [ -f "$obj/$f" ] && cp "$obj/$f" "$run/cell/obstacle_capture/"; done
+            [ -n "$(ls -A "$run/cell/obstacle_capture")" ] || echo "WARNING: obstacle capture files not found in $obj" >&2
+            echo "Obstacle: $(sed -n 's/^  shape: //p' "$cell/obstacle.yaml") from $obj"
+        elif [ "${NO_OBSTACLE:-0}" = 1 ]; then echo "Obstacle: none (collider 50 m below the cell)"
+        else echo "Obstacle: twin.yaml's virtual box (no detected obstacle in use)"; fi
+        cat > "$run/RECORDING.txt" <<REC
+Recorded in this run (fabric_run.sh $cmd, $(date '+%F %T')); fabric_run.sh save moves the large files to
+/home/taha/fabric_hw_data/$(basename "$(dirname "$run")")_$(basename "$run"):
+  cell/               twin.yaml (sheet, CBF, stretch guard), estimator.yaml, grasp.yaml, calibration.yaml, bridge.yaml,
+                      obstacle.yaml as used (+ obstacle_capture/: mesh, URDF, picture of the detected obstacle)
+  twin.npz            twin sheet state (positions, velocities), the four grips, commands sent
+  twin.depth.npz      every camera depth point on the sheet (world frame), for offline scoring
+  twin.cbf.jsonl.gz   per CBF frame: clearance, barrier h, model tension and strain, violation, slacks, correction,
+                      stretch-guard state, box clearance, nominal and sent commands, timings
+  twin.status.jsonl   twin diagnostics (faults, commands on/off, material, frame times, lag)
+  estimate.npz        estimated sheet state (positions, velocities, covariance, visibility); estimate.hands.npy
+  bag/ (mcap)         measured force/torque at both grips, joint states, bridge/guard/camera diagnostics, deadman,
+                      e-stops, TF, gloves, hands, camera observations, all /fabric topics, commands and arming
+  compute.log, commit.txt; after the run review.txt and cameras/ (perception logs from the hosts)
+REC
         echo "Run folder: $run"
         echo "The twin starts once both hands and both robot grips are measured (the estimator needs ~2 min first)."
+        read -r start_bend start_shear extra <<< "${MATERIAL:-1 1}"
+        if [ -n "${extra:-}" ] || ! python3 -c "import sys; b, s = map(float, sys.argv[1:]); assert 1/16 <= min(b, s) and max(b, s) <= 16" \
+                "$start_bend" "${start_shear:-x}" 2>/dev/null; then
+            echo "MATERIAL must be two scales in 1/16-16, \"bend shear\" (e.g. MATERIAL=\"10 0.1\"), not \"$MATERIAL\"" >&2; exit 1; fi
+        echo "bend $start_bend shear $start_shear" > "$run/material_start.txt"
+        [ "${MATERIAL:-1 1}" != "1 1" ] && echo "Twin and bank start DISTORTED: bend x$start_bend, shear x$start_shear (of twin.yaml)"
         ros_env
-        launch=(ros2 launch "$repo/src/fabric_cell/launch/compute.launch.py" cell_dir:="$repo/experiments/hardware/cell"
-                nominal_grips:=true twin:=true bank:=false commands:=false rviz:=true record:="$run")
-        if [ "$cmd" = twin ]; then "${launch[@]}" 2>&1 | tee "$run/compute.log"; exit; fi
+        launch=(ros2 launch "$repo/src/fabric_cell/launch/compute.launch.py" cell_dir:="$cell"
+                nominal_grips:=true twin:=true bank:="${BANK:-false}" commands:=false rviz:=true record:="$run" record_depth:=true
+                start_bend:="$start_bend" start_shear:="$start_shear")
+        # warm-up: widen the bank's search to reach a one-decade start error (x19.9 instead of x6.73)
+        [ "$cmd" = warmup-twin ] && launch+=(search_span:=8 search_rounds:=4)
+        if [ "$cmd" != go ]; then "${launch[@]}" 2>&1 | tee "$run/compute.log"; exit; fi
         setsid nohup "${launch[@]}" > "$run/compute.log" 2>&1 < /dev/null &
         sleep 20
         if grep -q "process has died" "$run/compute.log"; then
@@ -177,12 +308,24 @@ case "$cmd" in
         echo "Done. Full review: $run/review.txt. fabric_run.sh go to run again." ;;
     status) ros_env; python3 "$here/twin_monitor.py" "${1:-15}" ;;
     watch)  ros_env; python3 "$here/twin_monitor.py" "${1:-60}" --every 5 ;;
-    enable)
+    enable)      # the twin refuses when a hand is not seen at that moment; then nothing is armed (2026-11-19 21:50)
         ros_env
-        pub_bool /fabric/twin/enable_commands true
+        ok=1
+        for attempt in 1 2 3; do
+            pub_bool /fabric/twin/enable_commands true
+            python3 "$here/warmup.py" enabled --timeout 4 && { ok=0; break; }
+            [ "$attempt" -lt 3 ] && echo "retrying enable ($attempt/3)"
+        done
+        if [ "$ok" -ne 0 ]; then
+            echo "NOT ENABLED: bridges left disarmed; the robots will not move."; exit 1
+        fi
         for r in blue silver; do pub_bool "/oarbot_$r/fabric_cbf/arm" true; done
         sleep 2; python3 "$here/twin_monitor.py" 6 | tail -1
         echo "Armed. Deadman: release, press, hold. Release stops both arms. fabric_run.sh disable to end." ;;
+    warmup-auto) # the whole warm-up test for one operator at the sheet, spoken: both runs, waits for them
+        ros_env; python3 "$here/warmup_auto.py" "$@" ;;
+    warmup)      # warm-up calibration: only with commands on, both bridges armed and the deadman held
+        ros_env; python3 "$here/warmup.py" start "$@" ;;
     disable)
         ros_env
         pub_bool /fabric/twin/enable_commands false &
@@ -341,9 +484,10 @@ EOF
                 dir="${1:-$(cat "$state/obstacle_last" 2>/dev/null)}"
                 [ -n "$dir" ] && [ -f "$dir/obstacle.yaml" ] || { echo "No candidate in '${dir:-latest}'. Pass the output directory from detect or fit." >&2; exit 1; }
                 replace_file "$active" < "$dir/obstacle.yaml" || exit 1
+                realpath -- "$dir" > "$cell/obstacle_source.txt"   # the selected candidate (a refit has its own mesh/picture)
                 echo "Twin obstacle: $dir (experiments/hardware/cell/obstacle.yaml). The next fabric_run.sh go/twin uses it."
                 summarize_model ;;
-            clear) rm -f "$active" && echo "Twin obstacle: twin.yaml's virtual box" ;;
+            clear) rm -f "$active" "$cell/obstacle_source.txt" && echo "Twin obstacle: twin.yaml's virtual box" ;;
             show)
                 bg="$(saved_background)"
                 latest="$(cat "$state/obstacle_last" 2>/dev/null)"
@@ -359,7 +503,26 @@ EOF
                 fi ;;
             *) obstacle_help >&2; exit 2 ;;
         esac ;;
+    bases) python3 "$here/base_check.py" "${1:-10}" ;;
     review) ros_env; python3 "$here/run_review.py" "${1:?review <run_dir>}" ;;
+    audit) offline_env; ~/venvs/fabric_ros/bin/python "$here/twin_audit.py" "${1:?audit <run_dir>}" "${@:2}" ;;
+    identify) offline_env; ~/venvs/fabric_ros/bin/python "$here/identify_replay.py" "${1:?identify <run_dir> [options]}" "${@:2}" ;;
+    grip-apply) offline_env; ~/venvs/fabric_ros/bin/python "$here/grip_point_apply.py" "${1:?grip-apply <result.json> --bag <bag>}" "${@:2}" ;;
+    mps)
+        mkdir -p "$CUDA_MPS_PIPE_DIRECTORY" "$CUDA_MPS_LOG_DIRECTORY"
+        running() { pgrep -f "^nvidia-cuda-mps-control" >/dev/null; }
+        case "${1:-status}" in
+            start)   running && echo "MPS already running" || { nvidia-cuda-mps-control -d && echo "MPS started"; } ;;
+            stop)    echo quit | nvidia-cuda-mps-control 2>/dev/null; sleep 2; echo "MPS stopped" ;;
+            restart) echo quit | nvidia-cuda-mps-control 2>/dev/null; sleep 2; nvidia-cuda-mps-control -d && echo "MPS restarted" ;;
+            status)  running && echo "MPS running ($CUDA_MPS_PIPE_DIRECTORY)" || echo "MPS not running" ;;
+            *) echo "mps start|stop|restart|status" >&2; exit 2 ;;
+        esac ;;
+    warmup-design) offline_env; ~/venvs/fabric_ros/bin/python "$here/warmup_design.py" "$@" ;;
+    twin-compare) offline_env; ~/venvs/fabric_ros/bin/python "$here/twin_compare.py" "$@" ;;
+    twin-timing) offline_env; ~/venvs/fabric_ros/bin/python "$here/twin_timing.py" "$@" ;;
+    warmup-calibrate) offline_env; ~/venvs/fabric_ros/bin/python "$here/warmup_calibrate.py" "${1:?warmup-calibrate <warmup_run> --grips <result.json> --out <dir>}" "${@:2}" ;;
+    grip-search) offline_env; ~/venvs/fabric_ros/bin/python "$here/grip_point_search.py" "${1:?grip-search <run_dir> --out <dir>}" "${@:2}" ;;
     deploy-helpers)
         git fetch -q fork; echo "deploying fork/jazzy-platform-hardening $(git rev-parse --short fork/jazzy-platform-hardening) to both helpers"
         for r in blue silver; do

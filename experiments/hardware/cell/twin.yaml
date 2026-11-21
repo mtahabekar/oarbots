@@ -1,18 +1,37 @@
 # Fabric twin configuration (plain structured YAML, one `config_file` parameter).
-# Dimensions and density are for the measured stand-in. Material stiffness and obstacle geometry
-# are starting values for hardware validation.
+# The stand-in sheet (not carbon): dimensions, density and bending measured (2026-11-17 lab log). The carbon
+# values stay in the package defaults (src/fabric_twin/config, fabric_sim_cell, the Isaac plant). Shear and
+# stretch are uncalibrated; obstacle geometry is a starting value for hardware validation.
 sheet:
   width_m: 0.84
   height_m: 0.84
-  cells_x: 28            # 29 x 29 particles: the simulator's validated real-time ("lean") mesh
-  cells_y: 28
+  # 2026-11-21 warm-up calibration (experiments/hardware/sessions/2026-11-20_grip_calibration, report.md): the required
+  # mesh is 14 x 14 (6 cm cells). With point grips it scored 25.0 mm on the warm-up vs 27.3 mm at 40 x 40, and it was no
+  # worse, mostly better, on the three held-out recordings (main effect significant on all three). Was 28 x 28.
+  cells_x: 14
+  cells_y: 14
   areal_density_kg_m2: 0.215  # 152 g / (0.84 m × 0.84 m), sheet only
   stretch: [30000.0, 30000.0, 6000.0]   # Style3D weft, warp, shear; uncalibrated nominal values
-  bend: [0.002, 0.001, 0.0005]
-  patch_m: 0.03          # side of each grip patch: set to the measured finger contact size
-  substeps: 8
-  iterations: 6
+  # Cantilever (Peirce / ASTM D1388), 2026-11-17: G = 1.4e-5 N m (1.1-1.8e-5), bending length 1.9 cm, no
+  # difference between strips (directions not recorded): isotropic. Style3D's edge stiffness is in N m (Bergou
+  # quadratic bending); taken as G. Was the carbon placeholder [0.002, 0.001, 0.0005], ~140x stiffer (2026-11-20).
+  bend: [1.4e-5, 1.4e-5, 1.4e-5]
+  patch_m: 0.03          # used only when grip_insets_m is empty (square patches at the corner tips)
+  # Calibrated grip points (2026-11-21): ONE held particle per corner, at the corner (no inset was supported). The 3 cm
+  # square patches kept the sheet 57-77 mm too high (a rigid 2 x 2 square held flat). The pinch offsets themselves are in
+  # calibration.yaml (Blue's fabric_grip) and fusion.yaml (world_grip_offset_m). Fitted by scripts/hw/grip_point_search.py
+  # on warmup_10_0.1_111137 25-49 s; held out: 32.4 -> 27.4, 43.5 -> 42.9, 31.2 -> 28.3 mm (corners at the measurements).
+  grip_insets_m: [0.0, 0.0, 0.0, 0.0]
+  # Solver: 16 substeps x 10 iterations (was 8 x 6, which does not converge within a frame: the sheet floated ~97 mm
+  # high on the warm-up replay). Timed on this laptop with point grips and no self-contact: 7.0 ms/frame at 14 x 14
+  # (scripts/hw/twin_timing.py); 32 x 10 fits too (13.9 ms) but leaves little room beside the estimator on the GPU,
+  # and costs only 0.5-1.8 mm (2026-11-20_grip_calibration/realtime_candidates.log).
+  substeps: 16
+  iterations: 10
   linear_iterations: 3
+  # Cloth self-contact off (2026-11-20): with it on, two identical runs drifted 21-44 mm apart within 9 s; the hanging
+  # sheet does not fold onto itself. Obstacle and ground contact are unaffected.
+  self_collision: false
 obstacle:                # a box in the world frame; the CBF uses its enclosing capsule
   center: [0.0, 0.0, 0.16]
   half_extents: [0.22, 0.22, 0.16]
@@ -81,8 +100,22 @@ runtime:
   formation_lateral_slack_m: 0.02   # each robot grip this much toward the other robot
   formation_gain_per_s: 2.0
   commands_enabled: false   # shadow mode: commands are computed and logged, zero is sent
+# Warm-up (2026-11-21, was insets 2 and 4 cm only, 21 s). Simulated before use (scripts/hw/warmup_design.py,
+# sessions/2026-11-21_warmup_design): the 2-4 cm insets inform the grip points to about 0.5 cm and bending not at all
+# (Cramer-Rao sd 1.3 decades). Robot excursions to near the edge of the validated workspace boxes (bridge.yaml, >= 2.7
+# cm left) plus the person's large hand moves on spoken cues: grip points 0.12 cm, bending 0.13 and shear 0.07
+# decades, the sheet only ever slackened (>= 3.5 cm inside every stretch limit; the twin checks every hold before it
+# starts). The size of the hand moves matters, not their speed. A one-decade softer shear or bending still stays below
+# what the calibration can detect against the ~20 mm model error (it needed the carry's 45-70 cm motion). Robot part
+# 92 s, person part 102 s.
 warmup:
-  insets_m: [0.02, 0.04]
+  insets_m: [0.04, 0.08]      # toward the hands, then the base of the robot excursions
+  transverse_m: 0.08          # narrow: robot grips toward each other
+  lift_m: 0.06                # each robot grip up in turn (z room in the box: 9 cm)
+  lateral_m: 0.08             # both robot grips sideways, each way: shears the sheet
+  person_moves_m: {up: 0.25, down: 0.25, toward: 0.25, together: 0.20, side: 0.15}   # spoken cues, robots still
+  person_speed_mps: 0.1
+  person_reaction_sec: 2.0
   speed_mps: 0.03
   hold_sec: 5.0
   settle_sec: 3.0

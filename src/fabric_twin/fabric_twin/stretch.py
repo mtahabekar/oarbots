@@ -66,14 +66,19 @@ class StretchSpec:
 
 
 class StretchGuard:
-    def __init__(self, width_m, height_m, spec=StretchSpec()):
+    def __init__(self, width_m, height_m, spec=StretchSpec(), spans=None):
+        """`spans` {(i, j): m}: the sheet's rest length between grip pairs when the pinches are inset from the
+        corners (calibrated grip points, cloth.TwinCloth.grip_spans). Default: corner-to-corner."""
         spec.validate()
         self.spec = spec
         diagonal = float(np.hypot(width_m, height_m))
+        rest = {(0, 2): height_m, (1, 3): height_m, (0, 1): width_m, (0, 3): diagonal, (1, 2): diagonal}
+        if spans:
+            rest.update({pair: float(spans[pair]) for pair in rest if pair in spans})
         # (i, j, d_max): corners 0, 1 robots (v = 0 edge), 2, 3 hands; 0-2 and 1-3 run along v.
-        self.pairs = [(0, 2, height_m-spec.edge_slack_m), (1, 3, height_m-spec.edge_slack_m),
-                      (0, 1, width_m-spec.edge_slack_m), (0, 3, diagonal-spec.diagonal_slack_m),
-                      (1, 2, diagonal-spec.diagonal_slack_m)]
+        self.pairs = [(0, 2, rest[0, 2]-spec.edge_slack_m), (1, 3, rest[1, 3]-spec.edge_slack_m),
+                      (0, 1, rest[0, 1]-spec.edge_slack_m), (0, 3, rest[0, 3]-spec.diagonal_slack_m),
+                      (1, 2, rest[1, 2]-spec.diagonal_slack_m)]
 
     def force_term(self, forces):
         """Velocity (2, 3) that yields to the cloth's measured pull on each robot (world, N)."""

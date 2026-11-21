@@ -3,10 +3,10 @@
 #   scripts/hw/cell_up.sh            # bring up and check
 #   scripts/hw/cell_up.sh --check    # check only: start nothing, stop nothing
 #   scripts/hw/cell_up.sh --deploy   # also update ~/fabric_ws on every machine to the fork's branch head
-# Asks once for the lab password (scripts/hw/lab_ssh.sh). Steps, each reported OK / WARN / FAIL:
+# Lab passwords are built in (scripts/hw/lab_ssh.sh). Steps, each reported OK / WARN / FAIL:
 #   1 laptop lab address   2 hosts (ping, ssh)   3 clocks   4 deployed code   5 stock services and sessions
-#   6 streams on the session domain   7 camera frame age on each camera host   8 where the arms are
-#   9 what to run next (scripts/hw/fabric_run.sh)
+#   6 streams on the session domain   7 Dingo bases against calibration.yaml (overhead roof markers)
+#   8 camera frame age on each camera host   9 where the arms are   10 what to run next (scripts/hw/fabric_run.sh)
 # Physical prerequisites (not checkable from here): robots, helpers, NUC, tablet powered; arms powered and
 # not in fault; Blue's Rokubi USB on Silver's riser hub (ground loop, lab log 2026-11-18); camera cables slack.
 # The whole script is one block, so bash reads all of it before running any: editing this file while a run
@@ -47,6 +47,15 @@ step "2 Hosts"
 for h in 192.168.1.1:router 192.168.1.71:blue-helper-wired 192.168.1.102:blue-helper-wifi 192.168.1.110:silver-helper-wired \
          192.168.1.104:silver-helper-wifi 192.168.1.90:nuc 192.168.1.99:tablet 192.168.1.101:blue-dingo 192.168.1.103:silver-dingo; do
     ping -c1 -W1 "${h%%:*}" >/dev/null 2>&1 && ok "${h#*:} ${h%%:*}" || { case "${h#*:}" in *dingo*|*wifi*) warn "${h#*:} ${h%%:*} not answering" ;; *) fail "${h#*:} ${h%%:*} not answering" ;; esac; }
+done
+# A helper reachable on Wi-Fi only: ask it for its wired link (2026-11-21: Silver rebooted with its cable out,
+# enp11s0 NO-CARRIER; its DHCP profile comes up by itself once the cable is in).
+for h in blue:192.168.1.71:192.168.1.102 silver:192.168.1.110:192.168.1.104; do
+    IFS=: read -r r wired wifi <<< "$h"
+    if ! ping -c1 -W1 "$wired" >/dev/null 2>&1 && ping -c1 -W1 "$wifi" >/dev/null 2>&1; then
+        link="$("$LAB_SSH" "oarbot_$r@$wifi" "ip -br addr | awk '/^en/ {print \$1, \$2, \$3}'; ip -br link | awk '/^en/ && /NO-CARRIER/ {print \$1, \"NO-CARRIER\"}'" 2>/dev/null | tr '\n' ' ')"
+        fail "$r helper on Wi-Fi only; its wired port: ${link:-unknown}(NO-CARRIER = Ethernet cable out at the laptop or the switch; a new address = DHCP lease changed, update SSH_TARGET)"
+    fi
 done
 for m in blue silver nuc tablet; do
     name="$("$LAB_SSH" "${SSH_TARGET[$m]}" hostname 2>/dev/null)" && ok "ssh $m ($name)" || fail "ssh $m (${SSH_TARGET[$m]})"
@@ -134,7 +143,16 @@ for r in ('blue', 'silver'):
 print('  (the laptop can take up to a minute to discover new nodes: rerun --check if a stream reads 0)')
 EOF
 
-step "7 Camera frame age on each camera's own host (want under 0.1 s; a stale camera needs a restart)"
+step "7 Bases: each Dingo from its roof marker (overhead camera, 10 s on the NUC) against calibration.yaml"
+# The twin, CBF and grip calibration place each robot by its static world -> base_link transform; a pushed base
+# shifts the real grip with no other symptom. Judged by the grip shift (OK <= 1 cm, FAIL > 2 cm = the twin-error
+# allowance in the CBF margin); details and the fix in scripts/hw/base_check.py.
+if grep -q '^fabric-stack: active' <<< "$(scripts/hw/lab.sh session nuc status 2>/dev/null)"; then
+    python3 "$here/base_check.py" 10; rc=$?
+    [ $rc = 1 ] && warns=$((warns+1)); [ $rc -ge 2 ] && fails=$((fails+1))
+else fail "bases not checked: the NUC session (overhead camera) is not running"; fi
+
+step "8 Camera frame age on each camera's own host (want under 0.1 s; a stale camera needs a restart)"
 for cam in nuc:/nuc blue:/oarbot_blue/azure_kinect silver:/oarbot_silver/azure_kinect; do
     line="$(scripts/hw/lab.sh session "${cam%%:*}" exec python3 fabric_ws/scripts/hw/frame_age.py "${cam#*:}" 4 2>/dev/null | grep '^image')"
     med="$(sed -n 's/.*median\/max [+-]*[0-9.]* \/ +\([0-9.]*\).*/\1/p' <<< "$line")"
@@ -143,7 +161,7 @@ for cam in nuc:/nuc blue:/oarbot_blue/azure_kinect silver:/oarbot_silver/azure_k
     else warn "${cam%%:*} camera image age ${med} s: stale. Restart it: scripts/hw/lab.sh session ${cam%%:*} stop; scripts/hw/lab.sh session ${cam%%:*} start"; fi
 done
 
-step "8 Arms"
+step "9 Arms"
 python3 - <<'EOF'
 import time, math, yaml, rclpy
 from rclpy.node import Node

@@ -34,10 +34,10 @@ transforms:
   child: oarbot_silver/base_link
   translation: [0.4165, -1.0708, 0.012]
   rotation_xyzw: [0.0, 0.0, 0.710554, 0.703643]
-# PLACEHOLDERS (gate H15): the corner tip held in the fingers, in the tool frame.
+# IDENTIFIED, not measured (gate H15 still open): the pinch point in the tool frame, grip points identified experiments/hardware/sessions/2026-11-20_fabric_run/warmup_10_0.1_111137 25:49 (scripts/hw/grip_point_search.py).
 - parent: oarbot_blue/j2n6s300_end_effector
   child: oarbot_blue/fabric_grip
-  translation: [0.0, 0.0, 0.0]
+  translation: [-0.0006, -0.0174, 0.0098]
   rotation_xyzw: [0.0, 0.0, 0.0, 1.0]
 - parent: oarbot_silver/j2n6s300_end_effector
   child: oarbot_silver/fabric_grip
