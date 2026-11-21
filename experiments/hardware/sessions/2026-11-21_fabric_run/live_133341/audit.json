@@ -1,0 +1,94 @@
+{
+ "run": "/home/taha/ros2_colcon_ws/src/oarbots/experiments/hardware/sessions/2026-11-21_fabric_run/live_133341",
+ "twin_vs_depth": {
+  "0": {
+   "points": 82872,
+   "median_mm": 4.7,
+   "mad_mm": 22.4,
+   "p95_abs_mm": 72.6,
+   "over_30mm": 0.381
+  },
+  "1": {
+   "points": 104580,
+   "median_mm": 2.5,
+   "mad_mm": 23.4,
+   "p95_abs_mm": 80.4,
+   "over_30mm": 0.399
+  }
+ },
+ "twin_vs_depth_map_mm": [
+  [
+   25,
+   23,
+   38,
+   51,
+   59,
+   18
+  ],
+  [
+   15,
+   2,
+   7,
+   19,
+   31,
+   25
+  ],
+  [
+   16,
+   -3,
+   -7,
+   -4,
+   6,
+   21
+  ],
+  [
+   23,
+   3,
+   -12,
+   -15,
+   -13,
+   1
+  ],
+  [
+   17,
+   14,
+   -11,
+   -25,
+   -21,
+   -14
+  ],
+  [
+   8,
+   5,
+   -16,
+   -19,
+   -16,
+   -11
+  ]
+ ],
+ "estimate_vs_depth": {
+  "0": {
+   "points": 86179,
+   "median_mm": -1.6,
+   "mad_mm": 5.5,
+   "p95_abs_mm": 34.9,
+   "over_30mm": 0.063
+  },
+  "1": {
+   "points": 108186,
+   "median_mm": -3.1,
+   "mad_mm": 6.5,
+   "p95_abs_mm": 33.6,
+   "over_30mm": 0.064
+  }
+ },
+ "estimate_edge_strain_p95": 0.052,
+ "clearance_all_frames": {
+  "frames": 814,
+  "twin_min_m": 0.073,
+  "real_p5_m": 0.193,
+  "real_min_m": 0.122,
+  "real_minus_twin_median_m": -0.006,
+  "real_minus_twin_p5_m": -0.064
+ }
+}
