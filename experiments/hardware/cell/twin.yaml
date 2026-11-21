@@ -50,8 +50,8 @@ sheet:
   linear_iterations: 3
   # Cloth self-contact off (2026-11-20): with it on, two identical runs drifted 21-44 mm apart within 9 s; the hanging
   # sheet does not fold onto itself. Obstacle and ground contact are unaffected.
-  # 2026-11-21 14:00: back on (user), as in the 2026-11-19/20 runs.
-  self_collision: true
+  # 2026-11-21 14:00 on (user), 14:25 off again (user): the fits are made without it (repeatable objective).
+  self_collision: false
 obstacle:                # a box in the world frame; the CBF uses its enclosing capsule
   center: [0.0, 0.0, 0.16]
   half_extents: [0.22, 0.22, 0.16]

@@ -49,13 +49,17 @@ def tool_rotations(bag, seconds):
     reader = rosbag2_py.SequentialReader()
     reader.open(rosbag2_py.StorageOptions(uri=str(bag), storage_id='mcap'), rosbag2_py.ConverterOptions('cdr', 'cdr'))
     reader.set_filter(rosbag2_py.StorageFilter(topics=['/tf', '/tf_static']))
-    buffer, first = tf2_ros.BufferCore(Duration(seconds=600)), None
-    while reader.has_next():
+    buffer, first, done = tf2_ros.BufferCore(Duration(seconds=600)), None, False
+    while reader.has_next() and not done:
         topic, data, _ = reader.read_next()
         for tf in deserialize_message(data, TFMessage).transforms:
             (buffer.set_transform_static if topic == '/tf_static' else buffer.set_transform)(tf, 'bag')
             if first is None and topic == '/tf':
                 first = rclpy.time.Time.from_msg(tf.header.stamp)
+            # Stop shortly after the requested time: the buffer keeps 600 s and longer bags (a warm-up plus its bank fit)
+            # had already dropped it (2026-11-21).
+            if first is not None and topic == '/tf' and rclpy.time.Time.from_msg(tf.header.stamp) > first+Duration(seconds=seconds+2):
+                done = True
     out = {}
     for robot in ('blue', 'silver'):
         q = buffer.lookup_transform_core('world', f'oarbot_{robot}/j2n6s300_end_effector',

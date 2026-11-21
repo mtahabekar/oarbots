@@ -78,6 +78,9 @@
 #   fabric_run.sh static-fit <run_dir> [<run_dir> ...] [options]   offline, GPU, ~minutes: grip points (corner-weighted)
 #                                       then stretch on each run's still hold, Levenberg-Marquardt with a parallel
 #                                       Jacobian (scripts/hw/static_fit.py); stretch should agree across runs
+#   fabric_run.sh fit-apply <run_dir>   after a warm-up: static-fit on its still hold at the twin's own mesh and solver, then
+#                                       grip offsets into the cell (grip-apply --write, added to the recorded ones) and the
+#                                       stretch scale into twin.yaml (refused outside x0.3-x3); cell files backed up first
 #   fabric_run.sh grip-apply <result.json> --bag <bag_dir> [--write]   write those grip points into the cell config:
 #                                       fabric_grip transforms, hand offsets, twin grip insets (scripts/hw/grip_point_apply.py)
 #   fabric_run.sh warmup-calibrate <warmup_run> --grips <result.json> --out <dir> [--validate run:window ...]
@@ -331,7 +334,8 @@ REC
                 nominal_grips:=true twin:=true bank:="${BANK:-false}" commands:=false rviz:=true record:="$run" record_depth:=true
                 start_bend:="$start_bend" start_shear:="$start_shear")
         # warm-up: widen the bank's search to reach a one-decade start error (x19.9 instead of x6.73)
-        [ "$cmd" = warmup-twin ] && launch+=(search_span:=8 search_rounds:=4 search_workers:="${BANK_WORKERS:-1}")
+        [ "$cmd" = warmup-twin ] && launch+=(search_span:=8 search_rounds:=4 search_workers:="${BANK_WORKERS:-1}"
+                                             search_max_seconds:="${BANK_MAX_SECONDS:-600}")
         if [ "$cmd" != go ]; then "${launch[@]}" 2>&1 | tee "$run/compute.log"; exit; fi
         setsid nohup "${launch[@]}" > "$run/compute.log" 2>&1 < /dev/null &
         sleep 20
@@ -629,6 +633,38 @@ PY
           fenced ~/venvs/fabric_ros/bin/python "$here/grip_point_search.py" "$run" "${common[@]}" --kinds "" --start \
               --material stretch --material-step 0.25 --fix-from "$run/grip_fit/grips/result.json" \
               --out "$run/grip_fit/material" "$@"; fi; } 2>&1 | tee -a "$run/grip_fit.log" ;;
+    fit-apply)
+        run="${1:?fit-apply <warmup_run_dir>}"; run="${run%/}"
+        if [ -n "$(twin_pids)" ]; then echo "A twin (compute launch) is running: stop it first" >&2; exit 1; fi
+        name="$(basename "$(dirname "$run")")_$(basename "$run")"; bag="/home/taha/fabric_hw_data/$name/bag"
+        [ -d "$bag" ] || { echo "no saved bag for $run ($bag): fabric_run.sh save it first" >&2; exit 1; }
+        read -r cx cy ss it <<< "$(python3 -c "import yaml; s=yaml.safe_load(open('$repo/experiments/hardware/cell/twin.yaml'))['sheet']; print(s['cells_x'], s['cells_y'], s['substeps'], s['iterations'])")"
+        mkdir -p "$run/fit_apply/cell_before" && cp "$repo"/experiments/hardware/cell/{twin,fusion,calibration}.yaml "$run/fit_apply/cell_before/"
+        echo "== fit at the twin's numerics: ${cx}x${cy}, ${ss}x${it}"
+        "$0" static-fit "$run" --override cells_x=$cx cells_y=$cy substeps=$ss iterations=$it --tag fit_apply || exit 1
+        offline_env
+        ~/venvs/fabric_ros/bin/python - "$run" "$repo/experiments/hardware/cell/twin.yaml" <<'PY' || exit 1
+import json, re, sys
+from pathlib import Path
+run, twin = Path(sys.argv[1]), Path(sys.argv[2])
+r = json.loads((run / 'fit_apply/result.json').read_text())
+# grip-apply reads grip_point_search's format
+(run / 'fit_apply/grips_for_apply.json').write_text(json.dumps(dict(run=str(run.resolve()), window=r['window'],
+    names=r['grips']['names'], calibrated=r['grips']['values'])))
+scale = float(r['stretch_scale'])
+text = twin.read_text()
+m = re.search(r'\n  stretch: \[([0-9.e+-]+), ([0-9.e+-]+), ([0-9.e+-]+)\]', text)
+weft, warp, shear = (float(x) for x in m.groups())
+if not 0.3 <= scale <= 3.:
+    print(f'stretch x{scale:.3f} relative to twin.yaml is outside x0.3-x3: NOT applied (check the fit; the twin keeps {weft:g})')
+else:
+    new = f'\n  stretch: [{weft*scale:.1f}, {warp*scale:.1f}, {shear:g}]'
+    twin.write_text(text[:m.start()] + new + text[m.end():])
+    print(f'twin.yaml stretch weft/warp {weft:g} -> {weft*scale:.1f} (x{scale:.3f}, fitted on {run.name})')
+PY
+        echo "== grip offsets into the cell (added to the ones the run was recorded with)"
+        "$0" grip-apply "$run/fit_apply/grips_for_apply.json" --bag "$bag" --write
+        echo "Cell files before: $run/fit_apply/cell_before (revert = copy back). The next twin start uses the fit." ;;
     static-fit)
         if [ -n "$(twin_pids)" ]; then echo "A twin (compute launch) is running: stop it first" >&2; exit 1; fi
         offline_env

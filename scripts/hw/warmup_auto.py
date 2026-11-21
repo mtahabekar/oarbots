@@ -405,7 +405,8 @@ def one_run(node, material, index, total, attempt=1):
         day = datetime.date.today().isoformat()
         run = REPO / 'experiments/hardware/sessions' / f'{day}_fabric_run' / f'warmup_{start[0]:g}_{start[1]:g}_{time.strftime("%H%M%S")}'
         log(f'run {index}/{total}: MATERIAL="{material}" -> {run}')
-        subprocess.Popen(['bash', RUN_SH, 'warmup-twin', str(run)], env=dict(os.environ, MATERIAL=material),
+        subprocess.Popen(['bash', RUN_SH, 'warmup-twin', str(run)],
+                         env=dict(os.environ, MATERIAL=material, **({'NOMINAL': '1'} if material.split() == ['1', '1'] else {})),
                          stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
                          start_new_session=True)
         node.twin = {}
@@ -449,10 +450,15 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument('materials', nargs='*', default=['10 0.1', '10 10'],
                     help='starting "bend shear" scales, one run each (default "10 0.1" "10 10")')
+    ap.add_argument('--nominal', action='store_true',
+                    help='one warm-up at the twin\'s own material ("1 1"): a recording for the still-hold grip/stretch '
+                         'fit (fabric_run.sh fit-apply), not a test of the online bank (2026-11-21)')
     a = ap.parse_args()
+    if a.nominal:
+        a.materials = ['1 1']
     for m in a.materials:
         parts = m.split()
-        if len(parts) != 2 or not all(1 / 16 <= float(x) <= 16 for x in parts) or parts == ['1', '1']:
+        if len(parts) != 2 or not all(1 / 16 <= float(x) <= 16 for x in parts) or (parts == ['1', '1'] and not a.nominal):
             sys.exit(f'each material must be two distorted scales in 1/16-16, e.g. "10 0.1"; not "{m}"')
     say('Warm-up script started. Go to the sheet; I will call you.', wait=False)
     rclpy.init()
