@@ -54,7 +54,8 @@ def nodes(context):
                                          'search_cost_tolerance_m': float(get('search_cost_tolerance_m')),
                                          'search_parameter_tolerance': float(get('search_parameter_tolerance')),
                                          'search_max_seconds': float(get('search_max_seconds')),
-                                         'search_max_evaluations': int(get('search_max_evaluations'))}]))
+                                         'search_max_evaluations': int(get('search_max_evaluations')),
+                                         'search_workers': int(get('search_workers'))}]))
     if get('rviz') == 'true':
         out.append(Node(package='fabric_sim_cell', executable='demo_markers', name='fabric_estimate_markers'))
         out.append(Node(package='rviz2', executable='rviz2', name='fabric_cell_rviz', output='log',
@@ -103,6 +104,7 @@ def generate_launch_description():
         DeclareLaunchArgument('search_parameter_tolerance', default_value='0.1', description='Relative coefficient stability tolerance'),
         DeclareLaunchArgument('search_max_seconds', default_value='600', description='Maximum fit time; not a minimum duration'),
         DeclareLaunchArgument('search_max_evaluations', default_value='80', description='Maximum candidate simulations'),
+        DeclareLaunchArgument('search_workers', default_value='1', description='Independent bank GPU workers; >1 needs CUDA MPS; memory capped'),
         DeclareLaunchArgument('commands', default_value='false', description="'true': send the twin's commands to the robots"),
         DeclareLaunchArgument('nominal_commands', default_value='false', choices=['false', 'true'],
                               description='Allow commands on nominal grips (supervised closed-loop test)'),

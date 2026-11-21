@@ -302,20 +302,47 @@ The search stops after a refinement has stable coefficients (within 10%) and RMS
 at most 0.1 mm, verified by additional 10% probes on each coefficient. These are optimization stopping
 tolerances, not an absolute accuracy claim. `search_rounds` is a maximum (four in warmup-twin), rather
 than a fixed number that must always run. Limits also cap evaluations (80) and fitting time (600 s,
-checked between candidate simulations). A boundary, time/evaluation limit, or exhausted round budget
+checked between candidate batches). A boundary, time/evaluation limit, or exhausted round budget
 is reported as not converged and is not released. Progress includes candidate count and best residual;
 the operator returns as soon as the result and any expected release arrive. The physical motion is the
 scripted excitation (about 195 s since 2026-11-21; the operator helpers wait the twin's reported duration + 20 s);
 convergence controls the subsequent fit. With 24 holds the bank may run to its 600 s cap; the offline calibration
 below is the one that counts.
 
-**Planned (2026-11-21, not done yet): run the warm-up fitting on the GPU in parallel.** The online bank
-(`fabric_twin/bank.py`, `Bank.calibrate`) evaluates its candidate grid one simulation at a time, so with 24 holds a
-fit can take its whole 600 s cap while the person waits. Evaluate each round's candidates in parallel instead, as the
-offline tools already do (`warmup-calibrate`, `grip-search`: separate worker processes sharing the GPU through CUDA MPS,
-worker count capped from free memory, ~5.7 GB each). Use separate models/processes, not batched worlds in one model:
-Style3D's linear solve is one global PCG, so batched worlds are coupled (2026-11-20 lab log). Check that the parallel
-fit gives the same result as the sequential one on a recorded warm-up before using it on the cell.
+**Parallel warm-up bank (2026-11-21):** `BANK_WORKERS=2` selects independent spawned GPU processes for
+`warmup-twin` and `warmup-auto` (direct launch: `search_workers:=2`). Start CUDA MPS first:
+
+```bash
+scripts/hw/fabric_run.sh mps start
+BANK_WORKERS=2 scripts/hw/fabric_run.sh warmup-auto "10 10"   # only the second recording
+# Omit "10 10" to record both starts.
+```
+
+The default remains one worker. Each worker owns a separate Style3D model; batched worlds would be coupled by
+its global PCG. Workers persist through one fit, share the GPU through CUDA MPS, and are joined afterwards.
+The count is capped from currently available host memory (6 GB per worker, 4 GB reserved). Missing MPS or low
+memory falls back to one worker with a warning. The parent allocates no simulation model for a parallel-only fit.
+Only the warm-up search is parallelized; the small subsequent adaptation remains sequential.
+
+Candidates and convergence probes are evaluated in batches of at most the effective worker count. Their
+results are consumed in the original order, including ties and deduplicated/clipped candidates. Evaluation limits
+are exact; the time cap is checked before each batch, and a running batch may finish past the cap. Progress and
+the final result include the effective `workers`. A failed simulation produces no material release. Ctrl+C
+terminates and joins workers; after an interrupted CUDA job, restart MPS as described below.
+
+To compare the sequential and parallel paths on the same recorded holds (no robot motion):
+
+```bash
+scripts/hw/fabric_run.sh mps start
+W=experiments/hardware/sessions/2026-11-21_fabric_run/warmup_10_0.1_113825
+scripts/hw/fabric_run.sh bank-replay "$W" --config "$W/cell/twin.yaml" \
+    --start "10 0.1" --workers 2 --compare --max-evaluations 6 --json /tmp/bank-comparison.json
+```
+
+The bounded comparison uses all usable holds and six candidates per path. Increase `--max-evaluations` to 80
+for a full search comparison; comparison mode disables the time cap so both paths evaluate the same candidates.
+It checks the candidate table, winning scales, termination/convergence decision, and residual/sensitivity agreement
+within 0.1 mm. It fails if parallel execution fell back to one worker. Timings include worker startup and cleanup.
 
 **Warm-up has CBF OFF and stretch guard OFF** (operator request, 2026-11-20). Its saved run profile sets
 `cbf.enabled: false` and `stretch_guard.enabled: false`. The twin runs the scripted trajectory directly;
@@ -410,6 +437,15 @@ scripts/hw/fabric_run.sh identify <held_out_run> --mode evaluate --params stretc
 - Pick windows where the sheet touches nothing (warm-ups, no-obstacle runs): the replay has no obstacle.
 
 #### Calibrate from a warm-up: grip points, resolution, bending, shear (2026-11-20)
+
+`warmup-auto` records measured glove motion but its online bank fits only bending and shear. To fit the glove
+pinch offsets, use `grip-search` below: it fits all four corners, including the two gloves, followed by
+`warmup-calibrate` for the material/mesh study. The proposed simultaneous grip/material fit with stronger corner
+weights is not implemented. These existing commands fit the two stages separately and score unweighted depth.
+With the two distorted starts, fit the completed first recording and validate against a completed second one
+(`warmup-auto "10 10"` records just that second start). The 2026-11-21 `warmup_10_10_115349` run was aborted before
+motion and cannot serve as that validation recording. Fitting writes candidates; `grip-apply --write` is the
+separate step that changes the cell calibration, after held-out results support it.
 
 After a warm-up recording (no robot needed, GPU, about an hour with 6 workers; start CUDA MPS first so the workers
 share the GPU: `export CUDA_MPS_PIPE_DIRECTORY=$HOME/.cache/mps/pipe CUDA_MPS_LOG_DIRECTORY=$HOME/.cache/mps/log;

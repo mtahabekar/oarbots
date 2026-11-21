@@ -1,0 +1,123 @@
+hold ending t+ 3.0 s (inset 0 cm): 2048 depth points
+hold ending t+ 9.3 s (inset 4 cm): 2304 depth points
+hold ending t+15.7 s (inset 8 cm): 1792 depth points
+hold ending t+23.3 s (inset 9 cm): 2304 depth points
+hold ending t+31.0 s (inset 8 cm): 1792 depth points
+hold ending t+38.0 s (inset 8 cm): 2048 depth points
+hold ending t+45.0 s (inset 8 cm): 1536 depth points
+hold ending t+52.0 s (inset 8 cm): 1792 depth points
+hold ending t+59.0 s (inset 8 cm): 2048 depth points
+hold ending t+66.7 s (inset 9 cm): 2304 depth points
+hold ending t+77.0 s (inset 7 cm): 2304 depth points
+hold ending t+84.7 s (inset 8 cm): 2304 depth points
+hold ending t+92.3 s (inset 0 cm): 2500 depth points
+hold ending t+101.8 s (inset 0 cm): 2500 depth points
+hold ending t+111.3 s (inset 0 cm): 2500 depth points
+hold ending t+120.8 s (inset 0 cm): 2500 depth points
+hold ending t+130.3 s (inset 0 cm): 2500 depth points
+hold ending t+139.8 s (inset 0 cm): 2048 depth points
+hold ending t+148.8 s (inset 0 cm): 2500 depth points
+hold ending t+157.8 s (inset 0 cm): 2500 depth points
+hold ending t+166.3 s (inset 0 cm): 2500 depth points
+hold ending t+176.3 s (inset 0 cm): 2304 depth points
+hold ending t+184.8 s (inset 0 cm): 2500 depth points
+hold ending t+194.3 s (inset 0 cm): 2500 depth points
+warmup_10_0.1_113825: window -1 of 1, case start twin, config experiments/hardware/sessions/2026-11-21_fabric_run/warmup_10_0.1_113825/cell/twin.yaml
+search: 1 requested worker(s)
+Warp 1.17.0 initialized:
+   CUDA Toolkit 12.9, Driver 13.0
+   Devices:
+     "cpu"      : "x86_64"
+     "cuda:0"   : "NVIDIA GeForce RTX 5070 Laptop GPU" (8 GiB, sm_120, mempool enabled)
+   Kernel cache:
+     /tmp/oarbots-fabric-audit-gpu/1.17.0
+Module newton._src.utils.mesh 92b663b load on device 'cpu' took 2.65 ms  (cached)
+Module newton._src.geometry.bvh 58a3a49 load on device 'cuda:0' took 6.64 ms  (cached)
+Module newton._src.solvers.style3d.kernels 6e609e0 load on device 'cuda:0' took 6.74 ms  (cached)
+Module newton._src.solvers.style3d.collision.bvh.kernels eed0ece load on device 'cuda:0' took 3.63 ms  (cached)
+    Module newton._src.solvers.style3d.builder eb1b915 load on device 'cpu' took 0.42 ms  (cached)
+    Module newton._src.solvers.style3d.builder 013f25b load on device 'cuda:0' took 5.10 ms  (cached)
+SolverStyle3D::precompute() took 9.43 ms
+Module fabric_twin.cloth 2b29def load on device 'cuda:0' took 1.75 ms  (cached)
+Module capsule_cbf.newton_runtime 8379e06 load on device 'cuda:0' took 1.46 ms  (cached)
+Module newton._src.sim.collide f369c1a load on device 'cuda:0' took 1.94 ms  (cached)
+Module narrow_phase_primitive_write_contact_False_False_False 6b2fd5c load on device 'cuda:0' took 2.62 ms  (cached)
+Module newton._src.geometry.narrow_phase 3519ebf load on device 'cuda:0' took 2.86 ms  (cached)
+Module newton._src.geometry.kernels d546c9d load on device 'cuda:0' took 8.02 ms  (cached)
+Module newton._src.solvers.style3d.collision.bvh.kernels ebf1724 load on device 'cuda:0' took 2.99 ms  (cached)
+Module newton._src.solvers.style3d.collision.kernels f54ca9e load on device 'cuda:0' took 6.44 ms  (cached)
+Module newton._src.solvers.style3d.linear_solver f457b3c load on device 'cuda:0' took 5.51 ms  (cached)
+SolverStyle3D::precompute() took 1.71 ms
+    1 evaluations: best bend x10, shear x0.1, 20.82 mm
+SolverStyle3D::precompute() took 1.44 ms
+    2 evaluations: best bend x1.25, shear x0.0625, 20.71 mm
+SolverStyle3D::precompute() took 1.44 ms
+    3 evaluations: best bend x1.25, shear x0.0625, 20.71 mm
+SolverStyle3D::precompute() took 1.49 ms
+    4 evaluations: best bend x1.25, shear x0.0625, 20.71 mm
+SolverStyle3D::precompute() took 1.38 ms
+    5 evaluations: best bend x1.25, shear x0.0625, 20.71 mm
+SolverStyle3D::precompute() took 1.39 ms
+    6 evaluations: best bend x1.25, shear x0.0625, 20.71 mm
+search: 2 requested worker(s)
+    1 evaluations: best bend x10, shear x0.1, 20.82 mm
+    2 evaluations: best bend x1.25, shear x0.0625, 20.71 mm
+    3 evaluations: best bend x1.25, shear x0.0625, 20.71 mm
+    4 evaluations: best bend x1.25, shear x0.0625, 20.71 mm
+    5 evaluations: best bend x1.25, shear x0.0625, 20.71 mm
+    6 evaluations: best bend x1.25, shear x0.0625, 20.71 mm
+Warp 1.17.0 initialized:
+   CUDA Toolkit 12.9, Driver 13.0
+   Devices:
+     "cpu"      : "x86_64"
+     "cuda:0"   : "NVIDIA GeForce RTX 5070 Laptop GPU" (8 GiB, sm_120, mempool enabled)
+   Kernel cache:
+     /tmp/oarbots-fabric-audit-gpu/1.17.0
+Module newton._src.utils.mesh 92b663b load on device 'cpu' took 0.78 ms  (cached)
+Module newton._src.geometry.bvh 58a3a49 load on device 'cuda:0' took 0.80 ms  (cached)
+Module newton._src.solvers.style3d.kernels 6e609e0 load on device 'cuda:0' took 1.48 ms  (cached)
+Module newton._src.solvers.style3d.collision.bvh.kernels eed0ece load on device 'cuda:0' took 0.82 ms  (cached)
+    Module newton._src.solvers.style3d.builder eb1b915 load on device 'cpu' took 0.14 ms  (cached)
+    Module newton._src.solvers.style3d.builder 013f25b load on device 'cuda:0' took 2.01 ms  (cached)
+SolverStyle3D::precompute() took 4.64 ms
+Module fabric_twin.cloth 2b29def load on device 'cuda:0' took 0.28 ms  (cached)
+Module capsule_cbf.newton_runtime 8379e06 load on device 'cuda:0' took 0.27 ms  (cached)
+Module newton._src.sim.collide f369c1a load on device 'cuda:0' took 0.49 ms  (cached)
+Module narrow_phase_primitive_write_contact_False_False_False 6b2fd5c load on device 'cuda:0' took 0.52 ms  (cached)
+Module newton._src.geometry.narrow_phase 3519ebf load on device 'cuda:0' took 0.68 ms  (cached)
+Module newton._src.geometry.kernels d546c9d load on device 'cuda:0' took 3.12 ms  (cached)
+Module newton._src.solvers.style3d.collision.bvh.kernels ebf1724 load on device 'cuda:0' took 0.73 ms  (cached)
+Module newton._src.solvers.style3d.collision.kernels f54ca9e load on device 'cuda:0' took 1.55 ms  (cached)
+Module newton._src.solvers.style3d.linear_solver f457b3c load on device 'cuda:0' took 1.37 ms  (cached)
+SolverStyle3D::precompute() took 1.53 ms
+SolverStyle3D::precompute() took 1.38 ms
+Warp 1.17.0 initialized:
+   CUDA Toolkit 12.9, Driver 13.0
+   Devices:
+     "cpu"      : "x86_64"
+     "cuda:0"   : "NVIDIA GeForce RTX 5070 Laptop GPU" (8 GiB, sm_120, mempool enabled)
+   Kernel cache:
+     /tmp/oarbots-fabric-audit-gpu/1.17.0
+Module newton._src.utils.mesh 92b663b load on device 'cpu' took 2.38 ms  (cached)
+Module newton._src.geometry.bvh 58a3a49 load on device 'cuda:0' took 2.71 ms  (cached)
+Module newton._src.solvers.style3d.kernels 6e609e0 load on device 'cuda:0' took 3.79 ms  (cached)
+Module newton._src.solvers.style3d.collision.bvh.kernels eed0ece load on device 'cuda:0' took 4.32 ms  (cached)
+    Module newton._src.solvers.style3d.builder eb1b915 load on device 'cpu' took 0.29 ms  (cached)
+    Module newton._src.solvers.style3d.builder 013f25b load on device 'cuda:0' took 4.10 ms  (cached)
+SolverStyle3D::precompute() took 6.79 ms
+Module fabric_twin.cloth 2b29def load on device 'cuda:0' took 2.71 ms  (cached)
+Module capsule_cbf.newton_runtime 8379e06 load on device 'cuda:0' took 4.53 ms  (cached)
+Module newton._src.sim.collide f369c1a load on device 'cuda:0' took 1.85 ms  (cached)
+Module narrow_phase_primitive_write_contact_False_False_False 6b2fd5c load on device 'cuda:0' took 2.33 ms  (cached)
+Module newton._src.geometry.narrow_phase 3519ebf load on device 'cuda:0' took 5.04 ms  (cached)
+Module newton._src.geometry.kernels d546c9d load on device 'cuda:0' took 6.83 ms  (cached)
+Module newton._src.solvers.style3d.collision.bvh.kernels ebf1724 load on device 'cuda:0' took 2.36 ms  (cached)
+Module newton._src.solvers.style3d.collision.kernels f54ca9e load on device 'cuda:0' took 2.52 ms  (cached)
+Module newton._src.solvers.style3d.linear_solver f457b3c load on device 'cuda:0' took 2.97 ms  (cached)
+SolverStyle3D::precompute() took 1.46 ms
+SolverStyle3D::precompute() took 1.36 ms
+SolverStyle3D::precompute() took 1.42 ms
+SolverStyle3D::precompute() took 1.45 ms
+{"bend": 1.25, "shear": 0.0625, "cost_m": 0.020710809034643084, "start_cost_m": 0.02081922955047844, "sensitivity_m": 0.006539286547874949, "evaluations": 6, "converged": false, "stop_reason": "evaluation_limit", "rounds_completed": 0, "reach": 8.0, "cost_tolerance_m": 0.0001, "parameter_tolerance": 0.1, "workers": 2, "seconds": 90.97517165000318}
+from x10, x0.1: bend x1.25, shear x0.0625; evaluation_limit; residual 20.82 -> 20.71 mm; cost spread 0.11 mm
+{"passed": true, "same_trials": true, "same_result": true, "tolerance_mm": 0.1, "max_cost_difference_mm": 0.00022979281470020263, "speedup": 1.3603557164490208}

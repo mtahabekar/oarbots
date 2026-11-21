@@ -41,6 +41,7 @@
 #                                       area (collider 50 m below; the area under the sheet must be clear),
 #                                       bank search widened to x19.9 (span 8, 4 rounds) to undo one decade
 #   fabric_run.sh warmup-auto ["10 0.1" "10 10"]   the whole warm-up test, spoken (scripts/hw/warmup_auto.py):
+#                                       BANK_WORKERS=2 uses parallel fitting (start MPS first; default 1)
 #                                       run it and walk to the sheet; each run: twin restarted distorted, 15 s
 #                                       to reach the sheet, hands checked, commands on, deadman prompt, warm-up,
 #                                       fit, saved and reviewed. Ctrl+C: commands off, twin stopped and saved
@@ -81,7 +82,7 @@
 #                                       shear, bending and stretch apart from grip-point errors (scripts/hw/warmup_design.py)
 #   fabric_run.sh twin-timing [mesh:substeps:iterations ...]   GPU ms per twin frame at candidate numerics
 #                                       (run alone on the GPU; scripts/hw/twin_timing.py)
-#   fabric_run.sh mps start|stop|restart|status   CUDA MPS daemon so parallel offline GPU workers (grip-search,
+#   fabric_run.sh mps start|stop|restart|status   CUDA MPS daemon so parallel GPU workers (online bank, grip-search,
 #                                       warmup-calibrate, twin-compare) share the GPU; restart it after killing a run
 #                                       (its server is left unusable: "Failed to acquire primary context")
 #   fabric_run.sh twin-compare --windows run:a:b ... --configs name:mesh:k=v,... --out x.json   named twin
@@ -101,7 +102,7 @@ set -uo pipefail
 here="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 repo="$(cd -- "$here/../.." && pwd)"
 cd "$repo"
-if [ "${1:-}" != obstacle ] && [ "${1:-}" != audit ] && [ "${1:-}" != identify ] && [ "${1:-}" != grip-search ] && [ "${1:-}" != grip-apply ] && [ "${1:-}" != warmup-calibrate ] && [ "${1:-}" != warmup-design ] && [ "${1:-}" != twin-timing ] && [ "${1:-}" != twin-compare ] && [ "${1:-}" != mps ]; then
+if [ "${1:-}" != obstacle ] && [ "${1:-}" != audit ] && [ "${1:-}" != identify ] && [ "${1:-}" != grip-search ] && [ "${1:-}" != grip-apply ] && [ "${1:-}" != warmup-calibrate ] && [ "${1:-}" != warmup-design ] && [ "${1:-}" != twin-timing ] && [ "${1:-}" != twin-compare ] && [ "${1:-}" != bank-replay ] && [ "${1:-}" != mps ]; then
     # shellcheck source=lab_ssh.sh
     source "$here/lab_ssh.sh"; lab_ssh_setup
 fi
@@ -317,7 +318,7 @@ REC
                 nominal_grips:=true twin:=true bank:="${BANK:-false}" commands:=false rviz:=true record:="$run" record_depth:=true
                 start_bend:="$start_bend" start_shear:="$start_shear")
         # warm-up: widen the bank's search to reach a one-decade start error (x19.9 instead of x6.73)
-        [ "$cmd" = warmup-twin ] && launch+=(search_span:=8 search_rounds:=4)
+        [ "$cmd" = warmup-twin ] && launch+=(search_span:=8 search_rounds:=4 search_workers:="${BANK_WORKERS:-1}")
         if [ "$cmd" != go ]; then "${launch[@]}" 2>&1 | tee "$run/compute.log"; exit; fi
         setsid nohup "${launch[@]}" > "$run/compute.log" 2>&1 < /dev/null &
         sleep 20
@@ -593,6 +594,7 @@ PY
     warmup-design) offline_env; ~/venvs/fabric_ros/bin/python "$here/warmup_design.py" "$@" ;;
     twin-compare) offline_env; ~/venvs/fabric_ros/bin/python "$here/twin_compare.py" "$@" ;;
     twin-timing) offline_env; ~/venvs/fabric_ros/bin/python "$here/twin_timing.py" "$@" ;;
+    bank-replay) offline_env; ~/venvs/fabric_ros/bin/python "$here/bank_replay.py" "$@" ;;
     warmup-calibrate) offline_env; ~/venvs/fabric_ros/bin/python "$here/warmup_calibrate.py" "${1:?warmup-calibrate <warmup_run> --grips <result.json> --out <dir>}" "${@:2}" ;;
     grip-search) offline_env; ~/venvs/fabric_ros/bin/python "$here/grip_point_search.py" "${1:?grip-search <run_dir> --out <dir>}" "${@:2}" ;;
     deploy-helpers)

@@ -77,6 +77,7 @@ def test_bank_releases_only_converged_informative_results(converged, sensitivity
     def calibrate(*args, **kwargs):
         assert kwargs['cost_tolerance_m'] == .0001
         assert kwargs['parameter_tolerance'] == .1
+        assert kwargs['workers'] == 1
         kwargs['progress']({'evaluations': 1})
         return dict(bend=2., shear=.5, cost_m=.001, start_cost_m=.003, sensitivity_m=sensitivity,
                     evaluations=35, table=[], converged=converged,
@@ -86,9 +87,29 @@ def test_bank_releases_only_converged_informative_results(converged, sensitivity
                            status=lambda message, **details: statuses.append((message, details)), scales=(1., 1.),
                            span=4., rounds=4, cost_tolerance=.0001, parameter_tolerance=.1,
                            max_search_seconds=600., max_evaluations=80, min_sensitivity=.0015,
+                           search_workers=1,
                            release=lambda *args, **kwargs: releases.append((args, kwargs)),
                            get_logger=lambda: SimpleNamespace(warn=lambda text: None))
     ParameterBankNode.calibrate(node, dict(start_ns=0, holds=[(0, 3, 0), (4, 9, .02)]))
     assert bool(releases) is expected_release
     assert statuses[-1][0] == ('calibrated' if converged else 'calibration stopped')
     assert statuses[-1][1]['result']['release_expected'] is expected_release
+
+
+def test_failed_worker_does_not_publish_a_release():
+    pytest.importorskip('rclpy')
+    from fabric_twin.bank_node import ParameterBankNode
+    statuses, releases = [], []
+
+    def fail(*args, **kwargs):
+        raise RuntimeError('CUDA worker failed')
+
+    node = SimpleNamespace(ensure_bank=lambda: True, case=lambda t: object(), bank=SimpleNamespace(calibrate=fail),
+                           status=lambda message, **details: statuses.append(message), scales=(1., 1.),
+                           span=4., rounds=4, cost_tolerance=.0001, parameter_tolerance=.1,
+                           max_search_seconds=600., max_evaluations=80, search_workers=2,
+                           release=lambda *args, **kwargs: releases.append(args),
+                           get_logger=lambda: SimpleNamespace(error=lambda text: None))
+    ParameterBankNode.calibrate(node, dict(start_ns=0, holds=[(0, 3, 0), (4, 9, .02)]))
+    assert not releases
+    assert statuses[-1].startswith('calibration skipped: simulation failed:')

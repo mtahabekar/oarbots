@@ -139,10 +139,11 @@ def test_frame_loop_uses_only_the_requested_controller_and_stops_at_completion(d
 
 def test_automatic_runner_disarms_before_end_speech(monkeypatch):
     events = []
-    node = SimpleNamespace(deadman=True, window=None, bank=[], cmd={'blue': 2., 'silver': 2.}, started=False, twin={})
+    node = SimpleNamespace(deadman=False, window=None, bank=[], cmd={'blue': 2., 'silver': 2.}, started=False, twin={})
     node.start_pub = Publisher(lambda m: setattr(node, 'started', True))
 
     def spin(seconds, until=lambda: False):
+        node.deadman = True  # deliberate press after the start prompt (toggle mode)
         if node.started:
             node.window = {'holds': [(0, 1, 0)]}
         return until()
@@ -153,7 +154,7 @@ def test_automatic_runner_disarms_before_end_speech(monkeypatch):
     monkeypatch.setattr(automatic, 'log', lambda text: None)
     automatic.excite(node)
     stopped = events.index(('commands', False))
-    released = next(i for i, (kind, text) in enumerate(events) if kind == 'speech' and text.startswith('Release the deadman'))
+    released = next(i for i, (kind, text) in enumerate(events) if kind == 'speech' and text.startswith('Warm-up motion done.'))
     assert stopped < released
     assert sum(kind == 'commands' for kind, _ in events) == 1
 

@@ -9,6 +9,9 @@ grips since, the depth of the last second), then either:
     --grid "0.0625 0.25 1 4 16"      cost of every bend x shear pair in that list, with the share of
                                      depth points past the residual clip (a saturated cost cannot rank)
     --start "10 0.1"                 the node's search (span 8, 4 rounds, convergence tolerances)
+    --start "10 0.1" --workers 2 --compare --max-evaluations 6 --json comparison.json
+                                     sequential/parallel parity and wall time on identical cases;
+                                     comparison disables the time cap so both test the same candidates
 
 Scales are of --config's bend and shear (default: the cell's twin.yaml now). GPU; no ROS, no robots.
 """
@@ -51,7 +54,8 @@ class Recording:
         self.state_ns, self.q, self.v = twin['times_ns'], twin['positions'].astype(float), twin['velocities'].astype(float)
         self.corner_ns, self.corners = twin['corners_ns'], twin['corners'].astype(float)
         offsets = np.r_[0, np.cumsum(depth['counts'])]
-        self.depth_ns, self.depth_points = depth['stamps_ns'], [depth['points'][a:b].astype(float) for a, b in zip(offsets[:-1], offsets[1:])]
+        points = depth['points']  # decompress the NPZ member once, rather than once per camera frame
+        self.depth_ns, self.depth_points = depth['stamps_ns'], [points[a:b].astype(float) for a, b in zip(offsets[:-1], offsets[1:])]
         usable = ~estimate['predicted']
         self.estimate_ns, self.estimate = estimate['measurement_ns'][usable], estimate['positions'][usable]
         self.random = np.random.default_rng(0)
@@ -95,7 +99,17 @@ def main():
     ap.add_argument('--case-start', choices=('twin',), default='twin')
     ap.add_argument('--grid', help='scales to try on both axes, e.g. "0.0625 0.25 1 4 16"')
     ap.add_argument('--start', help='run the search from "bend shear"')
+    ap.add_argument('--workers', type=int, default=1, help='independent GPU search workers (requires CUDA MPS)')
+    ap.add_argument('--compare', action='store_true', help='compare sequential and parallel fits on identical cases')
+    ap.add_argument('--max-evaluations', type=int, default=80)
+    ap.add_argument('--max-seconds', type=float, default=600.)
+    ap.add_argument('--compare-tolerance-mm', type=float, default=.1)
+    ap.add_argument('--json', type=Path, help='write fit or comparison, including candidate tables and timings')
     a = ap.parse_args()
+    if a.workers < 1 or (a.compare and (not a.start or a.workers < 2)):
+        ap.error('--compare requires --start and --workers >= 2; workers must be positive')
+    if a.compare_tolerance_mm < 0 or not np.isfinite(a.compare_tolerance_mm):
+        ap.error('--compare-tolerance-mm must be finite and nonnegative')
     run = a.run.resolve()
     found = windows(run)
     if not found:
@@ -131,16 +145,46 @@ def main():
               f'spread over the grid {(costs.max() - costs.min()) * 1e3:.2f} mm')
     if a.start:
         start = tuple(float(x) for x in a.start.split())
-        result = bank.calibrate(cases, start, span=8., rounds=4, cost_tolerance_m=.0001, parameter_tolerance=.1,
-                                max_seconds=600., max_evaluations=80,
-                                progress=lambda p: print(f'  {p["evaluations"]:3d} evaluations: best bend x{p["bend"]:.3g}, '
-                                                         f'shear x{p["shear"]:.3g}, {p["cost_m"] * 1e3:.2f} mm', flush=True))
-        table = result.pop('table')
+        fits = []
+        for workers in ([1, a.workers] if a.compare else [a.workers]):
+            print(f'search: {workers} requested worker(s)', flush=True)
+            begun = time.perf_counter()
+            result = bank.calibrate(cases, start, span=8., rounds=4, cost_tolerance_m=.0001, parameter_tolerance=.1,
+                                    max_seconds=None if a.compare else a.max_seconds, max_evaluations=a.max_evaluations,
+                                    workers=workers,
+                                    progress=lambda p: print(f'  {p["evaluations"]:3d} evaluations: best bend x{p["bend"]:.3g}, '
+                                                             f'shear x{p["shear"]:.3g}, {p["cost_m"] * 1e3:.2f} mm', flush=True))
+            result['seconds'] = time.perf_counter()-begun  # includes worker startup and cleanup
+            fits.append(result)
+        table = result['table']
         spread = max(r['cost_m'] for r in table) - result['cost_m']
-        print(json.dumps({k: v for k, v in result.items() if k != 'history'}, default=float))
+        print(json.dumps({k: v for k, v in result.items() if k not in ('history', 'table')}, default=float))
         print(f'from x{start[0]:g}, x{start[1]:g}: bend x{result["bend"]:.3g}, shear x{result["shear"]:.3g}; '
               f'{result["stop_reason"]}; residual {result["start_cost_m"] * 1e3:.2f} -> {result["cost_m"] * 1e3:.2f} mm; '
               f'cost spread {spread * 1e3:.2f} mm')
+        output = dict(run=str(run), config=str(a.config), cases=len(cases), fits=fits)
+        passed = True
+        if a.compare:
+            serial, parallel = fits
+            tolerance = a.compare_tolerance_mm / 1000
+            same_trials = ([(r['bend'], r['shear']) for r in serial['table']] ==
+                           [(r['bend'], r['shear']) for r in parallel['table']])
+            differences = [abs(x['cost_m']-y['cost_m']) for x, y in zip(serial['table'], parallel['table'])]
+            same_result = all(serial[k] == parallel[k] for k in
+                              ('bend', 'shear', 'evaluations', 'converged', 'stop_reason', 'rounds_completed'))
+            passed = bool(parallel['workers'] > 1 and same_trials and same_result and
+                          np.isfinite(differences).all() and max(differences, default=np.inf) <= tolerance and
+                          abs(serial['sensitivity_m']-parallel['sensitivity_m']) <= tolerance)
+            output['comparison'] = dict(passed=passed, same_trials=same_trials, same_result=same_result,
+                                        tolerance_mm=a.compare_tolerance_mm,
+                                        max_cost_difference_mm=max(differences, default=np.inf)*1000,
+                                        speedup=serial['seconds']/parallel['seconds'])
+            print(json.dumps(output['comparison']), flush=True)
+        if a.json:
+            a.json.parent.mkdir(parents=True, exist_ok=True)
+            a.json.write_text(json.dumps(output, indent=2)+'\n')
+        if not passed:
+            raise SystemExit('Sequential/parallel comparison FAILED (or parallel workers unavailable)')
 
 
 if __name__ == '__main__':

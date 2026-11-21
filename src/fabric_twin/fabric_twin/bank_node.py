@@ -66,6 +66,9 @@ class ParameterBankNode(Node):
         self.parameter_tolerance = float(self.declare_parameter('search_parameter_tolerance', .1).value)
         self.max_search_seconds = float(self.declare_parameter('search_max_seconds', 600.).value)
         self.max_evaluations = int(self.declare_parameter('search_max_evaluations', 80).value)
+        self.search_workers = int(self.declare_parameter('search_workers', 1).value)
+        if self.search_workers < 1:
+            raise ValueError('search_workers must be positive')
         self.reach = self.span**(1+sum(.25*.5**k for k in range(self.rounds-1)))
         self.random = np.random.default_rng(0)
         self.release_pub = self.create_publisher(String, '/fabric/material_parameters', LATCHED)
@@ -167,13 +170,21 @@ class ParameterBankNode(Node):
         if len(cases) < 2:
             self.status(f'calibration skipped: only {len(cases)} of {len(request["holds"])} holds have state, grips and depth')
             return
-        self.status("calibration started", cases=len(cases))
+        self.status("calibration started", cases=len(cases), requested_workers=self.search_workers)
         started = time.perf_counter()
         start = self.scales
-        result = self.bank.calibrate(cases, start, span=self.span, rounds=self.rounds,
-                                     cost_tolerance_m=self.cost_tolerance, parameter_tolerance=self.parameter_tolerance,
-                                     max_seconds=self.max_search_seconds, max_evaluations=self.max_evaluations,
-                                     progress=lambda search: self.status('calibration progress', search=search))
+        try:
+            result = self.bank.calibrate(cases, start, span=self.span, rounds=self.rounds,
+                                         cost_tolerance_m=self.cost_tolerance, parameter_tolerance=self.parameter_tolerance,
+                                         max_seconds=self.max_search_seconds, max_evaluations=self.max_evaluations,
+                                         workers=self.search_workers,
+                                         progress=lambda search: self.status('calibration progress', search=search))
+        except Exception as error:
+            # A failed simulation must never produce a material release. Also let
+            # warmup-auto save the recording instead of waiting for its timeout.
+            self.status(f'calibration skipped: simulation failed: {error}')
+            self.get_logger().error(f'bank search failed: {error}')
+            return
         table = result.pop('table')
         result.update(cases=len(cases), seconds=round(time.perf_counter()-started, 1), start=list(start),
                       span=self.span, rounds=result['rounds_completed'], max_rounds=self.rounds,

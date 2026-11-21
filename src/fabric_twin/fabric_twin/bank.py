@@ -58,11 +58,25 @@ def surface_cost(q, grid, points, gate_m=.08, clip_m=.03):
 
 class Bank:
     def __init__(self, spec, grips):
-        # A copy of the twin's sheet with the same mesh and solver settings, and no obstacle in reach.
-        self.cloth = TwinCloth(replace(spec, obstacle=Obstacle(center=(0., 0., -50.), half_extents=(.1, .1, .1))), grips)
-        nx, ny = spec.cells_x+1, spec.cells_y+1
-        self.grid = np.lexsort((self.cloth.uv[:, 0], self.cloth.uv[:, 1])).reshape(ny, nx)
+        self.spec, self.initial_grips = spec, np.array(grips, copy=True)
+        self._cloth, self._grid = None, None
         self.evaluations = 0
+
+    @property
+    def cloth(self):
+        # A copy of the twin's sheet with the same mesh and solver settings, and no obstacle in reach.
+        # A parallel-only parent never needs its own CUDA model/context.
+        if self._cloth is None:
+            self._cloth = TwinCloth(replace(self.spec, obstacle=Obstacle(center=(0., 0., -50.),
+                                                                        half_extents=(.1, .1, .1))), self.initial_grips)
+        return self._cloth
+
+    @property
+    def grid(self):
+        if self._grid is None:
+            nx, ny = self.spec.cells_x+1, self.spec.cells_y+1
+            self._grid = np.lexsort((self.cloth.uv[:, 0], self.cloth.uv[:, 1])).reshape(ny, nx)
+        return self._grid
 
     def cost(self, scales, cases):
         """Mean robust squared distance (m^2) over the cases for one (bend, shear) pair, and the
@@ -84,13 +98,36 @@ class Bank:
 
     def calibrate(self, cases, start=(1., 1.), span=4., rounds=3, bounds=(1/16, 16.),
                   cost_tolerance_m=.0001, parameter_tolerance=.1, max_seconds=None,
-                  max_evaluations=None, progress=None):
+                  max_evaluations=None, progress=None, workers=1):
+        """Fit with independent GPU processes when requested, memory and MPS permit.
+
+        The default is the original sequential evaluator. Pool lifetime is one fit;
+        normal completion joins workers, and errors/Ctrl+C terminate and join them.
+        """
+        from .bank_workers import CandidatePool, worker_count
+        count = worker_count(workers, self.spec.device if workers != 1 else '')
+        options = dict(start=start, span=span, rounds=rounds, bounds=bounds,
+                       cost_tolerance_m=cost_tolerance_m, parameter_tolerance=parameter_tolerance,
+                       max_seconds=max_seconds, max_evaluations=max_evaluations,
+                       progress=(lambda p: progress(dict(p, workers=count))) if progress else None)
+        if count == 1:
+            result = self._calibrate(cases, **options)
+        else:
+            with CandidatePool(count, self.spec, self.initial_grips, cases) as pool:
+                result = self._calibrate(cases, **options, costs=pool.costs, batch_size=count)
+            self.evaluations += result['evaluations']
+        return dict(result, workers=count)
+
+    def _calibrate(self, cases, start=(1., 1.), span=4., rounds=3, bounds=(1/16, 16.),
+                   cost_tolerance_m=.0001, parameter_tolerance=.1, max_seconds=None,
+                   max_evaluations=None, progress=None, costs=None, batch_size=1):
         """Coarse-to-fine search in log scale around `start`.
 
         `rounds` is a maximum. Stop when a refinement changes the coefficients by at most
         `parameter_tolerance` and the RMS residual by at most `cost_tolerance_m`, verified
         by probing both axes at that relative coefficient scale. Boundary optima and exhausted
-        budgets are reported as not converged. Time limits are checked between simulations.
+        budgets are reported as not converged. Time limits are checked between batches
+        of at most `batch_size` simulations; an already running batch is allowed to finish.
 
         Returns dict(bend, shear, cost_m, start_cost_m, sensitivity_m, table). `sensitivity_m`
         is the largest RMS difference between any candidate's end shape and the best one's: if
@@ -103,8 +140,11 @@ class Bank:
                 or min(start) < bounds[0] or max(start) > bounds[1]
                 or cost_tolerance_m < 0 or not 0 < parameter_tolerance < 1
                 or (max_seconds is not None and (not np.isfinite(max_seconds) or max_seconds <= 0))
-                or (max_evaluations is not None and max_evaluations < 1)):
+                or (max_evaluations is not None and (not np.isfinite(max_evaluations)
+                    or max_evaluations < 1 or int(max_evaluations) != max_evaluations))):
             raise ValueError('Invalid calibration search bounds, tolerances or budgets')
+        if max_evaluations is not None:
+            max_evaluations = int(max_evaluations)
         table, best, best_cost, best_ends = {}, start, None, None
         factor = float(span)
         begun, history, completed, converged, reason = time.perf_counter(), [], 0, False, 'max_rounds'
@@ -112,35 +152,48 @@ class Bank:
         class BudgetReached(Exception):
             pass
 
-        def evaluate(scales):
+        def evaluate_many(candidates):
             nonlocal best, best_cost, best_ends, reason
-            key = tuple(round(float(np.log(s)), 6) for s in scales)
-            if key not in table:
+            missing, seen = [], set(table)
+            for scales in candidates:
+                key = tuple(round(float(np.log(s)), 6) for s in scales)
+                if key not in seen:
+                    seen.add(key)
+                    missing.append((key, scales))
+            for offset in range(0, len(missing), batch_size):
                 if max_evaluations is not None and len(table) >= max_evaluations:
                     reason = 'evaluation_limit'
                     raise BudgetReached
                 if table and max_seconds is not None and time.perf_counter()-begun >= max_seconds:
                     reason = 'time_limit'
                     raise BudgetReached
-                table[key] = self.cost(scales, cases)
-                cost, ends = table[key]
-                if np.isfinite(cost) and (best_cost is None or cost < best_cost):
-                    best, best_cost, best_ends = tuple(scales), cost, ends
-                if progress:
-                    progress(dict(evaluations=len(table), seconds=time.perf_counter()-begun,
-                                  rounds_completed=completed, bend=best[0], shear=best[1],
-                                  cost_m=float(np.sqrt(best_cost)) if best_cost is not None else None))
-            return table[key]
-        start_cost, _ = evaluate(best)
+                size = batch_size if max_evaluations is None else min(batch_size, max_evaluations-len(table))
+                batch = missing[offset:offset+size]
+                trials = [scales for _, scales in batch]
+                results = costs(trials) if costs else (self.cost(scales, cases) for scales in trials)
+                for (key, scales), (cost, ends) in zip(batch, results):
+                    table[key] = cost, ends
+                    if np.isfinite(cost) and (best_cost is None or cost < best_cost):
+                        best, best_cost, best_ends = tuple(scales), cost, ends
+                    if progress:
+                        progress(dict(evaluations=len(table), seconds=time.perf_counter()-begun,
+                                      rounds_completed=completed, bend=best[0], shear=best[1],
+                                      cost_m=float(np.sqrt(best_cost)) if best_cost is not None else None))
+                if len(batch) < min(batch_size, len(missing)-offset):
+                    reason = 'evaluation_limit'
+                    raise BudgetReached
+
+        evaluate_many([best])
+        start_key = tuple(round(float(np.log(s)), 6) for s in start)
+        start_cost = table[start_key][0]
         sensitivity = 0.
         try:
             for round_index in range(int(rounds)):
                 center = best
                 previous_cost = best_cost
                 steps = (1/factor, 1/np.sqrt(factor), 1., np.sqrt(factor), factor) if round_index == 0 else (1/factor, 1., factor)
-                for b in steps:
-                    for s in steps:
-                        evaluate(tuple(float(np.clip(x, *bounds)) for x in (center[0]*b, center[1]*s)))
+                evaluate_many([tuple(float(np.clip(x, *bounds)) for x in (center[0]*b, center[1]*s))
+                               for b in steps for s in steps])
                 completed += 1
                 if best_cost is None:
                     reason = 'no_valid_surface_fit'
@@ -157,12 +210,14 @@ class Bank:
                     # A stable coarse grid alone can miss a nearby optimum. Verify the
                     # declared coefficient tolerance before accepting the early stop.
                     probe_center, probe_cost = best, best_cost
+                    probes = []
                     for axis in range(2):
                         for direction in (-1, 1):
                             trial = list(probe_center)
                             trial[axis] *= (1+parameter_tolerance)**direction
                             trial[axis] = float(np.clip(trial[axis], *bounds))
-                            evaluate(tuple(trial))
+                            probes.append(tuple(trial))
+                    evaluate_many(probes)
                     probe_gain = float(np.sqrt(probe_cost)-np.sqrt(best_cost))
                     probe_change = float(np.max(np.abs(np.log(np.array(best)/probe_center))))
                     total_gain = float(np.sqrt(previous_cost)-np.sqrt(best_cost))

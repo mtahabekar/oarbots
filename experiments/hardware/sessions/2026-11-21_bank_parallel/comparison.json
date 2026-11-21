@@ -1,0 +1,113 @@
+{
+  "run": "/home/taha/ros2_colcon_ws/src/oarbots/experiments/hardware/sessions/2026-11-21_fabric_run/warmup_10_0.1_113825",
+  "config": "experiments/hardware/sessions/2026-11-21_fabric_run/warmup_10_0.1_113825/cell/twin.yaml",
+  "cases": 24,
+  "fits": [
+    {
+      "bend": 1.25,
+      "shear": 0.0625,
+      "cost_m": 0.020710579241828384,
+      "start_cost_m": 0.020819159225976568,
+      "sensitivity_m": 0.006539832227610379,
+      "evaluations": 6,
+      "converged": false,
+      "stop_reason": "evaluation_limit",
+      "rounds_completed": 0,
+      "reach": 8.0,
+      "cost_tolerance_m": 0.0001,
+      "parameter_tolerance": 0.1,
+      "history": [],
+      "table": [
+        {
+          "bend": 1.2500005608573637,
+          "shear": 0.06249998263998874,
+          "cost_m": 0.020710579241828384
+        },
+        {
+          "bend": 1.2500005608573637,
+          "shear": 0.10000000929940499,
+          "cost_m": 0.0207582987488193
+        },
+        {
+          "bend": 1.2500005608573637,
+          "shear": 0.282842803593581,
+          "cost_m": 0.02080135484069728
+        },
+        {
+          "bend": 1.2500005608573637,
+          "shear": 0.7999996410514483,
+          "cost_m": 0.020811648219134234
+        },
+        {
+          "bend": 3.5355327669460794,
+          "shear": 0.06249998263998874,
+          "cost_m": 0.02073009018867827
+        },
+        {
+          "bend": 9.999999070059587,
+          "shear": 0.10000000929940499,
+          "cost_m": 0.020819159225976568
+        }
+      ],
+      "workers": 1,
+      "seconds": 123.75859480901272
+    },
+    {
+      "bend": 1.25,
+      "shear": 0.0625,
+      "cost_m": 0.020710809034643084,
+      "start_cost_m": 0.02081922955047844,
+      "sensitivity_m": 0.006539286547874949,
+      "evaluations": 6,
+      "converged": false,
+      "stop_reason": "evaluation_limit",
+      "rounds_completed": 0,
+      "reach": 8.0,
+      "cost_tolerance_m": 0.0001,
+      "parameter_tolerance": 0.1,
+      "history": [],
+      "table": [
+        {
+          "bend": 1.2500005608573637,
+          "shear": 0.06249998263998874,
+          "cost_m": 0.020710809034643084
+        },
+        {
+          "bend": 1.2500005608573637,
+          "shear": 0.10000000929940499,
+          "cost_m": 0.020758303719050776
+        },
+        {
+          "bend": 1.2500005608573637,
+          "shear": 0.282842803593581,
+          "cost_m": 0.02080138582682155
+        },
+        {
+          "bend": 1.2500005608573637,
+          "shear": 0.7999996410514483,
+          "cost_m": 0.020811616282890313
+        },
+        {
+          "bend": 3.5355327669460794,
+          "shear": 0.06249998263998874,
+          "cost_m": 0.020729905585503694
+        },
+        {
+          "bend": 9.999999070059587,
+          "shear": 0.10000000929940499,
+          "cost_m": 0.02081922955047844
+        }
+      ],
+      "workers": 2,
+      "seconds": 90.97517165000318
+    }
+  ],
+  "comparison": {
+    "passed": true,
+    "same_trials": true,
+    "same_result": true,
+    "tolerance_mm": 0.1,
+    "max_cost_difference_mm": 0.00022979281470020263,
+    "speedup": 1.3603557164490208
+  }
+}
