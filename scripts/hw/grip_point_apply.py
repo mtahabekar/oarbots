@@ -10,6 +10,9 @@ where that corner's measurement is defined, so every consumer (twin, estimator, 
   hands (left, right)    world offset -> fusion.yaml world_grip_offset_m [left xyz, right xyz]
   insets (all four)      twin.yaml sheet.grip_insets_m [blue, silver, right, left]: one held particle per corner
 
+Robot and hand offsets are ADDED to the ones the recording was made with (its cell/ snapshot), since the search fits
+corrections relative to the recorded grips; insets are absolute (the search's --config).
+
 A world offset is down/in/side in the search's convention: down = -z; in = toward the opposite edge (robots toward
 the hands, hands toward the robots), horizontal; side = along the robot edge toward Silver. The directions come
 from the fitted recording's grips at the window start, as in the search.
@@ -93,9 +96,16 @@ def main():
     inward, side = directions(result)
     offsets = world_offsets(values, inward, side)
     rotations = tool_rotations(a.bag, a.at_sec)
-    tool = {r: rotations[r].T @ offsets[r] for r in ('blue', 'silver')}
+    # The fitted offsets are corrections to the offsets the recording was made with (its cell/ snapshot; zero for
+    # recordings before 2026-11-21): add them, never overwrite (2026-11-21).
+    from grip_point_search import recorded_offsets
+    recorded = recorded_offsets(Path(result['run']).resolve())
+    tool = {r: recorded['tool'][r] + rotations[r].T @ offsets[r] for r in ('blue', 'silver')}
     insets = [round(values.get(f'inset_{c}', 0.), 4) for c in CORNERS]
-    hands = np.r_[offsets['left'], offsets['right']]
+    hands = recorded['hands'] + np.r_[offsets['left'], offsets['right']]
+    for r in ('blue', 'silver'):
+        print(f'{r} fabric_grip in the recording: {np.round(recorded["tool"][r], 4).tolist()} m')
+    print(f'hand offsets in the recording (left xyz, right xyz): {np.round(recorded["hands"], 4).tolist()} m')
     print(f'directions: in (hands -> robots) {np.round(inward, 3).tolist()}, side (Blue -> Silver) {np.round(side, 3).tolist()}')
     for c in CORNERS:
         print(f'{c:7s} world offset {np.round(offsets[c]*100, 1).tolist()} cm, inset {values.get(f"inset_{c}", 0.)*100:.1f} cm')

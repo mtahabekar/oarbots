@@ -48,6 +48,28 @@ def _spec(config, override):
     return dataclasses.replace(spec, **{k: (int(v) if k in ints else float(v)) for k, v in override.items()})
 
 
+def recorded_offsets(run):
+    """The grip offsets the recording was made with (its cell/ snapshot): robot fabric_grip translations in the tool
+    frame and fusion world_grip_offset_m (left xyz, right xyz). The search's offsets are corrections on top of them."""
+    import re
+    import yaml
+    cell = Path(run) / 'cell'
+    tool = {r: np.zeros(3) for r in ('blue', 'silver')}
+    hands = np.zeros(6)
+    try:
+        cal = yaml.safe_load((cell / 'calibration.yaml').read_text())
+        for t in cal['transforms']:
+            for r in tool:
+                if t['parent'] == f'oarbot_{r}/j2n6s300_end_effector' and t['child'] == f'oarbot_{r}/fabric_grip':
+                    tool[r] = np.array(t['translation'], float)
+        m = re.search(r'world_grip_offset_m: (\[[^\]]*\])', (cell / 'fusion.yaml').read_text())
+        if m:
+            hands = np.array(json.loads(m.group(1)), float)
+    except FileNotFoundError:
+        pass
+    return dict(tool=tool, hands=hands)
+
+
 def _init(config, override, names, run, window, depth_every, points):
     import identify_replay as ir
     from fabric_twin.identify import Forward
@@ -96,7 +118,7 @@ def main():
     ap.add_argument('--window', default='25:49')
     ap.add_argument('--config', default=str(REPO / 'experiments/hardware/cell/twin.yaml'))
     ap.add_argument('--override', nargs='*', default=['cells_x=40', 'cells_y=40', 'substeps=32', 'iterations=10'])
-    ap.add_argument('--start', nargs='*', default=['down_right=0.043', 'down_left=0.043'],
+    ap.add_argument('--start', nargs='*', default=['auto'],
                     help='starting values, e.g. the earlier shared hand fit')
     ap.add_argument('--corners', default=','.join(CORNERS))
     ap.add_argument('--kinds', default=','.join(KINDS))
@@ -116,6 +138,13 @@ def main():
     from fabric_twin.identify import PARAMETERS
     spec = _spec(a.config, override)
     node = spec.width_m/spec.cells_x
+    if a.start == ['auto']:
+        # Grips are fitted relative to what the recording measured. A recording made after hand offsets were applied
+        # (fusion.yaml world_grip_offset_m, 2026-11-21) already has the hands lowered: start there (zero), not 4.3 cm
+        # lower again. Older recordings (no offsets) start at the 2026-11-20 fit: both hands 4.3 cm down.
+        recorded = recorded_offsets(a.run)
+        a.start = [] if np.any(np.abs(recorded['hands']) > 1e-9) else ['down_right=0.043', 'down_left=0.043']
+        print(f'start: {a.start or "zero (the recording already has hand offsets " + str(recorded["hands"].tolist()) + ")"}', flush=True)
     theta = np.zeros(len(names))
     for item in a.start:
         key, value = item.split('=')
