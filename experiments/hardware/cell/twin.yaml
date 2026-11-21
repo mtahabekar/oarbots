@@ -18,7 +18,10 @@ sheet:
   # holds, 28 x 28, grips fitted first): at 16 x 10 the best was x0.036 / x0.040 (RMS 26.0 / 29.2 mm); at 12 x 8 it is
   # x0.93 / x1.13 (25.6 / 28.8 mm), i.e. the nominal; at 8 x 6 x1.04 / x0.80 (28.9 / 31.9 mm). More iterations make the
   # cloth stiffer and the fit softens stretch to match. With 12 x 8 below, the nominal stretch is the fitted value.
-  stretch: [30000.0, 30000.0, 6000.0]   # Style3D weft, warp, shear
+  # 2026-11-21 14:20: point grips at 28 x 28, 8 x 6 (the grip-model comparison, lab log 14:05): stretch fitted on both still
+  # holds after the grips, x0.034 and x0.034 (RMS 27.7 / 31.4 mm; 2 x 2 patches 35.3 / 38.9, 3 x 3 42.6 / 46.4). Fits were
+  # made with self-contact off (repeatable objective); the live twin keeps it on (user).
+  stretch: [1020.0, 1020.0, 6000.0]   # Style3D weft, warp, shear (x0.034 of 30000; shear not fitted)
   # Cantilever (Peirce / ASTM D1388), 2026-11-17: G = 1.4e-5 N m (1.1-1.8e-5), bending length 1.9 cm, no
   # difference between strips (directions not recorded): isotropic. Style3D's edge stiffness is in N m (Bergou
   # quadratic bending); taken as G. Was the carbon placeholder [0.002, 0.001, 0.0005], ~140x stiffer (2026-11-20).
@@ -28,9 +31,10 @@ sheet:
   # square patches kept the sheet 57-77 mm too high (a rigid 2 x 2 square held flat). The pinch offsets themselves are in
   # calibration.yaml (Blue's fabric_grip) and fusion.yaml (world_grip_offset_m). Fitted by scripts/hw/grip_point_search.py
   # on warmup_10_0.1_111137 25-49 s; held out: 32.4 -> 27.4, 43.5 -> 42.9, 31.2 -> 28.3 mm (corners at the measurements).
-  # 2026-11-21 14:00 back to the 3 cm patches (user): empty list = square patch_m patches at the corner tips. Was
-  # [0.0, 0.0, 0.0, 0.0] (point grips) since the morning of 2026-11-21.
-  grip_insets_m: []
+  # 2026-11-21 14:20: point grips again (one held particle per corner): they fit the still holds best (27.7 / 31.4 mm vs
+  # 35.3 / 38.9 for the 3 cm (2 x 2) patches and 42.6 / 46.4 for 6 cm (3 x 3); the twin holds a patch as a rigid flat
+  # square). Briefly patches at 14:00 (user), before the comparison.
+  grip_insets_m: [0.0, 0.0, 0.0, 0.0]
   # Solver: 16 substeps x 10 iterations (was 8 x 6, which does not converge within a frame: the sheet floated ~97 mm
   # high on the warm-up replay). Timed on this laptop with point grips and no self-contact: 7.0 ms/frame at 14 x 14
   # (scripts/hw/twin_timing.py); 32 x 10 fits too (13.9 ms) but leaves little room beside the estimator on the GPU,
