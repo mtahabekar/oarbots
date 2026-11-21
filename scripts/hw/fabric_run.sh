@@ -89,9 +89,10 @@
 #   fabric_run.sh static-fit <run_dir> [<run_dir> ...] [options]   offline, GPU, ~minutes: grip points (corner-weighted)
 #                                       then stretch on each run's still hold, Levenberg-Marquardt with a parallel
 #                                       Jacobian (scripts/hw/static_fit.py); stretch should agree across runs
-#   fabric_run.sh fit-apply <run_dir>   after a warm-up: static-fit on its still hold at the twin's own mesh and solver, then
-#                                       grip offsets into the cell (grip-apply --write, added to the recorded ones) and the
-#                                       stretch scale into twin.yaml (refused outside x0.3-x3); cell files backed up first
+#   fabric_run.sh fit-apply <run_dir>   after a warm-up: static-fit at the twin's own mesh and solver (grips and stretch on
+#                                       the still hold, bending on the hand cues), then grip offsets into the cell
+#                                       (grip-apply --write, added to the recorded ones), the stretch scale into twin.yaml
+#                                       (refused outside x0.3-x3), bending only if identified; cell files backed up first
 #   fabric_run.sh grip-apply <result.json> --bag <bag_dir> [--write]   write those grip points into the cell config:
 #                                       fabric_grip transforms, hand offsets, twin grip insets (scripts/hw/grip_point_apply.py)
 #   fabric_run.sh warmup-calibrate <warmup_run> --grips <result.json> --out <dir> [--validate run:window ...]
@@ -702,7 +703,7 @@ PY
         read -r cx cy ss it <<< "$(python3 -c "import yaml; s=yaml.safe_load(open('$repo/experiments/hardware/cell/twin.yaml'))['sheet']; print(s['cells_x'], s['cells_y'], s['substeps'], s['iterations'])")"
         mkdir -p "$run/fit_apply/cell_before" && cp "$repo"/experiments/hardware/cell/{twin,fusion,calibration}.yaml "$run/fit_apply/cell_before/"
         echo "== fit at the twin's numerics: ${cx}x${cy}, ${ss}x${it}"
-        "$0" static-fit "$run" --override cells_x=$cx cells_y=$cy substeps=$ss iterations=$it --tag fit_apply || exit 1
+        "$0" static-fit "$run" --override cells_x=$cx cells_y=$cy substeps=$ss iterations=$it --tag fit_apply --bend || exit 1
         offline_env
         ~/venvs/fabric_ros/bin/python - "$run" "$repo/experiments/hardware/cell/twin.yaml" <<'PY' || exit 1
 import json, re, sys
@@ -722,6 +723,21 @@ else:
     new = f'\n  stretch: [{weft*scale:.1f}, {warp*scale:.1f}, {shear:g}]'
     twin.write_text(text[:m.start()] + new + text[m.end():])
     print(f'twin.yaml stretch weft/warp {weft:g} -> {weft*scale:.1f} (x{scale:.3f}, fitted on {run.name})')
+# Bending (stage 3, hand-cue motion): written only when identified on both sides; otherwise the measured value stays
+# and the verdict and the 1 mm range are reported (2026-11-21: the warm-up gave only a weak upper bound).
+b = r.get('bend')
+if b:
+    lo, hi = b['consistent_log10']
+    text = twin.read_text()
+    m = re.search(r'\n  bend: \[([0-9.e+-]+), ([0-9.e+-]+), ([0-9.e+-]+)\]', text)
+    vals = [float(x) for x in m.groups()]
+    if b['identified']:
+        s = float(b['bend_scale'])
+        twin.write_text(text[:m.start()] + '\n  bend: [' + ', '.join(f'{v*s:.3g}' for v in vals) + ']' + text[m.end():])
+        print(f'twin.yaml bending x{s:.3f}: {vals[0]:g} -> {vals[0]*s:.3g} N m (identified, within 1 mm: x{10**lo:.3g}-x{10**hi:.3g})')
+    else:
+        print(f'bending kept at {vals[0]:g} N m: {b["verdict"]} from this warm-up (within 1 mm of the best: '
+              f'x{10**lo:.3g}-x{10**hi:.3g} of twin.yaml)')
 PY
         echo "== grip offsets into the cell (added to the ones the run was recorded with)"
         "$0" grip-apply "$run/fit_apply/grips_for_apply.json" --bag "$bag" --write

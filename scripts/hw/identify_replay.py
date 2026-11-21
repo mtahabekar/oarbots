@@ -58,6 +58,23 @@ def load(run, window, depth_every, points, skip):
     # each slice then keeps its own full copy alive (12.8 GB per worker on a 5 min run, 2026-11-21 OOM).
     all_points = depth['points']
     points_list = [all_points[a:b] for a, b in zip(offsets[:-1], offsets[1:])]
+    if window.startswith('hands'):
+        # hands[:SECONDS]: the warm-up's person cues (holds labelled "hands ..." and what follows them), from the move
+        # into the first one to the end of the warm-up, at most SECONDS long: the motion that can show bending
+        # (2026-11-21 warm-up design; the still hold cannot).
+        found = warmup_windows(run)
+        plan = found[-1].get('plan') if found else None
+        if not plan:
+            raise SystemExit('no warm-up plan in twin.status.jsonl for a hands window')
+        first = next((k for k, hold in enumerate(plan) if hold['label'].startswith('hands')), None)
+        if first is None:
+            raise SystemExit('this warm-up has no hand cues')
+        begin = plan[first-1]['end'] if first > 0 else plan[first]['start']
+        finish = plan[-1]['end']
+        if ':' in window:
+            finish = min(finish, begin+float(window.split(':')[1]))
+        start, end = int(found[-1]['start_ns']+begin*1e9), int(found[-1]['start_ns']+finish*1e9)
+        return make_window(corners_ns, corners, depth['stamps_ns'], points_list, start, end, depth_every, points, skip)
     if window.startswith('still'):
         # still[:PRE]: the person's still hold before a warm-up's motion: PRE s (default 8) before its start to the end
         # of its settle hold. The grips are held at their median there (the gloves jitter 1-2 cm around a still hand):

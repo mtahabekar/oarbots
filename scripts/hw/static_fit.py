@@ -69,7 +69,7 @@ def fit_run(run, a, override, workers):
             print(f'  {label}: {res.start_cost_mm:.2f} -> {res.cost_mm:.2f} mm, {res.simulations} simulations, '
                   f'{res.seconds:.0f} s, {res.stop_reason}', flush=True)
             return res
-        previous = Path(run) / 'static_fit' / 'result.json'
+        previous = Path(run) / a.tag / 'result.json'
         if a.reuse_grips and previous.exists():
             from fabric_twin.static_fit import FitResult
             d = json.loads(previous.read_text())['grips']
@@ -91,8 +91,49 @@ def fit_run(run, a, override, workers):
                                                     f'{h["rms_mm"]:.2f} mm ({h["seconds"]:.0f} s)', flush=True))
         print(f'  stage 2 stretch: {m.start_cost_mm:.2f} -> {m.cost_mm:.2f} mm, {m.simulations} simulations, {m.seconds:.0f} s')
         print(f'    stretch x{10**m.theta[0]:.3f} (log10 {m.theta[0]:+.3f})')
+        bend = None
+        if a.bend:
+            # Stage 3 (2026-11-21, user): bending on the warm-up's hand-cue motion (a still sheet does not show it),
+            # grips and stretch held. Identified only if the minimum is inside the range and the RMS stays within
+            # DETECTION_MM over less than +/- a.bend_max_sd decades around it; otherwise the measured value stays.
+            from fabric_twin.static_fit import line_search_1d
+            fixed_b = dict(g.values(), stretch=float(m.theta[0]))
+            print(f'  stage 3 bending (grips, stretch held) on {a.bend_window}: parallel line search', flush=True)
+            bpool = mp.get_context('spawn').Pool(workers, initializer=_init,
+                                                 initargs=(a.config, override, str(run), a.bend_window, not a.patch_grips))
+            try:
+                b = line_search_1d(lambda thetas: bpool.map(_raw, [(['bend'], fixed_b, t) for t in thetas], chunksize=1),
+                                   a.bend_range[0], a.bend_range[1], points=workers, name='bend',
+                                   progress=lambda h: print(f'    sweep {h["iteration"]}: best x{10**h["value"]:.3f}, '
+                                                            f'{h["rms_mm"]:.2f} mm ({h["seconds"]:.0f} s)', flush=True))
+            finally:
+                bpool.close(); bpool.join()
+            # Identifiability from the WHOLE sampled curve, not the local fit near the minimum (2026-11-21: a 0.05 mm
+            # noise floor there faked a minimum): the range where the RMS stays within DETECTION_MM of the best. Bounded
+            # on both sides = identified; open on one side = only a bound (warm-up 1_1_135705: too stiff shows, too
+            # soft looks the same, as on 2026-11-20).
+            from fabric_twin.static_fit import DETECTION_MM
+            value = float(b.theta[0])
+            table = {float(k): v for k, v in b.history[-1]['table'].items()}
+            xs = np.array(sorted(table)); ys = np.array([table[x] for x in xs]); best = ys.min()
+            k = int(np.argmin(ys))
+            left = next((x for x, y in zip(xs[:k][::-1], ys[:k][::-1]) if y >= best+DETECTION_MM), None)
+            right = next((x for x, y in zip(xs[k+1:], ys[k+1:]) if y >= best+DETECTION_MM), None)
+            identified = left is not None and right is not None and (right-left)/2 <= a.bend_max_sd*2
+            low = a.bend_range[0] if left is None else left
+            high = a.bend_range[1] if right is None else right
+            verdict = ('IDENTIFIED' if identified else 'upper bound only' if left is None and right is not None
+                       else 'lower bound only' if right is None and left is not None else 'not identifiable')
+            print(f'  stage 3 bending: {b.start_cost_mm:.2f} -> {b.cost_mm:.2f} mm, {b.simulations} simulations, {b.seconds:.0f} s; '
+                  f'best x{10**value:.3f}; within {DETECTION_MM:g} mm of it: x{10**low:.3g}-x{10**high:.3g}'
+                  f'{"" if left is not None else " (open below)"}{"" if right is not None else " (open above)"}: {verdict}',
+                  flush=True)
+            bend = dict(b.as_dict(), identified=bool(identified), verdict=verdict, window=a.bend_window,
+                        bend_scale=float(10**value), consistent_log10=[float(low), float(high)],
+                        bounded_below=left is not None, bounded_above=right is not None)
         out = dict(run=str(run), window=a.window, override=override, grips=g.as_dict(), stretch=m.as_dict(),
-                   stretch_scale=float(10**m.theta[0]), seconds=round(g.seconds+m.seconds, 1))
+                   stretch_scale=float(10**m.theta[0]), bend=bend,
+                   seconds=round(g.seconds+m.seconds+(bend['seconds'] if bend else 0.), 1))
     finally:
         pool.close(); pool.join()
     return out
@@ -109,6 +150,11 @@ def main():
     ap.add_argument('--far-weight', type=float, default=.1)
     ap.add_argument('--grip-step', type=float, default=.005, help='finite-difference step, m')
     ap.add_argument('--stretch-range', type=float, nargs=2, default=[-2.5, .5], help='log10 search range of the stretch scale')
+    ap.add_argument('--bend', action='store_true', help='stage 3: fit the bending scale on the warm-up hand-cue motion')
+    ap.add_argument('--bend-window', default='hands:60', help='window for stage 3 (default: up to 60 s of hand cues)')
+    ap.add_argument('--bend-range', type=float, nargs=2, default=[-2., 2.], help='log10 search range of the bending scale')
+    ap.add_argument('--bend-max-sd', type=float, default=.5,
+                    help='identified only if the 1 mm range is bounded on both sides and at most 2x this many decades wide')
     ap.add_argument('--max-iterations', type=int, default=8)
     ap.add_argument('--reuse-grips', action='store_true', help="take stage 1 from the run's static_fit/result.json")
     ap.add_argument('--patch-grips', action='store_true',
