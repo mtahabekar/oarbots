@@ -14,11 +14,11 @@ sheet:
   cells_x: 28
   cells_y: 28
   areal_density_kg_m2: 0.215  # 152 g / (0.84 m × 0.84 m), sheet only
-  # Weft/warp stretch fitted 2026-11-21 (scripts/hw/static_fit.py, still hold before the warm-up, grips fitted first,
-  # 28 x 28 at 16 x 10): x0.036 (run warmup_10_0.1_113825) and x0.040 (warmup_10_10_121921), fitted independently,
-  # 0.04 decades apart; RMS 40.6 -> 26.0 and 42.8 -> 29.2 mm; the real sheet sagged 4-11 cm deeper than the nominal twin.
-  # Geometric mean x0.038 of the nominal 30000. Shear (6000) not fitted: a still sheet does not show it. Was [30000, 30000, 6000].
-  stretch: [1140.0, 1140.0, 6000.0]   # Style3D weft, warp, shear
+  # Stretch is an effective value for the solver settings (2026-11-21, scripts/hw/static_fit.py on both warm-up still
+  # holds, 28 x 28, grips fitted first): at 16 x 10 the best was x0.036 / x0.040 (RMS 26.0 / 29.2 mm); at 12 x 8 it is
+  # x0.93 / x1.13 (25.6 / 28.8 mm), i.e. the nominal; at 8 x 6 x1.04 / x0.80 (28.9 / 31.9 mm). More iterations make the
+  # cloth stiffer and the fit softens stretch to match. With 12 x 8 below, the nominal stretch is the fitted value.
+  stretch: [30000.0, 30000.0, 6000.0]   # Style3D weft, warp, shear
   # Cantilever (Peirce / ASTM D1388), 2026-11-17: G = 1.4e-5 N m (1.1-1.8e-5), bending length 1.9 cm, no
   # difference between strips (directions not recorded): isotropic. Style3D's edge stiffness is in N m (Bergou
   # quadratic bending); taken as G. Was the carbon placeholder [0.002, 0.001, 0.0005], ~140x stiffer (2026-11-20).
@@ -28,17 +28,26 @@ sheet:
   # square patches kept the sheet 57-77 mm too high (a rigid 2 x 2 square held flat). The pinch offsets themselves are in
   # calibration.yaml (Blue's fabric_grip) and fusion.yaml (world_grip_offset_m). Fitted by scripts/hw/grip_point_search.py
   # on warmup_10_0.1_111137 25-49 s; held out: 32.4 -> 27.4, 43.5 -> 42.9, 31.2 -> 28.3 mm (corners at the measurements).
-  grip_insets_m: [0.0, 0.0, 0.0, 0.0]
+  # 2026-11-21 14:00 back to the 3 cm patches (user): empty list = square patch_m patches at the corner tips. Was
+  # [0.0, 0.0, 0.0, 0.0] (point grips) since the morning of 2026-11-21.
+  grip_insets_m: []
   # Solver: 16 substeps x 10 iterations (was 8 x 6, which does not converge within a frame: the sheet floated ~97 mm
   # high on the warm-up replay). Timed on this laptop with point grips and no self-contact: 7.0 ms/frame at 14 x 14
   # (scripts/hw/twin_timing.py); 32 x 10 fits too (13.9 ms) but leaves little room beside the estimator on the GPU,
   # and costs only 0.5-1.8 mm (2026-11-20_grip_calibration/realtime_candidates.log).
-  substeps: 16
-  iterations: 10
+  # 2026-11-21 13:55: 12 x 8 (was 16 x 10). 28 x 28 timed alone: 8 x 6 2.5 ms, 12 x 8 4.8 ms, 16 x 10 7.8 ms per frame
+  # (twin-timing). In a session (estimator, CBF, RViz) the frame p95 was ~21 ms at 16 x 10 (3.6 % skipped frames) and
+  # 17-25 ms at 8 x 6 on 11-19/20; lag stayed ~165 ms in all. 12 x 8 matches 16 x 10's still-hold accuracy once stretch
+  # is fitted (above) at 60 % of its cost.
+  # 2026-11-21 14:00: back to 8 x 6 (user), the configuration the 2026-11-19/20 hardware runs used (28 x 28, 3 cm
+  # patches, self-contact on). At 8 x 6 the fitted stretch is the nominal (x1.04 / x0.80 with point grips, above).
+  substeps: 8
+  iterations: 6
   linear_iterations: 3
   # Cloth self-contact off (2026-11-20): with it on, two identical runs drifted 21-44 mm apart within 9 s; the hanging
   # sheet does not fold onto itself. Obstacle and ground contact are unaffected.
-  self_collision: false
+  # 2026-11-21 14:00: back on (user), as in the 2026-11-19/20 runs.
+  self_collision: true
 obstacle:                # a box in the world frame; the CBF uses its enclosing capsule
   center: [0.0, 0.0, 0.16]
   half_extents: [0.22, 0.22, 0.16]
