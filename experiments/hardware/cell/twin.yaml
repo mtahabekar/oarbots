@@ -8,8 +8,11 @@ sheet:
   # 2026-11-21 warm-up calibration (experiments/hardware/sessions/2026-11-20_grip_calibration, report.md): the required
   # mesh is 14 x 14 (6 cm cells). With point grips it scored 25.0 mm on the warm-up vs 27.3 mm at 40 x 40, and it was no
   # worse, mostly better, on the three held-out recordings (main effect significant on all three). Was 28 x 28.
-  cells_x: 14
-  cells_y: 14
+  # 2026-11-21 12:50 back to 28 x 28 (user): resolve the sheet's shape finer; with point grips (one held particle per
+  # corner) the mesh-size penalty of the old 2 x 2 patches is gone (all meshes 14-56 within 7 mm on the 11-20 replay).
+  # Timed 7.5 ms/frame at 28 x 28, 16 x 10 (twin-timing, 2026-11-20 lab log), within the 16.7 ms budget beside the CBF.
+  cells_x: 28
+  cells_y: 28
   areal_density_kg_m2: 0.215  # 152 g / (0.84 m × 0.84 m), sheet only
   stretch: [30000.0, 30000.0, 6000.0]   # Style3D weft, warp, shear; uncalibrated nominal values
   # Cantilever (Peirce / ASTM D1388), 2026-11-17: G = 1.4e-5 N m (1.1-1.8e-5), bending length 1.9 cm, no

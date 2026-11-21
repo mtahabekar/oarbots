@@ -88,7 +88,7 @@ def main():
     a = ap.parse_args()
     run = a.run.resolve()
     twin = np.load(data_file(run, 'twin.npz'))
-    depth = np.load(data_file(run, 'twin.depth.npz'))
+    depth = dict(np.load(data_file(run, 'twin.depth.npz')))  # decompress each array once, not per frame
     estimate_path = data_file(run, 'estimate.npz', required=False)
     offsets = np.r_[0, np.cumsum(depth['counts'])]
     uv = twin['uv'].astype(float)

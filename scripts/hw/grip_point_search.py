@@ -98,7 +98,7 @@ class Pool:
         self.pool.close(); self.pool.join()
 
 
-def safe_workers(requested, per_worker_gb=6., reserve_gb=4.):
+def safe_workers(requested, per_worker_gb=2., reserve_gb=4.):  # 0.6 GB measured 2026-11-21 after the npz fix (was 6)
     """Worker processes that fit in the memory available now. Each GPU worker (Warp, Newton, CUDA context, one model)
     peaked at 5.7 GB of host memory on 2026-11-21; six of them plus the rest ran the 30 GB laptop out of memory."""
     try:
@@ -130,6 +130,8 @@ def main():
     ap.add_argument('--validate', nargs='*', default=[], help='held-out run_dir:window pairs')
     ap.add_argument('--depth-every', type=int, default=2)
     ap.add_argument('--points', type=int, default=64)
+    ap.add_argument('--no-pattern', dest='pattern', action='store_false',
+                    help='do not keep moving in an improving direction (pattern move, on by default since 2026-11-21)')
     ap.add_argument('--out', type=Path, required=True, help='output folder (log.jsonl, result.json)')
     a = ap.parse_args()
     a.out.mkdir(parents=True, exist_ok=True)
@@ -206,7 +208,22 @@ def main():
             for c, r in zip(combos, pool.map(combos)):
                 record(f'pass{npass}-combined', c, r)
                 candidates.append((c, r))
+        previous = theta.copy()
         theta, best = min(candidates, key=lambda c: objective(c[1]))
+        # Pattern move (user, 2026-11-21): keep going in the direction that just helped, 1x, 2x, ... the move in one
+        # parallel batch, extending while the farthest one is still the best and still improving.
+        delta = theta-previous
+        while a.pattern and np.any(delta):
+            ext = [np.clip(theta+k*delta, lower, upper) for k in range(1, max(2, min(a.workers, 4))+1)]
+            res = pool.map(ext)
+            for c, r in zip(ext, res):
+                record(f'pass{npass}-pattern', c, r)
+            j = min(range(len(ext)), key=lambda m: objective(res[m]))
+            if objective(best)-objective(res[j]) <= a.tolerance_mm:
+                break
+            theta, best = ext[j], res[j]
+            if j < len(ext)-1:
+                break
         print(f'pass {npass}: objective {objective(best):.2f} mm, median {best["median_mm"]:.1f}, p95 {best["p95_abs_mm"]:.1f}; '
               f'{len(gains)} improving coordinates; ' + ', '.join(f'{n}={v*100:.1f}cm' for n, v in zip(names, theta) if v), flush=True)
     pool.close()

@@ -54,7 +54,24 @@ def load(run, window, depth_every, points, skip):
     twin, depth = np.load(data_file(run, 'twin.npz')), np.load(data_file(run, 'twin.depth.npz'))
     corners_ns, corners = twin['corners_ns'], twin['corners']
     offsets = np.r_[0, np.cumsum(depth['counts'])]
-    points_list = [depth['points'][a:b] for a, b in zip(offsets[:-1], offsets[1:])]
+    # Read each array once: np.load on an .npz decompresses the whole array at every depth['points'] access, and
+    # each slice then keeps its own full copy alive (12.8 GB per worker on a 5 min run, 2026-11-21 OOM).
+    all_points = depth['points']
+    points_list = [all_points[a:b] for a, b in zip(offsets[:-1], offsets[1:])]
+    if window.startswith('still'):
+        # still[:PRE]: the person's still hold before a warm-up's motion: PRE s (default 8) before its start to the end
+        # of its settle hold. The grips are held at their median there (the gloves jitter 1-2 cm around a still hand):
+        # a static fit of the grip points (fabric_run.sh grip-fit, 2026-11-21).
+        found = warmup_windows(run)
+        if not found:
+            raise SystemExit('no warm-up window in twin.status.jsonl for a still window')
+        w = found[-1]
+        pre = float(window.split(':')[1]) if ':' in window else 8.
+        start, end = int(w['start_ns']-pre*1e9), int(w['start_ns']+w['holds'][0][1]*1e9)
+        sel = (corners_ns >= start) & (corners_ns <= end)
+        corners = np.array(corners, float, copy=True)
+        corners[sel] = np.median(corners[sel], axis=0)
+        return make_window(corners_ns, corners, depth['stamps_ns'], points_list, start, end, depth_every, points, skip)
     if window.startswith('warmup'):
         found = warmup_windows(run)
         if not found:

@@ -71,6 +71,10 @@
 #   fabric_run.sh grip-search <run_dir> --out <dir> [options]   offline, GPU: each corner's grip point (pinch
 #                                       offset from TF/glove and inset from the sheet corner) fitted on its own to raw
 #                                       depth with the strip-measured material (scripts/hw/grip_point_search.py)
+#   fabric_run.sh grip-fit <run_dir> [--validate <run>:still ...] [grip-search options]   offline, GPU, minutes: static
+#                                       fit of the four grip points (down/in/side) on the person's still hold before
+#                                       the warm-up motion, 40 x 40 mesh, keep-moving search; result in <run>/grip_fit
+#                                       (apply with grip-apply). Refuses while a twin runs (memory; 2026-11-21 OOM)
 #   fabric_run.sh grip-apply <result.json> --bag <bag_dir> [--write]   write those grip points into the cell config:
 #                                       fabric_grip transforms, hand offsets, twin grip insets (scripts/hw/grip_point_apply.py)
 #   fabric_run.sh warmup-calibrate <warmup_run> --grips <result.json> --out <dir> [--validate run:window ...]
@@ -123,6 +127,12 @@ offline_env() {  # offline analysis: no lab network or session domain needed; th
     source /opt/ros/jazzy/setup.bash; source "$repo/../../install/setup.bash" 2>/dev/null
     export WARP_CACHE_PATH=/tmp/oarbots-fabric-audit-gpu
     export PYTHONPATH="$repo/src/fabric_twin:$repo/src/fabric_state_estimator:$repo/src/human_hand_tracking:${PYTHONPATH:-}"
+}
+fenced() {  # offline GPU jobs in a memory-capped scope: an overrun kills only the job, never the desktop/VS Code/twin
+    local avail_kb; avail_kb="$(awk '/MemAvailable/ {print $2}' /proc/meminfo)"
+    local cap_gb=$(( avail_kb / 1048576 - 4 )); [ "$cap_gb" -lt 4 ] && cap_gb=4
+    echo "memory fence: this job may use at most ${cap_gb} GB (available minus 4 GB)" >&2
+    systemd-run --user --scope -q -p MemoryMax="${cap_gb}G" -p MemorySwapMax=0 "$@"
 }
 pub_bool() { timeout 15 ros2 topic pub --once "$1" std_msgs/msg/Bool "{data: $2}" >/dev/null 2>&1; }
 twin_pids() { pgrep -f "ros2 launch .*compute.launch.py"; }
@@ -579,7 +589,7 @@ PY
     bases) python3 "$here/base_check.py" "${1:-10}" ;;
     review) ros_env; python3 "$here/run_review.py" "${1:?review <run_dir>}" ;;
     audit) offline_env; ~/venvs/fabric_ros/bin/python "$here/twin_audit.py" "${1:?audit <run_dir>}" "${@:2}" ;;
-    identify) offline_env; ~/venvs/fabric_ros/bin/python "$here/identify_replay.py" "${1:?identify <run_dir> [options]}" "${@:2}" ;;
+    identify) offline_env; fenced ~/venvs/fabric_ros/bin/python "$here/identify_replay.py" "${1:?identify <run_dir> [options]}" "${@:2}" ;;
     grip-apply) offline_env; ~/venvs/fabric_ros/bin/python "$here/grip_point_apply.py" "${1:?grip-apply <result.json> --bag <bag>}" "${@:2}" ;;
     mps)
         mkdir -p "$CUDA_MPS_PIPE_DIRECTORY" "$CUDA_MPS_LOG_DIRECTORY"
@@ -595,8 +605,16 @@ PY
     twin-compare) offline_env; ~/venvs/fabric_ros/bin/python "$here/twin_compare.py" "$@" ;;
     twin-timing) offline_env; ~/venvs/fabric_ros/bin/python "$here/twin_timing.py" "$@" ;;
     bank-replay) offline_env; ~/venvs/fabric_ros/bin/python "$here/bank_replay.py" "$@" ;;
-    warmup-calibrate) offline_env; ~/venvs/fabric_ros/bin/python "$here/warmup_calibrate.py" "${1:?warmup-calibrate <warmup_run> --grips <result.json> --out <dir>}" "${@:2}" ;;
-    grip-search) offline_env; ~/venvs/fabric_ros/bin/python "$here/grip_point_search.py" "${1:?grip-search <run_dir> --out <dir>}" "${@:2}" ;;
+    warmup-calibrate) offline_env; fenced ~/venvs/fabric_ros/bin/python "$here/warmup_calibrate.py" "${1:?warmup-calibrate <warmup_run> --grips <result.json> --out <dir>}" "${@:2}" ;;
+    grip-fit)
+        run="${1:?grip-fit <run_dir> [--validate <run>:still ...]}"; shift
+        if [ -n "$(twin_pids)" ]; then echo "A twin (compute launch) is running: stop it first (its GPU memory and the workers' do not fit together)" >&2; exit 1; fi
+        offline_env
+        pgrep -f nvidia-cuda-mps-control >/dev/null || { nvidia-cuda-mps-control -d && echo "MPS started"; }
+        fenced ~/venvs/fabric_ros/bin/python "$here/grip_point_search.py" "$run" --window still:3 --kinds down,in,side \
+            --override cells_x=40 cells_y=40 substeps=32 iterations=10 --step 0.02 --min-step 0.005 --max-passes 10 \
+            --workers 6 --depth-every 1 --points 128 --out "$run/grip_fit" "$@" 2>&1 | tee "$run/grip_fit.log" ;;
+    grip-search) offline_env; fenced ~/venvs/fabric_ros/bin/python "$here/grip_point_search.py" "${1:?grip-search <run_dir> --out <dir>}" "${@:2}" ;;
     deploy-helpers)
         git fetch -q fork; echo "deploying fork/jazzy-platform-hardening $(git rev-parse --short fork/jazzy-platform-hardening) to both helpers"
         for r in blue silver; do
