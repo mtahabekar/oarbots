@@ -21,7 +21,7 @@ sheet:
   # 2026-11-21 14:20: point grips at 28 x 28, 8 x 6 (the grip-model comparison, lab log 14:05): stretch fitted on both still
   # holds after the grips, x0.034 and x0.034 (RMS 27.7 / 31.4 mm; 2 x 2 patches 35.3 / 38.9, 3 x 3 42.6 / 46.4). Fits were
   # made with self-contact off (repeatable objective); the live twin keeps it on (user).
-  stretch: [1020.0, 1020.0, 6000.0]   # Style3D weft, warp, shear (x0.034 of 30000; shear not fitted)
+  stretch: [1094.9, 1094.9, 6000]   # Style3D weft, warp, shear (x0.034 of 30000; shear not fitted)
   # Cantilever (Peirce / ASTM D1388), 2026-11-17: G = 1.4e-5 N m (1.1-1.8e-5), bending length 1.9 cm, no
   # difference between strips (directions not recorded): isotropic. Style3D's edge stiffness is in N m (Bergou
   # quadratic bending); taken as G. Was the carbon placeholder [0.002, 0.001, 0.0005], ~140x stiffer (2026-11-20).

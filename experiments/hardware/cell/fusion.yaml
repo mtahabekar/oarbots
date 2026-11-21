@@ -36,4 +36,4 @@
     # 11:11 warm-up with each corner fitted on its own (scripts/hw/grip_point_search.py, grip-apply): both pinches
     # 4.3 cm below the glove estimate, the right hand's also 2 cm toward Silver (+x). Replace by a measured
     # tag_to_grip_offsets_m (pivot calibration, test guide Block B) when that is done.
-    world_grip_offset_m: [0.0, 0.0, -0.043, 0.02, -0.0003, -0.043]
+    world_grip_offset_m: [0.0, -0.0047, -0.0615, 0.026, -0.0012, -0.05]
