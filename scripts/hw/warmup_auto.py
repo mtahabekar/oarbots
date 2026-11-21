@@ -32,6 +32,7 @@ import datetime
 import json
 import math
 import os
+import re
 import subprocess
 import sys
 import time
@@ -156,9 +157,27 @@ def finish_run(node, run, reason):
     print(review, flush=True)
 
 
+def slack_cue(problem):
+    """Spoken cue for a warm-up hold that would over-stretch a pair with a hand in it (the twin's
+    warmup_start_problem), or None when the person cannot fix it. 2026-11-21 10:12: the sheet's Silver-side edge
+    started at 0.765-0.805 m against its 0.805 m limit, so "hands down 25 cm" would have stretched it; stepping
+    closer to the robots gives the hand cues their room."""
+    m = re.search(r'would stretch .*hand.* to ([0-9.]+) m \(start ([0-9.]+) m, stretch-guard limit ([0-9.]+) m\)', problem)
+    if not m:
+        return None
+    after, before, limit = map(float, m.groups())
+    excess_cm = 100 * (after - max(before, limit))
+    step = int(5 * math.ceil((excess_cm + 3) / 5))      # rounded up to 5 cm, at least 3 cm spare
+    return (f'The sheet is too tight for the hand moves. Step about {min(step, 30)} centimetres closer to the robots, '
+            'let the sheet hang slack, and hold still.')
+
+
 def wait_ready(node, run, start_scales):
-    """Twin following from the requested start, bridges present, both hands steadily seen."""
+    """Twin following from the requested start, bridges present, both hands steadily seen, and the warm-up's
+    planned holds within the stretch limits for STEADY_SEC (a hand-hold problem is spoken as a cue to step closer,
+    not an abort: the twin's corners settle over the first seconds and the person can add slack)."""
     start, last_note, steady_since, last_hint, last_log = time.monotonic(), 0., None, 0., 0.
+    last_slack = 0.
     while True:
         node.spin(.25)
         now = time.monotonic()
@@ -177,7 +196,15 @@ def wait_ready(node, run, start_scales):
         if node.following() and not missing:
             problem = node.twin.get('warmup_start_problem', 'restart the twin with the updated warm-up geometry check')
             if problem:
-                raise Abort(problem)
+                cue = slack_cue(problem)
+                if cue is None:
+                    raise Abort(problem)
+                steady_since = None
+                if now - last_slack > 10:
+                    log(f'waiting for slack: {problem}')
+                    say(cue, wait=False)
+                    last_slack = now
+                continue
             steady_since = steady_since or now
             if now - steady_since >= STEADY_SEC:
                 material = json.loads(node.twin.get('material') or '{}')
@@ -375,7 +402,8 @@ def one_run(node, material, index, total, attempt=1):
         node.spin(.2)
     say('Five seconds.', wait=False)
     node.spin(max(0., t_end - time.monotonic()))
-    say('Hold both free corners with the gloves, tags toward the overhead camera, the sheet slightly slack. '
+    say('Hold both free corners with the gloves, tags toward the overhead camera, the sheet clearly slack: '
+        'stand about ten centimetres closer to the robots than where it would be tight. '
         'Keep still. I will tell you each step.')
     try:
         wait_ready(node, run, start)
