@@ -6,6 +6,9 @@
 #   fabric_run.sh warmup-start [--check]  separate, narrower warm-up pose (warmup_grasp.yaml), through the deadman
 #   fabric_run.sh stop-go               end a running go from another terminal (as Ctrl+C there)
 #   fabric_run.sh arm-start             restart both arms' Kinova velocity API (the driver's silent latch); start-pose does it
+#   fabric_run.sh arm-to <robot> <home|grasp|six joints> [--retreat]   ONE arm in joint space (grasp_joints.py), MoveIt-
+#                                       checked, 15 cm from the other arm, deadman held; --retreat when it is already
+#                                       closer: the path may only move away from the other arm (2026-11-21 collision)
 #   fabric_run.sh perception [seconds]  perception on all three cameras (workspace profile), default 3600 s
 #   fabric_run.sh perception-stop
 #   fabric_run.sh bridges start|stop    the joint-mode CBF bridges with the cell's bridge.yaml (start disarmed)
@@ -150,6 +153,24 @@ case "$cmd" in
     stop-go)     # end a running `go` from another terminal: same as Ctrl+C there (commands off, bridges disarmed,
                  # then that go stops the twin, saves and reviews the run)
         pkill -INT -f "scripts/hw/auto_start.py" && echo "go is ending: commands off; the twin stops and the run is saved" || echo "no go running" ;;
+    arm-to)      # one arm, deadman-supervised; bridges stopped for the move (they share the joint input), then restarted
+        r="${1:?arm-to <blue|silver> <home|grasp|six joints> [--retreat]}"; shift
+        [ "$r" = blue ] || [ "$r" = silver ] || { echo "arm-to: robot is blue or silver" >&2; exit 2; }
+        retreat=(); target=(); for a in "$@"; do [ "$a" = --retreat ] && retreat=(--retreat) || target+=("$a"); done
+        [ ${#target[@]} -gt 0 ] || { echo "arm-to: give home, grasp or six joint angles" >&2; exit 2; }
+        for b in blue silver; do scripts/hw/lab.sh session "$b" exec systemctl --user stop fabric-bridge >/dev/null 2>&1; done
+        echo "  $r driver: $(timeout 40 scripts/hw/lab.sh session "$r" exec ros2 service call "/oarbot_$r/kinova/j2n6s300_driver/in/start" kinova_msgs/srv/Start 2>&1 | sed -n "s/.*start_result='\([^']*\)'.*/\1/p")"
+        pre="$(scripts/hw/lab.sh session "$r" exec python3 fabric_ws/scripts/hw/grasp_joints.py --robot "$r" --to "${target[@]}" "${retreat[@]}" --check-only 2>&1 | grep -E 'Preflight|ABORT')"
+        echo "  $r preflight: $pre"
+        rc=1
+        if grep -q 'Preflight passed' <<< "$pre" && ! grep -q ABORT <<< "$pre"; then
+            spd-say -r -10 "Moving ${r^} only. Release, then press and hold the deadman." >/dev/null 2>&1
+            scripts/hw/lab.sh session "$r" exec python3 fabric_ws/scripts/hw/grasp_joints.py --robot "$r" --to "${target[@]}" "${retreat[@]}" --wait 600 |
+                while IFS= read -r line; do echo "  $line"; [[ "$line" == Arrived* ]] && spd-say -r -10 "${r^} arrived. Release the deadman." >/dev/null 2>&1; done
+            rc=${PIPESTATUS[0]}
+        else spd-say -r -10 "${r^} failed its check" >/dev/null 2>&1; fi
+        for b in blue silver; do scripts/hw/lab.sh session "$b" start-cell-bridge "/home/oarbot_$b/fabric_ws/experiments/hardware/cell" 2>&1 | tail -1 | sed "s/^/  $b: /"; done
+        exit $rc ;;
     arm-start)   # clear the Kinova driver's silent "Velocity stream timed out: API stopped" latch on both arms
         for r in blue silver; do echo "$r: $(timeout 40 scripts/hw/lab.sh session "$r" exec ros2 service call "/oarbot_$r/kinova/j2n6s300_driver/in/start" kinova_msgs/srv/Start 2>&1 | grep -o "start_result='[^']*'")"; done ;;
     perception)

@@ -16,7 +16,8 @@ position is checked against the path):
     scripts/hw/lab.sh session blue exec python3 fabric_ws/scripts/hw/grasp_joints.py --robot blue --to home
 Targets: `grasp` (experiments/hardware/cell/grasp.yaml), `home` (the SRDF Home state) or six joint
 angles in rad. Preflight: MoveIt finds every degree of the joint path collision-free, and the tool,
-wrist and camera stay at least 15 cm from the other arm. Aborts only on faults: stale or jumping joint
+wrist and camera stay at least 15 cm from the other arm (with --retreat: an arm already closer may only move
+away from the other, ending 15 cm clear). Aborts only on faults: stale or jumping joint
 readings, a joint more than 10 deg off the path (the arm not following), joints faster than 3x the
 command, the guard forwarding a command it was not given, or a gravity-compensated wrist-force change
 above the rated payload within half a second (slow drift with the wrist's orientation is the compensation,
@@ -61,6 +62,10 @@ FORCE_CONTACT_N = 15.7
 FORCE_WINDOW_SEC = 0.25
 FORCE_LOOKBACK_SEC = 0.5
 CLEARANCE_M = 0.15
+# --retreat: an arm that ended up closer than CLEARANCE_M to the other (2026-11-21: both arms moved from Home
+# together and their wrists touched) may move only if its distance to the other arm never shrinks along the path
+# (this tolerance is FK sampling noise, not an allowance) and the path ends at least CLEARANCE_M away.
+RETREAT_TOL_M = 0.002
 WAIT_SEC = 120.0
 LINKS = ('j2n6s300_end_effector', 'j2n6s300_link_5', 'camera_base')
 
@@ -218,6 +223,7 @@ class GraspJoints(Node):
         others = self.other_points()
         closest = (math.inf, None)
         tool_path = []
+        per_sample = []                            # (path %, closest distance to the other arm at that sample)
         for k in range(steps + 1):
             q = q0 + d * k / steps
             req = GetStateValidity.Request()
@@ -232,17 +238,29 @@ class GraspJoints(Node):
             if k % 5 == 0 or k == steps:
                 pts = self.points(q, W)
                 tool_path.append(pts[0])
+                here = math.inf
                 for a, name in zip(pts, LINKS):
                     for b in others:
                         dist = float(np.linalg.norm(a - b))
+                        here = min(here, dist)
                         if dist < closest[0]:
                             closest = (dist, f'{name} at {100*k/steps:.0f} %')
-        if closest[0] < CLEARANCE_M:
+                per_sample.append((100 * k / steps, here))
+        if self.args.retreat:
+            for (pa, da), (pb, db) in zip(per_sample, per_sample[1:]):
+                if db < da - RETREAT_TOL_M:
+                    raise Abort(f'Retreat: the path gets closer to {self.other}\'s arm ({da*100:.1f} -> {db*100:.1f} cm '
+                                f'at {pa:.0f}-{pb:.0f} %)')
+            if per_sample[-1][1] < CLEARANCE_M:
+                raise Abort(f'Retreat ends only {per_sample[-1][1]*100:.0f} cm from {self.other}\'s arm '
+                            f'(needs {CLEARANCE_M*100:.0f})')
+        elif closest[0] < CLEARANCE_M:
             raise Abort(f'The path comes {closest[0]*100:.0f} cm from {self.other}\'s arm ({closest[1]})')
         tool_path = np.array(tool_path)
         return dict(joint_change_deg=np.round(np.degrees(d), 1).tolist(), checks=steps + 1,
                     seconds_at_speed=round(float(np.degrees(np.max(np.abs(d)))) / self.args.speed + 2 * ACCEL_SEC, 1),
                     closest_to_other_arm_m=round(closest[0], 3), closest_where=closest[1],
+                    end_distance_to_other_arm_m=round(per_sample[-1][1], 3), retreat=bool(self.args.retreat),
                     tool_start_world=np.round(tool_path[0], 3).tolist(), tool_end_world=np.round(tool_path[-1], 3).tolist(),
                     tool_lowest_z=round(float(tool_path[:, 2].min()), 3),
                     tool_x_range=[round(float(tool_path[:, 0].min()), 3), round(float(tool_path[:, 0].max()), 3)])
@@ -370,6 +388,9 @@ def main():
     ap.add_argument('--speed', type=float, default=10.0, help='largest joint speed, deg/s (the guard allows 15)')
     ap.add_argument('--wait', type=float, default=WAIT_SEC, help='seconds to wait for the deadman before giving up')
     ap.add_argument('--check-only', action='store_true', help='run the preflight checks and send nothing')
+    ap.add_argument('--retreat', action='store_true',
+                    help='allow a start closer than 15 cm to the other arm if the path only moves away from it '
+                         'and ends at least 15 cm clear (after the arms came too close)')
     args = ap.parse_args()
     if not 0 < args.speed <= 15:
         ap.error('--speed must be in (0, 15] deg/s')
