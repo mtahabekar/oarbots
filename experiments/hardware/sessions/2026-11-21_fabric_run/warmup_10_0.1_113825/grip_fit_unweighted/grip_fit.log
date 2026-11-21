@@ -1,0 +1,390 @@
+memory fence: this job may use at most 16 GB (available minus 4 GB)
+start: zero (the recording already has hand offsets [0.0, 0.0, -0.043, 0.02, -0.0003, -0.043])
+start: objective 39.33 mm, median -36.7 mm, p95 138.6 mm (12 parameters, node 2.1 cm)
+pass 0: objective 35.97 mm, median -32.7, p95 113.7; 4 improving coordinates; down_silver=-4.0cm, in_silver=-4.0cm, down_left=4.0cm, in_left=-4.0cm
+pass 1: objective 31.62 mm, median 15.8, p95 88.2; 9 improving coordinates; in_blue=-8.0cm, down_silver=4.0cm, in_silver=-4.0cm, down_right=8.0cm, down_left=12.0cm, in_left=-4.0cm
+pass 2: objective 31.21 mm, median 13.9, p95 87.4; 2 improving coordinates; in_blue=-8.0cm, down_silver=2.0cm, in_silver=-4.0cm, down_right=8.0cm, down_left=12.0cm, in_left=-4.0cm
+pass 3: objective 31.09 mm, median 7.3, p95 79.5; 1 improving coordinates; down_blue=-2.0cm, in_blue=-8.0cm, down_silver=2.0cm, in_silver=-4.0cm, down_right=8.0cm, down_left=12.0cm, in_left=-4.0cm
+pass 4: objective 30.92 mm, median 18.1, p95 87.1; 1 improving coordinates; down_blue=-2.0cm, in_blue=-8.0cm, down_silver=2.0cm, in_silver=-4.0cm, down_right=10.0cm, down_left=12.0cm, in_left=-4.0cm
+pass 5: no improving move; offset step -> 1.00 cm
+pass 6: no improving move; offset step -> 0.50 cm
+pass 7: no improving move at the smallest step; done
+Warp 1.17.0 initialized:
+   CUDA Toolkit 12.9, Driver 13.0
+   Devices:
+     "cpu"      : "x86_64"
+     "cuda:0"   : "NVIDIA GeForce RTX 5070 Laptop GPU" (8 GiB, sm_120, mempool enabled)
+   Kernel cache:
+     /tmp/oarbots-fabric-audit-gpu/1.17.0
+Module newton._src.utils.mesh 92b663b load on device 'cpu' took 1.23 ms  (cached)
+Module newton._src.geometry.bvh 58a3a49 load on device 'cuda:0' took 1.17 ms  (cached)
+Module newton._src.solvers.style3d.kernels 6e609e0 load on device 'cuda:0' took 2.03 ms  (cached)
+Module newton._src.solvers.style3d.collision.bvh.kernels eed0ece load on device 'cuda:0' took 1.30 ms  (cached)
+    Module newton._src.solvers.style3d.builder eb1b915 load on device 'cpu' took 0.21 ms  (cached)
+    Module newton._src.solvers.style3d.builder 013f25b load on device 'cuda:0' took 2.99 ms  (cached)
+SolverStyle3D::precompute() took 16.47 ms
+SolverStyle3D::precompute() took 14.07 ms
+Module capsule_cbf.newton_runtime 8379e06 load on device 'cuda:0' took 0.55 ms  (cached)
+Module newton._src.solvers.style3d.linear_solver f457b3c load on device 'cuda:0' took 1.51 ms  (cached)
+SolverStyle3D::precompute() took 59.40 ms
+SolverStyle3D::precompute() took 53.89 ms
+SolverStyle3D::precompute() took 52.18 ms
+SolverStyle3D::precompute() took 6.95 ms
+SolverStyle3D::precompute() took 37.94 ms
+SolverStyle3D::precompute() took 43.51 ms
+SolverStyle3D::precompute() took 40.41 ms
+SolverStyle3D::precompute() took 40.18 ms
+SolverStyle3D::precompute() took 36.44 ms
+SolverStyle3D::precompute() took 8.75 ms
+SolverStyle3D::precompute() took 61.31 ms
+SolverStyle3D::precompute() took 56.72 ms
+SolverStyle3D::precompute() took 61.30 ms
+SolverStyle3D::precompute() took 164.42 ms
+SolverStyle3D::precompute() took 38.81 ms
+SolverStyle3D::precompute() took 49.11 ms
+SolverStyle3D::precompute() took 48.78 ms
+SolverStyle3D::precompute() took 7.53 ms
+SolverStyle3D::precompute() took 35.33 ms
+SolverStyle3D::precompute() took 49.31 ms
+SolverStyle3D::precompute() took 46.70 ms
+SolverStyle3D::precompute() took 7.02 ms
+SolverStyle3D::precompute() took 34.05 ms
+SolverStyle3D::precompute() took 47.13 ms
+SolverStyle3D::precompute() took 42.61 ms
+SolverStyle3D::precompute() took 6.91 ms
+SolverStyle3D::precompute() took 52.56 ms
+SolverStyle3D::precompute() took 41.03 ms
+SolverStyle3D::precompute() took 8.42 ms
+SolverStyle3D::precompute() took 59.46 ms
+SolverStyle3D::precompute() took 57.67 ms
+Warp 1.17.0 initialized:
+   CUDA Toolkit 12.9, Driver 13.0
+   Devices:
+     "cpu"      : "x86_64"
+     "cuda:0"   : "NVIDIA GeForce RTX 5070 Laptop GPU" (8 GiB, sm_120, mempool enabled)
+   Kernel cache:
+     /tmp/oarbots-fabric-audit-gpu/1.17.0
+Module newton._src.utils.mesh 92b663b load on device 'cpu' took 1.26 ms  (cached)
+Module newton._src.geometry.bvh 58a3a49 load on device 'cuda:0' took 1.45 ms  (cached)
+Module newton._src.solvers.style3d.kernels 6e609e0 load on device 'cuda:0' took 4.51 ms  (cached)
+Module newton._src.solvers.style3d.collision.bvh.kernels eed0ece load on device 'cuda:0' took 1.40 ms  (cached)
+    Module newton._src.solvers.style3d.builder eb1b915 load on device 'cpu' took 0.29 ms  (cached)
+    Module newton._src.solvers.style3d.builder 013f25b load on device 'cuda:0' took 3.87 ms  (cached)
+SolverStyle3D::precompute() took 17.96 ms
+SolverStyle3D::precompute() took 10.89 ms
+Module capsule_cbf.newton_runtime 8379e06 load on device 'cuda:0' took 0.55 ms  (cached)
+Module newton._src.solvers.style3d.linear_solver f457b3c load on device 'cuda:0' took 1.36 ms  (cached)
+SolverStyle3D::precompute() took 32.72 ms
+SolverStyle3D::precompute() took 64.68 ms
+SolverStyle3D::precompute() took 64.58 ms
+SolverStyle3D::precompute() took 65.28 ms
+SolverStyle3D::precompute() took 6.71 ms
+SolverStyle3D::precompute() took 8.65 ms
+SolverStyle3D::precompute() took 64.09 ms
+SolverStyle3D::precompute() took 64.13 ms
+SolverStyle3D::precompute() took 59.70 ms
+SolverStyle3D::precompute() took 7.41 ms
+SolverStyle3D::precompute() took 7.18 ms
+SolverStyle3D::precompute() took 24.92 ms
+SolverStyle3D::precompute() took 61.13 ms
+SolverStyle3D::precompute() took 221.79 ms
+SolverStyle3D::precompute() took 6.74 ms
+SolverStyle3D::precompute() took 7.19 ms
+SolverStyle3D::precompute() took 60.80 ms
+SolverStyle3D::precompute() took 57.22 ms
+SolverStyle3D::precompute() took 52.81 ms
+SolverStyle3D::precompute() took 6.78 ms
+SolverStyle3D::precompute() took 62.14 ms
+SolverStyle3D::precompute() took 59.72 ms
+SolverStyle3D::precompute() took 57.20 ms
+SolverStyle3D::precompute() took 7.17 ms
+SolverStyle3D::precompute() took 65.10 ms
+SolverStyle3D::precompute() took 60.38 ms
+SolverStyle3D::precompute() took 64.78 ms
+SolverStyle3D::precompute() took 7.12 ms
+SolverStyle3D::precompute() took 65.69 ms
+SolverStyle3D::precompute() took 64.34 ms
+SolverStyle3D::precompute() took 65.37 ms
+SolverStyle3D::precompute() took 7.96 ms
+SolverStyle3D::precompute() took 65.41 ms
+SolverStyle3D::precompute() took 65.69 ms
+SolverStyle3D::precompute() took 214.84 ms
+Warp 1.17.0 initialized:
+   CUDA Toolkit 12.9, Driver 13.0
+   Devices:
+     "cpu"      : "x86_64"
+     "cuda:0"   : "NVIDIA GeForce RTX 5070 Laptop GPU" (8 GiB, sm_120, mempool enabled)
+   Kernel cache:
+     /tmp/oarbots-fabric-audit-gpu/1.17.0
+Module newton._src.utils.mesh 92b663b load on device 'cpu' took 1.24 ms  (cached)
+Module newton._src.geometry.bvh 58a3a49 load on device 'cuda:0' took 2.17 ms  (cached)
+Module newton._src.solvers.style3d.kernels 6e609e0 load on device 'cuda:0' took 1.99 ms  (cached)
+Module newton._src.solvers.style3d.collision.bvh.kernels eed0ece load on device 'cuda:0' took 1.29 ms  (cached)
+    Module newton._src.solvers.style3d.builder eb1b915 load on device 'cpu' took 0.23 ms  (cached)
+    Module newton._src.solvers.style3d.builder 013f25b load on device 'cuda:0' took 2.54 ms  (cached)
+SolverStyle3D::precompute() took 15.42 ms
+SolverStyle3D::precompute() took 12.89 ms
+Module capsule_cbf.newton_runtime 8379e06 load on device 'cuda:0' took 0.51 ms  (cached)
+Module newton._src.solvers.style3d.linear_solver f457b3c load on device 'cuda:0' took 1.47 ms  (cached)
+SolverStyle3D::precompute() took 64.62 ms
+SolverStyle3D::precompute() took 64.47 ms
+SolverStyle3D::precompute() took 64.71 ms
+SolverStyle3D::precompute() took 7.62 ms
+SolverStyle3D::precompute() took 7.09 ms
+SolverStyle3D::precompute() took 64.28 ms
+SolverStyle3D::precompute() took 62.35 ms
+SolverStyle3D::precompute() took 60.07 ms
+SolverStyle3D::precompute() took 7.05 ms
+SolverStyle3D::precompute() took 7.38 ms
+SolverStyle3D::precompute() took 7.15 ms
+SolverStyle3D::precompute() took 65.10 ms
+SolverStyle3D::precompute() took 65.31 ms
+SolverStyle3D::precompute() took 218.24 ms
+SolverStyle3D::precompute() took 7.68 ms
+SolverStyle3D::precompute() took 7.82 ms
+SolverStyle3D::precompute() took 64.72 ms
+SolverStyle3D::precompute() took 62.05 ms
+SolverStyle3D::precompute() took 62.16 ms
+SolverStyle3D::precompute() took 7.79 ms
+SolverStyle3D::precompute() took 7.84 ms
+SolverStyle3D::precompute() took 64.66 ms
+SolverStyle3D::precompute() took 65.86 ms
+SolverStyle3D::precompute() took 64.61 ms
+SolverStyle3D::precompute() took 25.85 ms
+SolverStyle3D::precompute() took 7.20 ms
+SolverStyle3D::precompute() took 65.15 ms
+SolverStyle3D::precompute() took 60.85 ms
+SolverStyle3D::precompute() took 64.15 ms
+SolverStyle3D::precompute() took 7.11 ms
+SolverStyle3D::precompute() took 65.83 ms
+SolverStyle3D::precompute() took 62.90 ms
+SolverStyle3D::precompute() took 62.83 ms
+SolverStyle3D::precompute() took 30.07 ms
+SolverStyle3D::precompute() took 223.16 ms
+SolverStyle3D::precompute() took 39.49 ms
+SolverStyle3D::precompute() took 48.36 ms
+Warp 1.17.0 initialized:
+   CUDA Toolkit 12.9, Driver 13.0
+   Devices:
+     "cpu"      : "x86_64"
+     "cuda:0"   : "NVIDIA GeForce RTX 5070 Laptop GPU" (8 GiB, sm_120, mempool enabled)
+   Kernel cache:
+     /tmp/oarbots-fabric-audit-gpu/1.17.0
+Module newton._src.utils.mesh 92b663b load on device 'cpu' took 1.08 ms  (cached)
+Module newton._src.geometry.bvh 58a3a49 load on device 'cuda:0' took 1.16 ms  (cached)
+Module newton._src.solvers.style3d.kernels 6e609e0 load on device 'cuda:0' took 1.97 ms  (cached)
+Module newton._src.solvers.style3d.collision.bvh.kernels eed0ece load on device 'cuda:0' took 1.27 ms  (cached)
+    Module newton._src.solvers.style3d.builder eb1b915 load on device 'cpu' took 0.23 ms  (cached)
+    Module newton._src.solvers.style3d.builder 013f25b load on device 'cuda:0' took 2.49 ms  (cached)
+SolverStyle3D::precompute() took 15.91 ms
+SolverStyle3D::precompute() took 13.98 ms
+Module capsule_cbf.newton_runtime 8379e06 load on device 'cuda:0' took 0.50 ms  (cached)
+Module newton._src.solvers.style3d.linear_solver f457b3c load on device 'cuda:0' took 1.48 ms  (cached)
+SolverStyle3D::precompute() took 59.80 ms
+SolverStyle3D::precompute() took 57.88 ms
+SolverStyle3D::precompute() took 57.10 ms
+SolverStyle3D::precompute() took 7.14 ms
+SolverStyle3D::precompute() took 7.04 ms
+SolverStyle3D::precompute() took 64.20 ms
+SolverStyle3D::precompute() took 61.43 ms
+SolverStyle3D::precompute() took 58.58 ms
+SolverStyle3D::precompute() took 7.20 ms
+SolverStyle3D::precompute() took 7.35 ms
+SolverStyle3D::precompute() took 37.51 ms
+SolverStyle3D::precompute() took 56.72 ms
+SolverStyle3D::precompute() took 55.18 ms
+SolverStyle3D::precompute() took 217.05 ms
+SolverStyle3D::precompute() took 8.62 ms
+SolverStyle3D::precompute() took 61.05 ms
+SolverStyle3D::precompute() took 56.97 ms
+SolverStyle3D::precompute() took 50.29 ms
+SolverStyle3D::precompute() took 7.53 ms
+SolverStyle3D::precompute() took 64.64 ms
+SolverStyle3D::precompute() took 65.41 ms
+SolverStyle3D::precompute() took 64.02 ms
+SolverStyle3D::precompute() took 42.12 ms
+SolverStyle3D::precompute() took 39.93 ms
+SolverStyle3D::precompute() took 55.88 ms
+SolverStyle3D::precompute() took 52.18 ms
+SolverStyle3D::precompute() took 59.50 ms
+SolverStyle3D::precompute() took 15.60 ms
+SolverStyle3D::precompute() took 64.56 ms
+SolverStyle3D::precompute() took 62.30 ms
+SolverStyle3D::precompute() took 61.20 ms
+SolverStyle3D::precompute() took 33.10 ms
+SolverStyle3D::precompute() took 61.64 ms
+SolverStyle3D::precompute() took 62.75 ms
+SolverStyle3D::precompute() took 216.81 ms
+Warp 1.17.0 initialized:
+   CUDA Toolkit 12.9, Driver 13.0
+   Devices:
+     "cpu"      : "x86_64"
+     "cuda:0"   : "NVIDIA GeForce RTX 5070 Laptop GPU" (8 GiB, sm_120, mempool enabled)
+   Kernel cache:
+     /tmp/oarbots-fabric-audit-gpu/1.17.0
+Module newton._src.utils.mesh 92b663b load on device 'cpu' took 0.95 ms  (cached)
+Module newton._src.geometry.bvh 58a3a49 load on device 'cuda:0' took 1.07 ms  (cached)
+Module newton._src.solvers.style3d.kernels 6e609e0 load on device 'cuda:0' took 1.99 ms  (cached)
+Module newton._src.solvers.style3d.collision.bvh.kernels eed0ece load on device 'cuda:0' took 1.12 ms  (cached)
+    Module newton._src.solvers.style3d.builder eb1b915 load on device 'cpu' took 0.22 ms  (cached)
+    Module newton._src.solvers.style3d.builder 013f25b load on device 'cuda:0' took 3.03 ms  (cached)
+SolverStyle3D::precompute() took 16.13 ms
+SolverStyle3D::precompute() took 14.05 ms
+Module capsule_cbf.newton_runtime 8379e06 load on device 'cuda:0' took 0.51 ms  (cached)
+Module newton._src.solvers.style3d.linear_solver f457b3c load on device 'cuda:0' took 1.50 ms  (cached)
+SolverStyle3D::precompute() took 62.43 ms
+SolverStyle3D::precompute() took 61.51 ms
+SolverStyle3D::precompute() took 60.77 ms
+SolverStyle3D::precompute() took 6.87 ms
+SolverStyle3D::precompute() took 6.99 ms
+SolverStyle3D::precompute() took 7.26 ms
+SolverStyle3D::precompute() took 64.04 ms
+SolverStyle3D::precompute() took 64.71 ms
+SolverStyle3D::precompute() took 64.37 ms
+SolverStyle3D::precompute() took 7.39 ms
+SolverStyle3D::precompute() took 20.04 ms
+SolverStyle3D::precompute() took 7.41 ms
+SolverStyle3D::precompute() took 64.79 ms
+SolverStyle3D::precompute() took 232.93 ms
+SolverStyle3D::precompute() took 42.56 ms
+SolverStyle3D::precompute() took 6.68 ms
+SolverStyle3D::precompute() took 7.70 ms
+SolverStyle3D::precompute() took 65.17 ms
+SolverStyle3D::precompute() took 64.92 ms
+SolverStyle3D::precompute() took 64.82 ms
+SolverStyle3D::precompute() took 8.20 ms
+SolverStyle3D::precompute() took 6.83 ms
+SolverStyle3D::precompute() took 65.21 ms
+SolverStyle3D::precompute() took 64.96 ms
+SolverStyle3D::precompute() took 64.67 ms
+SolverStyle3D::precompute() took 32.03 ms
+SolverStyle3D::precompute() took 7.62 ms
+SolverStyle3D::precompute() took 64.71 ms
+SolverStyle3D::precompute() took 61.11 ms
+SolverStyle3D::precompute() took 63.85 ms
+SolverStyle3D::precompute() took 7.69 ms
+SolverStyle3D::precompute() took 64.93 ms
+SolverStyle3D::precompute() took 64.03 ms
+SolverStyle3D::precompute() took 61.93 ms
+SolverStyle3D::precompute() took 179.86 ms
+SolverStyle3D::precompute() took 38.72 ms
+SolverStyle3D::precompute() took 47.53 ms
+SolverStyle3D::precompute() took 51.17 ms
+Warp 1.17.0 initialized:
+   CUDA Toolkit 12.9, Driver 13.0
+   Devices:
+     "cpu"      : "x86_64"
+     "cuda:0"   : "NVIDIA GeForce RTX 5070 Laptop GPU" (8 GiB, sm_120, mempool enabled)
+   Kernel cache:
+     /tmp/oarbots-fabric-audit-gpu/1.17.0
+Module newton._src.utils.mesh 92b663b load on device 'cpu' took 0.94 ms  (cached)
+Module newton._src.geometry.bvh 58a3a49 load on device 'cuda:0' took 1.08 ms  (cached)
+Module newton._src.solvers.style3d.kernels 6e609e0 load on device 'cuda:0' took 1.98 ms  (cached)
+Module newton._src.solvers.style3d.collision.bvh.kernels eed0ece load on device 'cuda:0' took 1.09 ms  (cached)
+    Module newton._src.solvers.style3d.builder eb1b915 load on device 'cpu' took 0.28 ms  (cached)
+    Module newton._src.solvers.style3d.builder 013f25b load on device 'cuda:0' took 2.36 ms  (cached)
+SolverStyle3D::precompute() took 15.42 ms
+SolverStyle3D::precompute() took 14.37 ms
+Module capsule_cbf.newton_runtime 8379e06 load on device 'cuda:0' took 0.49 ms  (cached)
+Module newton._src.solvers.style3d.linear_solver f457b3c load on device 'cuda:0' took 1.50 ms  (cached)
+SolverStyle3D::precompute() took 60.18 ms
+SolverStyle3D::precompute() took 58.41 ms
+SolverStyle3D::precompute() took 57.14 ms
+SolverStyle3D::precompute() took 7.22 ms
+SolverStyle3D::precompute() took 33.88 ms
+SolverStyle3D::precompute() took 51.68 ms
+SolverStyle3D::precompute() took 48.46 ms
+SolverStyle3D::precompute() took 54.33 ms
+SolverStyle3D::precompute() took 15.12 ms
+SolverStyle3D::precompute() took 7.12 ms
+SolverStyle3D::precompute() took 61.61 ms
+SolverStyle3D::precompute() took 56.47 ms
+SolverStyle3D::precompute() took 60.20 ms
+SolverStyle3D::precompute() took 160.58 ms
+SolverStyle3D::precompute() took 27.02 ms
+SolverStyle3D::precompute() took 60.61 ms
+SolverStyle3D::precompute() took 59.09 ms
+SolverStyle3D::precompute() took 57.27 ms
+SolverStyle3D::precompute() took 18.17 ms
+SolverStyle3D::precompute() took 7.35 ms
+SolverStyle3D::precompute() took 65.10 ms
+SolverStyle3D::precompute() took 64.80 ms
+SolverStyle3D::precompute() took 63.71 ms
+SolverStyle3D::precompute() took 7.03 ms
+SolverStyle3D::precompute() took 59.93 ms
+SolverStyle3D::precompute() took 49.07 ms
+SolverStyle3D::precompute() took 47.89 ms
+SolverStyle3D::precompute() took 37.37 ms
+SolverStyle3D::precompute() took 59.45 ms
+SolverStyle3D::precompute() took 58.77 ms
+SolverStyle3D::precompute() took 59.85 ms
+SolverStyle3D::precompute() took 47.34 ms
+SolverStyle3D::precompute() took 56.02 ms
+SolverStyle3D::precompute() took 59.37 ms
+SolverStyle3D::precompute() took 217.62 ms
+Warp 1.17.0 initialized:
+   CUDA Toolkit 12.9, Driver 13.0
+   Devices:
+     "cpu"      : "x86_64"
+     "cuda:0"   : "NVIDIA GeForce RTX 5070 Laptop GPU" (8 GiB, sm_120, mempool enabled)
+   Kernel cache:
+     /tmp/oarbots-fabric-audit-gpu/1.17.0
+Module newton._src.utils.mesh 92b663b load on device 'cpu' took 0.92 ms  (cached)
+Module newton._src.geometry.bvh 58a3a49 load on device 'cuda:0' took 0.97 ms  (cached)
+Module newton._src.solvers.style3d.kernels 6e609e0 load on device 'cuda:0' took 1.84 ms  (cached)
+Module newton._src.solvers.style3d.collision.bvh.kernels eed0ece load on device 'cuda:0' took 0.92 ms  (cached)
+    Module newton._src.solvers.style3d.builder eb1b915 load on device 'cpu' took 0.21 ms  (cached)
+    Module newton._src.solvers.style3d.builder 013f25b load on device 'cuda:0' took 2.31 ms  (cached)
+SolverStyle3D::precompute() took 13.43 ms
+SolverStyle3D::precompute() took 11.16 ms
+Module capsule_cbf.newton_runtime 8379e06 load on device 'cuda:0' took 0.43 ms  (cached)
+Module newton._src.solvers.style3d.linear_solver f457b3c load on device 'cuda:0' took 1.30 ms  (cached)
+Warp 1.17.0 initialized:
+   CUDA Toolkit 12.9, Driver 13.0
+   Devices:
+     "cpu"      : "x86_64"
+     "cuda:0"   : "NVIDIA GeForce RTX 5070 Laptop GPU" (8 GiB, sm_120, mempool enabled)
+   Kernel cache:
+     /tmp/oarbots-fabric-audit-gpu/1.17.0
+Module newton._src.utils.mesh 92b663b load on device 'cpu' took 0.83 ms  (cached)
+Module newton._src.geometry.bvh 58a3a49 load on device 'cuda:0' took 1.13 ms  (cached)
+Module newton._src.solvers.style3d.kernels 6e609e0 load on device 'cuda:0' took 1.85 ms  (cached)
+Module newton._src.solvers.style3d.collision.bvh.kernels eed0ece load on device 'cuda:0' took 1.01 ms  (cached)
+    Module newton._src.solvers.style3d.builder eb1b915 load on device 'cpu' took 0.21 ms  (cached)
+    Module newton._src.solvers.style3d.builder 013f25b load on device 'cuda:0' took 2.80 ms  (cached)
+SolverStyle3D::precompute() took 14.00 ms
+SolverStyle3D::precompute() took 11.38 ms
+Module capsule_cbf.newton_runtime 8379e06 load on device 'cuda:0' took 0.40 ms  (cached)
+Module newton._src.solvers.style3d.linear_solver f457b3c load on device 'cuda:0' took 1.15 ms  (cached)
+Warp 1.17.0 initialized:
+   CUDA Toolkit 12.9, Driver 13.0
+   Devices:
+     "cpu"      : "x86_64"
+     "cuda:0"   : "NVIDIA GeForce RTX 5070 Laptop GPU" (8 GiB, sm_120, mempool enabled)
+   Kernel cache:
+     /tmp/oarbots-fabric-audit-gpu/1.17.0
+Module newton._src.utils.mesh 92b663b load on device 'cpu' took 0.75 ms  (cached)
+Module newton._src.geometry.bvh 58a3a49 load on device 'cuda:0' took 1.03 ms  (cached)
+Module newton._src.solvers.style3d.kernels 6e609e0 load on device 'cuda:0' took 1.83 ms  (cached)
+Module newton._src.solvers.style3d.collision.bvh.kernels eed0ece load on device 'cuda:0' took 1.02 ms  (cached)
+    Module newton._src.solvers.style3d.builder eb1b915 load on device 'cpu' took 0.18 ms  (cached)
+    Module newton._src.solvers.style3d.builder 013f25b load on device 'cuda:0' took 2.88 ms  (cached)
+SolverStyle3D::precompute() took 14.01 ms
+SolverStyle3D::precompute() took 11.25 ms
+Module capsule_cbf.newton_runtime 8379e06 load on device 'cuda:0' took 0.41 ms  (cached)
+Module newton._src.solvers.style3d.linear_solver f457b3c load on device 'cuda:0' took 1.18 ms  (cached)
+held out warmup_10_10_121921 still:3: corners 42.3 / start 42.3 / calibrated 39.4 mm (median -54 / -54 / -15, p95 138 / 137 / 130)
+{
+ "down_blue": -0.02,
+ "in_blue": -0.08,
+ "side_blue": 0.0,
+ "down_silver": 0.019999999999999993,
+ "in_silver": -0.04,
+ "side_silver": 0.0,
+ "down_right": 0.1,
+ "in_right": 0.0,
+ "side_right": 0.0,
+ "down_left": 0.12,
+ "in_left": -0.04,
+ "side_left": 0.0
+}

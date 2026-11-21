@@ -1,0 +1,120 @@
+{
+ "run": "experiments/hardware/sessions/2026-11-21_fabric_run/warmup_10_0.1_113825",
+ "window": "still:3",
+ "override": {
+  "cells_x": "40",
+  "cells_y": "40",
+  "substeps": "32",
+  "iterations": "10"
+ },
+ "node_m": 0.020999999999999998,
+ "names": [
+  "down_blue",
+  "in_blue",
+  "side_blue",
+  "down_silver",
+  "in_silver",
+  "side_silver",
+  "down_right",
+  "in_right",
+  "side_right",
+  "down_left",
+  "in_left",
+  "side_left"
+ ],
+ "calibrated": {
+  "down_blue": -0.02,
+  "in_blue": -0.08,
+  "side_blue": 0.0,
+  "down_silver": 0.019999999999999993,
+  "in_silver": -0.04,
+  "side_silver": 0.0,
+  "down_right": 0.1,
+  "in_right": 0.0,
+  "side_right": 0.0,
+  "down_left": 0.12,
+  "in_left": -0.04,
+  "side_left": 0.0
+ },
+ "start": {
+  "kind": "start",
+  "seconds": 9.0,
+  "values": {
+   "down_blue": 0.0,
+   "in_blue": 0.0,
+   "side_blue": 0.0,
+   "down_silver": 0.0,
+   "in_silver": 0.0,
+   "side_silver": 0.0,
+   "down_right": 0.0,
+   "in_right": 0.0,
+   "side_right": 0.0,
+   "down_left": 0.0,
+   "in_left": 0.0,
+   "side_left": 0.0
+  },
+  "median_mm": -36.71355153133369,
+  "mad_mm": 47.340796368906695,
+  "rms_tanh50_mm": 39.33326208882009,
+  "p95_abs_mm": 138.56236780186092,
+  "over_30mm": 0.6444784493751594,
+  "near_sheet": 0.7854567307692307
+ },
+ "final": {
+  "kind": "final",
+  "seconds": 543.5,
+  "values": {
+   "down_blue": -0.02,
+   "in_blue": -0.08,
+   "side_blue": 0.0,
+   "down_silver": 0.02,
+   "in_silver": -0.04,
+   "side_silver": 0.0,
+   "down_right": 0.1,
+   "in_right": 0.0,
+   "side_right": 0.0,
+   "down_left": 0.12,
+   "in_left": -0.04,
+   "side_left": 0.0
+  },
+  "median_mm": 18.142872488691008,
+  "mad_mm": 28.587321407501598,
+  "rms_tanh50_mm": 30.924630638357044,
+  "p95_abs_mm": 87.13174864940419,
+  "over_30mm": 0.4343302990897269,
+  "near_sheet": 0.9242788461538461
+ },
+ "validation": [
+  {
+   "run": "experiments/hardware/sessions/2026-11-21_fabric_run/warmup_10_10_121921",
+   "window": "still:3",
+   "point_grips_at_corners": {
+    "median_mm": -53.651895615663875,
+    "mad_mm": 42.34779979193121,
+    "rms_tanh50_mm": 42.28622101241042,
+    "p95_abs_mm": 137.76707266763003,
+    "over_30mm": 0.746246688254342,
+    "near_sheet": 0.680488782051282
+   },
+   "start": {
+    "median_mm": -53.859686210100314,
+    "mad_mm": 42.685962290713114,
+    "rms_tanh50_mm": 42.269766575266985,
+    "p95_abs_mm": 137.4996709318339,
+    "over_30mm": 0.7443498679189903,
+    "near_sheet": 0.6824919871794872
+   },
+   "calibrated": {
+    "median_mm": -14.92440597913542,
+    "mad_mm": 55.69871262167677,
+    "rms_tanh50_mm": 39.40027194357282,
+    "p95_abs_mm": 129.8812150629161,
+    "over_30mm": 0.6995505086349657,
+    "near_sheet": 0.8467548076923077
+   }
+  }
+ ],
+ "evaluations": 218,
+ "seconds": 555.5931687160046,
+ "material": "twin.yaml as measured (bend 1.4e-5 N m strips, density 0.215)"
+}

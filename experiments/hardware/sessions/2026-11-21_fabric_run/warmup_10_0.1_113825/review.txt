@@ -1,0 +1,72 @@
+blue: commands for 86 s, grip range from its start: x -7/+11 cm, y -1/+8 cm, z -1/+7 cm
+   median 3.3 cm/s; grip [-0.394, -0.417, 1.033] -> [-0.394, -0.416, 1.033]; at most 0.0 cm past the box
+   t+   0 s  commanded  1.5 cm/s (mean vector [0.2, 0.9, -0.0])  delivered  1.1 cm/s  faces []  past 0.0 cm
+   t+   5 s  commanded  1.4 cm/s (mean vector [0.2, 0.8, -0.0])  delivered  1.1 cm/s  faces []  past 0.0 cm
+   t+  10 s  commanded  1.7 cm/s (mean vector [1.7, -0.1, -0.1])  delivered  1.4 cm/s  faces []  past 0.0 cm
+   t+  15 s  commanded  0.5 cm/s (mean vector [-0.0, 0.1, 0.0])  delivered  0.5 cm/s  faces []  past 0.0 cm
+   t+  20 s  commanded  2.2 cm/s (mean vector [-1.7, 0.2, 0.0])  delivered  1.9 cm/s  faces []  past 0.0 cm
+   t+  25 s  commanded  1.7 cm/s (mean vector [0.0, -0.0, 1.6])  delivered  1.2 cm/s  faces []  past 0.0 cm
+   t+  30 s  commanded  0.3 cm/s (mean vector [0.0, -0.0, -0.3])  delivered  0.2 cm/s  faces []  past 0.0 cm
+   t+  35 s  commanded  1.9 cm/s (mean vector [-0.0, 0.1, -1.3])  delivered  1.5 cm/s  faces []  past 0.0 cm
+   t+  40 s  commanded  0.0 cm/s (mean vector [-0.0, -0.0, 0.0])  delivered  0.0 cm/s  faces []  past 0.0 cm
+   t+  45 s  commanded  0.1 cm/s (mean vector [0.0, 0.0, -0.1])  delivered  0.0 cm/s  faces []  past 0.0 cm
+   t+  50 s  commanded  0.1 cm/s (mean vector [0.0, -0.0, -0.0])  delivered  0.0 cm/s  faces []  past 0.0 cm
+   t+  55 s  commanded  2.1 cm/s (mean vector [1.8, -0.1, -0.0])  delivered  1.9 cm/s  faces []  past 0.0 cm
+   t+  60 s  commanded  1.2 cm/s (mean vector [-1.1, 0.1, 0.1])  delivered  0.8 cm/s  faces []  past 0.0 cm
+   t+  65 s  commanded  2.9 cm/s (mean vector [-2.6, 0.3, 0.1])  delivered  2.5 cm/s  faces []  past 0.0 cm
+   t+  70 s  commanded  1.0 cm/s (mean vector [0.9, -0.1, -0.0])  delivered  0.6 cm/s  faces []  past 0.0 cm
+   t+  75 s  commanded  1.5 cm/s (mean vector [1.0, -0.1, 0.0])  delivered  1.3 cm/s  faces []  past 0.0 cm
+   t+  80 s  commanded  2.1 cm/s (mean vector [-0.5, -1.9, 0.0])  delivered  1.8 cm/s  faces []  past 0.0 cm
+   t+  85 s  commanded  0.2 cm/s (mean vector [0.0, 0.2, 0.0])  delivered  0.3 cm/s  faces []  past 0.0 cm
+silver: commands for 91 s, grip range from its start: x -9/+8 cm, y -1/+9 cm, z -0/+7 cm
+   median 3.3 cm/s; grip [0.376, -0.427, 1.057] -> [0.376, -0.427, 1.057]; at most 0.0 cm past the box
+   t+   0 s  commanded  1.4 cm/s (mean vector [-0.0, 0.9, -0.1])  delivered  1.1 cm/s  faces []  past 0.0 cm
+   t+   5 s  commanded  1.4 cm/s (mean vector [-0.0, 0.9, -0.0])  delivered  1.1 cm/s  faces []  past 0.0 cm
+   t+  10 s  commanded  1.8 cm/s (mean vector [-1.8, -0.1, -0.1])  delivered  1.4 cm/s  faces []  past 0.0 cm
+   t+  15 s  commanded  0.5 cm/s (mean vector [0.0, 0.0, -0.0])  delivered  0.4 cm/s  faces []  past 0.0 cm
+   t+  20 s  commanded  2.2 cm/s (mean vector [1.8, 0.2, 0.1])  delivered  1.9 cm/s  faces []  past 0.0 cm
+   t+  25 s  commanded  0.1 cm/s (mean vector [-0.0, -0.1, -0.0])  delivered  0.1 cm/s  faces []  past 0.0 cm
+   t+  30 s  commanded  0.0 cm/s (mean vector [0.0, -0.0, 0.0])  delivered  0.0 cm/s  faces []  past 0.0 cm
+   t+  35 s  commanded  0.0 cm/s (mean vector [0.0, -0.0, 0.0])  delivered  0.0 cm/s  faces []  past 0.0 cm
+   t+  40 s  commanded  1.7 cm/s (mean vector [-0.0, -0.0, 1.5])  delivered  1.3 cm/s  faces []  past 0.0 cm
+   t+  45 s  commanded  1.0 cm/s (mean vector [0.1, 0.0, -1.0])  delivered  0.6 cm/s  faces []  past 0.0 cm
+   t+  50 s  commanded  1.1 cm/s (mean vector [-0.1, 0.0, -0.5])  delivered  0.8 cm/s  faces []  past 0.0 cm
+   t+  55 s  commanded  2.2 cm/s (mean vector [1.8, 0.2, -0.0])  delivered  1.8 cm/s  faces []  past 0.0 cm
+   t+  60 s  commanded  1.2 cm/s (mean vector [-1.1, -0.0, 0.0])  delivered  0.9 cm/s  faces []  past 0.0 cm
+   t+  65 s  commanded  2.9 cm/s (mean vector [-2.6, -0.2, -0.1])  delivered  2.5 cm/s  faces []  past 0.0 cm
+   t+  70 s  commanded  1.0 cm/s (mean vector [0.9, 0.1, 0.0])  delivered  0.7 cm/s  faces []  past 0.0 cm
+   t+  75 s  commanded  1.4 cm/s (mean vector [0.9, 0.1, 0.1])  delivered  1.3 cm/s  faces []  past 0.0 cm
+   t+  80 s  commanded  2.1 cm/s (mean vector [0.2, -1.9, 0.0])  delivered  1.8 cm/s  faces []  past 0.0 cm
+   t+  85 s  commanded  0.3 cm/s (mean vector [-0.0, 0.2, 0.0])  delivered  0.2 cm/s  faces []  past 0.0 cm
+   t+  90 s  commanded  0.1 cm/s (mean vector [-0.0, -0.1, -0.0])  delivered  0.0 cm/s  faces []  past 0.0 cm
+twin while enabled: none (commands sent) 100 %
+warm-up start coefficients: bend x10, shear x0.1 (material version 0)
+warm-up at 11:39:27: commands on 100 % of the window, a twin fault 0 %
+   hold t+ 0.0- 3.0 s  target inset   0 cm  reached blue  0.0 cm, silver  0.0 cm  start               3D error blue   0 mm, silver   0 mm
+   hold t+ 4.3- 9.3 s  target inset   4 cm  reached blue  4.2 cm, silver  4.2 cm  slack 4 cm          3D error blue   0 mm, silver   0 mm
+   hold t+10.7-15.7 s  target inset   8 cm  reached blue  8.2 cm, silver  8.1 cm  slack 8 cm          3D error blue   1 mm, silver   0 mm
+   hold t+18.3-23.3 s  target inset   9 cm  reached blue  9.8 cm, silver  8.4 cm  narrow 8 cm         3D error blue   1 mm, silver   1 mm
+   hold t+26.0-31.0 s  target inset   8 cm  reached blue  8.0 cm, silver  8.0 cm  back                3D error blue   0 mm, silver   1 mm
+   hold t+33.0-38.0 s  target inset   8 cm  reached blue  8.0 cm, silver  8.0 cm  lift Blue 6 cm      3D error blue   1 mm, silver   0 mm
+   hold t+40.0-45.0 s  target inset   8 cm  reached blue  8.0 cm, silver  8.0 cm  back                3D error blue   0 mm, silver   0 mm
+   hold t+47.0-52.0 s  target inset   8 cm  reached blue  8.0 cm, silver  8.0 cm  lift Silver 6 cm    3D error blue   1 mm, silver   0 mm
+   hold t+54.0-59.0 s  target inset   8 cm  reached blue  8.0 cm, silver  8.0 cm  back                3D error blue   0 mm, silver   1 mm
+   hold t+61.7-66.7 s  target inset   9 cm  reached blue  9.8 cm, silver  7.6 cm  shift toward Silver 8 cm 3D error blue   1 mm, silver   0 mm
+   hold t+72.0-77.0 s  target inset   7 cm  reached blue  6.2 cm, silver  8.4 cm  shift toward Blue 8 cm 3D error blue   0 mm, silver   1 mm
+   hold t+79.7-84.7 s  target inset   8 cm  reached blue  8.0 cm, silver  8.0 cm  back                3D error blue   1 mm, silver   1 mm
+   hold t+87.3-92.3 s  target inset   0 cm  reached blue -0.2 cm, silver -0.2 cm  return              3D error blue   0 mm, silver   1 mm
+   hold t+96.8-101.8 s  target inset   0 cm  reached blue  0.0 cm, silver  0.0 cm  hands up 25 cm      3D error blue   0 mm, silver   0 mm
+   hold t+106.3-111.3 s  target inset   0 cm  reached blue  0.0 cm, silver  0.0 cm  back                3D error blue   0 mm, silver   0 mm
+   hold t+115.8-120.8 s  target inset   0 cm  reached blue  0.0 cm, silver  0.0 cm  hands down 25 cm    3D error blue   0 mm, silver   0 mm
+   hold t+125.3-130.3 s  target inset   0 cm  reached blue  0.0 cm, silver  0.0 cm  back                3D error blue   0 mm, silver   0 mm
+   hold t+134.8-139.8 s  target inset   0 cm  reached blue  0.0 cm, silver  0.0 cm  hands toward the robots 25 cm 3D error blue   0 mm, silver   0 mm
+   hold t+143.8-148.8 s  target inset   0 cm  reached blue  0.0 cm, silver  0.0 cm  hands together 20 cm each 3D error blue   0 mm, silver   0 mm
+   hold t+152.8-157.8 s  target inset   0 cm  reached blue  0.0 cm, silver  0.0 cm  apart               3D error blue   0 mm, silver   0 mm
+   hold t+161.3-166.3 s  target inset   0 cm  reached blue  0.0 cm, silver  0.0 cm  hands to your left 15 cm 3D error blue   0 mm, silver   0 mm
+   hold t+171.3-176.3 s  target inset   0 cm  reached blue  0.0 cm, silver  0.0 cm  hands to your right 15 cm 3D error blue   0 mm, silver   0 mm
+   hold t+179.8-184.8 s  target inset   0 cm  reached blue  0.0 cm, silver  0.0 cm  back                3D error blue   0 mm, silver   0 mm
+   hold t+189.3-194.3 s  target inset   0 cm  reached blue  0.0 cm, silver  0.0 cm  return              3D error blue   0 mm, silver   0 mm
+   full 3D return error: blue 0.0 mm (xyz [0.0, 0.0, 0.0] mm), silver 0.0 mm (xyz [0.0, 0.0, 0.0] mm)
+bank stop: time_limit, converged False, 0 rounds, 15 evaluations
+bank fit: bend x1.250, shear x0.062; residual 20.8 -> 20.7 mm (0.5 % lower), 24 holds, 619 s, informative True
+   moved from the start (bend x10, shear x0.1): bend x0.12, shear x0.62; bend and shear AT THE SEARCH EDGE (x8 from the start): no minimum found

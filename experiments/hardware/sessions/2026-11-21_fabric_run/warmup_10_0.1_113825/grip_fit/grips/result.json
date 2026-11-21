@@ -1,0 +1,125 @@
+{
+ "run": "experiments/hardware/sessions/2026-11-21_fabric_run/warmup_10_0.1_113825",
+ "window": "still:3",
+ "override": {
+  "cells_x": "40",
+  "cells_y": "40",
+  "substeps": "32",
+  "iterations": "10"
+ },
+ "node_m": 0.020999999999999998,
+ "names": [
+  "down_blue",
+  "in_blue",
+  "side_blue",
+  "down_silver",
+  "in_silver",
+  "side_silver",
+  "down_right",
+  "in_right",
+  "side_right",
+  "down_left",
+  "in_left",
+  "side_left"
+ ],
+ "calibrated": {
+  "down_blue": -0.02,
+  "in_blue": 0.0,
+  "side_blue": -0.02,
+  "down_silver": 0.0,
+  "in_silver": 0.02,
+  "side_silver": 0.0,
+  "down_right": 0.0,
+  "in_right": 0.0,
+  "side_right": 0.02,
+  "down_left": -0.02,
+  "in_left": 0.0,
+  "side_left": 0.0
+ },
+ "start": {
+  "kind": "start",
+  "seconds": 8.9,
+  "values": {
+   "down_blue": 0.0,
+   "in_blue": 0.0,
+   "side_blue": 0.0,
+   "down_silver": 0.0,
+   "in_silver": 0.0,
+   "side_silver": 0.0,
+   "down_right": 0.0,
+   "in_right": 0.0,
+   "side_right": 0.0,
+   "down_left": 0.0,
+   "in_left": 0.0,
+   "side_left": 0.0
+  },
+  "median_mm": -37.38607477556634,
+  "mad_mm": 48.25277479169424,
+  "rms_tanh50_mm": 39.08499379360625,
+  "p95_abs_mm": 137.76836169236927,
+  "over_30mm": 0.648294611962432,
+  "near_sheet": 0.8104967948717948,
+  "weighted_rms_mm": 31.52894599848749
+ },
+ "final": {
+  "kind": "final",
+  "seconds": 325.3,
+  "values": {
+   "down_blue": -0.02,
+   "in_blue": 0.0,
+   "side_blue": -0.02,
+   "down_silver": 0.0,
+   "in_silver": 0.02,
+   "side_silver": 0.0,
+   "down_right": 0.0,
+   "in_right": 0.0,
+   "side_right": 0.02,
+   "down_left": -0.02,
+   "in_left": 0.0,
+   "side_left": 0.0
+  },
+  "median_mm": -46.452072574451996,
+  "mad_mm": 45.722646148609684,
+  "rms_tanh50_mm": 39.79465413230793,
+  "p95_abs_mm": 139.84328218500966,
+  "over_30mm": 0.6361979166666667,
+  "near_sheet": 0.7692307692307693,
+  "weighted_rms_mm": 29.991224094265355
+ },
+ "validation": [
+  {
+   "run": "experiments/hardware/sessions/2026-11-21_fabric_run/warmup_10_10_121921",
+   "window": "still:3",
+   "point_grips_at_corners": {
+    "median_mm": -53.43071797548216,
+    "mad_mm": 42.484858283537456,
+    "rms_tanh50_mm": 42.2879294610187,
+    "p95_abs_mm": 137.36589632480974,
+    "over_30mm": 0.7463874963137718,
+    "near_sheet": 0.6792868589743589,
+    "weighted_rms_mm": 33.68229813523021
+   },
+   "start": {
+    "median_mm": -58.301885658169034,
+    "mad_mm": 42.40595980403681,
+    "rms_tanh50_mm": 42.92927991315233,
+    "p95_abs_mm": 138.2940840334953,
+    "over_30mm": 0.7629427792915532,
+    "near_sheet": 0.6616586538461539,
+    "weighted_rms_mm": 34.083019379990404
+   },
+   "calibrated": {
+    "median_mm": -65.14587328344287,
+    "mad_mm": 40.06889953538051,
+    "rms_tanh50_mm": 44.78761446644675,
+    "p95_abs_mm": 138.44183658019594,
+    "over_30mm": 0.7513597513597513,
+    "near_sheet": 0.515625,
+    "weighted_rms_mm": 36.990086288278
+   }
+  }
+ ],
+ "evaluations": 134,
+ "seconds": 337.21242441200593,
+ "material": "twin.yaml as measured (bend 1.4e-5 N m strips, density 0.215)"
+}
