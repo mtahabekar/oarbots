@@ -309,6 +309,14 @@ scripted excitation (about 195 s since 2026-11-21; the operator helpers wait the
 convergence controls the subsequent fit. With 24 holds the bank may run to its 600 s cap; the offline calibration
 below is the one that counts.
 
+**Planned (2026-11-21, not done yet): run the warm-up fitting on the GPU in parallel.** The online bank
+(`fabric_twin/bank.py`, `Bank.calibrate`) evaluates its candidate grid one simulation at a time, so with 24 holds a
+fit can take its whole 600 s cap while the person waits. Evaluate each round's candidates in parallel instead, as the
+offline tools already do (`warmup-calibrate`, `grip-search`: separate worker processes sharing the GPU through CUDA MPS,
+worker count capped from free memory, ~5.7 GB each). Use separate models/processes, not batched worlds in one model:
+Style3D's linear solve is one global PCG, so batched worlds are coupled (2026-11-20 lab log). Check that the parallel
+fit gives the same result as the sequential one on a recorded warm-up before using it on the cell.
+
 **Warm-up has CBF OFF and stretch guard OFF** (operator request, 2026-11-20). Its saved run profile sets
 `cbf.enabled: false` and `stretch_guard.enabled: false`. The twin runs the scripted trajectory directly;
 no CBF object, obstacle filtering, formation recovery, CBF smoothing or stretch projection affects the
