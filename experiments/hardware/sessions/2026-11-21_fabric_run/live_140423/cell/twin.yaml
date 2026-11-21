@@ -1,0 +1,141 @@
+# Fabric twin configuration (plain structured YAML, one `config_file` parameter).
+# The stand-in sheet (not carbon): dimensions, density and bending measured (2026-11-17 lab log). The carbon
+# values stay in the package defaults (src/fabric_twin/config, fabric_sim_cell, the Isaac plant). Shear and
+# stretch are uncalibrated; obstacle geometry is a starting value for hardware validation.
+sheet:
+  width_m: 0.84
+  height_m: 0.84
+  # 2026-11-21 warm-up calibration (experiments/hardware/sessions/2026-11-20_grip_calibration, report.md): the required
+  # mesh is 14 x 14 (6 cm cells). With point grips it scored 25.0 mm on the warm-up vs 27.3 mm at 40 x 40, and it was no
+  # worse, mostly better, on the three held-out recordings (main effect significant on all three). Was 28 x 28.
+  # 2026-11-21 12:50 back to 28 x 28 (user): resolve the sheet's shape finer; with point grips (one held particle per
+  # corner) the mesh-size penalty of the old 2 x 2 patches is gone (all meshes 14-56 within 7 mm on the 11-20 replay).
+  # Timed 7.5 ms/frame at 28 x 28, 16 x 10 (twin-timing, 2026-11-20 lab log), within the 16.7 ms budget beside the CBF.
+  cells_x: 28
+  cells_y: 28
+  areal_density_kg_m2: 0.215  # 152 g / (0.84 m × 0.84 m), sheet only
+  # Stretch is an effective value for the solver settings (2026-11-21, scripts/hw/static_fit.py on both warm-up still
+  # holds, 28 x 28, grips fitted first): at 16 x 10 the best was x0.036 / x0.040 (RMS 26.0 / 29.2 mm); at 12 x 8 it is
+  # x0.93 / x1.13 (25.6 / 28.8 mm), i.e. the nominal; at 8 x 6 x1.04 / x0.80 (28.9 / 31.9 mm). More iterations make the
+  # cloth stiffer and the fit softens stretch to match. With 12 x 8 below, the nominal stretch is the fitted value.
+  # 2026-11-21 14:20: point grips at 28 x 28, 8 x 6 (the grip-model comparison, lab log 14:05): stretch fitted on both still
+  # holds after the grips, x0.034 and x0.034 (RMS 27.7 / 31.4 mm; 2 x 2 patches 35.3 / 38.9, 3 x 3 42.6 / 46.4). Fits were
+  # made with self-contact off (repeatable objective); the live twin keeps it on (user).
+  stretch: [1094.9, 1094.9, 6000]   # Style3D weft, warp, shear (x0.034 of 30000; shear not fitted)
+  # Cantilever (Peirce / ASTM D1388), 2026-11-17: G = 1.4e-5 N m (1.1-1.8e-5), bending length 1.9 cm, no
+  # difference between strips (directions not recorded): isotropic. Style3D's edge stiffness is in N m (Bergou
+  # quadratic bending); taken as G. Was the carbon placeholder [0.002, 0.001, 0.0005], ~140x stiffer (2026-11-20).
+  bend: [1.4e-5, 1.4e-5, 1.4e-5]
+  patch_m: 0.03          # used only when grip_insets_m is empty (square patches at the corner tips)
+  # Calibrated grip points (2026-11-21): ONE held particle per corner, at the corner (no inset was supported). The 3 cm
+  # square patches kept the sheet 57-77 mm too high (a rigid 2 x 2 square held flat). The pinch offsets themselves are in
+  # calibration.yaml (Blue's fabric_grip) and fusion.yaml (world_grip_offset_m). Fitted by scripts/hw/grip_point_search.py
+  # on warmup_10_0.1_111137 25-49 s; held out: 32.4 -> 27.4, 43.5 -> 42.9, 31.2 -> 28.3 mm (corners at the measurements).
+  # 2026-11-21 14:20: point grips again (one held particle per corner): they fit the still holds best (27.7 / 31.4 mm vs
+  # 35.3 / 38.9 for the 3 cm (2 x 2) patches and 42.6 / 46.4 for 6 cm (3 x 3); the twin holds a patch as a rigid flat
+  # square). Briefly patches at 14:00 (user), before the comparison.
+  grip_insets_m: [0.0, 0.0, 0.0, 0.0]
+  # Solver: 16 substeps x 10 iterations (was 8 x 6, which does not converge within a frame: the sheet floated ~97 mm
+  # high on the warm-up replay). Timed on this laptop with point grips and no self-contact: 7.0 ms/frame at 14 x 14
+  # (scripts/hw/twin_timing.py); 32 x 10 fits too (13.9 ms) but leaves little room beside the estimator on the GPU,
+  # and costs only 0.5-1.8 mm (2026-11-20_grip_calibration/realtime_candidates.log).
+  # 2026-11-21 13:55: 12 x 8 (was 16 x 10). 28 x 28 timed alone: 8 x 6 2.5 ms, 12 x 8 4.8 ms, 16 x 10 7.8 ms per frame
+  # (twin-timing). In a session (estimator, CBF, RViz) the frame p95 was ~21 ms at 16 x 10 (3.6 % skipped frames) and
+  # 17-25 ms at 8 x 6 on 11-19/20; lag stayed ~165 ms in all. 12 x 8 matches 16 x 10's still-hold accuracy once stretch
+  # is fitted (above) at 60 % of its cost.
+  # 2026-11-21 14:00: back to 8 x 6 (user), the configuration the 2026-11-19/20 hardware runs used (28 x 28, 3 cm
+  # patches, self-contact on). At 8 x 6 the fitted stretch is the nominal (x1.04 / x0.80 with point grips, above).
+  substeps: 8
+  iterations: 6
+  linear_iterations: 3
+  # Cloth self-contact off (2026-11-20): with it on, two identical runs drifted 21-44 mm apart within 9 s; the hanging
+  # sheet does not fold onto itself. Obstacle and ground contact are unaffected.
+  # 2026-11-21 14:00 on (user), 14:25 off again (user): the fits are made without it (repeatable objective).
+  self_collision: false
+obstacle:                # a box in the world frame; the CBF uses its enclosing capsule
+  center: [0.0, 0.0, 0.16]
+  half_extents: [0.22, 0.22, 0.16]
+  yaw: 0.0
+feedback:
+  stiffness_per_s2: 25.0
+  damping_per_s: 6.0
+  integral_per_s3: 150.0
+  integral_limit_mps2: 5.0
+  integral_leak_sec: 5.0
+  accel_limit_mps2: 20.0
+  trusted_sigma_m: 0.02
+  max_error_m: 0.25
+cbf:
+  enabled: true
+  # Empty: this package's config/cbf.json: clearance rows only (no model tension or strain
+  # rows), a 7-cell prediction grid, and arm acceleration limited to 0.4 m/s^2.
+  config: ''
+  period: 4              # twin frames per control update (15 Hz)
+  # What the arms deliver: 16 cm/s in every direction at the grasp at 36 deg/s per joint (2026-11-19 sweep;
+  # was 0.1). Never plan faster than that; the bridge caps at the same 0.15.
+  max_speed_mps: 0.15
+  # Clearance target around the capsule: 2 cm of twin error plus 0.15 m/s x 0.5 s of measured arm lag.
+  # The capsule itself already lies outside the box (7.3 cm above the top of the default box).
+  # It shapes the command; it never stops the arms (a virtual collision is reported only, 2026-11-19).
+  # The 0.6 m Isaac descent rehearsal at this setting cleared the table by 6.25 cm (lab log 2026-11-19).
+  margin_m: 0.095
+stretch_guard:
+  # Model-free stretch guard, the last layer before a command leaves the twin, with priority over
+  # obstacle clearance: every grip pair through a robot stays at least this much shorter than the
+  # sheet between them, using measured grips (robot TF, glove filter). It replaces the CBF's
+  # model-predicted tension limit; see docs/fabric-hardware-test-guide.md, "Tension".
+  # Slack: must exceed the grip position error (robot grip calibration + glove tag-to-pinch error)
+  # plus arm speed x command latency. 3.5 cm = about 1 cm + 1 cm + 0.15 m/s x 0.1 s; recompute on site.
+  # It slows separating motion; it never stops the arms.
+  enabled: true
+  edge_slack_m: 0.035
+  diagonal_slack_m: 0.035
+  alpha_per_s: 2.0
+  max_speed_mps: 0.15
+  # Yield to the measured cloth pull on each robot above force_soft_n. Off until the wrist force
+  # sign, frame and compensation are verified (platform gates H5/H6). force_soft_n is a
+  # PLACEHOLDER: set it to about half of the smallest measured capacity (arm payload margin,
+  # robot grip slip force, what the person holds comfortably).
+  force_feedback: false
+  force_soft_n: 3.0
+  force_gain_mps_per_n: 0.004
+  force_max_speed_mps: 0.05
+  force_topics: [/oarbot_blue/force_torque_calibrated, /oarbot_silver/force_torque_calibrated]
+  force_on_robot_sign: 1.0   # +1: the calibrated force is the cloth's pull on the tool
+runtime:
+  world_frame: world
+  robot_grip_frames: [oarbot_blue/fabric_grip, oarbot_silver/fabric_grip]
+  hand_topic: /fabric/hand_states
+  estimate_topic: /fabric/estimated_state
+  # The twin runs this far behind the clock so grips are interpolated between measurements:
+  # about one glove period plus the hand-fusion delay. Add max_speed * delay to the CBF margin.
+  delay_sec: 0.15
+  hand_coast_sec: 1.0
+  hand_start_age_sec: 0.5
+  estimate_stale_sec: 1.0
+  state_every_frames: 4
+  # Each robot grip keeps its starting offset from its human grip, shortened by this much, so
+  # following lag changes the sag instead of stretching the sheet.
+  formation_slack_m: 0.04
+  formation_lateral_slack_m: 0.02   # each robot grip this much toward the other robot
+  formation_gain_per_s: 2.0
+  commands_enabled: false   # shadow mode: commands are computed and logged, zero is sent
+# Warm-up (2026-11-21, was insets 2 and 4 cm only, 21 s). Simulated before use (scripts/hw/warmup_design.py,
+# sessions/2026-11-21_warmup_design): the 2-4 cm insets inform the grip points to about 0.5 cm and bending not at all
+# (Cramer-Rao sd 1.3 decades). Robot excursions to near the edge of the validated workspace boxes (bridge.yaml, >= 2.7
+# cm left) plus the person's large hand moves on spoken cues: grip points 0.12 cm, bending 0.13 and shear 0.07
+# decades, the sheet only ever slackened (>= 3.5 cm inside every stretch limit; the twin checks every hold before it
+# starts). The size of the hand moves matters, not their speed. A one-decade softer shear or bending still stays below
+# what the calibration can detect against the ~20 mm model error (it needed the carry's 45-70 cm motion). Robot part
+# 92 s, person part 102 s.
+warmup:
+  insets_m: [0.04, 0.08]      # toward the hands, then the base of the robot excursions
+  transverse_m: 0.08          # narrow: robot grips toward each other
+  lift_m: 0.06                # each robot grip up in turn (z room in the box: 9 cm)
+  lateral_m: 0.08             # both robot grips sideways, each way: shears the sheet
+  person_moves_m: {up: 0.25, down: 0.25, toward: 0.25, together: 0.20, side: 0.15}   # spoken cues, robots still
+  person_speed_mps: 0.1
+  person_reaction_sec: 2.0
+  speed_mps: 0.03
+  hold_sec: 5.0
+  settle_sec: 3.0

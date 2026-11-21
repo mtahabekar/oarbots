@@ -139,7 +139,31 @@ def main():
     obstacle_file = run / 'cell' / 'obstacle.yaml'
     obstacle = yaml.safe_load(obstacle_file.read_text()).get('obstacle', {}) if obstacle_file.exists() else {}
     capsule = obstacle.get('capsule')
+    dist, footprint, top = None, np.zeros((0, 2)), None
     if capsule:
+        dist = lambda p: capsule_distance(p, capsule)   # noqa: E731
+        prism = obstacle.get('prism') or {}
+        footprint, top = np.array(prism.get('footprint', []), float), prism.get('top')
+    else:
+        # The virtual box of the run's twin.yaml (no detected obstacle in use, 2026-11-21): the same enclosing capsule the
+        # CBF built (capsule_cbf.Capsule with the twin's cap settings), and the box itself as the "inside" check.
+        twin_cfg = yaml.safe_load((run / 'cell' / 'twin.yaml').read_text()) if (run / 'cell' / 'twin.yaml').exists() else {}
+        box = twin_cfg.get('obstacle') or {}
+        if box.get('half_extents'):
+            from fabric_twin.vendor import use_capsule_cbf
+            use_capsule_cbf()
+            from capsule_cbf.capsule import Capsule
+            from capsule_cbf.settings import Settings
+            cbf_cfg = twin_cfg.get('cbf') or {}
+            cap = Capsule(box['center'], box['half_extents'], cbf_cfg.get('top_cap_mode', Settings.top_cap_mode),
+                          cbf_cfg.get('top_cap_radius_scale', Settings.top_cap_radius_scale))
+            dist = lambda p: cap.distances(p, 0.)[0]   # noqa: E731
+            (cx, cy, cz), (hx, hy, hz), yaw = box['center'], box['half_extents'], float(box.get('yaw', 0.))
+            c, s_ = np.cos(yaw), np.sin(yaw)
+            footprint = np.array([[cx+c*a-s_*b, cy+s_*a+c*b] for a, b in ((hx, hy), (-hx, hy), (-hx, -hy), (hx, -hy))])
+            top = cz+hz
+            result['obstacle'] = dict(kind='virtual box (twin.yaml)', center=box['center'], half_extents=box['half_extents'])
+    if dist is not None:
         cbf_path = run / 'twin.cbf.jsonl.gz' if (run / 'twin.cbf.jsonl.gz').exists() else run / 'twin.cbf.jsonl'
         rows = []
         with (gzip.open(cbf_path, 'rt') if cbf_path.suffix == '.gz' else open(cbf_path)) as f:
@@ -148,8 +172,6 @@ def main():
                 if d.get('twin_time') is not None and d.get('min_clearance') is not None:
                     rows.append((d['twin_time'], d['min_clearance'], float(bool(d.get('commands_enabled')))))
         cbf = np.array(rows, float)
-        prism = obstacle.get('prism') or {}
-        footprint = np.array(prism.get('footprint', []), float)
         real, inside_frames = [], 0
         for j in range(len(depth['stamps_ns'])):
             p = depth['points'][offsets[j]:offsets[j + 1]].astype(float)
@@ -159,9 +181,9 @@ def main():
             k = int(np.argmin(abs(cbf[:, 0] - t)))
             if abs(cbf[k, 0] - t) > .1:
                 continue
-            real.append((np.sort(capsule_distance(p, capsule))[2], cbf[k, 1], cbf[k, 2]))
+            real.append((np.sort(dist(p))[2], cbf[k, 1], cbf[k, 2]))
             if len(footprint) >= 3 and cbf[k, 2] > 0:
-                inside = inside_polygon(p[:, :2], footprint) & (p[:, 2] < prism['top'])
+                inside = inside_polygon(p[:, :2], footprint) & (p[:, 2] < top)
                 inside_frames += int(inside.sum() >= 3)
         real = np.array(real)
         if len(real):   # every frame, commands on or off (a shadow run has them off)
@@ -185,7 +207,7 @@ def main():
                 k = int(np.argmin(abs(cbf[:, 0] - t)))
                 if abs(cbf[k, 0] - t) < .1 and cbf[k, 2] > 0:
                     fine = np.stack([zoom(q.reshape(m, m, 3)[..., c], (n - 1) / (m - 1) + 1e-9, order=1) for c in range(3)], -1)
-                    ce.append((capsule_distance(fine.reshape(-1, 3), capsule).min(), cbf[k, 1]))
+                    ce.append((dist(fine.reshape(-1, 3)).min(), cbf[k, 1]))
             if ce:
                 ce = np.array(ce)
                 result['estimate_clearance_commands_on'] = dict(p5_m=round(float(np.percentile(ce[:, 0], 5)), 3),

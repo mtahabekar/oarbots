@@ -1,0 +1,122 @@
+{
+ "run": "/home/taha/ros2_colcon_ws/src/oarbots/experiments/hardware/sessions/2026-11-21_fabric_run/live_140423",
+ "twin_vs_depth": {
+  "1": {
+   "points": 179174,
+   "median_mm": 3.9,
+   "mad_mm": 19.8,
+   "p95_abs_mm": 71.0,
+   "over_30mm": 0.322
+  },
+  "0": {
+   "points": 275479,
+   "median_mm": -13.9,
+   "mad_mm": 28.4,
+   "p95_abs_mm": 62.8,
+   "over_30mm": 0.499
+  }
+ },
+ "twin_vs_depth_map_mm": [
+  [
+   16,
+   12,
+   19,
+   39,
+   -31,
+   -17
+  ],
+  [
+   19,
+   10,
+   8,
+   -52,
+   -43,
+   33
+  ],
+  [
+   22,
+   8,
+   -6,
+   -1,
+   28,
+   37
+  ],
+  [
+   10,
+   9,
+   -6,
+   -14,
+   3,
+   13
+  ],
+  [
+   -3,
+   11,
+   0,
+   -16,
+   -1,
+   -4
+  ],
+  [
+   -6,
+   0,
+   -11,
+   -9,
+   0,
+   11
+  ]
+ ],
+ "estimate_vs_depth": {
+  "1": {
+   "points": 177479,
+   "median_mm": -3.3,
+   "mad_mm": 7.4,
+   "p95_abs_mm": 43.6,
+   "over_30mm": 0.089
+  },
+  "0": {
+   "points": 205753,
+   "median_mm": -3.6,
+   "mad_mm": 7.8,
+   "p95_abs_mm": 123.4,
+   "over_30mm": 0.175
+  }
+ },
+ "estimate_edge_strain_p95": 1.214,
+ "obstacle": {
+  "kind": "virtual box (twin.yaml)",
+  "center": [
+   0.0,
+   0.0,
+   0.16
+  ],
+  "half_extents": [
+   0.22,
+   0.22,
+   0.16
+  ]
+ },
+ "clearance_all_frames": {
+  "frames": 2001,
+  "twin_min_m": 0.043,
+  "real_p5_m": 0.121,
+  "real_min_m": 0.047,
+  "real_minus_twin_median_m": 0.009,
+  "real_minus_twin_p5_m": -0.046
+ },
+ "clearance_commands_on": {
+  "frames": 1906,
+  "twin_min_m": 0.043,
+  "real_p5_m": 0.12,
+  "real_min_m": 0.047,
+  "real_minus_twin_median_m": 0.01,
+  "real_minus_twin_p5_m": -0.044,
+  "frames_real_below_zero": 0,
+  "frames_with_depth_inside_prism": 0,
+  "note": "real = third-closest sheet depth point to the CBF capsule per frame; check images before calling contact"
+ },
+ "estimate_clearance_commands_on": {
+  "p5_m": 0.128,
+  "minus_twin_median_m": 0.023
+ }
+}
