@@ -1,0 +1,21 @@
+blue: commands for 15 s, grip range from its start: x -0/+1 cm, y -1/+4 cm, z -0/+0 cm
+   median 0.6 cm/s; grip [-0.392, -0.412, 1.054] -> [-0.393, -0.411, 1.055]; at most 0.0 cm past the box
+   t+   0 s  commanded  0.9 cm/s (mean vector [0.1, 0.4, 0.0])  delivered  0.7 cm/s  faces []  past 0.0 cm
+   t+   5 s  commanded  0.9 cm/s (mean vector [0.0, 0.4, -0.1])  delivered  0.6 cm/s  faces []  past 0.0 cm
+   t+  10 s  commanded  1.4 cm/s (mean vector [-0.2, -0.8, 0.1])  delivered  1.1 cm/s  faces []  past 0.0 cm
+silver: commands for 15 s, grip range from its start: x -0/+0 cm, y -1/+4 cm, z -0/+0 cm
+   median 0.7 cm/s; grip [0.375, -0.422, 1.059] -> [0.375, -0.422, 1.059]; at most 0.0 cm past the box
+   t+   0 s  commanded  0.8 cm/s (mean vector [0.0, 0.4, 0.0])  delivered  0.7 cm/s  faces []  past 0.0 cm
+   t+   5 s  commanded  0.8 cm/s (mean vector [0.0, 0.4, -0.0])  delivered  0.6 cm/s  faces []  past 0.0 cm
+   t+  10 s  commanded  1.4 cm/s (mean vector [-0.1, -0.8, 0.0])  delivered  1.2 cm/s  faces []  past 0.0 cm
+twin while enabled: none (commands sent) 100 %
+warm-up start coefficients: bend x10, shear x0.1 (material version 0)
+warm-up at 10:32:19: commands on 100 % of the window, a twin fault 0 %
+   hold t+ 0.0- 3.0 s  target inset   0 cm  reached blue  0.0 cm, silver  0.0 cm
+   hold t+ 3.7- 8.7 s  target inset   2 cm  reached blue  2.1 cm, silver  2.1 cm
+   hold t+ 9.3-14.3 s  target inset   4 cm  reached blue  4.1 cm, silver  4.1 cm
+   hold t+15.7-20.7 s  target inset   0 cm  reached blue -0.2 cm, silver -0.2 cm
+   full 3D return error: blue 0.7 mm (xyz [-0.3, 0.6, 0.3] mm), silver 0.3 mm (xyz [-0.2, -0.2, -0.2] mm)
+bank fit: bend x0.503, shear x1.987; residual 28.1 -> 27.9 mm (0.8 % lower), 4 holds, 277 s, informative True
+   moved from the start (bend x10, shear x0.1): bend x0.05, shear x19.87; bend and shear AT THE SEARCH EDGE (x19.9 from the start): no minimum found
+material release 1 (warmup): bend x0.503, shear x1.987

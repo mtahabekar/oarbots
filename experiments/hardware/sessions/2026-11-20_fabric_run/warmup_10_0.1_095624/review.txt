@@ -1,0 +1,20 @@
+blue: commands for 18 s, grip range from its start: x +0/+2 cm, y -1/+4 cm, z -0/+0 cm
+   median 0.6 cm/s; grip [-0.43, -0.415, 1.051] -> [-0.411, -0.415, 1.051]; at most 0.0 cm past the box
+   t+   0 s  commanded  1.3 cm/s (mean vector [0.6, 0.4, -0.1])  delivered  1.0 cm/s  faces []  past 0.0 cm
+   t+   5 s  commanded  0.8 cm/s (mean vector [0.1, 0.5, -0.0])  delivered  0.6 cm/s  faces []  past 0.0 cm
+   t+  10 s  commanded  0.7 cm/s (mean vector [-0.1, -0.7, -0.0])  delivered  0.4 cm/s  faces []  past 0.0 cm
+   t+  15 s  commanded  0.8 cm/s (mean vector [-0.1, -0.3, 0.1])  delivered  0.7 cm/s  faces []  past 0.0 cm
+silver: commands for 18 s, grip range from its start: x -2/+0 cm, y -1/+4 cm, z -0/+0 cm
+   median 0.7 cm/s; grip [0.413, -0.421, 1.053] -> [0.393, -0.421, 1.053]; at most 0.0 cm past the box
+   t+   0 s  commanded  1.3 cm/s (mean vector [-0.5, 0.4, -0.0])  delivered  1.0 cm/s  faces []  past 0.0 cm
+   t+   5 s  commanded  0.7 cm/s (mean vector [0.0, 0.5, -0.0])  delivered  0.6 cm/s  faces []  past 0.0 cm
+   t+  10 s  commanded  0.7 cm/s (mean vector [-0.1, -0.6, 0.0])  delivered  0.4 cm/s  faces []  past 0.0 cm
+   t+  15 s  commanded  0.9 cm/s (mean vector [-0.0, -0.3, 0.0])  delivered  0.8 cm/s  faces []  past 0.0 cm
+twin while enabled: none (commands sent) 100 %
+warm-up start coefficients: bend x10, shear x0.1 (material version 0)
+warm-up at 09:57:20: commands on 100 % of the window, a twin fault 0 %
+   hold t+ 0.0- 3.0 s  target inset   0 cm  reached blue  0.3 cm, silver  0.1 cm
+   hold t+ 3.7- 8.7 s  target inset   2 cm  reached blue  2.4 cm, silver  2.1 cm
+   hold t+ 9.3-14.3 s  target inset   4 cm  reached blue  4.4 cm, silver  4.0 cm
+   hold t+15.7-20.7 s  target inset   0 cm  reached blue  0.1 cm, silver -0.2 cm
+bank: no completed fit in this recording (the run ended before the fit, about 4 min)

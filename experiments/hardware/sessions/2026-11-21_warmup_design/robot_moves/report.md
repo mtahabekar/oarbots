@@ -1,0 +1,25 @@
+# Warm-up design study (2026-11-21 07:54)
+
+Start corners from warmup_10_0.1_111137 (warm-up start). Truth = the cell twin (twin.yaml), depth sampled at 5 Hz, 128 points per frame. Detection limit 6.4 mm unique effect (model error 20 mm, threshold 1 mm).
+
+| candidate | s | shear -1 | shear -0.5 | shear +0.5 | shear +1 | bend -1 | bend +1 | stretch -1 | CR sd shear | CR sd bend |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| current | 21 | 4.2 / 3.6 | 3.2 / 2.6 | 7.1 / 5.7 | 27.9 / 19.6 * | 0.4 / 0.4 | 2.7 / 2.4 | 12.8 / 11.7 * | 0.196 | 1.289 |
+| deep | 23 | 4.1 / 3.5 | 3.2 / 2.6 | 7.2 / 5.8 | 27.8 / 19.8 * | 0.4 / 0.3 | 2.5 / 2.3 | 12.6 / 11.7 * | 0.184 | 1.092 |
+| shear | 46 | 3.9 / 3.5 | 3.1 / 2.7 | 5.9 / 4.9 | 19.5 / 16.4 * | 0.6 / 0.5 | 3.8 / 3.3 | 11.4 / 10.8 * | 0.132 | 0.432 |
+| lift | 49 | 3.1 / 2.8 | 2.3 / 2.1 | 4.8 / 4.2 | 19.1 / 15.8 * | 0.3 / 0.3 | 2.5 / 2.4 | 10.2 / 9.8 * | 0.163 | 0.861 |
+| narrow | 36 | 4.4 / 3.5 | 3.7 / 2.7 | 6.2 / 5.1 | 23.1 / 18.0 * | 0.4 / 0.4 | 2.9 / 2.7 | 12.1 / 11.1 * | 0.151 | 0.547 |
+| deep+shear | 49 | 3.7 / 3.3 | 3.1 / 2.7 | 5.8 / 4.9 | 19.9 / 17.0 * | 0.8 / 0.7 | 4.0 / 3.4 | 11.8 / 11.4 * | 0.130 | 0.337 |
+| all | 92 | 3.8 / 3.2 | 3.8 / 2.8 | 5.2 / 4.8 | 16.3 / 14.5 * | 0.8 / 0.8 | 4.0 / 3.8 | 11.1 / 10.7 * | 0.100 | 0.236 |
+| recorded live_115658 40:120 | 80 | 14.1 / 10.7 * | 10.4 / 8.1 * | 10.0 / 8.3 * | 24.5 / 23.8 * | 10.0 / 3.2 | 12.2 / 9.3 * | 24.2 / 21.0 * | 0.054 | 0.080 |
+
+Cells: effect / unique (mm RMS of the depth residual); * = above the detection limit.
+
+- current: geometry {"blue": 7.8, "silver": 7.9} cm to the box faces, pair growth {"0-1": 0.0, "2-3": 0.0, "0-2": 0.0, "1-3": 0.0, "0-3": 0.0, "1-2": 0.0} cm; grip offsets 1 cm -> down_blue 3.7, down_silver 3.1, down_right 3.7, down_left 3.8, in_blue 2.7, in_silver 4.2, in_right 2.4, in_left 5.5 mm; CR sd offsets down_blue 0.45, down_silver 0.49, down_right 0.44, down_left 0.53, in_blue 0.63, in_silver 0.38, in_right 0.62, in_left 0.31 cm
+- deep: geometry {"blue": 3.8, "silver": 3.9} cm to the box faces, pair growth {"0-1": 0.0, "2-3": 0.0, "0-2": 0.0, "1-3": 0.0, "0-3": 0.0, "1-2": 0.0} cm; grip offsets 1 cm -> down_blue 3.8, down_silver 3.1, down_right 3.8, down_left 3.8, in_blue 2.6, in_silver 4.3, in_right 2.3, in_left 5.9 mm; CR sd offsets down_blue 0.43, down_silver 0.47, down_right 0.39, down_left 0.49, in_blue 0.59, in_silver 0.33, in_right 0.57, in_left 0.26 cm
+- shear: geometry {"blue": 3.2, "silver": 3.6} cm to the box faces, pair growth {"0-1": 0.0, "2-3": 0.0, "0-2": 0.0, "1-3": 0.0, "0-3": 3.65, "1-2": 3.4} cm; grip offsets 1 cm -> down_blue 3.6, down_silver 3.6, down_right 3.8, down_left 3.9, in_blue 3.1, in_silver 3.4, in_right 2.7, in_left 4.7 mm; CR sd offsets down_blue 0.29, down_silver 0.24, down_right 0.22, down_left 0.33, in_blue 0.35, in_silver 0.29, in_right 0.34, in_left 0.22 cm
+- lift: geometry {"blue": 2.8, "silver": 3.0} cm to the box faces, pair growth {"0-1": 0.0, "2-3": 0.0, "0-2": 0.0, "1-3": 0.0, "0-3": 0.0, "1-2": 0.0} cm; grip offsets 1 cm -> down_blue 3.7, down_silver 3.4, down_right 3.6, down_left 3.7, in_blue 2.6, in_silver 4.1, in_right 2.3, in_left 4.4 mm; CR sd offsets down_blue 0.29, down_silver 0.31, down_right 0.29, down_left 0.34, in_blue 0.41, in_silver 0.24, in_right 0.41, in_left 0.24 cm
+- narrow: geometry {"blue": 3.2, "silver": 3.6} cm to the box faces, pair growth {"0-1": 0.0, "2-3": 0.0, "0-2": 0.0, "1-3": 0.0, "0-3": 0.0, "1-2": 0.0} cm; grip offsets 1 cm -> down_blue 4.1, down_silver 3.6, down_right 4.1, down_left 3.8, in_blue 2.6, in_silver 4.2, in_right 2.6, in_left 6.6 mm; CR sd offsets down_blue 0.31, down_silver 0.35, down_right 0.29, down_left 0.37, in_blue 0.46, in_silver 0.23, in_right 0.41, in_left 0.14 cm
+- deep+shear: geometry {"blue": 2.7, "silver": 3.8} cm to the box faces, pair growth {"0-1": 0.0, "2-3": 0.0, "0-2": 0.0, "1-3": 0.0, "0-3": 1.06, "1-2": 1.03} cm; grip offsets 1 cm -> down_blue 3.8, down_silver 4.1, down_right 4.0, down_left 3.8, in_blue 2.9, in_silver 3.5, in_right 3.0, in_left 5.0 mm; CR sd offsets down_blue 0.28, down_silver 0.28, down_right 0.25, down_left 0.31, in_blue 0.35, in_silver 0.26, in_right 0.33, in_left 0.19 cm
+- all: geometry {"blue": 2.7, "silver": 3.0} cm to the box faces, pair growth {"0-1": 0.0, "2-3": 0.0, "0-2": 0.0, "1-3": 0.0, "0-3": 1.06, "1-2": 1.03} cm; grip offsets 1 cm -> down_blue 4.2, down_silver 3.5, down_right 3.8, down_left 4.0, in_blue 2.8, in_silver 4.0, in_right 2.3, in_left 4.7 mm; CR sd offsets down_blue 0.18, down_silver 0.20, down_right 0.18, down_left 0.21, in_blue 0.25, in_silver 0.14, in_right 0.26, in_left 0.11 cm
+- recorded live_115658 40:120: geometry {} cm to the box faces, pair growth {} cm; grip offsets 1 cm -> down_blue 10.4, down_silver 10.5, down_right 10.1, down_left 9.8, in_blue 10.1, in_silver 10.7, in_right 8.4, in_left 10.4 mm; CR sd offsets down_blue 0.10, down_silver 0.11, down_right 0.10, down_left 0.08, in_blue 0.12, in_silver 0.10, in_right 0.11, in_left 0.13 cm

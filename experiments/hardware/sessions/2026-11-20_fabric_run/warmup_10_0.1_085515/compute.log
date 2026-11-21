@@ -1,0 +1,21 @@
+[INFO] [launch]: All log files can be found below /home/taha/.ros/log/2026-11-20-08-55-16-453679-taha-Legion-7-16IAX10-41778
+[INFO] [launch]: Default logging verbosity is set to INFO
+[INFO] [launch.user]: Using nominal grip transforms from /home/taha/ros2_colcon_ws/src/oarbots/experiments/hardware/sessions/2026-11-20_fabric_run/warmup_10_0.1_085515/cell/calibration.yaml (shadow run, no commands).
+[INFO] [calibration_publisher-1]: process started with pid [41782]
+[INFO] [fusion-2]: process started with pid [41783]
+[INFO] [observer-3]: process started with pid [41784]
+[INFO] [twin-4]: process started with pid [41785]
+[INFO] [parameter_bank-5]: process started with pid [41786]
+[INFO] [demo_markers-6]: process started with pid [41787]
+[INFO] [rviz2-7]: process started with pid [41788]
+[INFO] [recorder-8]: process started with pid [41789]
+[INFO] [twin_recorder-9]: process started with pid [41790]
+[rviz2-7] [INFO] [1795182916.844810315] [rviz2]: Stereo is NOT SUPPORTED
+[rviz2-7] [INFO] [1795182916.844900752] [rviz2]: OpenGl version: 4.6 (GLSL 4.6)
+[rviz2-7] [INFO] [1795182916.871520253] [rviz2]: Stereo is NOT SUPPORTED
+[calibration_publisher-1] [INFO] [1795182916.929518843] [cell_calibration]: published 5 calibration transforms from /home/taha/ros2_colcon_ws/src/oarbots/experiments/hardware/sessions/2026-11-20_fabric_run/warmup_10_0.1_085515/cell/calibration.yaml
+[rviz2-7] [INFO] [1795182917.003310101] [rviz2]: Stereo is NOT SUPPORTED
+[twin-4] [WARN] [1795182918.085659840] [fabric_twin]: starting material DISTORTED: bend x10, shear x0.1 of twin.yaml
+[twin-4] [INFO] [1795182918.094628828] [fabric_twin]: fabric twin waiting for four grips; cloth library at /home/taha/ros2_colcon_ws/src/fabric_sim_isaacsim_newton
+[observer-3] [INFO] [1795182918.181637138] [fabric_state_estimator]: Preparing physics backend before accepting live captures
+[parameter_bank-5] [INFO] [1795182918.262931977] [fabric_parameter_bank]: parameter bank ready; depth from 2 cameras; starting scales bend x10, shear x0.1; search reach x19.9

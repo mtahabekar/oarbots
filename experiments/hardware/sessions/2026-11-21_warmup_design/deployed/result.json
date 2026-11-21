@@ -1,0 +1,282 @@
+{
+ "reference": "/home/taha/ros2_colcon_ws/src/oarbots/experiments/hardware/sessions/2026-11-20_fabric_run/warmup_10_0.1_111137",
+ "detect_mm": 6.40312423743285,
+ "model_error_mm": 20.0,
+ "hold_sec": 5.0,
+ "speed_mps": 0.03,
+ "candidates": {
+  "deployed": {
+   "kwargs": {
+    "insets_m": [
+     0.04,
+     0.08
+    ],
+    "transverse_m": 0.08,
+    "lift_m": 0.06,
+    "lateral_m": 0.08,
+    "person_moves_m": {
+     "up": 0.25,
+     "down": 0.25,
+     "toward": 0.25,
+     "together": 0.2,
+     "side": 0.15
+    }
+   },
+   "geometry": {
+    "duration_s": 194.33333333333331,
+    "holds": 24,
+    "largest_displacement_cm": 11.932427016577249,
+    "workspace_margin_cm": {
+     "blue": 2.7,
+     "silver": 3.0
+    },
+    "pair_growth_cm": {
+     "0-1": 0.0,
+     "2-3": 1.93,
+     "0-2": 5.66,
+     "1-3": 5.49,
+     "0-3": 3.45,
+     "1-2": 3.96
+    },
+    "start_pair_m": {
+     "0-1": 0.7681225093756483,
+     "2-3": 0.7171225597279056,
+     "0-2": 0.6796551080858908,
+     "1-3": 0.6419948681201062,
+     "0-3": 1.018133686295107,
+     "1-2": 0.9666912168636885
+    }
+   },
+   "nominal_rms_mm": 2.5198105722665787,
+   "material": {
+    "stretch": {
+     "-1.0": {
+      "effect_mm": 12.234555557370186,
+      "unique_mm": 11.791613884270191,
+      "detectable": true,
+      "compensating_offsets_cm": {
+       "down_blue": 0.32,
+       "down_silver": -0.28,
+       "down_right": 0.21,
+       "down_left": 0.43,
+       "in_blue": -0.8,
+       "in_silver": 0.67,
+       "in_right": 0.28,
+       "in_left": -0.26
+      }
+     },
+     "-0.5": {
+      "effect_mm": 9.325920604169369,
+      "unique_mm": 8.72297678142786,
+      "detectable": true,
+      "compensating_offsets_cm": {
+       "down_blue": 0.57,
+       "down_silver": 0.02,
+       "down_right": 0.26,
+       "down_left": 0.34,
+       "in_blue": -0.43,
+       "in_silver": 0.16,
+       "in_right": -0.15,
+       "in_left": -0.27
+      }
+     },
+     "+0.5": {
+      "effect_mm": 18.005874007940292,
+      "unique_mm": 16.215026378631592,
+      "detectable": true,
+      "compensating_offsets_cm": {
+       "down_blue": -0.54,
+       "down_silver": -0.43,
+       "down_right": -0.5,
+       "down_left": -1.27,
+       "in_blue": 1.61,
+       "in_silver": 0.43,
+       "in_right": -1.05,
+       "in_left": 1.13
+      }
+     },
+     "+1.0": {
+      "effect_mm": 38.318417966365814,
+      "unique_mm": 36.16667538881302,
+      "detectable": true,
+      "compensating_offsets_cm": {
+       "down_blue": -1.41,
+       "down_silver": -1.34,
+       "down_right": -0.81,
+       "down_left": -0.71,
+       "in_blue": 2.02,
+       "in_silver": -1.3,
+       "in_right": 0.42,
+       "in_left": -0.74
+      }
+     }
+    },
+    "shear": {
+     "-1.0": {
+      "effect_mm": 4.142343997955322,
+      "unique_mm": 3.7911536637693644,
+      "detectable": false,
+      "compensating_offsets_cm": {
+       "down_blue": 0.21,
+       "down_silver": 0.17,
+       "down_right": 0.01,
+       "down_left": 0.11,
+       "in_blue": -0.14,
+       "in_silver": 0.34,
+       "in_right": -0.13,
+       "in_left": -0.1
+      }
+     },
+     "-0.5": {
+      "effect_mm": 4.217625129967928,
+      "unique_mm": 3.233272349461913,
+      "detectable": false,
+      "compensating_offsets_cm": {
+       "down_blue": 0.39,
+       "down_silver": 0.12,
+       "down_right": -0.06,
+       "down_left": 0.04,
+       "in_blue": 0.12,
+       "in_silver": 0.44,
+       "in_right": 0.05,
+       "in_left": -0.2
+      }
+     },
+     "+0.5": {
+      "effect_mm": 5.785813555121422,
+      "unique_mm": 4.712258465588093,
+      "detectable": false,
+      "compensating_offsets_cm": {
+       "down_blue": -0.09,
+       "down_silver": 0.09,
+       "down_right": -0.14,
+       "down_left": -0.28,
+       "in_blue": 0.93,
+       "in_silver": 0.1,
+       "in_right": -0.29,
+       "in_left": 0.28
+      }
+     },
+     "+1.0": {
+      "effect_mm": 14.882106333971024,
+      "unique_mm": 14.395645819604397,
+      "detectable": true,
+      "compensating_offsets_cm": {
+       "down_blue": -0.51,
+       "down_silver": 0.13,
+       "down_right": -0.37,
+       "down_left": -0.34,
+       "in_blue": 0.84,
+       "in_silver": -0.28,
+       "in_right": -0.37,
+       "in_left": 0.66
+      }
+     }
+    },
+    "bend": {
+     "-1.0": {
+      "effect_mm": 1.1723370989784598,
+      "unique_mm": 1.1241992469877005,
+      "detectable": false,
+      "compensating_offsets_cm": {
+       "down_blue": 0.01,
+       "down_silver": -0.0,
+       "down_right": 0.04,
+       "down_left": 0.03,
+       "in_blue": -0.02,
+       "in_silver": -0.01,
+       "in_right": 0.05,
+       "in_left": 0.06
+      }
+     },
+     "-0.5": {
+      "effect_mm": 1.0951432632282376,
+      "unique_mm": 1.0455052834004164,
+      "detectable": false,
+      "compensating_offsets_cm": {
+       "down_blue": 0.01,
+       "down_silver": -0.03,
+       "down_right": 0.06,
+       "down_left": 0.03,
+       "in_blue": -0.04,
+       "in_silver": 0.0,
+       "in_right": 0.03,
+       "in_left": 0.05
+      }
+     },
+     "+0.5": {
+      "effect_mm": 2.045166678726673,
+      "unique_mm": 1.9723763689398766,
+      "detectable": false,
+      "compensating_offsets_cm": {
+       "down_blue": 0.01,
+       "down_silver": 0.02,
+       "down_right": 0.01,
+       "down_left": 0.03,
+       "in_blue": 0.03,
+       "in_silver": 0.1,
+       "in_right": -0.08,
+       "in_left": -0.07
+      }
+     },
+     "+1.0": {
+      "effect_mm": 5.388966761529446,
+      "unique_mm": 5.1843333058059216,
+      "detectable": false,
+      "compensating_offsets_cm": {
+       "down_blue": 0.01,
+       "down_silver": 0.21,
+       "down_right": 0.12,
+       "down_left": 0.27,
+       "in_blue": -0.11,
+       "in_silver": -0.06,
+       "in_right": -0.29,
+       "in_left": -0.08
+      }
+     }
+    }
+   },
+   "cramer_rao": {
+    "units": "decades for material, cm for offsets",
+    "noise_m": 0.08,
+    "frames": 967.0,
+    "sd": {
+     "stretch": 0.021567760035395622,
+     "shear": 0.07111024111509323,
+     "bend": 0.12727144360542297,
+     "down_blue": 0.10382285714149475,
+     "down_silver": 0.12153983116149902,
+     "down_right": 0.11151088029146194,
+     "down_left": 0.12499914318323135,
+     "in_blue": 0.11774390935897827,
+     "in_silver": 0.10990012437105179,
+     "in_right": 0.1611310988664627,
+     "in_left": 0.0956367775797844
+    },
+    "largest_correlation": {
+     "stretch": 0.674414336681366,
+     "shear": 0.6744142770767212,
+     "bend": 0.18569929897785187,
+     "down_blue": 0.5272238850593567,
+     "down_silver": 0.5301764607429504,
+     "down_right": 0.5301764607429504,
+     "down_left": 0.5725494623184204,
+     "in_blue": 0.57254958152771,
+     "in_silver": 0.28038397431373596,
+     "in_right": 0.34840989112854004,
+     "in_left": 0.24819140136241913
+    }
+   },
+   "nuisance_effect_mm_per_cm": {
+    "down_blue": 5.348971579223871,
+    "down_silver": 3.72977158986032,
+    "down_right": 3.8941933307796717,
+    "down_left": 5.119072273373604,
+    "in_blue": 4.576376173645258,
+    "in_silver": 3.3446040470153093,
+    "in_right": 2.44243280030787,
+    "in_left": 3.9459271356463432
+   }
+  }
+ }
+}

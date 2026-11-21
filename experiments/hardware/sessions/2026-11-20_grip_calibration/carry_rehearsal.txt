@@ -1,0 +1,18 @@
+   CUDA Toolkit 12.9, Driver 13.0
+   Devices:
+     "cpu"      : "x86_64"
+     "cuda:0"   : "NVIDIA GeForce RTX 5070 Laptop GPU" (8 GiB, sm_120, mempool enabled)
+   Kernel cache:
+     /tmp/oarbots-fabric-audit-gpu/1.17.0
+    Module newton._src.solvers.style3d.builder eb1b915 load on device 'cpu' took 0.15 ms  (cached)
+    Module newton._src.solvers.style3d.builder 013f25b load on device 'cuda:0' took 5.03 ms  (cached)
+cfg deployed 28x28 8x6 patch: 15 s
+  edges through a robot max 0.808 m (limit 0.815), diagonals max 1.136 m (limit 1.163)
+  clearance min 0.113 m (test requires > 0.05); model pull p95 2.5 N (test < 10)
+  CBF statuses ['feasible', 'relaxed_soft']; twin p95 error vs plant median 8.8 mm
+  acceptance (test_carry criteria): PASS
+cfg candidate 14x14 16x10 point grips, no self-contact: 16 s
+  edges through a robot max 0.810 m (limit 0.815), diagonals max 1.144 m (limit 1.163)
+  clearance min 0.093 m (test requires > 0.05); model pull p95 2.0 N (test < 10)
+  CBF statuses ['feasible', 'relaxed_soft']; twin p95 error vs plant median 11.5 mm
+  acceptance (test_carry criteria): PASS

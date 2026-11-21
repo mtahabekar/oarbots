@@ -1,0 +1,96 @@
+# Perception for the overhead camera on the real cell: TEMPLATE copied from the simulated cell.
+# Tune on recorded images of this cell before use:
+#   glove_hsv_lower/upper, glove_tag_size_m, tag_to_grip_offsets_m (the fixed tag-to-pinch offset,
+#   in tag coordinates, left then right), workspace_roi, cloth_max_value/saturation (dark carbon
+#   against a light matte floor), min_component_area and glove_min_area_px (pixel areas: these are
+#   for half-resolution images), static_exclusion_mask (a wrist camera's own gripper).
+# Inspect fabric/labels and fabric/depth_valid with publish_debug_images: true while tuning.
+#
+# MEASURED 2026-11-18 (lab log 2026-11-18, "Glove test"; scripts/hw/glove_check.py, 26 frames, both gloves
+# at ~2.1-2.4 m, tags 24-32 px): glove colour, tag_depth_gate_m, tag_roi_upscale. Still template values:
+# tag_to_grip_offsets_m (pivot calibration), workspace_roi, cloth_* and the depth noise model.
+/**:
+  ros__parameters:
+    glove_tag_dictionary: DICT_4X4_50
+    glove_tag_ids:
+    - 21
+    - 20
+    glove_tag_size_m: 0.08
+    # Teal rubber gloves under the overhead lights: H 90-94 (shaded parts to 101), S median 140, V 44-192.
+    # H <= 100 excludes the blue cable pile behind the robots (H 102-105); S >= 100 excludes dark
+    # teal-grey trousers (S 70-100). Leaves ~7 colour regions per frame (the detector searches the
+    # whole image above 8); support around the tags 0.24-0.31 (gate 0.08).
+    glove_hsv_lower:
+    - 88
+    - 100
+    - 35
+    glove_hsv_upper:
+    - 100
+    - 255
+    - 255
+    tag_to_grip_offsets_m:
+    - 0.0
+    - -0.06
+    - -0.0155
+    - 0.0
+    - -0.06
+    - -0.0155
+    tag_max_reprojection_px: 2.0
+    tag_min_color_support: 0.08
+    tag_pixel_stddev: 0.7
+    tag_position_floor_m: 0.01
+    glove_min_area_px: 25
+    # Tag search, measured on 43 tag sightings (24-32 px): the 2x enlarged search gives precise corners
+    # (reprojection 0.03-0.11 px) but lost tag 20 in 4 frames (glare on the print); the original-size
+    # search found all 43 but with coarse corners (to 1.4 px; depth residual of the right pose to
+    # 11.9 mm, at the gate). Both, with 2x preferred: 43/43, reprojection <= 1.21 px, residual <= 8.9 mm.
+    tag_roi_upscale: 2
+    tag_roi_fallback_unscaled: true
+    tag_use_depth: true
+    # Depth residual of a tag pose (mean of 5 samples, tilt only), measured with the search above: right
+    # pose 0.7-8.9 mm (median 5.0), wrong pose of the ambiguous pair 25.7-32.8 mm (36 ambiguous tags at
+    # 2.1-2.4 m). 12 mm lies between; the default 5 mm (simulated depth) rejected 16 of 44 sightings.
+    # The rule that the other pose must fit at least 2x worse still applies.
+    tag_depth_gate_m: 0.012
+    # Depth sampled on a 7 x 7 grid over the tag (the wrist cameras need it, see their files): here it
+    # changes nothing in detection (43/43) and tightens the residuals (right pose 3.1-6.3 mm, wrong
+    # 23.2-27.6 mm), so the 12 mm gate keeps its margin.
+    tag_depth_grid: 7
+    workspace_roi:
+    - 0.18
+    - 0.5
+    - 0.56
+    - 1.0
+    segmentation_backend: hsv
+    segmentation_model: ''
+    model_input_size:
+    - 640
+    - 384
+    segmentation_confidence: 0.65
+    cloth_max_value: 130
+    cloth_max_saturation: 40
+    min_component_area: 75
+    uv_model: ''
+    uv_confidence: 0.7
+    uv_stddev: 0.05
+    min_depth_m: 0.25
+    max_depth_m: 3.0
+    depth_edge_threshold_m: 0.03
+    depth_noise_floor_m: 0.003
+    depth_noise_scale: 0.002
+    sample_stride: 8
+    max_depth_samples: 256
+    max_boundary_points: 240
+    max_tracks: 0
+    track_max_gap_sec: 0.2
+    track_fb_threshold_px: 1.0
+    sync_slop_sec: 0.015
+    # Sheet processing at 5 Hz; gloves on every frame (15 fps). Measured on the NUC (CPU only) 2026-11-18:
+    # a full frame takes 88-105 ms, so processing every frame (the default, 0) left frames 0.249 s old at
+    # publication and dropped nearly all of them; at 5 Hz the glove messages run at 15.0 Hz, 0.115 s old
+    # (p95 0.178 s). The simulated cell's monitor profile also ran the overhead at 5 Hz.
+    fabric_rate_hz: 5.0
+    max_age_sec: 0.25
+    require_robot_mask: false
+    static_exclusion_mask: ''
+    publish_debug_images: false

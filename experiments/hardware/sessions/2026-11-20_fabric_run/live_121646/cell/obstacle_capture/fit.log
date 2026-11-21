@@ -1,0 +1,15 @@
+{
+ "overhead": {
+  "changed_pixels": 1335,
+  "points_in_roi": 436,
+  "floor_z_corrected_m": 0.0022,
+  "floor_points": 25653,
+  "floor_tilt_error_deg": 0.761
+ },
+ "blue_wrist": "skipped: camera moved 0.5 cm or rotated 0.67 deg since the background",
+ "silver_wrist": "no object capture"
+}
+436 foreground points, 2 supported clusters; the selected obstacle has 289 points (66 %)
+overhead: 289 points in the selected obstacle
+prism: 18 sides (20 faces), top 0.180 m; capsule: center [-0.0013, 0.0823], radius 0.071 m, cylinder 0.180 m, cap 0.000 m (sphere 81.169 m), 3 L (the earlier box-based capsule: 7 L)
+written: /home/taha/ros2_colcon_ws/src/oarbots/experiments/hardware/sessions/2026-11-20_obstacle/refit_box3_121429_121533_jS1aDC/obstacle.yaml, .urdf, .obj, .png, obstacle_points.npz

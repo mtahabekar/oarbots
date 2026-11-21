@@ -1,0 +1,24 @@
+--- 21:40:42 (5 s window)
+twin: waiting for left hand | no frames | commands False | frame p95  ms, error p95  m, box clearance  m, CBF None
+gloves: overhead 15.0 Hz (left 33 %, right 1 %), blue_wrist 15.0 Hz (left 0 %, right 0 %), silver_wrist 15.0 Hz (left 0 %, right 0 %)
+fused hands fresh: left 31 %, right 1 % | commands cm/s {} | bridges {'blue': 'not armed', 'silver': 'not armed'} | deadman False
+--- 21:40:47 (5 s window)
+twin: twin following the measured grips | 245 frames, stale grip 0 % | commands False | frame p95 16.80 ms, error p95 0.051 m, box clearance 50.87 m, CBF feasible
+gloves: overhead 15.0 Hz (left 100 %, right 96 %), blue_wrist 15.0 Hz (left 0 %, right 0 %), silver_wrist 14.8 Hz (left 0 %, right 0 %)
+fused hands fresh: left 100 %, right 96 % | commands cm/s {'blue': 0.0, 'silver': 0.0} | bridges {'blue': 'not armed', 'silver': 'not armed'} | deadman False
+--- 21:40:52 (5 s window)
+twin: twin following the measured grips | 269 frames, stale grip 0 % | commands False | frame p95 16.67 ms, error p95 0.084 m, box clearance 50.82 m, CBF feasible
+gloves: overhead 15.0 Hz (left 100 %, right 99 %), blue_wrist 15.0 Hz (left 0 %, right 0 %), silver_wrist 14.8 Hz (left 0 %, right 0 %)
+fused hands fresh: left 100 %, right 99 % | commands cm/s {'blue': 0.0, 'silver': 0.0} | bridges {'blue': 'not armed', 'silver': 'not armed'} | deadman False
+--- 21:40:57 (5 s window)
+twin: twin following the measured grips | 269 frames, stale grip 0 % | commands False | frame p95 16.68 ms, error p95 0.098 m, box clearance 50.81 m, CBF feasible
+gloves: overhead 15.0 Hz (left 100 %, right 93 %), blue_wrist 15.0 Hz (left 0 %, right 0 %), silver_wrist 15.0 Hz (left 0 %, right 0 %)
+fused hands fresh: left 100 %, right 93 % | commands cm/s {'blue': 0.0, 'silver': 0.0} | bridges {'blue': 'not armed', 'silver': 'not armed'} | deadman True
+--- 21:41:02 (5 s window)
+twin: twin following the measured grips | 269 frames, stale grip 0 % | commands False | frame p95 16.56 ms, error p95 0.076 m, box clearance 50.81 m, CBF feasible
+gloves: overhead 15.0 Hz (left 100 %, right 93 %), blue_wrist 15.0 Hz (left 0 %, right 0 %), silver_wrist 15.0 Hz (left 0 %, right 0 %)
+fused hands fresh: left 100 %, right 93 % | commands cm/s {'blue': 0.0, 'silver': 0.0} | bridges {'blue': 'not armed', 'silver': 'not armed'} | deadman True
+--- 21:41:07 (5 s window)
+twin: twin following the measured grips | 269 frames, stale grip 0 % | commands False | frame p95 16.50 ms, error p95 0.112 m, box clearance 50.80 m, CBF feasible
+gloves: overhead 15.0 Hz (left 100 %, right 93 %), blue_wrist 14.8 Hz (left 0 %, right 0 %), silver_wrist 15.0 Hz (left 0 %, right 0 %)
+fused hands fresh: left 100 %, right 93 % | commands cm/s {'blue': 0.0, 'silver': 0.0} | bridges {'blue': 'not armed', 'silver': 'not armed'} | deadman True

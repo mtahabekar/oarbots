@@ -1,0 +1,215 @@
+repeatability: 4 new evaluations in 4 groups (0 cached or repeated)
+repeatability: baseline 27.37, 27.05, 27.30, 27.14 mm, sd 0.14 mm -> detection threshold 1.00 mm
+resolution: 14x14 25.00, 20x20 26.57, 28x28 27.55, 40x40 27.33 mm -> required 14x14
+bending: best x0.1 (gain 0.14 mm, identifiable False, adopted False); shear: best x1 (gain 0.00 mm, identifiable True, adopted False)
+with grip points: shear best x1 (gain 0.00 mm, adopted False), bending best x0.0316 (gain 0.47 mm, adopted False)
+evaluation: 16 new evaluations in 8 groups (56 cached or repeated)
+deployed: 4 new evaluations in 4 groups (0 cached or repeated)
+heldout-scan-bend: 6 new evaluations in 3 groups (3 cached or repeated)
+heldout-scan-shear: 6 new evaluations in 3 groups (3 cached or repeated)
+heldout-scan-bend-grips: 6 new evaluations in 3 groups (3 cached or repeated)
+heldout-scan-shear-grips: 6 new evaluations in 3 groups (3 cached or repeated)
+Warp 1.17.0 initialized:
+   CUDA Toolkit 12.9, Driver 13.0
+   Devices:
+     "cpu"      : "x86_64"
+     "cuda:0"   : "NVIDIA GeForce RTX 5070 Laptop GPU" (8 GiB, sm_120, mempool enabled)
+   Kernel cache:
+     /tmp/oarbots-fabric-audit-gpu/1.17.0
+Module newton._src.utils.mesh 92b663b load on device 'cpu' took 0.87 ms  (cached)
+Module newton._src.geometry.bvh 58a3a49 load on device 'cuda:0' took 1.17 ms  (cached)
+Module newton._src.solvers.style3d.kernels 6e609e0 load on device 'cuda:0' took 1.97 ms  (cached)
+Module newton._src.solvers.style3d.collision.bvh.kernels eed0ece load on device 'cuda:0' took 1.21 ms  (cached)
+    Module newton._src.solvers.style3d.builder eb1b915 load on device 'cpu' took 0.25 ms  (cached)
+    Module newton._src.solvers.style3d.builder 013f25b load on device 'cuda:0' took 3.76 ms  (cached)
+SolverStyle3D::precompute() took 18.38 ms
+SolverStyle3D::precompute() took 160.74 ms
+Module capsule_cbf.newton_runtime 8379e06 load on device 'cuda:0' took 0.45 ms  (cached)
+Module newton._src.solvers.style3d.linear_solver f457b3c load on device 'cuda:0' took 1.18 ms  (cached)
+SolverStyle3D::precompute() took 9.66 ms
+SolverStyle3D::precompute() took 11.83 ms
+SolverStyle3D::precompute() took 74.05 ms
+SolverStyle3D::precompute() took 4.86 ms
+SolverStyle3D::precompute() took 6.52 ms
+SolverStyle3D::precompute() took 1.60 ms
+SolverStyle3D::precompute() took 1.86 ms
+SolverStyle3D::precompute() took 23.07 ms
+SolverStyle3D::precompute() took 1.55 ms
+SolverStyle3D::precompute() took 2.33 ms
+SolverStyle3D::precompute() took 23.49 ms
+SolverStyle3D::precompute() took 1.50 ms
+SolverStyle3D::precompute() took 1.76 ms
+SolverStyle3D::precompute() took 22.93 ms
+Warp 1.17.0 initialized:
+   CUDA Toolkit 12.9, Driver 13.0
+   Devices:
+     "cpu"      : "x86_64"
+     "cuda:0"   : "NVIDIA GeForce RTX 5070 Laptop GPU" (8 GiB, sm_120, mempool enabled)
+   Kernel cache:
+     /tmp/oarbots-fabric-audit-gpu/1.17.0
+Module newton._src.utils.mesh 92b663b load on device 'cpu' took 0.75 ms  (cached)
+Module newton._src.geometry.bvh 58a3a49 load on device 'cuda:0' took 1.21 ms  (cached)
+Module newton._src.solvers.style3d.kernels 6e609e0 load on device 'cuda:0' took 1.45 ms  (cached)
+Module newton._src.solvers.style3d.collision.bvh.kernels eed0ece load on device 'cuda:0' took 0.86 ms  (cached)
+    Module newton._src.solvers.style3d.builder eb1b915 load on device 'cpu' took 0.16 ms  (cached)
+    Module newton._src.solvers.style3d.builder 013f25b load on device 'cuda:0' took 5.59 ms  (cached)
+SolverStyle3D::precompute() took 16.57 ms
+SolverStyle3D::precompute() took 163.61 ms
+Module capsule_cbf.newton_runtime 8379e06 load on device 'cuda:0' took 0.50 ms  (cached)
+Module newton._src.solvers.style3d.linear_solver f457b3c load on device 'cuda:0' took 1.37 ms  (cached)
+SolverStyle3D::precompute() took 9.76 ms
+SolverStyle3D::precompute() took 12.21 ms
+SolverStyle3D::precompute() took 256.26 ms
+SolverStyle3D::precompute() took 1.77 ms
+SolverStyle3D::precompute() took 2.72 ms
+SolverStyle3D::precompute() took 17.55 ms
+SolverStyle3D::precompute() took 1.63 ms
+SolverStyle3D::precompute() took 1.75 ms
+SolverStyle3D::precompute() took 23.54 ms
+SolverStyle3D::precompute() took 1.58 ms
+SolverStyle3D::precompute() took 23.29 ms
+Warp 1.17.0 initialized:
+   CUDA Toolkit 12.9, Driver 13.0
+   Devices:
+     "cpu"      : "x86_64"
+     "cuda:0"   : "NVIDIA GeForce RTX 5070 Laptop GPU" (8 GiB, sm_120, mempool enabled)
+   Kernel cache:
+     /tmp/oarbots-fabric-audit-gpu/1.17.0
+Module newton._src.utils.mesh 92b663b load on device 'cpu' took 1.00 ms  (cached)
+Module newton._src.geometry.bvh 58a3a49 load on device 'cuda:0' took 1.11 ms  (cached)
+Module newton._src.solvers.style3d.kernels 6e609e0 load on device 'cuda:0' took 1.97 ms  (cached)
+Module newton._src.solvers.style3d.collision.bvh.kernels eed0ece load on device 'cuda:0' took 1.08 ms  (cached)
+    Module newton._src.solvers.style3d.builder eb1b915 load on device 'cpu' took 0.23 ms  (cached)
+    Module newton._src.solvers.style3d.builder 013f25b load on device 'cuda:0' took 2.03 ms  (cached)
+SolverStyle3D::precompute() took 17.10 ms
+SolverStyle3D::precompute() took 163.99 ms
+Module capsule_cbf.newton_runtime 8379e06 load on device 'cuda:0' took 0.48 ms  (cached)
+Module newton._src.solvers.style3d.linear_solver f457b3c load on device 'cuda:0' took 1.27 ms  (cached)
+SolverStyle3D::precompute() took 228.74 ms
+SolverStyle3D::precompute() took 1.81 ms
+SolverStyle3D::precompute() took 2.01 ms
+SolverStyle3D::precompute() took 33.64 ms
+SolverStyle3D::precompute() took 5.58 ms
+SolverStyle3D::precompute() took 5.50 ms
+SolverStyle3D::precompute() took 1.55 ms
+SolverStyle3D::precompute() took 2.34 ms
+SolverStyle3D::precompute() took 23.63 ms
+SolverStyle3D::precompute() took 1.50 ms
+SolverStyle3D::precompute() took 1.62 ms
+SolverStyle3D::precompute() took 23.50 ms
+SolverStyle3D::precompute() took 1.51 ms
+SolverStyle3D::precompute() took 2.19 ms
+SolverStyle3D::precompute() took 22.66 ms
+Warp 1.17.0 initialized:
+   CUDA Toolkit 12.9, Driver 13.0
+   Devices:
+     "cpu"      : "x86_64"
+     "cuda:0"   : "NVIDIA GeForce RTX 5070 Laptop GPU" (8 GiB, sm_120, mempool enabled)
+   Kernel cache:
+     /tmp/oarbots-fabric-audit-gpu/1.17.0
+Module newton._src.utils.mesh 92b663b load on device 'cpu' took 0.77 ms  (cached)
+Module newton._src.geometry.bvh 58a3a49 load on device 'cuda:0' took 0.94 ms  (cached)
+Module newton._src.solvers.style3d.kernels 6e609e0 load on device 'cuda:0' took 1.94 ms  (cached)
+Module newton._src.solvers.style3d.collision.bvh.kernels eed0ece load on device 'cuda:0' took 1.18 ms  (cached)
+    Module newton._src.solvers.style3d.builder eb1b915 load on device 'cpu' took 0.26 ms  (cached)
+    Module newton._src.solvers.style3d.builder 013f25b load on device 'cuda:0' took 4.08 ms  (cached)
+SolverStyle3D::precompute() took 18.74 ms
+SolverStyle3D::precompute() took 161.23 ms
+Module capsule_cbf.newton_runtime 8379e06 load on device 'cuda:0' took 0.39 ms  (cached)
+Module newton._src.solvers.style3d.linear_solver f457b3c load on device 'cuda:0' took 1.17 ms  (cached)
+SolverStyle3D::precompute() took 1.71 ms
+SolverStyle3D::precompute() took 2.83 ms
+SolverStyle3D::precompute() took 35.56 ms
+SolverStyle3D::precompute() took 1.78 ms
+SolverStyle3D::precompute() took 2.00 ms
+SolverStyle3D::precompute() took 34.18 ms
+SolverStyle3D::precompute() took 9.56 ms
+SolverStyle3D::precompute() took 4.84 ms
+SolverStyle3D::precompute() took 1.49 ms
+SolverStyle3D::precompute() took 1.70 ms
+SolverStyle3D::precompute() took 23.83 ms
+SolverStyle3D::precompute() took 1.48 ms
+SolverStyle3D::precompute() took 2.11 ms
+SolverStyle3D::precompute() took 22.71 ms
+Warp 1.17.0 initialized:
+   CUDA Toolkit 12.9, Driver 13.0
+   Devices:
+     "cpu"      : "x86_64"
+     "cuda:0"   : "NVIDIA GeForce RTX 5070 Laptop GPU" (8 GiB, sm_120, mempool enabled)
+   Kernel cache:
+     /tmp/oarbots-fabric-audit-gpu/1.17.0
+Module newton._src.utils.mesh 92b663b load on device 'cpu' took 0.78 ms  (cached)
+Module newton._src.geometry.bvh 58a3a49 load on device 'cuda:0' took 0.94 ms  (cached)
+Module newton._src.solvers.style3d.kernels 6e609e0 load on device 'cuda:0' took 1.86 ms  (cached)
+Module newton._src.solvers.style3d.collision.bvh.kernels eed0ece load on device 'cuda:0' took 1.17 ms  (cached)
+    Module newton._src.solvers.style3d.builder eb1b915 load on device 'cpu' took 0.22 ms  (cached)
+    Module newton._src.solvers.style3d.builder 013f25b load on device 'cuda:0' took 4.16 ms  (cached)
+SolverStyle3D::precompute() took 18.84 ms
+SolverStyle3D::precompute() took 164.12 ms
+Module capsule_cbf.newton_runtime 8379e06 load on device 'cuda:0' took 0.41 ms  (cached)
+Module newton._src.solvers.style3d.linear_solver f457b3c load on device 'cuda:0' took 1.18 ms  (cached)
+SolverStyle3D::precompute() took 9.52 ms
+SolverStyle3D::precompute() took 11.34 ms
+SolverStyle3D::precompute() took 192.40 ms
+SolverStyle3D::precompute() took 5.12 ms
+SolverStyle3D::precompute() took 5.46 ms
+SolverStyle3D::precompute() took 1.58 ms
+SolverStyle3D::precompute() took 1.77 ms
+SolverStyle3D::precompute() took 22.96 ms
+SolverStyle3D::precompute() took 1.53 ms
+SolverStyle3D::precompute() took 23.46 ms
+# Warm-up calibration and factor test
+
+Warm-up /home/taha/ros2_colcon_ws/src/oarbots/experiments/hardware/sessions/2026-11-20_fabric_run/warmup_10_0.1_111137 25:49; held out: held out live_115658 40:120; held out live_120408 20:90; held out warmup_hardware_215321 10:100
+
+Repeatability: baseline sd 0.14 mm over 4 runs; detection threshold 1.00 mm.
+
+Detected: required mesh 14x14; bending best x0.1 (gain 0.14 mm, adopted False); shear best x1 (gain 0.00 mm, adopted False); with grip points shear x1, bending x1.
+
+| Config | warm-up (fit) | held out live_115658 40:120 | held out live_120408 20:90 | held out warmup_hardware_215321 10:100 |
+| --- | --- | --- | --- | --- |
+| baseline | 27.3 (-22, 59) | 32.2 (-23, 88) | 46.0 (-64, 137) | 31.3 (+1, 123) |
+| S | 27.3 (-22, 59) | 32.2 (-23, 88) | 46.0 (-64, 137) | 31.3 (+1, 123) |
+| B | 27.3 (-22, 59) | 32.2 (-23, 88) | 46.0 (-64, 137) | 31.3 (+1, 123) |
+| BS | 27.3 (-22, 59) | 32.2 (-23, 88) | 46.0 (-64, 137) | 31.3 (+1, 123) |
+| G | 19.5 (+6, 45) | 27.5 (+4, 67) | 44.1 (-50, 134) | 29.5 (+5, 104) |
+| GS | 19.5 (+6, 45) | 27.5 (+4, 67) | 44.1 (-50, 134) | 29.5 (+5, 104) |
+| GB | 19.5 (+6, 45) | 27.5 (+4, 67) | 44.1 (-50, 134) | 29.5 (+5, 104) |
+| GBS | 19.5 (+6, 45) | 27.5 (+4, 67) | 44.1 (-50, 134) | 29.5 (+5, 104) |
+| R | 25.0 (-20, 52) | 31.2 (-17, 86) | 40.8 (-36, 132) | 28.5 (+3, 123) |
+| RS | 25.0 (-20, 52) | 31.2 (-17, 86) | 40.8 (-36, 132) | 28.5 (+3, 123) |
+| RB | 25.0 (-20, 52) | 31.2 (-17, 86) | 40.8 (-36, 132) | 28.5 (+3, 123) |
+| RBS | 25.0 (-20, 52) | 31.2 (-17, 86) | 40.8 (-36, 132) | 28.5 (+3, 123) |
+| RG | 18.5 (+7, 42) | 27.4 (+8, 70) | 40.4 (-14, 128) | 30.5 (+8, 101) |
+| RGS | 18.5 (+7, 42) | 27.4 (+8, 70) | 40.4 (-14, 128) | 30.5 (+8, 101) |
+| RGB | 18.5 (+7, 42) | 27.4 (+8, 70) | 40.4 (-14, 128) | 30.5 (+8, 101) |
+| RGBS | 18.5 (+7, 42) | 27.4 (+8, 70) | 40.4 (-14, 128) | 30.5 (+8, 101) |
+| joint@14 | 18.5 (+7, 42) | 27.4 (+8, 70) | 40.4 (-14, 128) | 30.5 (+8, 101) |
+| joint@40 | 19.5 (+6, 45) | 27.5 (+4, 67) | 44.1 (-50, 134) | 29.5 (+5, 104) |
+| deployed | 47.7 (-102, 145) | 42.6 (-74, 134) | 47.8 (-81, 142) | 32.1 (-3, 124) |
+
+Cells: objective mm (median mm, p95 mm). Main effects (mm^2 of mean square per frame, 95 % block-bootstrap interval):
+
+- warm-up (fit): R -78.1 [-123.5, -53.1]; G -324.4 [-355.0, -301.3]; B +0.0 [+0.0, +0.0]; S +0.0 [+0.0, +0.0]
+- held out live_115658 40:120: R -34.6 [-57.3, -15.0]; G -253.7 [-318.5, -185.0]; B +0.0 [+0.0, +0.0]; S +0.0 [+0.0, +0.0]
+- held out live_120408 20:90: R -379.3 [-438.3, -316.1]; G -101.8 [-128.7, -74.0]; B +0.0 [+0.0, +0.0]; S +0.0 [+0.0, +0.0]
+- held out warmup_hardware_215321 10:100: R -56.6 [-99.8, -15.4]; G +33.7 [-22.7, +84.5]; B +0.0 [+0.0, +0.0]; S +0.0 [+0.0, +0.0]
+
+Bending and shear one decade either side of the detected value on the held-out windows (objective mm):
+
+- bend, held out live_115658 40:120: -1.00 31.06, +0.00 31.19, +1.00 31.47
+- bend, held out live_120408 20:90: -1.00 43.83, +0.00 40.80, +1.00 38.99
+- bend, held out warmup_hardware_215321 10:100: -1.00 30.46, +0.00 28.52, +1.00 30.78
+- shear, held out live_115658 40:120: -1.00 30.58, +0.00 31.19, +1.00 34.24
+- shear, held out live_120408 20:90: -1.00 38.75, +0.00 40.80, +1.00 45.21
+- shear, held out warmup_hardware_215321 10:100: -1.00 26.92, +0.00 28.52, +1.00 31.88
+- bend with grip points, held out live_115658 40:120: -1.00 27.32, +0.00 27.40, +1.00 27.63
+- bend with grip points, held out live_120408 20:90: -1.00 40.38, +0.00 40.40, +1.00 44.75
+- bend with grip points, held out warmup_hardware_215321 10:100: -1.00 30.43, +0.00 30.48, +1.00 31.12
+- shear with grip points, held out live_115658 40:120: -1.00 27.42, +0.00 27.40, +1.00 29.09
+- shear with grip points, held out live_120408 20:90: -1.00 43.08, +0.00 40.40, +1.00 42.69
+- shear with grip points, held out warmup_hardware_215321 10:100: -1.00 25.50, +0.00 30.48, +1.00 30.97
+
+Adopted (held-out evidence): R=True, G=True, B=False, S=False
+
+R on = the coarser mesh instead of the finest; adopting R means the coarser mesh costs nothing measurable.

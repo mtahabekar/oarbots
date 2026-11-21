@@ -1,0 +1,77 @@
+config,mesh,window,objective_mm,median_mm,p95_abs_mm,over_30mm
+baseline,40,warm-up (fit),27.32,-21.7,59.3,0.478
+baseline,40,held out live_115658 40:120,32.24,-22.7,88.2,0.531
+baseline,40,held out live_120408 20:90,45.97,-64.4,137.0,0.83
+baseline,40,held out warmup_hardware_215321 10:100,31.27,0.6,123.3,0.433
+S,40,warm-up (fit),27.32,-21.7,59.3,0.478
+S,40,held out live_115658 40:120,32.24,-22.7,88.2,0.531
+S,40,held out live_120408 20:90,45.97,-64.4,137.0,0.83
+S,40,held out warmup_hardware_215321 10:100,31.27,0.6,123.3,0.433
+B,40,warm-up (fit),27.32,-21.7,59.3,0.478
+B,40,held out live_115658 40:120,32.24,-22.7,88.2,0.531
+B,40,held out live_120408 20:90,45.97,-64.4,137.0,0.83
+B,40,held out warmup_hardware_215321 10:100,31.27,0.6,123.3,0.433
+BS,40,warm-up (fit),27.32,-21.7,59.3,0.478
+BS,40,held out live_115658 40:120,32.24,-22.7,88.2,0.531
+BS,40,held out live_120408 20:90,45.97,-64.4,137.0,0.83
+BS,40,held out warmup_hardware_215321 10:100,31.27,0.6,123.3,0.433
+G,40,warm-up (fit),19.46,6.2,45.1,0.191
+G,40,held out live_115658 40:120,27.46,3.7,67.2,0.362
+G,40,held out live_120408 20:90,44.07,-49.8,134.2,0.82
+G,40,held out warmup_hardware_215321 10:100,29.51,4.8,104.3,0.345
+GS,40,warm-up (fit),19.46,6.2,45.1,0.191
+GS,40,held out live_115658 40:120,27.46,3.7,67.2,0.362
+GS,40,held out live_120408 20:90,44.07,-49.8,134.2,0.82
+GS,40,held out warmup_hardware_215321 10:100,29.51,4.8,104.3,0.345
+GB,40,warm-up (fit),19.46,6.2,45.1,0.191
+GB,40,held out live_115658 40:120,27.46,3.7,67.2,0.362
+GB,40,held out live_120408 20:90,44.07,-49.8,134.2,0.82
+GB,40,held out warmup_hardware_215321 10:100,29.51,4.8,104.3,0.345
+GBS,40,warm-up (fit),19.46,6.2,45.1,0.191
+GBS,40,held out live_115658 40:120,27.46,3.7,67.2,0.362
+GBS,40,held out live_120408 20:90,44.07,-49.8,134.2,0.82
+GBS,40,held out warmup_hardware_215321 10:100,29.51,4.8,104.3,0.345
+R,14,warm-up (fit),25.0,-20.5,52.3,0.393
+R,14,held out live_115658 40:120,31.19,-16.9,86.1,0.486
+R,14,held out live_120408 20:90,40.8,-36.3,131.9,0.631
+R,14,held out warmup_hardware_215321 10:100,28.52,2.6,123.3,0.356
+RS,14,warm-up (fit),25.0,-20.5,52.3,0.393
+RS,14,held out live_115658 40:120,31.19,-16.9,86.1,0.486
+RS,14,held out live_120408 20:90,40.8,-36.3,131.9,0.631
+RS,14,held out warmup_hardware_215321 10:100,28.52,2.6,123.3,0.356
+RB,14,warm-up (fit),25.0,-20.5,52.3,0.393
+RB,14,held out live_115658 40:120,31.19,-16.9,86.1,0.486
+RB,14,held out live_120408 20:90,40.8,-36.3,131.9,0.631
+RB,14,held out warmup_hardware_215321 10:100,28.52,2.6,123.3,0.356
+RBS,14,warm-up (fit),25.0,-20.5,52.3,0.393
+RBS,14,held out live_115658 40:120,31.19,-16.9,86.1,0.486
+RBS,14,held out live_120408 20:90,40.8,-36.3,131.9,0.631
+RBS,14,held out warmup_hardware_215321 10:100,28.52,2.6,123.3,0.356
+RG,14,warm-up (fit),18.55,7.3,42.2,0.167
+RG,14,held out live_115658 40:120,27.4,8.1,69.5,0.353
+RG,14,held out live_120408 20:90,40.4,-14.1,127.6,0.666
+RG,14,held out warmup_hardware_215321 10:100,30.48,8.2,101.5,0.38
+RGS,14,warm-up (fit),18.55,7.3,42.2,0.167
+RGS,14,held out live_115658 40:120,27.4,8.1,69.5,0.353
+RGS,14,held out live_120408 20:90,40.4,-14.1,127.6,0.666
+RGS,14,held out warmup_hardware_215321 10:100,30.48,8.2,101.5,0.38
+RGB,14,warm-up (fit),18.55,7.3,42.2,0.167
+RGB,14,held out live_115658 40:120,27.4,8.1,69.5,0.353
+RGB,14,held out live_120408 20:90,40.4,-14.1,127.6,0.666
+RGB,14,held out warmup_hardware_215321 10:100,30.48,8.2,101.5,0.38
+RGBS,14,warm-up (fit),18.55,7.3,42.2,0.167
+RGBS,14,held out live_115658 40:120,27.4,8.1,69.5,0.353
+RGBS,14,held out live_120408 20:90,40.4,-14.1,127.6,0.666
+RGBS,14,held out warmup_hardware_215321 10:100,30.48,8.2,101.5,0.38
+joint@14,14,warm-up (fit),18.55,7.3,42.2,0.167
+joint@14,14,held out live_115658 40:120,27.4,8.1,69.5,0.353
+joint@14,14,held out live_120408 20:90,40.4,-14.1,127.6,0.666
+joint@14,14,held out warmup_hardware_215321 10:100,30.48,8.2,101.5,0.38
+joint@40,40,warm-up (fit),19.46,6.2,45.1,0.191
+joint@40,40,held out live_115658 40:120,27.46,3.7,67.2,0.362
+joint@40,40,held out live_120408 20:90,44.07,-49.8,134.2,0.82
+joint@40,40,held out warmup_hardware_215321 10:100,29.51,4.8,104.3,0.345
+deployed,28,warm-up (fit),47.72,-102.4,145.2,0.891
+deployed,28,held out live_115658 40:120,42.56,-73.9,133.8,0.857
+deployed,28,held out live_120408 20:90,47.77,-81.0,141.8,0.881
+deployed,28,held out warmup_hardware_215321 10:100,32.07,-3.4,124.5,0.285

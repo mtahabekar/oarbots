@@ -1,0 +1,21 @@
+[INFO] [launch]: All log files can be found below /home/taha/.ros/log/2026-11-19-21-44-36-357554-taha-Legion-7-16IAX10-305062
+[INFO] [launch]: Default logging verbosity is set to INFO
+[INFO] [launch.user]: Using nominal grip transforms from /home/taha/ros2_colcon_ws/src/oarbots/experiments/hardware/sessions/2026-11-19_fabric_run/warmup_hardware_214436/cell/calibration.yaml (shadow run, no commands).
+[INFO] [calibration_publisher-1]: process started with pid [305067]
+[INFO] [fusion-2]: process started with pid [305068]
+[INFO] [observer-3]: process started with pid [305069]
+[INFO] [twin-4]: process started with pid [305070]
+[INFO] [parameter_bank-5]: process started with pid [305071]
+[INFO] [demo_markers-6]: process started with pid [305072]
+[INFO] [rviz2-7]: process started with pid [305073]
+[INFO] [recorder-8]: process started with pid [305074]
+[INFO] [twin_recorder-9]: process started with pid [305075]
+[rviz2-7] [INFO] [1795142676.662537617] [rviz2]: Stereo is NOT SUPPORTED
+[rviz2-7] [INFO] [1795142676.662628311] [rviz2]: OpenGl version: 4.6 (GLSL 4.6)
+[rviz2-7] [INFO] [1795142676.686576747] [rviz2]: Stereo is NOT SUPPORTED
+[calibration_publisher-1] [INFO] [1795142676.830945361] [cell_calibration]: published 5 calibration transforms from /home/taha/ros2_colcon_ws/src/oarbots/experiments/hardware/sessions/2026-11-19_fabric_run/warmup_hardware_214436/cell/calibration.yaml
+[rviz2-7] [INFO] [1795142676.835373209] [rviz2]: Stereo is NOT SUPPORTED
+[twin-4] [INFO] [1795142678.035601872] [fabric_twin]: fabric twin waiting for four grips; cloth library at /home/taha/ros2_colcon_ws/src/fabric_sim_isaacsim_newton
+[observer-3] [INFO] [1795142678.112766777] [fabric_state_estimator]: Preparing physics backend before accepting live captures
+[parameter_bank-5] [INFO] [1795142678.191005818] [fabric_parameter_bank]: parameter bank ready; depth from 2 cameras
+[twin-4] [INFO] [1795142783.200636210] [fabric_twin]: twin started from a surface between the grips in 0.8 s: 841 particles, obstacle clearance 50.932 m

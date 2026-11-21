@@ -1,0 +1,43 @@
+blue: commands for 95 s, grip range from its start: x -9/+12 cm, y -12/+12 cm, z -33/+9 cm
+   median 14.9 cm/s; grip [-0.391, -0.418, 1.053] -> [-0.366, -0.507, 1.025]; at most 0.5 cm past the box
+   t+   0 s  commanded  6.6 cm/s (mean vector [0.8, 0.4, -0.5])  delivered  4.6 cm/s  faces []  past 0.0 cm
+   t+   5 s  commanded 11.8 cm/s (mean vector [2.0, -1.5, -6.8])  delivered  8.3 cm/s  faces []  past 0.0 cm
+   t+  10 s  commanded 11.8 cm/s (mean vector [0.7, 1.8, 6.5])  delivered  8.5 cm/s  faces []  past 0.0 cm
+   t+  15 s  commanded 12.3 cm/s (mean vector [2.9, 0.4, -1.2])  delivered  7.1 cm/s  faces []  past 0.0 cm
+   t+  20 s  commanded 12.8 cm/s (mean vector [0.5, -5.2, 0.8])  delivered  7.4 cm/s  faces []  past 0.3 cm
+   t+  25 s  commanded  8.0 cm/s (mean vector [-0.8, -0.3, 1.0])  delivered  6.9 cm/s  faces []  past 0.0 cm
+   t+  30 s  commanded 10.7 cm/s (mean vector [6.6, -0.5, -0.4])  delivered  5.9 cm/s  faces []  past 0.3 cm
+   t+  35 s  commanded 12.7 cm/s (mean vector [2.1, -0.1, -0.8])  delivered  7.9 cm/s  faces []  past 0.0 cm
+   t+  40 s  commanded 10.7 cm/s (mean vector [2.2, 0.6, 3.6])  delivered  6.1 cm/s  faces []  past 0.0 cm
+   t+  45 s  commanded 10.6 cm/s (mean vector [-0.2, 1.7, -0.3])  delivered  8.2 cm/s  faces []  past 0.0 cm
+   t+  50 s  commanded 14.0 cm/s (mean vector [7.9, -3.8, -1.5])  delivered  6.8 cm/s  faces [x+y-]  past 0.1 cm
+   t+  55 s  commanded 14.9 cm/s (mean vector [14.1, -0.9, 0.7])  delivered  2.4 cm/s  faces [x+y-]  past 0.3 cm
+   t+  60 s  commanded 11.3 cm/s (mean vector [3.6, 2.0, 3.9])  delivered  7.3 cm/s  faces [x+]  past 0.3 cm
+   t+  65 s  commanded 10.6 cm/s (mean vector [1.8, 0.1, 6.7])  delivered  3.1 cm/s  faces [x+]  past 0.4 cm
+   t+  70 s  commanded 12.7 cm/s (mean vector [5.7, 1.2, -9.7])  delivered  8.1 cm/s  faces [x+]  past 0.1 cm
+   t+  75 s  commanded 12.4 cm/s (mean vector [3.2, -3.3, 10.6])  delivered  8.6 cm/s  faces [x+y-]  past 0.0 cm
+   t+  80 s  commanded 13.9 cm/s (mean vector [2.2, 6.7, -0.2])  delivered  8.3 cm/s  faces []  past 0.1 cm
+   t+  85 s  commanded 12.1 cm/s (mean vector [-1.0, -2.6, 2.0])  delivered  8.3 cm/s  faces []  past 0.5 cm
+   t+  90 s  commanded 11.0 cm/s (mean vector [2.7, -0.8, -4.0])  delivered  3.7 cm/s  faces []  past 0.0 cm
+silver: commands for 95 s, grip range from its start: x -12/+11 cm, y -12/+12 cm, z -32/+10 cm
+   median 14.7 cm/s; grip [0.382, -0.427, 1.058] -> [0.289, -0.543, 1.046]; at most 0.5 cm past the box
+   t+   0 s  commanded  5.3 cm/s (mean vector [-1.0, -0.3, -1.6])  delivered  3.5 cm/s  faces []  past 0.0 cm
+   t+   5 s  commanded 10.4 cm/s (mean vector [-0.2, -1.8, -4.4])  delivered  7.4 cm/s  faces []  past 0.0 cm
+   t+  10 s  commanded 10.8 cm/s (mean vector [1.4, 2.2, 5.5])  delivered  7.6 cm/s  faces []  past 0.0 cm
+   t+  15 s  commanded 13.0 cm/s (mean vector [-8.2, -0.6, -0.6])  delivered  7.6 cm/s  faces [x-]  past 0.2 cm
+   t+  20 s  commanded 11.7 cm/s (mean vector [0.8, -4.3, 0.9])  delivered  6.7 cm/s  faces []  past 0.2 cm
+   t+  25 s  commanded  9.8 cm/s (mean vector [0.1, -1.1, 0.7])  delivered  7.3 cm/s  faces []  past 0.0 cm
+   t+  30 s  commanded 11.1 cm/s (mean vector [-6.7, -1.1, -1.2])  delivered  4.8 cm/s  faces []  past 0.5 cm
+   t+  35 s  commanded 12.8 cm/s (mean vector [-2.3, -0.4, 5.5])  delivered  8.0 cm/s  faces [y-]  past 0.0 cm
+   t+  40 s  commanded 12.4 cm/s (mean vector [-0.2, -0.7, 2.1])  delivered  4.8 cm/s  faces []  past 0.4 cm
+   t+  45 s  commanded 12.4 cm/s (mean vector [-2.7, 2.6, -0.7])  delivered  8.2 cm/s  faces []  past 0.0 cm
+   t+  50 s  commanded 13.6 cm/s (mean vector [-7.7, -4.3, -1.0])  delivered  6.0 cm/s  faces [x-y-]  past 0.0 cm
+   t+  55 s  commanded 14.7 cm/s (mean vector [-13.5, -1.1, 0.2])  delivered  3.2 cm/s  faces [x-y-]  past 0.1 cm
+   t+  60 s  commanded 10.9 cm/s (mean vector [-4.0, -0.6, 1.6])  delivered  6.0 cm/s  faces [x-]  past 0.2 cm
+   t+  65 s  commanded 11.0 cm/s (mean vector [-4.7, 0.6, -0.2])  delivered  4.3 cm/s  faces []  past 0.0 cm
+   t+  70 s  commanded 12.8 cm/s (mean vector [-2.6, -0.0, 12.4])  delivered  4.9 cm/s  faces [x-z+]  past 0.4 cm
+   t+  75 s  commanded 11.6 cm/s (mean vector [-2.0, 0.6, -10.1])  delivered  8.2 cm/s  faces [x-]  past 0.4 cm
+   t+  80 s  commanded 12.8 cm/s (mean vector [-0.1, 3.8, 8.2])  delivered  9.4 cm/s  faces []  past 0.3 cm
+   t+  85 s  commanded 12.0 cm/s (mean vector [-1.0, -4.4, 1.9])  delivered  7.0 cm/s  faces [y-]  past 0.0 cm
+   t+  90 s  commanded 11.3 cm/s (mean vector [-1.8, -1.1, -3.8])  delivered  2.9 cm/s  faces [y-]  past 0.1 cm
+twin while enabled: none (commands sent) 86 %, a grip measurement is missing 14 %

@@ -1,0 +1,22 @@
+READY for supervised warm-up preparation, verified 2026-11-20T08:00:23.487856-05:00.
+Both arms at grasp pose: Blue largest joint error 0.90 deg; Silver 1.07 deg (1.5 deg tolerance).
+All three camera streams 15 Hz; post-motion median frame age: overhead 0.086 s, Blue 0.075 s, Silver 0.085 s.
+Both force sensors: raw about 97 Hz, calibrated about 83 Hz. Blue sensor hosted on Silver.
+Tablet deadman and e-stop streams about 50 Hz; both false at readiness.
+Final 20-second window: both hands fresh within 0.5 s for 100% of samples, twin stale-grip frames 0%.
+Twin: following measured grips; no fault; CBF feasible. Parameter bank running.
+Commands OFF, both bridges NOT ARMED, warm-up IDLE.
+Empty area beneath sheet confirmed by operator; per-session empty-cell profile used.
+Operator requested voice instructions; spoken guidance and readiness announcement delivered through spd-say; speaker unmuted at 80%.
+Existing device builds retained per runbook; no builds or deployments performed.
+
+Next, with the operator holding both gloves steady and a second person at the tablet:
+  scripts/hw/fabric_run.sh enable
+  scripts/hw/fabric_run.sh warmup
+Follow spoken deadman instructions. Releasing the deadman stops both arms.
+To stop the session:
+  scripts/hw/fabric_run.sh disable
+  scripts/hw/fabric_run.sh stop-twin
+To save after stopping:
+  scripts/hw/fabric_run.sh save /home/taha/ros2_colcon_ws/src/oarbots/experiments/hardware/sessions/2026-11-20_fabric_run/warmup_ready_075313
+  scripts/hw/fabric_run.sh review /home/taha/ros2_colcon_ws/src/oarbots/experiments/hardware/sessions/2026-11-20_fabric_run/warmup_ready_075313

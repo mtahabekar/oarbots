@@ -1,0 +1,3202 @@
+[
+ {
+  "stamp": 1795193320479656633,
+  "level": 1,
+  "message": "edge strain bound violated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193320249259172",
+   "prior_depth_p95_m": "0.07334395136383984",
+   "marginal_innovation_score": "3.602148926436179",
+   "capture_to_analysis_ms": "229.092307",
+   "hand_age_sec": "[0.066697817, 0.066697817]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193320899726952,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193320649383840",
+   "prior_depth_p95_m": "0.0634127507182196",
+   "marginal_innovation_score": "3.2918988588656775",
+   "capture_to_analysis_ms": "240.587709",
+   "hand_age_sec": "[0.0, 0.0]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193321399424288,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193321049500388",
+   "prior_depth_p95_m": "0.07603269064316578",
+   "marginal_innovation_score": "2.299376754466891",
+   "capture_to_analysis_ms": "345.557103",
+   "hand_age_sec": "[0.0, 0.0]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193321899604932,
+  "level": 1,
+  "message": "edge strain bound violated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193321449629311",
+   "prior_depth_p95_m": "0.0654997616125612",
+   "marginal_innovation_score": "2.337098325730075",
+   "capture_to_analysis_ms": "240.431673",
+   "hand_age_sec": "[0.0, 0.0]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193322399420963,
+  "level": 1,
+  "message": "edge strain bound violated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193322049888382",
+   "prior_depth_p95_m": "0.06650915443376809",
+   "marginal_innovation_score": "1.8251597169578149",
+   "capture_to_analysis_ms": "240.075556",
+   "hand_age_sec": "[0.0, 0.0]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193322903534330,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193322650049175",
+   "prior_depth_p95_m": "0.05794620770704454",
+   "marginal_innovation_score": "1.3689083400818538",
+   "capture_to_analysis_ms": "252.074907",
+   "hand_age_sec": "[0.0, 0.0]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193323399576694,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193323050165371",
+   "prior_depth_p95_m": "0.08718197611102421",
+   "marginal_innovation_score": "3.8995271876848805",
+   "capture_to_analysis_ms": "234.539153",
+   "hand_age_sec": "[0.0, 0.0]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193323902323703,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193323650382446",
+   "prior_depth_p95_m": "0.060966257398526465",
+   "marginal_innovation_score": "2.3827504554824857",
+   "capture_to_analysis_ms": "250.643251",
+   "hand_age_sec": "[0.0, 0.0]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193324399452667,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193324050523539",
+   "prior_depth_p95_m": "0.0615873378384411",
+   "marginal_innovation_score": "1.6568951807325158",
+   "capture_to_analysis_ms": "339.489021",
+   "hand_age_sec": "[0.0, 0.0]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193324899500477,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193324450629583",
+   "prior_depth_p95_m": "0.04151131139483296",
+   "marginal_innovation_score": "0.7257281596773302",
+   "capture_to_analysis_ms": "249.201846",
+   "hand_age_sec": "[0.0, 0.0]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193325399615183,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193325051036036",
+   "prior_depth_p95_m": "0.07023406078122255",
+   "marginal_innovation_score": "3.3579797872926784",
+   "capture_to_analysis_ms": "255.794292",
+   "hand_age_sec": "[0.0, 0.0]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193325899488584,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193325651283910",
+   "prior_depth_p95_m": "0.06787114723199791",
+   "marginal_innovation_score": "2.966693079311741",
+   "capture_to_analysis_ms": "235.861359",
+   "hand_age_sec": "[0.0, 0.0]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193326399619728,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193326051456931",
+   "prior_depth_p95_m": "0.0886223585344146",
+   "marginal_innovation_score": "4.584477052688703",
+   "capture_to_analysis_ms": "246.213136",
+   "hand_age_sec": "[0.0, 0.0]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193326899485448,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193326651634031",
+   "prior_depth_p95_m": "0.09682045728014611",
+   "marginal_innovation_score": "4.5853506574357965",
+   "capture_to_analysis_ms": "241.317188",
+   "hand_age_sec": "[0.066684738, 0.066684738]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193327399514794,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193327051770457",
+   "prior_depth_p95_m": "0.07912081212358457",
+   "marginal_innovation_score": "3.118440288515636",
+   "capture_to_analysis_ms": "341.086848",
+   "hand_age_sec": "[0.066680874, 0.0]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193327899565790,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193327451959872",
+   "prior_depth_p95_m": "0.06967782735394622",
+   "marginal_innovation_score": "2.487978897747425",
+   "capture_to_analysis_ms": "250.457534",
+   "hand_age_sec": "[0.0, 0.0]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193328399668538,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193328052213116",
+   "prior_depth_p95_m": "0.08005283143003118",
+   "marginal_innovation_score": "3.9431185161427518",
+   "capture_to_analysis_ms": "237.6338",
+   "hand_age_sec": "[0.133339529, 0.066681299]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193328916408819,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193328652328223",
+   "prior_depth_p95_m": "0.08533770346353726",
+   "marginal_innovation_score": "6.864451596368936",
+   "capture_to_analysis_ms": "262.975004",
+   "hand_age_sec": "[0.0, 0.0]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193329399499736,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193329052478764",
+   "prior_depth_p95_m": "0.10119924073998286",
+   "marginal_innovation_score": "9.50589383878303",
+   "capture_to_analysis_ms": "341.951694",
+   "hand_age_sec": "[0.066680688, 0.0]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193329908743479,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193329652758299",
+   "prior_depth_p95_m": "0.09148418528042701",
+   "marginal_innovation_score": "8.73181187471706",
+   "capture_to_analysis_ms": "254.660973",
+   "hand_age_sec": "[0.0, 0.0]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193330399570752,
+  "level": 1,
+  "message": "edge strain bound violated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193330052876253",
+   "prior_depth_p95_m": "0.09351402840459155",
+   "marginal_innovation_score": "5.097871109879931",
+   "capture_to_analysis_ms": "251.250607",
+   "hand_age_sec": "[0.133380911, 0.0]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193330906679986,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193330653213160",
+   "prior_depth_p95_m": "0.07458613557719249",
+   "marginal_innovation_score": "4.151033272378873",
+   "capture_to_analysis_ms": "252.117296",
+   "hand_age_sec": "[0.06671151, 0.0]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193331399540307,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193331053420081",
+   "prior_depth_p95_m": "0.0960593855379592",
+   "marginal_innovation_score": "4.236529372134494",
+   "capture_to_analysis_ms": "334.797517",
+   "hand_age_sec": "[0.133376301, 0.0]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193331907442443,
+  "level": 1,
+  "message": "edge strain bound violated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193331653690478",
+   "prior_depth_p95_m": "0.0715401596135089",
+   "marginal_innovation_score": "3.2850331858144672",
+   "capture_to_analysis_ms": "252.510373",
+   "hand_age_sec": "[0.0, 0.0]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193332399607240,
+  "level": 1,
+  "message": "edge strain bound violated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193332053811083",
+   "prior_depth_p95_m": "0.09800060538271152",
+   "marginal_innovation_score": "6.980487057707737",
+   "capture_to_analysis_ms": "262.724161",
+   "hand_age_sec": "[0.0, 0.0]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193332899564542,
+  "level": 1,
+  "message": "edge strain bound violated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193332453862369",
+   "prior_depth_p95_m": "0.08571191991542361",
+   "marginal_innovation_score": "6.411975495048795",
+   "capture_to_analysis_ms": "255.681262",
+   "hand_age_sec": "[0.266739922, 0.0]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193333399634603,
+  "level": 1,
+  "message": "edge strain bound violated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193333054091977",
+   "prior_depth_p95_m": "0.08774159009727771",
+   "marginal_innovation_score": "8.646020681791976",
+   "capture_to_analysis_ms": "255.699008",
+   "hand_age_sec": "[0.0, 0.0]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193333914496623,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193333654251603",
+   "prior_depth_p95_m": "0.0962456383538814",
+   "marginal_innovation_score": "6.174916878462146",
+   "capture_to_analysis_ms": "259.038068",
+   "hand_age_sec": "[0.0, 0.0]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193334405068106,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193334054385262",
+   "prior_depth_p95_m": "0.09593377204966572",
+   "marginal_innovation_score": "5.513705828205828",
+   "capture_to_analysis_ms": "349.494308",
+   "hand_age_sec": "[0.0, 0.0]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193334916258171,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193334654612464",
+   "prior_depth_p95_m": "0.1021959211348945",
+   "marginal_innovation_score": "10.843556478341668",
+   "capture_to_analysis_ms": "260.005436",
+   "hand_age_sec": "[0.0, 0.0]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193335399641876,
+  "level": 1,
+  "message": "edge strain bound violated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193335054744944",
+   "prior_depth_p95_m": "0.10349981382672312",
+   "marginal_innovation_score": "7.966264591237477",
+   "capture_to_analysis_ms": "253.019097",
+   "hand_age_sec": "[0.0, 0.0]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193335909284008,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193335655019875",
+   "prior_depth_p95_m": "0.09787005605823879",
+   "marginal_innovation_score": "6.662912977382511",
+   "capture_to_analysis_ms": "252.892679",
+   "hand_age_sec": "[0.0, 0.0]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193336406708487,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193336055232945",
+   "prior_depth_p95_m": "0.09926701882856784",
+   "marginal_innovation_score": "9.551872876977056",
+   "capture_to_analysis_ms": "350.198802",
+   "hand_age_sec": "[0.0, 0.0]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193336910609092,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193336655445760",
+   "prior_depth_p95_m": "0.1024960883887877",
+   "marginal_innovation_score": "7.126181798039989",
+   "capture_to_analysis_ms": "253.745284",
+   "hand_age_sec": "[0.0, 0.0]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193337399764188,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193337055579321",
+   "prior_depth_p95_m": "0.1112415181182093",
+   "marginal_innovation_score": "7.592833762622687",
+   "capture_to_analysis_ms": "251.676885",
+   "hand_age_sec": "[0.0, 0.0]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193337899634889,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193337455726223",
+   "prior_depth_p95_m": "0.11015729456418318",
+   "marginal_innovation_score": "7.685644576201096",
+   "capture_to_analysis_ms": "251.043268",
+   "hand_age_sec": "[0.0, 0.0]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193338399553552,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193338055873677",
+   "prior_depth_p95_m": "0.12188528202480196",
+   "marginal_innovation_score": "7.294747282049333",
+   "capture_to_analysis_ms": "249.081756",
+   "hand_age_sec": "[0.133350789, 0.066679365]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193338899664442,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193338656110528",
+   "prior_depth_p95_m": "0.11192732244576048",
+   "marginal_innovation_score": "7.598493268978307",
+   "capture_to_analysis_ms": "242.029855",
+   "hand_age_sec": "[0.0, 0.0]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193339399534026,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193339056331723",
+   "prior_depth_p95_m": "0.09905601407253274",
+   "marginal_innovation_score": "6.270561447246445",
+   "capture_to_analysis_ms": "251.891083",
+   "hand_age_sec": "[0.0, 0.0]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193339911584639,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193339656529096",
+   "prior_depth_p95_m": "0.10681325714489105",
+   "marginal_innovation_score": "7.294295476907149",
+   "capture_to_analysis_ms": "253.610165",
+   "hand_age_sec": "[0.0, 0.0]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193340407046988,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193340056691736",
+   "prior_depth_p95_m": "0.1102560226705113",
+   "marginal_innovation_score": "8.238067673649946",
+   "capture_to_analysis_ms": "349.009017",
+   "hand_age_sec": "[0.0, 0.0]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193340899693511,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193340656973214",
+   "prior_depth_p95_m": "0.0894786086662942",
+   "marginal_innovation_score": "4.525145331216121",
+   "capture_to_analysis_ms": "241.368413",
+   "hand_age_sec": "[0.0, 0.0]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193341399338621,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193341057129228",
+   "prior_depth_p95_m": "0.07669057347250877",
+   "marginal_innovation_score": "5.109853214741396",
+   "capture_to_analysis_ms": "251.498075",
+   "hand_age_sec": "[0.0, 0.0]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193341909271134,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193341657318658",
+   "prior_depth_p95_m": "0.08264069030714545",
+   "marginal_innovation_score": "6.579308453341881",
+   "capture_to_analysis_ms": "250.577033",
+   "hand_age_sec": "[0.0, 0.0]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193342399642832,
+  "level": 1,
+  "message": "edge strain bound violated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193342057490177",
+   "prior_depth_p95_m": "0.08294853220781179",
+   "marginal_innovation_score": "9.26937409579368",
+   "capture_to_analysis_ms": "250.465507",
+   "hand_age_sec": "[0.0, 0.0]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193342908902870,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193342657714351",
+   "prior_depth_p95_m": "0.09758470171808416",
+   "marginal_innovation_score": "12.693039883319452",
+   "capture_to_analysis_ms": "249.968102",
+   "hand_age_sec": "[0.066682657, 0.066682657]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193343399695403,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193343057927773",
+   "prior_depth_p95_m": "0.0933008311575261",
+   "marginal_innovation_score": "8.897287218253439",
+   "capture_to_analysis_ms": "247.086134",
+   "hand_age_sec": "[0.0, 0.0]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193343901556193,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193343658082143",
+   "prior_depth_p95_m": "0.07986369212275533",
+   "marginal_innovation_score": "13.359084128544687",
+   "capture_to_analysis_ms": "242.244486",
+   "hand_age_sec": "[0.0, 0.0]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193344399675218,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193344058293887",
+   "prior_depth_p95_m": "0.08740005696169612",
+   "marginal_innovation_score": "7.823552998795437",
+   "capture_to_analysis_ms": "248.18873",
+   "hand_age_sec": "[0.066674554, 0.066674554]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193344907823123,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193344658546050",
+   "prior_depth_p95_m": "0.06765435549985005",
+   "marginal_innovation_score": "5.03505351616251",
+   "capture_to_analysis_ms": "248.128989",
+   "hand_age_sec": "[0.066691888, 0.0]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193345399528624,
+  "level": 1,
+  "message": "edge strain bound violated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193345058690945",
+   "prior_depth_p95_m": "0.06570125583545015",
+   "marginal_innovation_score": "2.059933583344882",
+   "capture_to_analysis_ms": "252.49894",
+   "hand_age_sec": "[0.466836783, 0.0]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193345901937780,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193345658901896",
+   "prior_depth_p95_m": "0.06732874309440148",
+   "marginal_innovation_score": "3.5860331019224336",
+   "capture_to_analysis_ms": "241.703826",
+   "hand_age_sec": "[null, 0.0]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193346399549535,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193346059037518",
+   "prior_depth_p95_m": "0.04206275678202276",
+   "marginal_innovation_score": "1.333632005523341",
+   "capture_to_analysis_ms": "242.853716",
+   "hand_age_sec": "[null, 0.06669984]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193346899610020,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193346459139109",
+   "prior_depth_p95_m": "0.057070923680784216",
+   "marginal_innovation_score": "3.0900994090943805",
+   "capture_to_analysis_ms": "238.288729",
+   "hand_age_sec": "[null, 0.0]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193347399305748,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193347059407785",
+   "prior_depth_p95_m": "0.06761946958852882",
+   "marginal_innovation_score": "3.2205926369445717",
+   "capture_to_analysis_ms": "244.071819",
+   "hand_age_sec": "[0.0, 0.0]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193347905328268,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193347659706248",
+   "prior_depth_p95_m": "0.06496035008781609",
+   "marginal_innovation_score": "1.7790185513870067",
+   "capture_to_analysis_ms": "244.400996",
+   "hand_age_sec": "[0.066684283, 0.066684283]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193348399537879,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193348059832491",
+   "prior_depth_p95_m": "0.06722423564700486",
+   "marginal_innovation_score": "3.5339908281372794",
+   "capture_to_analysis_ms": "252.282531",
+   "hand_age_sec": "[0.0, 0.0]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193348899342085,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193348459997702",
+   "prior_depth_p95_m": "0.1022773651017942",
+   "marginal_innovation_score": "4.1019076857481105",
+   "capture_to_analysis_ms": "250.605235",
+   "hand_age_sec": "[0.048144211, 0.066730342]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193349399556429,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193349060201598",
+   "prior_depth_p95_m": "0.11365343101101463",
+   "marginal_innovation_score": "5.731200049256058",
+   "capture_to_analysis_ms": "245.695268",
+   "hand_age_sec": "[0.048351408, 0.066702156]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193349904667570,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193349660484179",
+   "prior_depth_p95_m": "0.11684133970478416",
+   "marginal_innovation_score": "5.612241635190633",
+   "capture_to_analysis_ms": "243.032466",
+   "hand_age_sec": "[0.048438052, 0.066646022]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193350399372488,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193349860556114",
+   "prior_depth_p95_m": "0.08800798154790923",
+   "marginal_innovation_score": "5.7491587024507504",
+   "capture_to_analysis_ms": "245.812126",
+   "hand_age_sec": "[0.048341967, 0.0]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193350905869119,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193350660921103",
+   "prior_depth_p95_m": "0.07942794101429564",
+   "marginal_innovation_score": "6.526196128113909",
+   "capture_to_analysis_ms": "243.81226",
+   "hand_age_sec": "[0.048444019, 0.0]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193351399478035,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193351061127017",
+   "prior_depth_p95_m": "0.07049720111316002",
+   "marginal_innovation_score": "4.90543431925932",
+   "capture_to_analysis_ms": "241.715459",
+   "hand_age_sec": "[0.448649933, 0.0]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193351899566748,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193351661314915",
+   "prior_depth_p95_m": "0.11479761796106532",
+   "marginal_innovation_score": "9.432862491184073",
+   "capture_to_analysis_ms": "232.163683",
+   "hand_age_sec": "[null, 0.066703993]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193352399550030,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193352061402999",
+   "prior_depth_p95_m": "0.0894372299054317",
+   "marginal_innovation_score": "7.1473144413277305",
+   "capture_to_analysis_ms": "246.711111",
+   "hand_age_sec": "[0.0, 0.0]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193352899502458,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193352461544731",
+   "prior_depth_p95_m": "0.07549425060078113",
+   "marginal_innovation_score": "6.70902886107218",
+   "capture_to_analysis_ms": "242.392923",
+   "hand_age_sec": "[0.0, 0.0]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193353399627430,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193353061817043",
+   "prior_depth_p95_m": "0.0735498897973182",
+   "marginal_innovation_score": "5.611999969161028",
+   "capture_to_analysis_ms": "248.04159",
+   "hand_age_sec": "[0.0, 0.0]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193353910421015,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193353662014520",
+   "prior_depth_p95_m": "0.04586758939294705",
+   "marginal_innovation_score": "3.828368766590408",
+   "capture_to_analysis_ms": "246.92902",
+   "hand_age_sec": "[0.0, 0.0]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193354409196550,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193354062285196",
+   "prior_depth_p95_m": "0.07246606081954149",
+   "marginal_innovation_score": "3.7556927210747686",
+   "capture_to_analysis_ms": "345.61231",
+   "hand_age_sec": "[0.0, 0.0]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193354909730732,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193354662454898",
+   "prior_depth_p95_m": "0.07884203751423469",
+   "marginal_innovation_score": "3.248243189337566",
+   "capture_to_analysis_ms": "245.895241",
+   "hand_age_sec": "[0.0, 0.0]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193355399353620,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193355062526514",
+   "prior_depth_p95_m": "0.08143653284236602",
+   "marginal_innovation_score": "3.047855013321167",
+   "capture_to_analysis_ms": "239.163247",
+   "hand_age_sec": "[0.0, 0.0]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193355919418295,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193355662782979",
+   "prior_depth_p95_m": "0.0782834900062941",
+   "marginal_innovation_score": "1.8952113134155395",
+   "capture_to_analysis_ms": "255.242047",
+   "hand_age_sec": "[0.0, 0.0]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193356416293381,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193356062964265",
+   "prior_depth_p95_m": "0.09605553031988036",
+   "marginal_innovation_score": "3.069648907579335",
+   "capture_to_analysis_ms": "352.140976",
+   "hand_age_sec": "[0.0, 0.0]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193356899631669,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193356463176923",
+   "prior_depth_p95_m": "0.09712407877160845",
+   "marginal_innovation_score": "2.927441386160392",
+   "capture_to_analysis_ms": "256.337611",
+   "hand_age_sec": "[0.0, 0.0]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193357399705844,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193357063522300",
+   "prior_depth_p95_m": "0.07452901455962901",
+   "marginal_innovation_score": "2.806976307417085",
+   "capture_to_analysis_ms": "249.795616",
+   "hand_age_sec": "[0.0, 0.0]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193357911273639,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193357663610406",
+   "prior_depth_p95_m": "0.06487241134487733",
+   "marginal_innovation_score": "2.8376114104940418",
+   "capture_to_analysis_ms": "246.474048",
+   "hand_age_sec": "[0.0, 0.0]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193358399613011,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193358063753831",
+   "prior_depth_p95_m": "0.06826836040481457",
+   "marginal_innovation_score": "3.69642754484462",
+   "capture_to_analysis_ms": "257.010425",
+   "hand_age_sec": "[0.0, 0.0]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193358923452668,
+  "level": 1,
+  "message": "edge strain bound violated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193358664074467",
+   "prior_depth_p95_m": "0.0925940784033582",
+   "marginal_innovation_score": "7.147965011618537",
+   "capture_to_analysis_ms": "258.113848",
+   "hand_age_sec": "[0.0, 0.0]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193359414830672,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193359064167195",
+   "prior_depth_p95_m": "0.10889546847594973",
+   "marginal_innovation_score": "10.06592015558514",
+   "capture_to_analysis_ms": "349.369207",
+   "hand_age_sec": "[0.0, 0.0]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193359899547928,
+  "level": 1,
+  "message": "edge strain bound violated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193359464238509",
+   "prior_depth_p95_m": "0.1065068225411309",
+   "marginal_innovation_score": "8.963372410905059",
+   "capture_to_analysis_ms": "256.841636",
+   "hand_age_sec": "[0.066659087, 0.0]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193360399716869,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193360064400860",
+   "prior_depth_p95_m": "0.09994907252015292",
+   "marginal_innovation_score": "7.440485660578588",
+   "capture_to_analysis_ms": "246.087841",
+   "hand_age_sec": "[0.0, 0.0]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193360915042526,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193360664631938",
+   "prior_depth_p95_m": "0.09126084057589796",
+   "marginal_innovation_score": "16.747391835248486",
+   "capture_to_analysis_ms": "249.045948",
+   "hand_age_sec": "[0.0, 0.0]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193361399530364,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193361064886836",
+   "prior_depth_p95_m": "0.10163881335504728",
+   "marginal_innovation_score": "16.878232369101443",
+   "capture_to_analysis_ms": "255.597821",
+   "hand_age_sec": "[0.0, 0.0]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193361908732278,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193361665060859",
+   "prior_depth_p95_m": "0.0815852062313747",
+   "marginal_innovation_score": "12.94034445565465",
+   "capture_to_analysis_ms": "242.629",
+   "hand_age_sec": "[0.0, 0.0]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193362399703851,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193362065161210",
+   "prior_depth_p95_m": "0.10907779818890878",
+   "marginal_innovation_score": "14.076240939518993",
+   "capture_to_analysis_ms": "246.111992",
+   "hand_age_sec": "[0.0, 0.0]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193362918837454,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193362665424309",
+   "prior_depth_p95_m": "0.091026033722411",
+   "marginal_innovation_score": "4.786660066578541",
+   "capture_to_analysis_ms": "251.997688",
+   "hand_age_sec": "[0.533576678, 0.0]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193363406226530,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193363065520035",
+   "prior_depth_p95_m": "0.10042865667673716",
+   "marginal_innovation_score": "7.66504538097243",
+   "capture_to_analysis_ms": "339.499993",
+   "hand_age_sec": "[0.066676241, 0.0]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193363899688619,
+  "level": 1,
+  "message": "edge strain bound violated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193363465663351",
+   "prior_depth_p95_m": "0.09003112147670249",
+   "marginal_innovation_score": "7.082406002450836",
+   "capture_to_analysis_ms": "244.429587",
+   "hand_age_sec": "[0.066682244, 0.066682244]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193364399568723,
+  "level": 1,
+  "message": "edge strain bound violated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193364065965655",
+   "prior_depth_p95_m": "0.0926434142800093",
+   "marginal_innovation_score": "6.1712193024326805",
+   "capture_to_analysis_ms": "253.108982",
+   "hand_age_sec": "[0.0, 0.0]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193364920124940,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193364666244704",
+   "prior_depth_p95_m": "0.07860668780376051",
+   "marginal_innovation_score": "6.259025756160043",
+   "capture_to_analysis_ms": "252.557058",
+   "hand_age_sec": "[0.066694565, 0.0]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193365399575791,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193365066459622",
+   "prior_depth_p95_m": "0.08287559968810478",
+   "marginal_innovation_score": "5.958656510086919",
+   "capture_to_analysis_ms": "242.349031",
+   "hand_age_sec": "[0.0, 0.0]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193365933414824,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193365466626152",
+   "prior_depth_p95_m": "0.08576974936854442",
+   "marginal_innovation_score": "7.236466429468699",
+   "capture_to_analysis_ms": "465.517574",
+   "hand_age_sec": "[0.0, 0.0]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193366408585197,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193366000055674",
+   "prior_depth_p95_m": "0.09694531645293507",
+   "marginal_innovation_score": "7.889252678385712",
+   "capture_to_analysis_ms": "407.112885",
+   "hand_age_sec": "[0.0, 0.0]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193366899773560,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193366618724788",
+   "prior_depth_p95_m": "0.07494976405816735",
+   "marginal_innovation_score": "8.477288785865605",
+   "capture_to_analysis_ms": "256.791702",
+   "hand_age_sec": "[0.018490574, 0.018490574]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193367407986167,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193367000393027",
+   "prior_depth_p95_m": "0.08318805886160278",
+   "marginal_innovation_score": "5.747509372282364",
+   "capture_to_analysis_ms": "406.00083",
+   "hand_age_sec": "[0.0, 0.0]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193367899534774,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193367419037101",
+   "prior_depth_p95_m": "0.06870855458294732",
+   "marginal_innovation_score": "5.709059292509777",
+   "capture_to_analysis_ms": "256.158159",
+   "hand_age_sec": "[0.018468148, 0.018468148]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193368399415855,
+  "level": 1,
+  "message": "edge strain bound violated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193368019266348",
+   "prior_depth_p95_m": "0.05585272411704458",
+   "marginal_innovation_score": "2.4718758443233546",
+   "capture_to_analysis_ms": "259.289467",
+   "hand_age_sec": "[0.018503316, 0.018503316]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193368899704842,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193368619519444",
+   "prior_depth_p95_m": "0.05741443087224416",
+   "marginal_innovation_score": "3.575593490596192",
+   "capture_to_analysis_ms": "247.333975",
+   "hand_age_sec": "[0.018374355, 0.018374355]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193369507800259,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193369219640466",
+   "prior_depth_p95_m": "0.0735495553562723",
+   "marginal_innovation_score": "4.95223246127644",
+   "capture_to_analysis_ms": "286.600764",
+   "hand_age_sec": "[0.018261782, 0.018261782]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193369899695163,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193369419790140",
+   "prior_depth_p95_m": "0.06373790115679769",
+   "marginal_innovation_score": "4.274250483522831",
+   "capture_to_analysis_ms": "245.593714",
+   "hand_age_sec": "[0.018334382, 0.018334382]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193370399472039,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193370020004925",
+   "prior_depth_p95_m": "0.05949597560314528",
+   "marginal_innovation_score": "3.088948133295902",
+   "capture_to_analysis_ms": "247.687348",
+   "hand_age_sec": "[0.018300446, 0.018300446]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193370899507532,
+  "level": 1,
+  "message": "edge strain bound violated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193370620317840",
+   "prior_depth_p95_m": "0.06553365052774007",
+   "marginal_innovation_score": "2.8906970686097866",
+   "capture_to_analysis_ms": "246.551312",
+   "hand_age_sec": "[0.018531405, 0.018531405]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193371399586557,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193371020419531",
+   "prior_depth_p95_m": "0.051874814600715524",
+   "marginal_innovation_score": "2.572631408243927",
+   "capture_to_analysis_ms": "288.951573",
+   "hand_age_sec": "[0.018387323, 0.018387323]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193371907965254,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193371620567998",
+   "prior_depth_p95_m": "0.05539601190353828",
+   "marginal_innovation_score": "2.511160241725582",
+   "capture_to_analysis_ms": "286.033825",
+   "hand_age_sec": "[0.018243229, 0.018243229]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193372508904897,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193372220880857",
+   "prior_depth_p95_m": "0.06118865892363633",
+   "marginal_innovation_score": "2.924092922834565",
+   "capture_to_analysis_ms": "286.892871",
+   "hand_age_sec": "[0.018308781, 0.018308781]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193372899621019,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193372402653786",
+   "prior_depth_p95_m": "0.10715541352048452",
+   "marginal_innovation_score": "6.252948559831339",
+   "capture_to_analysis_ms": "459.574001",
+   "hand_age_sec": "[0.0, 0.0]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193373399462249,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193373021115869",
+   "prior_depth_p95_m": "0.04125229995513957",
+   "marginal_innovation_score": "1.5676736821034094",
+   "capture_to_analysis_ms": "241.93765",
+   "hand_age_sec": "[0.018336081, 0.018336081]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193373899720708,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193373621305198",
+   "prior_depth_p95_m": "0.04851740007957317",
+   "marginal_innovation_score": "2.05292966242708",
+   "capture_to_analysis_ms": "245.777288",
+   "hand_age_sec": "[0.0, 0.018226991]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193374547295671,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193374221582785",
+   "prior_depth_p95_m": "0.05056454947007583",
+   "marginal_innovation_score": "3.1526035066765807",
+   "capture_to_analysis_ms": "259.584052",
+   "hand_age_sec": "[0.0, 0.018334113]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193374944519100,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193374621692569",
+   "prior_depth_p95_m": "0.05831488790912921",
+   "marginal_innovation_score": "5.194622454800042",
+   "capture_to_analysis_ms": "321.39577",
+   "hand_age_sec": "[0.0, 0.018233305]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193375510388563,
+  "level": 1,
+  "message": "edge strain bound violated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193375221947641",
+   "prior_depth_p95_m": "0.05691321650543698",
+   "marginal_innovation_score": "2.1355926518312383",
+   "capture_to_analysis_ms": "287.15373",
+   "hand_age_sec": "[0.066682877, 0.084936957]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193375899562291,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193375422056379",
+   "prior_depth_p95_m": "0.06377634727710967",
+   "marginal_innovation_score": "3.2854942109354965",
+   "capture_to_analysis_ms": "257.009231",
+   "hand_age_sec": "[0.0, 0.018330836]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193376399443753,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193376022226009",
+   "prior_depth_p95_m": "0.07507869713433699",
+   "marginal_innovation_score": "8.70748639646867",
+   "capture_to_analysis_ms": "240.72043",
+   "hand_age_sec": "[0.0, 0.0]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193376899515174,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193376622441637",
+   "prior_depth_p95_m": "0.06777245810878146",
+   "marginal_innovation_score": "5.615673862540358",
+   "capture_to_analysis_ms": "251.626118",
+   "hand_age_sec": "[0.018351365, 0.018351365]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193377469097175,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193377222684163",
+   "prior_depth_p95_m": "0.07864183277414172",
+   "marginal_innovation_score": "3.9100614831842",
+   "capture_to_analysis_ms": "245.310029",
+   "hand_age_sec": "[0.01831932, 0.01831932]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193377908653618,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193377622843404",
+   "prior_depth_p95_m": "0.07142745695132072",
+   "marginal_innovation_score": "3.9311997722026533",
+   "capture_to_analysis_ms": "284.236659",
+   "hand_age_sec": "[0.085020557, 0.018339381]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193378493437773,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193378223072903",
+   "prior_depth_p95_m": "0.06621559706932081",
+   "marginal_innovation_score": "5.4519930678882975",
+   "capture_to_analysis_ms": "268.937458",
+   "hand_age_sec": "[0.018355378, 0.0]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193378899749316,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193378404921120",
+   "prior_depth_p95_m": "0.09301972671480732",
+   "marginal_innovation_score": "6.229895562989807",
+   "capture_to_analysis_ms": "468.315052",
+   "hand_age_sec": "[0.0, 0.0]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193379399730411,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193379023295123",
+   "prior_depth_p95_m": "0.09058255564757269",
+   "marginal_innovation_score": "7.397368991093913",
+   "capture_to_analysis_ms": "239.191157",
+   "hand_age_sec": "[0.084829702, 0.018146017]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193379899483906,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193379623696169",
+   "prior_depth_p95_m": "0.0644389425455678",
+   "marginal_innovation_score": "3.457057316515058",
+   "capture_to_analysis_ms": "243.659028",
+   "hand_age_sec": "[0.018287354, 0.018287354]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193380466547388,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193380223977834",
+   "prior_depth_p95_m": "0.07894401547163753",
+   "marginal_innovation_score": "6.17714631864286",
+   "capture_to_analysis_ms": "241.264701",
+   "hand_age_sec": "[0.018321557, 0.018321557]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193380904972385,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193380624127980",
+   "prior_depth_p95_m": "0.07211572833385611",
+   "marginal_innovation_score": "3.8993101309656044",
+   "capture_to_analysis_ms": "279.545216",
+   "hand_age_sec": "[0.351753834, 0.018405048]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193381510657123,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193381224251099",
+   "prior_depth_p95_m": "0.044151439322908936",
+   "marginal_innovation_score": "5.210112231185786",
+   "capture_to_analysis_ms": "284.945542",
+   "hand_age_sec": "[0.018359727, 0.018359727]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193381899682279,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193381424444554",
+   "prior_depth_p95_m": "0.059343946259927574",
+   "marginal_innovation_score": "4.0573306317156215",
+   "capture_to_analysis_ms": "243.353467",
+   "hand_age_sec": "[0.018486732, 0.018486732]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193382399309800,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193381824495694",
+   "prior_depth_p95_m": "0.07096765599151919",
+   "marginal_innovation_score": "3.549961270047183",
+   "capture_to_analysis_ms": "281.21764",
+   "hand_age_sec": "[0.08501847, 0.018338405]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193382899498896,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193382624716214",
+   "prior_depth_p95_m": "0.0630952492358593",
+   "marginal_innovation_score": "6.995692922217848",
+   "capture_to_analysis_ms": "271.515237",
+   "hand_age_sec": "[0.018177429, 0.018177429]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193383406759920,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193383006656264",
+   "prior_depth_p95_m": "0.10071529380914877",
+   "marginal_innovation_score": "9.230766611811434",
+   "capture_to_analysis_ms": "398.887848",
+   "hand_age_sec": "[0.0, 0.0]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193383899510110,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193383425122946",
+   "prior_depth_p95_m": "0.08647193546425608",
+   "marginal_innovation_score": "3.255701326571464",
+   "capture_to_analysis_ms": "254.568553",
+   "hand_age_sec": "[0.018353991, 0.018353991]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193384399423949,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193383825224741",
+   "prior_depth_p95_m": "0.0797462816248261",
+   "marginal_innovation_score": "2.9499622188737944",
+   "capture_to_analysis_ms": "297.22555",
+   "hand_age_sec": "[0.018347575, 0.018347575]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193384899491435,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193384625505458",
+   "prior_depth_p95_m": "0.08168218035793642",
+   "marginal_innovation_score": "4.797720222599367",
+   "capture_to_analysis_ms": "248.905095",
+   "hand_age_sec": "[0.085023721, 0.018329998]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193385399537140,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193385025663595",
+   "prior_depth_p95_m": "0.07157300420654106",
+   "marginal_innovation_score": "8.33636914464745",
+   "capture_to_analysis_ms": "311.656722",
+   "hand_age_sec": "[0.018309829, 0.018309829]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193385923808582,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193385625866583",
+   "prior_depth_p95_m": "0.06688418004028862",
+   "marginal_innovation_score": "9.20780952927125",
+   "capture_to_analysis_ms": "296.650746",
+   "hand_age_sec": "[0.018239145, 0.018239145]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193386399477097,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193385826030820",
+   "prior_depth_p95_m": "0.07759658472978966",
+   "marginal_innovation_score": "7.893714510817134",
+   "capture_to_analysis_ms": "259.51527",
+   "hand_age_sec": "[0.018328887, 0.018328887]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193386899370136,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193386426130393",
+   "prior_depth_p95_m": "0.10367777491145933",
+   "marginal_innovation_score": "15.36645426847104",
+   "capture_to_analysis_ms": "291.743513",
+   "hand_age_sec": "[0.018216367, 0.018216367]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193387399449947,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193387026359007",
+   "prior_depth_p95_m": "0.08766232348610933",
+   "marginal_innovation_score": "15.16753524705841",
+   "capture_to_analysis_ms": "317.778954",
+   "hand_age_sec": "[0.018123079, 0.018123079]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193387899660820,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193387408385485",
+   "prior_depth_p95_m": "0.09777266041485064",
+   "marginal_innovation_score": "8.724448463589967",
+   "capture_to_analysis_ms": "461.343219",
+   "hand_age_sec": "[0.066700492, 0.0]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193388399416481,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193387826625686",
+   "prior_depth_p95_m": "0.11542607407176654",
+   "marginal_innovation_score": "17.740898905626793",
+   "capture_to_analysis_ms": "263.616019",
+   "hand_age_sec": "[0.018027117, 0.018027117]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193388899573457,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193388426856324",
+   "prior_depth_p95_m": "0.08403613753237898",
+   "marginal_innovation_score": "14.204653553565544",
+   "capture_to_analysis_ms": "313.335327",
+   "hand_age_sec": "[0.018074995, 0.018074995]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193389399631954,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193389027080023",
+   "prior_depth_p95_m": "0.09685360035245058",
+   "marginal_innovation_score": "17.789644274565145",
+   "capture_to_analysis_ms": "283.93293",
+   "hand_age_sec": "[0.018202736, 0.018202736]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193389922752542,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193389627281057",
+   "prior_depth_p95_m": "0.08150642027683702",
+   "marginal_innovation_score": "13.615957765657944",
+   "capture_to_analysis_ms": "294.265745",
+   "hand_age_sec": "[0.01815529, 0.01815529]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193390399574313,
+  "level": 1,
+  "message": "edge strain bound violated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193389809172255",
+   "prior_depth_p95_m": "0.12286571130177937",
+   "marginal_innovation_score": "13.465167934066256",
+   "capture_to_analysis_ms": "470.751663",
+   "hand_age_sec": "[0.0, 0.0]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193390899569423,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193390427650531",
+   "prior_depth_p95_m": "0.08639197675777943",
+   "marginal_innovation_score": "11.379187222018242",
+   "capture_to_analysis_ms": "269.555009",
+   "hand_age_sec": "[0.151602448, 0.084912384]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193391401096755,
+  "level": 1,
+  "message": "edge strain bound violated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193391009620796",
+   "prior_depth_p95_m": "0.09911430433797659",
+   "marginal_innovation_score": "5.809429239110176",
+   "capture_to_analysis_ms": "390.065762",
+   "hand_age_sec": "[0.733572713, 0.666882649]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193391899422609,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193391409780787",
+   "prior_depth_p95_m": "0.07412720505945672",
+   "marginal_innovation_score": "8.909592514327711",
+   "capture_to_analysis_ms": "463.709049",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193392399637252,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193391828428838",
+   "prior_depth_p95_m": "0.10643485324062757",
+   "marginal_innovation_score": "14.650266116476507",
+   "capture_to_analysis_ms": "287.920241",
+   "hand_age_sec": "[null, 0.151884333]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193392899567836,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193392610266756",
+   "prior_depth_p95_m": "0.10437584245422624",
+   "marginal_innovation_score": "11.170634001812726",
+   "capture_to_analysis_ms": "226.645374",
+   "hand_age_sec": "[null, 0.66692544]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193393428731688,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193393210522608",
+   "prior_depth_p95_m": "0.09384775243856049",
+   "marginal_innovation_score": "13.839686316903766",
+   "capture_to_analysis_ms": "216.794877",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193393899598153,
+  "level": 1,
+  "message": "no visual factors",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193393628860012",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "nan",
+   "capture_to_analysis_ms": "249.084031",
+   "hand_age_sec": "[0.018183054, null]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193394460436024,
+  "level": 1,
+  "message": "no visual factors",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193394229046012",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "nan",
+   "capture_to_analysis_ms": "229.992973",
+   "hand_age_sec": "[0.618369054, null]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193394899578403,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193394429148698",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "173.8061637158197",
+   "capture_to_analysis_ms": "225.747687",
+   "hand_age_sec": "[0.0, null]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193395479540356,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193395229617618",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "35.36355611632686",
+   "capture_to_analysis_ms": "248.700581",
+   "hand_age_sec": "[0.0, null]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193395899470546,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193395429650705",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "4.660760189493477",
+   "capture_to_analysis_ms": "253.997443",
+   "hand_age_sec": "[0.0, null]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193396399355868,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193396029774738",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "81.29317437083193",
+   "capture_to_analysis_ms": "298.670898",
+   "hand_age_sec": "[0.266709127, null]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193396899694608,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193396629980161",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "72.77911971637613",
+   "capture_to_analysis_ms": "233.926314",
+   "hand_age_sec": "[0.86691455, null]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193397457803165,
+  "level": 1,
+  "message": "no visual factors",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193397230291561",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "nan",
+   "capture_to_analysis_ms": "226.358889",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193397899397110,
+  "level": 1,
+  "message": "no visual factors",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193397430392751",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "nan",
+   "capture_to_analysis_ms": "225.416732",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193398475844972,
+  "level": 1,
+  "message": "no visual factors",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193398230643383",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "nan",
+   "capture_to_analysis_ms": "243.955554",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193398899522906,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193398412752614",
+   "prior_depth_p95_m": "0.06013722457006987",
+   "marginal_innovation_score": "27.949341989798373",
+   "capture_to_analysis_ms": "468.651088",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193399416625484,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193399012841407",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "23.56608360257832",
+   "capture_to_analysis_ms": "402.367883",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193399899628185,
+  "level": 1,
+  "message": "no visual factors",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193399430978128",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "nan",
+   "capture_to_analysis_ms": "229.27466",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193400399518830,
+  "level": 1,
+  "message": "no visual factors",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193400031176293",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "nan",
+   "capture_to_analysis_ms": "291.964264",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193400899643644,
+  "level": 1,
+  "message": "no visual factors",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193400631413897",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "nan",
+   "capture_to_analysis_ms": "226.257109",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193401479175935,
+  "level": 1,
+  "message": "no visual factors",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193401231656930",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "nan",
+   "capture_to_analysis_ms": "246.259346",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193401899702960,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193401413805607",
+   "prior_depth_p95_m": "0.06192461899516055",
+   "marginal_innovation_score": "24.387498078827083",
+   "capture_to_analysis_ms": "466.813241",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193402399372617,
+  "level": 1,
+  "message": "no visual factors",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193402031978870",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "nan",
+   "capture_to_analysis_ms": "235.811785",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193402913180772,
+  "level": 1,
+  "message": "no visual factors",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193402632211472",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "nan",
+   "capture_to_analysis_ms": "279.573825",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193403482699504,
+  "level": 1,
+  "message": "no visual factors",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193403232447748",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "nan",
+   "capture_to_analysis_ms": "249.00421",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193403899425479,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193403414496836",
+   "prior_depth_p95_m": "0.06170511797314682",
+   "marginal_innovation_score": "25.755580973413718",
+   "capture_to_analysis_ms": "473.661462",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193404475203354,
+  "level": 1,
+  "message": "no visual factors",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193404232787504",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "nan",
+   "capture_to_analysis_ms": "241.039976",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193404937044945,
+  "level": 1,
+  "message": "no visual factors",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193404632926020",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "nan",
+   "capture_to_analysis_ms": "302.739179",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193405410944738,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193405015222366",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "21.106504539610032",
+   "capture_to_analysis_ms": "394.248785",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193405899698127,
+  "level": 1,
+  "message": "no visual factors",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193405433253977",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "nan",
+   "capture_to_analysis_ms": "247.707862",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193406478503097,
+  "level": 1,
+  "message": "no visual factors",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193406233576785",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "nan",
+   "capture_to_analysis_ms": "243.671885",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193406922380040,
+  "level": 1,
+  "message": "no visual factors",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193406633710863",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "nan",
+   "capture_to_analysis_ms": "287.316369",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193407399653416,
+  "level": 1,
+  "message": "no visual factors",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193406833826402",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "nan",
+   "capture_to_analysis_ms": "243.853592",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193407899634553,
+  "level": 1,
+  "message": "no visual factors",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193407634094081",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "nan",
+   "capture_to_analysis_ms": "241.204116",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193408472454975,
+  "level": 1,
+  "message": "no visual factors",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193408234323475",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "nan",
+   "capture_to_analysis_ms": "237.085048",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193408899389756,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193408416369588",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "27.195345010082043",
+   "capture_to_analysis_ms": "466.023583",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193409399425984,
+  "level": 1,
+  "message": "no visual factors",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193409034637009",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "nan",
+   "capture_to_analysis_ms": "242.788168",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193409899361175,
+  "level": 1,
+  "message": "no visual factors",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193409634898955",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "nan",
+   "capture_to_analysis_ms": "240.430295",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193410479282508,
+  "level": 1,
+  "message": "no visual factors",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193410235104070",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "nan",
+   "capture_to_analysis_ms": "242.823639",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193410922883127,
+  "level": 1,
+  "message": "no visual factors",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193410635258827",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "nan",
+   "capture_to_analysis_ms": "286.274838",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193411399299579,
+  "level": 1,
+  "message": "no visual factors",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193410835335357",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "nan",
+   "capture_to_analysis_ms": "240.693239",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193411899593119,
+  "level": 1,
+  "message": "no visual factors",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193411635696258",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "nan",
+   "capture_to_analysis_ms": "233.687177",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193412486549205,
+  "level": 1,
+  "message": "no visual factors",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193412235936110",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "nan",
+   "capture_to_analysis_ms": "249.388709",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193412919644425,
+  "level": 1,
+  "message": "no visual factors",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193412636048646",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "nan",
+   "capture_to_analysis_ms": "282.325458",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193413486865507,
+  "level": 1,
+  "message": "no visual factors",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193413236289679",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "nan",
+   "capture_to_analysis_ms": "249.047242",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193413913209322,
+  "level": 1,
+  "message": "no visual factors",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193413636436535",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "nan",
+   "capture_to_analysis_ms": "275.468202",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193414403609571,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193414018533113",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "22.463855633563725",
+   "capture_to_analysis_ms": "383.855897",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193414899672088,
+  "level": 1,
+  "message": "no visual factors",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193414436735503",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "nan",
+   "capture_to_analysis_ms": "225.296196",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193415481153128,
+  "level": 1,
+  "message": "no visual factors",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193415237041910",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "nan",
+   "capture_to_analysis_ms": "242.678695",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193415925686303,
+  "level": 1,
+  "message": "no visual factors",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193415637156115",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "nan",
+   "capture_to_analysis_ms": "286.878521",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193416409349859,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193416019348663",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "27.11815446837454",
+   "capture_to_analysis_ms": "388.730605",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193416899513024,
+  "level": 1,
+  "message": "no visual factors",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193416437481611",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "nan",
+   "capture_to_analysis_ms": "244.556638",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193417399750443,
+  "level": 1,
+  "message": "no visual factors",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193417037690341",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "nan",
+   "capture_to_analysis_ms": "238.283813",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193417899888689,
+  "level": 1,
+  "message": "no visual factors",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193417637929485",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "nan",
+   "capture_to_analysis_ms": "245.68534",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193418399656112,
+  "level": 1,
+  "message": "no visual factors",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193418038093548",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "nan",
+   "capture_to_analysis_ms": "240.078835",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193418900024847,
+  "level": 1,
+  "message": "no visual factors",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193418638321082",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "nan",
+   "capture_to_analysis_ms": "233.608076",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193419474408742,
+  "level": 1,
+  "message": "no visual factors",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193419238545133",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "nan",
+   "capture_to_analysis_ms": "234.316037",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795193419939581831,
+  "level": 1,
+  "message": "no visual factors",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795193419638674793",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "nan",
+   "capture_to_analysis_ms": "299.279385",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ValueError: Missing causal, fresh human grip measurements for both corne\": 291}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ }
+]

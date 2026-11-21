@@ -1,0 +1,11 @@
+blue: commands for 12 s, grip range from its start: x -0/+4 cm, y +0/+10 cm, z -0/+6 cm
+   median 10.6 cm/s; grip [-0.392, -0.41, 1.056] -> [-0.355, -0.34, 1.119]; at most 0.0 cm past the box
+   t+   0 s  commanded  2.7 cm/s (mean vector [0.3, 2.0, 0.8])  delivered  2.6 cm/s  faces []  past 0.0 cm
+   t+   5 s  commanded  1.0 cm/s (mean vector [0.8, -0.2, 0.5])  delivered  0.0 cm/s  faces []  past 0.0 cm
+   t+  10 s  commanded  4.7 cm/s (mean vector [0.5, -2.1, 2.7])  delivered  1.1 cm/s  faces []  past 0.0 cm
+silver: commands for 12 s, grip range from its start: x -3/+0 cm, y +0/+8 cm, z -1/+6 cm
+   median 9.2 cm/s; grip [0.375, -0.422, 1.059] -> [0.356, -0.339, 1.115]; at most 0.0 cm past the box
+   t+   0 s  commanded  2.3 cm/s (mean vector [-0.6, 1.7, 0.5])  delivered  2.3 cm/s  faces []  past 0.0 cm
+   t+   5 s  commanded  1.1 cm/s (mean vector [0.7, -0.6, 0.6])  delivered  0.0 cm/s  faces []  past 0.0 cm
+   t+  10 s  commanded  4.8 cm/s (mean vector [-0.1, -0.3, 3.6])  delivered  0.8 cm/s  faces []  past 0.0 cm
+twin while enabled: a grip measurement is missing 85 %, none (commands sent) 15 %

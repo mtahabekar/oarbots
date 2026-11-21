@@ -1,0 +1,232 @@
+[INFO] [launch]: All log files can be found below /home/taha/.ros/log/2026-11-20-10-31-28-826360-taha-Legion-7-16IAX10-86430
+[INFO] [launch]: Default logging verbosity is set to INFO
+[INFO] [launch.user]: Using nominal grip transforms from /home/taha/ros2_colcon_ws/src/oarbots/experiments/hardware/sessions/2026-11-20_fabric_run/warmup_10_0.1_103127/cell/calibration.yaml (shadow run, no commands).
+[INFO] [calibration_publisher-1]: process started with pid [86434]
+[INFO] [fusion-2]: process started with pid [86435]
+[INFO] [observer-3]: process started with pid [86436]
+[INFO] [twin-4]: process started with pid [86437]
+[INFO] [parameter_bank-5]: process started with pid [86438]
+[INFO] [demo_markers-6]: process started with pid [86439]
+[INFO] [rviz2-7]: process started with pid [86440]
+[INFO] [recorder-8]: process started with pid [86441]
+[INFO] [twin_recorder-9]: process started with pid [86442]
+[rviz2-7] [INFO] [1795188689.121669598] [rviz2]: Stereo is NOT SUPPORTED
+[rviz2-7] [INFO] [1795188689.121757326] [rviz2]: OpenGl version: 4.6 (GLSL 4.6)
+[rviz2-7] [INFO] [1795188689.144913522] [rviz2]: Stereo is NOT SUPPORTED
+[calibration_publisher-1] [INFO] [1795188689.273250065] [cell_calibration]: published 5 calibration transforms from /home/taha/ros2_colcon_ws/src/oarbots/experiments/hardware/sessions/2026-11-20_fabric_run/warmup_10_0.1_103127/cell/calibration.yaml
+[rviz2-7] [INFO] [1795188689.273768056] [rviz2]: Stereo is NOT SUPPORTED
+[twin-4] [WARN] [1795188690.390898487] [fabric_twin]: starting material DISTORTED: bend x10, shear x0.1 of twin.yaml
+[twin-4] [INFO] [1795188690.398754720] [fabric_twin]: fabric twin waiting for four grips; cloth library at /home/taha/ros2_colcon_ws/src/fabric_sim_isaacsim_newton
+[observer-3] [INFO] [1795188690.449511380] [fabric_state_estimator]: Preparing physics backend before accepting live captures
+[parameter_bank-5] [INFO] [1795188690.532596982] [fabric_parameter_bank]: parameter bank ready; depth from 2 cameras; starting scales bend x10, shear x0.1; search reach x19.9
+[twin-4] [INFO] [1795188705.723390462] [fabric_twin]: twin started from a surface between the grips in 0.8 s: 841 particles, obstacle clearance 50.325 m
+[twin-4] [WARN] [1795188727.973281778] [fabric_twin]: robot commands ENABLED
+[twin-4] [INFO] [1795188739.269500114] [fabric_twin]: warm-up excitation started: insets [0.02, 0.04] m at 0.03 m/s, 21 s, started at 1795188739.11 s
+[twin-4] [WARN] [1795188759.939676563] [fabric_twin]: warm-up excitation complete: robot commands disabled; no hand following
+[twin-4] [WARN] [1795188760.011692882] [fabric_twin]: robot commands disabled
+[twin-4] [WARN] [1795188760.219827333] [fabric_twin]: robot commands disabled
+[twin-4] [WARN] [1795188760.423739904] [fabric_twin]: robot commands disabled
+[parameter_bank-5] [INFO] [1795188760.735510927] [fabric_parameter_bank]: calibration started
+[parameter_bank-5] [INFO] [1795189037.557252422] [fabric_parameter_bank]: calibrated
+[parameter_bank-5] [INFO] [1795189037.557532095] [fabric_parameter_bank]: material release 1 (warmup): bend x0.503, shear x1.987
+[twin-4] [INFO] [1795189037.769915391] [fabric_twin]: material release 1: bend x0.503, shear x1.987 applied in 111 ms
+[parameter_bank-5] [INFO] [1795189045.994586499] [fabric_parameter_bank]: adaptation paused: sheet too taut to tell coefficients apart
+[twin-4] [WARN] [1795189051.456701231] [fabric_twin]: robot commands disabled
+[twin-4] [WARN] [1795189051.709746286] [fabric_twin]: robot commands disabled
+[twin-4] [WARN] [1795189051.886142741] [fabric_twin]: robot commands disabled
+[WARNING] [launch]: user interrupted with ctrl-c (SIGINT)
+[INFO] [twin_recorder-9]: sending signal 'SIGINT' to process[twin_recorder-9]
+[INFO] [recorder-8]: sending signal 'SIGINT' to process[recorder-8]
+[INFO] [rviz2-7]: sending signal 'SIGINT' to process[rviz2-7]
+[INFO] [demo_markers-6]: sending signal 'SIGINT' to process[demo_markers-6]
+[INFO] [parameter_bank-5]: sending signal 'SIGINT' to process[parameter_bank-5]
+[INFO] [twin-4]: sending signal 'SIGINT' to process[twin-4]
+[INFO] [observer-3]: sending signal 'SIGINT' to process[observer-3]
+[INFO] [fusion-2]: sending signal 'SIGINT' to process[fusion-2]
+[INFO] [calibration_publisher-1]: sending signal 'SIGINT' to process[calibration_publisher-1]
+[rviz2-7] [INFO] [1795189052.038154227] [rclcpp]: signal_handler(SIGINT/SIGTERM)
+[INFO] [rviz2-7]: process has finished cleanly [pid 86440]
+[fusion-2] Traceback (most recent call last):
+[fusion-2]   File "/home/taha/ros2_colcon_ws/install/human_hand_tracking/lib/human_hand_tracking/fusion", line 33, in <module>
+[fusion-2]     sys.exit(load_entry_point('human-hand-tracking==0.1.0', 'console_scripts', 'fusion')())
+[fusion-2]              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[fusion-2]   File "/home/taha/ros2_colcon_ws/src/oarbots/src/human_hand_tracking/human_hand_tracking/node.py", line 201, in main
+[fusion-2]     rclpy.spin(node)
+[fusion-2]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/__init__.py", line 247, in spin
+[fusion-2]     executor.spin_once()
+[fusion-2]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 934, in spin_once
+[fusion-2]     self._spin_once_impl(timeout_sec)
+[fusion-2]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 915, in _spin_once_impl
+[fusion-2]     handler, entity, node = self.wait_for_ready_callbacks(
+[fusion-2]                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[fusion-2]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 885, in wait_for_ready_callbacks
+[fusion-2]     return next(self._cb_iter)
+[fusion-2]            ^^^^^^^^^^^^^^^^^^^
+[fusion-2]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 789, in _wait_for_ready_callbacks
+[fusion-2]     wait_set.wait(timeout_nsec)
+[fusion-2] KeyboardInterrupt
+[observer-3] Warp 1.17.0 initialized:
+[observer-3]    CUDA Toolkit 12.9, Driver 13.0
+[observer-3]    Devices:
+[observer-3]      "cpu"      : "x86_64"
+[observer-3]      "cuda:0"   : "NVIDIA GeForce RTX 5070 Laptop GPU" (8 GiB, sm_120, mempool enabled)
+[observer-3]    Kernel cache:
+[observer-3]      /tmp/oarbots-fabric-audit-gpu/1.17.0
+[observer-3] Module newton._src.utils.mesh 92b663b load on device 'cpu' took 0.74 ms  (cached)
+[observer-3] Module newton._src.geometry.bvh 58a3a49 load on device 'cuda:0' took 0.85 ms  (cached)
+[observer-3] Module newton._src.solvers.style3d.kernels 6e609e0 load on device 'cuda:0' took 1.40 ms  (cached)
+[observer-3] Module newton._src.solvers.style3d.collision.bvh.kernels eed0ece load on device 'cuda:0' took 0.92 ms  (cached)
+[observer-3]     Module newton._src.solvers.style3d.builder eb1b915 load on device 'cpu' took 0.15 ms  (cached)
+[observer-3]     Module newton._src.solvers.style3d.builder 013f25b load on device 'cuda:0' took 1.77 ms  (cached)
+[observer-3] SolverStyle3D::precompute() took 7.00 ms
+[observer-3] Module fabric_state_estimator.newton_backend ac93137 load on device 'cuda:0' took 0.38 ms  (cached)
+[observer-3] Module newton._src.solvers.style3d.linear_solver f457b3c load on device 'cuda:0' took 1.45 ms  (cached)
+[observer-3] Traceback (most recent call last):
+[observer-3]   File "/home/taha/ros2_colcon_ws/install/fabric_state_estimator/lib/fabric_state_estimator/observer", line 33, in <module>
+[observer-3]     sys.exit(load_entry_point('fabric-state-estimator==0.1.0', 'console_scripts', 'observer')())
+[observer-3]              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[observer-3]   File "/home/taha/ros2_colcon_ws/src/oarbots/src/fabric_state_estimator/fabric_state_estimator/node.py", line 325, in main
+[observer-3]     rclpy.spin(node)
+[observer-3]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/__init__.py", line 247, in spin
+[observer-3]     executor.spin_once()
+[observer-3]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 934, in spin_once
+[observer-3]     self._spin_once_impl(timeout_sec)
+[observer-3]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 924, in _spin_once_impl
+[observer-3]     handler()
+[observer-3]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/task.py", line 270, in __call__
+[observer-3]     self._execute_coroutine_step(self._handler)
+[observer-3]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/task.py", line 286, in _execute_coroutine_step
+[observer-3]     result = coro.send(None)
+[observer-3]              ^^^^^^^^^^^^^^^
+[observer-3]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 600, in handler
+[observer-3]     await call_coroutine()
+[observer-3]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 462, in _execute
+[observer-3]     await await_or_execute(tmr.callback)
+[observer-3]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 116, in await_or_execute
+[observer-3]     return callback(*args)
+[observer-3]            ^^^^^^^^^^^^^^^
+[observer-3]   File "/home/taha/ros2_colcon_ws/src/oarbots/src/fabric_state_estimator/fabric_state_estimator/node.py", line 240, in flush
+[observer-3]     snapshot = self.observer.assimilate(frame)
+[observer-3]                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[observer-3]   File "/home/taha/ros2_colcon_ws/src/oarbots/src/fabric_state_estimator/fabric_state_estimator/ensemble.py", line 257, in assimilate
+[observer-3]     self.q, self.v = self.physics.advance(self.q, self.v, dt, self._boundary_targets(frame), self.loads)
+[observer-3]                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[observer-3]   File "/home/taha/ros2_colcon_ws/src/oarbots/src/fabric_state_estimator/fabric_state_estimator/newton_backend.py", line 216, in advance
+[observer-3]     out_q, out_v = a.particle_q.numpy().reshape(q.shape).astype(float), a.particle_qd.numpy().reshape(v.shape).astype(float)
+[observer-3]                    ^^^^^^^^^^^^^^^^^^^^
+[observer-3]   File "/home/taha/venvs/fabric_ros/lib/python3.12/site-packages/warp/_src/types.py", line 4518, in numpy
+[observer-3]     a = self.to("cpu", requires_grad=False)
+[observer-3]         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[observer-3]   File "/home/taha/venvs/fabric_ros/lib/python3.12/site-packages/warp/_src/types.py", line 4617, in to
+[observer-3]     return warp.clone(self, device=device, requires_grad=requires_grad)
+[observer-3]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[observer-3]   File "/home/taha/venvs/fabric_ros/lib/python3.12/site-packages/warp/_src/context.py", line 9832, in clone
+[observer-3]     warp.copy(arr, src)
+[observer-3]   File "/home/taha/venvs/fabric_ros/lib/python3.12/site-packages/warp/_src/context.py", line 14099, in copy
+[observer-3]     result = runtime.core.wp_memcpy_d2h(
+[observer-3]              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[observer-3] KeyboardInterrupt
+[INFO] [calibration_publisher-1]: process has finished cleanly [pid 86434]
+[ERROR] [fusion-2]: process has died [pid 86435, exit code -2, cmd '/home/taha/ros2_colcon_ws/install/human_hand_tracking/lib/human_hand_tracking/fusion --ros-args -r __node:=hand_fusion --params-file /home/taha/ros2_colcon_ws/src/oarbots/experiments/hardware/sessions/2026-11-20_fabric_run/warmup_10_0.1_103127/cell/fusion.yaml'].
+[INFO] [demo_markers-6]: process has finished cleanly [pid 86439]
+[twin-4] Warp 1.17.0 initialized:
+[twin-4]    CUDA Toolkit 12.9, Driver 13.0
+[twin-4]    Devices:
+[twin-4]      "cpu"      : "x86_64"
+[twin-4]      "cuda:0"   : "NVIDIA GeForce RTX 5070 Laptop GPU" (8 GiB, sm_120, mempool enabled)
+[twin-4]    Kernel cache:
+[twin-4]      /tmp/oarbots-fabric-audit-gpu/1.17.0
+[twin-4] Module newton._src.utils.mesh 92b663b load on device 'cpu' took 0.72 ms  (cached)
+[twin-4] Module newton._src.geometry.bvh 58a3a49 load on device 'cuda:0' took 0.88 ms  (cached)
+[twin-4] Module newton._src.solvers.style3d.kernels 6e609e0 load on device 'cuda:0' took 1.45 ms  (cached)
+[twin-4] Module newton._src.solvers.style3d.collision.bvh.kernels eed0ece load on device 'cuda:0' took 0.90 ms  (cached)
+[twin-4]     Module newton._src.solvers.style3d.builder eb1b915 load on device 'cpu' took 0.14 ms  (cached)
+[twin-4]     Module newton._src.solvers.style3d.builder 013f25b load on device 'cuda:0' took 2.08 ms  (cached)
+[twin-4] SolverStyle3D::precompute() took 6.73 ms
+[twin-4] Module fabric_twin.cloth 2b29def load on device 'cuda:0' took 0.28 ms  (cached)
+[twin-4] Module capsule_cbf.newton_runtime 8379e06 load on device 'cuda:0' took 0.27 ms  (cached)
+[twin-4] Module newton._src.sim.collide f369c1a load on device 'cuda:0' took 0.64 ms  (cached)
+[twin-4] Module narrow_phase_primitive_write_contact_False_False_False 6b2fd5c load on device 'cuda:0' took 0.58 ms  (cached)
+[twin-4] Module newton._src.geometry.narrow_phase 3519ebf load on device 'cuda:0' took 3.64 ms  (cached)
+[twin-4] Module newton._src.geometry.kernels d546c9d load on device 'cuda:0' took 3.18 ms  (cached)
+[twin-4] Module newton._src.solvers.style3d.collision.bvh.kernels ebf1724 load on device 'cuda:0' took 0.80 ms  (cached)
+[twin-4] Module newton._src.solvers.style3d.collision.kernels f54ca9e load on device 'cuda:0' took 2.69 ms  (cached)
+[twin-4] Module newton._src.solvers.style3d.linear_solver f457b3c load on device 'cuda:0' took 2.96 ms  (cached)
+[twin-4] SolverStyle3D::precompute() took 4.26 ms
+[twin-4] SolverStyle3D::precompute() took 6.60 ms
+[INFO] [recorder-8]: process has finished cleanly [pid 86441]
+[INFO] [twin_recorder-9]: process has finished cleanly [pid 86442]
+[parameter_bank-5] Warp 1.17.0 initialized:
+[parameter_bank-5]    CUDA Toolkit 12.9, Driver 13.0
+[parameter_bank-5]    Devices:
+[parameter_bank-5]      "cpu"      : "x86_64"
+[parameter_bank-5]      "cuda:0"   : "NVIDIA GeForce RTX 5070 Laptop GPU" (8 GiB, sm_120, mempool enabled)
+[parameter_bank-5]    Kernel cache:
+[parameter_bank-5]      /tmp/oarbots-fabric-audit-gpu/1.17.0
+[parameter_bank-5] Module newton._src.utils.mesh 92b663b load on device 'cpu' took 0.78 ms  (cached)
+[parameter_bank-5] Module newton._src.geometry.bvh 58a3a49 load on device 'cuda:0' took 0.76 ms  (cached)
+[parameter_bank-5] Module newton._src.solvers.style3d.kernels 6e609e0 load on device 'cuda:0' took 1.66 ms  (cached)
+[parameter_bank-5] Module newton._src.solvers.style3d.collision.bvh.kernels eed0ece load on device 'cuda:0' took 0.77 ms  (cached)
+[parameter_bank-5]     Module newton._src.solvers.style3d.builder eb1b915 load on device 'cpu' took 0.15 ms  (cached)
+[parameter_bank-5]     Module newton._src.solvers.style3d.builder 013f25b load on device 'cuda:0' took 1.55 ms  (cached)
+[parameter_bank-5] SolverStyle3D::precompute() took 6.60 ms
+[parameter_bank-5] Module fabric_twin.cloth 2b29def load on device 'cuda:0' took 0.30 ms  (cached)
+[parameter_bank-5] Module capsule_cbf.newton_runtime 8379e06 load on device 'cuda:0' took 0.26 ms  (cached)
+[parameter_bank-5] Module newton._src.sim.collide f369c1a load on device 'cuda:0' took 0.47 ms  (cached)
+[parameter_bank-5] Module narrow_phase_primitive_write_contact_False_False_False 6b2fd5c load on device 'cuda:0' took 2.08 ms  (cached)
+[parameter_bank-5] Module newton._src.geometry.narrow_phase 3519ebf load on device 'cuda:0' took 3.05 ms  (cached)
+[parameter_bank-5] Module newton._src.geometry.kernels d546c9d load on device 'cuda:0' took 5.48 ms  (cached)
+[parameter_bank-5] Module newton._src.solvers.style3d.collision.bvh.kernels ebf1724 load on device 'cuda:0' took 2.77 ms  (cached)
+[parameter_bank-5] Module newton._src.solvers.style3d.collision.kernels f54ca9e load on device 'cuda:0' took 2.32 ms  (cached)
+[parameter_bank-5] Module newton._src.solvers.style3d.linear_solver f457b3c load on device 'cuda:0' took 2.69 ms  (cached)
+[parameter_bank-5] SolverStyle3D::precompute() took 4.77 ms
+[parameter_bank-5] SolverStyle3D::precompute() took 7.86 ms
+[parameter_bank-5] SolverStyle3D::precompute() took 4.33 ms
+[parameter_bank-5] SolverStyle3D::precompute() took 150.40 ms
+[parameter_bank-5] SolverStyle3D::precompute() took 9.63 ms
+[parameter_bank-5] SolverStyle3D::precompute() took 4.64 ms
+[parameter_bank-5] SolverStyle3D::precompute() took 4.85 ms
+[parameter_bank-5] SolverStyle3D::precompute() took 4.30 ms
+[parameter_bank-5] SolverStyle3D::precompute() took 4.31 ms
+[parameter_bank-5] SolverStyle3D::precompute() took 4.31 ms
+[parameter_bank-5] SolverStyle3D::precompute() took 4.34 ms
+[parameter_bank-5] SolverStyle3D::precompute() took 4.86 ms
+[parameter_bank-5] SolverStyle3D::precompute() took 4.44 ms
+[parameter_bank-5] SolverStyle3D::precompute() took 4.84 ms
+[parameter_bank-5] SolverStyle3D::precompute() took 4.30 ms
+[parameter_bank-5] SolverStyle3D::precompute() took 6.58 ms
+[parameter_bank-5] SolverStyle3D::precompute() took 4.31 ms
+[parameter_bank-5] SolverStyle3D::precompute() took 4.44 ms
+[parameter_bank-5] SolverStyle3D::precompute() took 7.15 ms
+[parameter_bank-5] SolverStyle3D::precompute() took 4.22 ms
+[parameter_bank-5] SolverStyle3D::precompute() took 4.33 ms
+[parameter_bank-5] SolverStyle3D::precompute() took 4.16 ms
+[parameter_bank-5] SolverStyle3D::precompute() took 4.14 ms
+[parameter_bank-5] SolverStyle3D::precompute() took 4.12 ms
+[parameter_bank-5] SolverStyle3D::precompute() took 8.44 ms
+[parameter_bank-5] SolverStyle3D::precompute() took 6.49 ms
+[parameter_bank-5] SolverStyle3D::precompute() took 4.30 ms
+[parameter_bank-5] SolverStyle3D::precompute() took 5.35 ms
+[parameter_bank-5] SolverStyle3D::precompute() took 4.40 ms
+[parameter_bank-5] SolverStyle3D::precompute() took 4.43 ms
+[parameter_bank-5] SolverStyle3D::precompute() took 4.69 ms
+[parameter_bank-5] SolverStyle3D::precompute() took 4.41 ms
+[parameter_bank-5] SolverStyle3D::precompute() took 4.57 ms
+[parameter_bank-5] SolverStyle3D::precompute() took 4.42 ms
+[parameter_bank-5] SolverStyle3D::precompute() took 4.59 ms
+[parameter_bank-5] SolverStyle3D::precompute() took 4.94 ms
+[parameter_bank-5] SolverStyle3D::precompute() took 6.58 ms
+[parameter_bank-5] SolverStyle3D::precompute() took 4.68 ms
+[parameter_bank-5] SolverStyle3D::precompute() took 4.26 ms
+[parameter_bank-5] SolverStyle3D::precompute() took 4.49 ms
+[parameter_bank-5] SolverStyle3D::precompute() took 4.53 ms
+[parameter_bank-5] SolverStyle3D::precompute() took 4.60 ms
+[parameter_bank-5] SolverStyle3D::precompute() took 4.46 ms
+[parameter_bank-5] SolverStyle3D::precompute() took 8.77 ms
+[parameter_bank-5] SolverStyle3D::precompute() took 4.96 ms
+[parameter_bank-5] SolverStyle3D::precompute() took 4.74 ms
+[parameter_bank-5] SolverStyle3D::precompute() took 4.72 ms
+[parameter_bank-5] SolverStyle3D::precompute() took 7.71 ms
+[ERROR] [observer-3]: process has died [pid 86436, exit code -2, cmd '/home/taha/ros2_colcon_ws/install/fabric_state_estimator/lib/fabric_state_estimator/observer --ros-args -r __node:=fabric_state_estimator --params-file /tmp/launch_params_k3zuanay'].
+[INFO] [twin-4]: process has finished cleanly [pid 86437]
+[INFO] [parameter_bank-5]: process has finished cleanly [pid 86438]

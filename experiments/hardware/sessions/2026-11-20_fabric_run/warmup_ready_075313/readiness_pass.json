@@ -1,0 +1,42 @@
+{
+  "ready": true,
+  "fresh_percent": [
+    100.0,
+    100.0
+  ],
+  "stale_grip_percent": 0.0,
+  "state": {
+    "deadman": false,
+    "e_stop": false,
+    "fault": "",
+    "commands_enabled": "False",
+    "frame": "18580",
+    "virtual_collision": "False",
+    "material": "{\"version\": 0, \"bend\": 1.0, \"shear\": 1.0}",
+    "skipped_frames": "137",
+    "stale_grip_frames": "7624",
+    "replaced": "0",
+    "warmup": "idle",
+    "frame_ms_p50": "7.6989734999415305",
+    "frame_ms_p95": "17.925432699848876",
+    "lag_sec": "0.170418346",
+    "box_clearance_m": "50.71576765335527",
+    "error_p50_m": "0.0374896956448261",
+    "error_p95_m": "0.10312079303185932",
+    "error_max_m": "0.13126841204669565",
+    "force_total_n": "0.8686630617698197",
+    "residual_total_n": "0.6581089873499149",
+    "force_net_n": "[-0.1159, 0.048, -0.6778]",
+    "diverged": "False",
+    "cbf_ms_p95": "5.13848460002464",
+    "cbf_status": "feasible",
+    "capsule_clearance_m": "50.68596892056277",
+    "message": "twin following the measured grips"
+  },
+  "bridges": {
+    "blue": "not armed",
+    "silver": "not armed"
+  },
+  "parameter_bank_running": true,
+  "checked_at_unix": 1795179623.487856
+}

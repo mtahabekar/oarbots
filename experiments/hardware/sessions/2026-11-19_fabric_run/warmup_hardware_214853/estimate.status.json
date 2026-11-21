@@ -1,0 +1,3202 @@
+[
+ {
+  "stamp": 1795143068911780888,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143068631304628",
+   "prior_depth_p95_m": "0.03168540291585853",
+   "marginal_innovation_score": "1.043632701122177",
+   "capture_to_analysis_ms": "260.97745",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143069492127588,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143069231508635",
+   "prior_depth_p95_m": "0.03560214313415302",
+   "marginal_innovation_score": "1.1037353796712983",
+   "capture_to_analysis_ms": "244.938734",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143069911801082,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143069631651014",
+   "prior_depth_p95_m": "0.03293978731635465",
+   "marginal_innovation_score": "1.253782767075755",
+   "capture_to_analysis_ms": "234.742069",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143070478084492,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143070231834270",
+   "prior_depth_p95_m": "0.03874895239717654",
+   "marginal_innovation_score": "1.3779529483246677",
+   "capture_to_analysis_ms": "244.925379",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143070911759195,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143070632049892",
+   "prior_depth_p95_m": "0.03358627700627117",
+   "marginal_innovation_score": "0.8142682024372854",
+   "capture_to_analysis_ms": "244.503374",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143071485521187,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143071232273409",
+   "prior_depth_p95_m": "0.03202028410405384",
+   "marginal_innovation_score": "1.5541542551513532",
+   "capture_to_analysis_ms": "252.00198",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143071912054048,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143071632421914",
+   "prior_depth_p95_m": "0.03157268629107244",
+   "marginal_innovation_score": "0.7851553354746009",
+   "capture_to_analysis_ms": "241.664227",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143072483866994,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143072232630024",
+   "prior_depth_p95_m": "0.025338264346387075",
+   "marginal_innovation_score": "1.0980369051666345",
+   "capture_to_analysis_ms": "249.843808",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143072911849170,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143072632786779",
+   "prior_depth_p95_m": "0.028624361493646246",
+   "marginal_innovation_score": "0.9162131624578633",
+   "capture_to_analysis_ms": "253.102493",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143073479185029,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143073232977884",
+   "prior_depth_p95_m": "0.02350499212528747",
+   "marginal_innovation_score": "1.5567172678551535",
+   "capture_to_analysis_ms": "244.88092",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143073911715449,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143073633128399",
+   "prior_depth_p95_m": "0.024852393830357474",
+   "marginal_innovation_score": "0.720824352928218",
+   "capture_to_analysis_ms": "243.995592",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143074493669589,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143074233352204",
+   "prior_depth_p95_m": "0.02301394254641802",
+   "marginal_innovation_score": "0.8063046216800469",
+   "capture_to_analysis_ms": "241.362443",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143074911848402,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143074633529943",
+   "prior_depth_p95_m": "0.02722012490469695",
+   "marginal_innovation_score": "1.0283939012590861",
+   "capture_to_analysis_ms": "246.357153",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143075475695483,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143075233792378",
+   "prior_depth_p95_m": "0.023363902055874113",
+   "marginal_innovation_score": "0.734090761222633",
+   "capture_to_analysis_ms": "240.666844",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143075911719811,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143075633912152",
+   "prior_depth_p95_m": "0.027006829883505",
+   "marginal_innovation_score": "1.5936412943075644",
+   "capture_to_analysis_ms": "239.88133",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143076479001944,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143076234196131",
+   "prior_depth_p95_m": "0.024451503735266986",
+   "marginal_innovation_score": "0.9446736673342774",
+   "capture_to_analysis_ms": "243.203931",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143076911675989,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143076634284867",
+   "prior_depth_p95_m": "0.024626671872136796",
+   "marginal_innovation_score": "0.743157179678644",
+   "capture_to_analysis_ms": "236.156457",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143077474680839,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143077234509825",
+   "prior_depth_p95_m": "0.028261993676032614",
+   "marginal_innovation_score": "0.8311634089087162",
+   "capture_to_analysis_ms": "238.865547",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143077911645633,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143077634673314",
+   "prior_depth_p95_m": "0.022480270349682474",
+   "marginal_innovation_score": "1.2871113671763208",
+   "capture_to_analysis_ms": "237.817344",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143078474864903,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143078234908425",
+   "prior_depth_p95_m": "0.02246263078749769",
+   "marginal_innovation_score": "0.6553272662238726",
+   "capture_to_analysis_ms": "238.630634",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143078911859737,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143078635095521",
+   "prior_depth_p95_m": "0.02464981547029794",
+   "marginal_innovation_score": "0.7612553056479334",
+   "capture_to_analysis_ms": "241.514049",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143079485151845,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143079235389995",
+   "prior_depth_p95_m": "0.02522179080054106",
+   "marginal_innovation_score": "0.8589836339448282",
+   "capture_to_analysis_ms": "239.369803",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143079911962862,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143079635594202",
+   "prior_depth_p95_m": "0.023805529559064096",
+   "marginal_innovation_score": "1.3232620332292147",
+   "capture_to_analysis_ms": "240.486094",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143080475578561,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143080235790887",
+   "prior_depth_p95_m": "0.021545743137803136",
+   "marginal_innovation_score": "0.7497578337815177",
+   "capture_to_analysis_ms": "238.381275",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143080911696926,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143080635971481",
+   "prior_depth_p95_m": "0.02464787318786177",
+   "marginal_innovation_score": "0.7998001679921124",
+   "capture_to_analysis_ms": "237.366157",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143081475523410,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143081236156110",
+   "prior_depth_p95_m": "0.02461889525953609",
+   "marginal_innovation_score": "0.8164004224149073",
+   "capture_to_analysis_ms": "238.043407",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143081911766287,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143081636301875",
+   "prior_depth_p95_m": "0.025558926533410513",
+   "marginal_innovation_score": "1.5741572660431564",
+   "capture_to_analysis_ms": "237.532594",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143082471370329,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143082236534178",
+   "prior_depth_p95_m": "0.02730696816137253",
+   "marginal_innovation_score": "0.8533658758044572",
+   "capture_to_analysis_ms": "233.455525",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143082911813060,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143082636641902",
+   "prior_depth_p95_m": "0.028919831265764695",
+   "marginal_innovation_score": "1.6950029953896433",
+   "capture_to_analysis_ms": "235.626268",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143083474946625,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143083237032168",
+   "prior_depth_p95_m": "0.024983487951971372",
+   "marginal_innovation_score": "0.7538095030582435",
+   "capture_to_analysis_ms": "236.423157",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143083911750657,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143083637189477",
+   "prior_depth_p95_m": "0.029197713812555523",
+   "marginal_innovation_score": "0.9648634908203172",
+   "capture_to_analysis_ms": "234.09454",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143084492774650,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143084237357568",
+   "prior_depth_p95_m": "0.02330886571277423",
+   "marginal_innovation_score": "0.7561202178526072",
+   "capture_to_analysis_ms": "235.657093",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143084911941183,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143084637503737",
+   "prior_depth_p95_m": "0.021044083706921374",
+   "marginal_innovation_score": "0.996341508097056",
+   "capture_to_analysis_ms": "234.396403",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143085470537274,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143085237813978",
+   "prior_depth_p95_m": "0.02067155288995538",
+   "marginal_innovation_score": "0.5791450209874697",
+   "capture_to_analysis_ms": "231.2861",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143085911816907,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143085637941164",
+   "prior_depth_p95_m": "0.019805248843107786",
+   "marginal_innovation_score": "0.783929935419069",
+   "capture_to_analysis_ms": "231.829999",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143086474235150,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143086238146519",
+   "prior_depth_p95_m": "0.0271049729343223",
+   "marginal_innovation_score": "1.4384393094544181",
+   "capture_to_analysis_ms": "234.777711",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143086911783849,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143086638218384",
+   "prior_depth_p95_m": "0.023027783376272492",
+   "marginal_innovation_score": "0.794975057612238",
+   "capture_to_analysis_ms": "229.125715",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143087481625216,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143087238412505",
+   "prior_depth_p95_m": "0.026398698974445453",
+   "marginal_innovation_score": "1.6473748965815036",
+   "capture_to_analysis_ms": "242.060382",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143087911941371,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143087638619420",
+   "prior_depth_p95_m": "0.021127372896172857",
+   "marginal_innovation_score": "0.7402352384082035",
+   "capture_to_analysis_ms": "236.992989",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143088474981216,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143088238838715",
+   "prior_depth_p95_m": "0.024151601067934236",
+   "marginal_innovation_score": "1.7113741933931927",
+   "capture_to_analysis_ms": "234.855952",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143088911896325,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143088638971204",
+   "prior_depth_p95_m": "0.025959997399195467",
+   "marginal_innovation_score": "1.4503141771798047",
+   "capture_to_analysis_ms": "234.561281",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143089497323835,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143089239231991",
+   "prior_depth_p95_m": "0.023482425888939007",
+   "marginal_innovation_score": "2.2023304827450723",
+   "capture_to_analysis_ms": "232.770916",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143089911838650,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143089639339005",
+   "prior_depth_p95_m": "0.026566790238166414",
+   "marginal_innovation_score": "2.0309856599977354",
+   "capture_to_analysis_ms": "242.946807",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143090476101966,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143090239602439",
+   "prior_depth_p95_m": "0.025178569554105287",
+   "marginal_innovation_score": "1.4815525138334529",
+   "capture_to_analysis_ms": "235.140008",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143090911776066,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143090639851644",
+   "prior_depth_p95_m": "0.02186367414559933",
+   "marginal_innovation_score": "1.249052450797009",
+   "capture_to_analysis_ms": "249.046999",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143091481739605,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143091240001181",
+   "prior_depth_p95_m": "0.02563435566537997",
+   "marginal_innovation_score": "0.7225961052122718",
+   "capture_to_analysis_ms": "240.366137",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143091911888413,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143091640197485",
+   "prior_depth_p95_m": "0.022444164106150646",
+   "marginal_innovation_score": "0.8413439701090168",
+   "capture_to_analysis_ms": "246.094784",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143092476603853,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143092240508143",
+   "prior_depth_p95_m": "0.022743434186847142",
+   "marginal_innovation_score": "0.8693121822466213",
+   "capture_to_analysis_ms": "234.59",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143092911742439,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143092640610460",
+   "prior_depth_p95_m": "0.022699716388152057",
+   "marginal_innovation_score": "0.7644625105309649",
+   "capture_to_analysis_ms": "240.704093",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143093476124622,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143093240863362",
+   "prior_depth_p95_m": "0.0245868494144041",
+   "marginal_innovation_score": "1.5635389737849408",
+   "capture_to_analysis_ms": "233.829964",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143093911808768,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143093641049092",
+   "prior_depth_p95_m": "0.023201030078021916",
+   "marginal_innovation_score": "1.3272630722247307",
+   "capture_to_analysis_ms": "244.389018",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143094486510354,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143094241326603",
+   "prior_depth_p95_m": "0.02416515776285566",
+   "marginal_innovation_score": "1.612343264411955",
+   "capture_to_analysis_ms": "243.250117",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143094911728276,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143094641434609",
+   "prior_depth_p95_m": "0.025446195323538517",
+   "marginal_innovation_score": "0.7683010060969276",
+   "capture_to_analysis_ms": "234.264191",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143095471662505,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143095241735011",
+   "prior_depth_p95_m": "0.022180710747787283",
+   "marginal_innovation_score": "1.491072893950654",
+   "capture_to_analysis_ms": "228.517612",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143095911999040,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143095641869677",
+   "prior_depth_p95_m": "0.02098672592844031",
+   "marginal_innovation_score": "1.5036098504741418",
+   "capture_to_analysis_ms": "228.665028",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143096478252875,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143096242106388",
+   "prior_depth_p95_m": "0.023391603913596848",
+   "marginal_innovation_score": "0.7571112333308743",
+   "capture_to_analysis_ms": "234.685654",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143096911721782,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143096642261306",
+   "prior_depth_p95_m": "0.0248820493830475",
+   "marginal_innovation_score": "0.9237838281284315",
+   "capture_to_analysis_ms": "232.655662",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143097476986522,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143097242315590",
+   "prior_depth_p95_m": "0.03184739887315204",
+   "marginal_innovation_score": "1.3393092353988323",
+   "capture_to_analysis_ms": "233.47169",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143097911902681,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143097642454894",
+   "prior_depth_p95_m": "0.08786318438123814",
+   "marginal_innovation_score": "7.154614288645772",
+   "capture_to_analysis_ms": "244.076908",
+   "hand_age_sec": "[null, 0.06668756]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143098411767789,
+  "level": 1,
+  "message": "edge strain bound violated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143098042530890",
+   "prior_depth_p95_m": "0.06867397338243221",
+   "marginal_innovation_score": "4.78336668053721",
+   "capture_to_analysis_ms": "262.144214",
+   "hand_age_sec": "[0.066681534, 0.333397278]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143098927538599,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143098642793819",
+   "prior_depth_p95_m": "0.08404460516455281",
+   "marginal_innovation_score": "2.8286377165924734",
+   "capture_to_analysis_ms": "283.310463",
+   "hand_age_sec": "[0.0, 0.933660207]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143099411914053,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143099042985735",
+   "prior_depth_p95_m": "0.127901653220727",
+   "marginal_innovation_score": "3.8506914114675594",
+   "capture_to_analysis_ms": "274.054388",
+   "hand_age_sec": "[0.0, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143099918046882,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143099643169909",
+   "prior_depth_p95_m": "0.10820982774494932",
+   "marginal_innovation_score": "5.8048977355572715",
+   "capture_to_analysis_ms": "273.544618",
+   "hand_age_sec": "[0.0, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143100411891742,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143100043285582",
+   "prior_depth_p95_m": "0.10609599619422319",
+   "marginal_innovation_score": "3.97972286143389",
+   "capture_to_analysis_ms": "273.669158",
+   "hand_age_sec": "[0.400115673, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143100911775373,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143100643544475",
+   "prior_depth_p95_m": "0.019106013555731938",
+   "marginal_innovation_score": "4.21312204742931",
+   "capture_to_analysis_ms": "266.144276",
+   "hand_age_sec": "[null, 0.0]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143101493844792,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143101243803044",
+   "prior_depth_p95_m": "0.11743915214908851",
+   "marginal_innovation_score": "9.529793869897144",
+   "capture_to_analysis_ms": "248.366818",
+   "hand_age_sec": "[null, 0.066691728]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143101911619228,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143101643945155",
+   "prior_depth_p95_m": "0.10422604316654575",
+   "marginal_innovation_score": "15.327272232396849",
+   "capture_to_analysis_ms": "259.393097",
+   "hand_age_sec": "[0.066687633, 0.066687633]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143102411609122,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143102044066226",
+   "prior_depth_p95_m": "0.11510440715989563",
+   "marginal_innovation_score": "19.103007099965303",
+   "capture_to_analysis_ms": "248.509781",
+   "hand_age_sec": "[0.06667097, 0.06667097]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143102911501031,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143102644327132",
+   "prior_depth_p95_m": "0.10509069092014811",
+   "marginal_innovation_score": "16.24095798492421",
+   "capture_to_analysis_ms": "260.68871",
+   "hand_age_sec": "[0.333506532, 0.0]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143103411652106,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143103044526447",
+   "prior_depth_p95_m": "0.09591314121077406",
+   "marginal_innovation_score": "16.81410663205253",
+   "capture_to_analysis_ms": "264.662151",
+   "hand_age_sec": "[0.733705847, 0.266840986]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143103911640624,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143103644833841",
+   "prior_depth_p95_m": "0.08176755665357775",
+   "marginal_innovation_score": "8.724399205023929",
+   "capture_to_analysis_ms": "259.01577",
+   "hand_age_sec": "[0.0, 0.0]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143104505334009,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143104244999257",
+   "prior_depth_p95_m": "0.0925423383523767",
+   "marginal_innovation_score": "8.343582351079554",
+   "capture_to_analysis_ms": "249.751023",
+   "hand_age_sec": "[0.066679076, 0.066679076]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143104911659825,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143104645092881",
+   "prior_depth_p95_m": "0.08904167218795221",
+   "marginal_innovation_score": "12.742820920018808",
+   "capture_to_analysis_ms": "250.211368",
+   "hand_age_sec": "[0.0, 0.0]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143105499064195,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143105245385143",
+   "prior_depth_p95_m": "0.09954834272111193",
+   "marginal_innovation_score": "14.412685445749865",
+   "capture_to_analysis_ms": "252.375874",
+   "hand_age_sec": "[0.0, 0.0]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143105911843637,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143105645534677",
+   "prior_depth_p95_m": "0.10932791154167373",
+   "marginal_innovation_score": "16.776951647473222",
+   "capture_to_analysis_ms": "253.355123",
+   "hand_age_sec": "[0.0, 0.0]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143106480292872,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143106045769813",
+   "prior_depth_p95_m": "0.12004271996110838",
+   "marginal_innovation_score": "18.55717509252232",
+   "capture_to_analysis_ms": "433.323866",
+   "hand_age_sec": "[0.133329374, 0.0]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143106911825789,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143106645921297",
+   "prior_depth_p95_m": "0.10799384408737381",
+   "marginal_innovation_score": "16.70975433334129",
+   "capture_to_analysis_ms": "250.046432",
+   "hand_age_sec": "[0.0, 0.0]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143107496817204,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143107246088904",
+   "prior_depth_p95_m": "0.11027533701694481",
+   "marginal_innovation_score": "16.316875349154788",
+   "capture_to_analysis_ms": "249.388134",
+   "hand_age_sec": "[0.066672837, 0.0]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143107911613775,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143107646281620",
+   "prior_depth_p95_m": "0.10391194266108558",
+   "marginal_innovation_score": "15.177583896232823",
+   "capture_to_analysis_ms": "252.523753",
+   "hand_age_sec": "[0.0, 0.0]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143108498604412,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143108246507337",
+   "prior_depth_p95_m": "0.10692587718838431",
+   "marginal_innovation_score": "14.241802934914755",
+   "capture_to_analysis_ms": "250.606372",
+   "hand_age_sec": "[0.400117492, 0.0]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143108911725287,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143108646669880",
+   "prior_depth_p95_m": "0.11249626757793493",
+   "marginal_innovation_score": "13.985240210217198",
+   "capture_to_analysis_ms": "245.057449",
+   "hand_age_sec": "[0.200062628, 0.0]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143109491386103,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143109246858736",
+   "prior_depth_p95_m": "0.12082930240080376",
+   "marginal_innovation_score": "16.0344695867078",
+   "capture_to_analysis_ms": "237.706711",
+   "hand_age_sec": "[0.133387237, 0.0]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143109911670988,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143109647040468",
+   "prior_depth_p95_m": "0.115300423843158",
+   "marginal_innovation_score": "13.26720702573704",
+   "capture_to_analysis_ms": "249.647393",
+   "hand_age_sec": "[0.533568969, 0.0]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143110491891060,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143110247265312",
+   "prior_depth_p95_m": "0.11000079504265863",
+   "marginal_innovation_score": "13.888651211370478",
+   "capture_to_analysis_ms": "243.519337",
+   "hand_age_sec": "[0.400157165, 0.0]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143110911695090,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143110647419547",
+   "prior_depth_p95_m": "0.11023806574168898",
+   "marginal_innovation_score": "12.932939539724732",
+   "capture_to_analysis_ms": "256.830872",
+   "hand_age_sec": "[0.066690711, 0.066690711]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143111411945900,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143111047565979",
+   "prior_depth_p95_m": "0.10478516002866951",
+   "marginal_innovation_score": "12.79222736078268",
+   "capture_to_analysis_ms": "262.686801",
+   "hand_age_sec": "[0.0, 0.0]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143111911863621,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143111647806013",
+   "prior_depth_p95_m": "0.09546765876009512",
+   "marginal_innovation_score": "11.702261890846755",
+   "capture_to_analysis_ms": "249.337282",
+   "hand_age_sec": "[0.333486098, 0.066719225]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143112493326313,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143112248030250",
+   "prior_depth_p95_m": "0.09657673936182445",
+   "marginal_innovation_score": "11.416606551543223",
+   "capture_to_analysis_ms": "244.100196",
+   "hand_age_sec": "[0.266753629, 0.0]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143112911662532,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143112648202085",
+   "prior_depth_p95_m": "0.09236633338341534",
+   "marginal_innovation_score": "11.89607736995757",
+   "capture_to_analysis_ms": "245.709472",
+   "hand_age_sec": "[0.266802934, 0.0]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143113497634511,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143113248513383",
+   "prior_depth_p95_m": "0.11127034711436412",
+   "marginal_innovation_score": "14.270292644024314",
+   "capture_to_analysis_ms": "248.045019",
+   "hand_age_sec": "[0.333513748, 0.066697366]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143113911636292,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143113648702725",
+   "prior_depth_p95_m": "0.09780897295696483",
+   "marginal_innovation_score": "11.510782508885065",
+   "capture_to_analysis_ms": "247.683546",
+   "hand_age_sec": "[0.133385424, 0.066680026]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143114497062349,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143114248898767",
+   "prior_depth_p95_m": "0.12745718176114326",
+   "marginal_innovation_score": "14.195418097385884",
+   "capture_to_analysis_ms": "247.039124",
+   "hand_age_sec": "[0.733581466, 0.0]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143114911644486,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143114649093149",
+   "prior_depth_p95_m": "0.11005654196029163",
+   "marginal_innovation_score": "14.111806304508477",
+   "capture_to_analysis_ms": "242.781424",
+   "hand_age_sec": "[0.333469115, 0.066741753]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143115497181441,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143115249223140",
+   "prior_depth_p95_m": "0.10773568843103333",
+   "marginal_innovation_score": "12.322302181606576",
+   "capture_to_analysis_ms": "246.634091",
+   "hand_age_sec": "[0.133345527, 0.066673494]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143115911673567,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143115649318781",
+   "prior_depth_p95_m": "0.1109550592926288",
+   "marginal_innovation_score": "10.88563494382272",
+   "capture_to_analysis_ms": "250.97493",
+   "hand_age_sec": "[0.133351424, 0.066691918]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143116491322571,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143116249594869",
+   "prior_depth_p95_m": "0.09699328500295613",
+   "marginal_innovation_score": "10.666661831589552",
+   "capture_to_analysis_ms": "240.620705",
+   "hand_age_sec": "[0.466900921, 0.066711645]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143116911683056,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143116649770992",
+   "prior_depth_p95_m": "0.10044489465597432",
+   "marginal_innovation_score": "11.09119308526655",
+   "capture_to_analysis_ms": "246.275017",
+   "hand_age_sec": "[0.266782539, 0.0]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143117502856103,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143117250024864",
+   "prior_depth_p95_m": "0.11049671652029147",
+   "marginal_innovation_score": "11.391225277163365",
+   "capture_to_analysis_ms": "251.474244",
+   "hand_age_sec": "[0.867036411, 0.0]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143117911804870,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143117650343114",
+   "prior_depth_p95_m": "0.0977203426503758",
+   "marginal_innovation_score": "10.798917925424295",
+   "capture_to_analysis_ms": "245.684508",
+   "hand_age_sec": "[null, 0.0]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143118495877760,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143118250474057",
+   "prior_depth_p95_m": "0.1198128491081928",
+   "marginal_innovation_score": "12.822103211190052",
+   "capture_to_analysis_ms": "244.230091",
+   "hand_age_sec": "[null, 0.0]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143118911708093,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143118650643359",
+   "prior_depth_p95_m": "0.10315746399601615",
+   "marginal_innovation_score": "14.099860299977035",
+   "capture_to_analysis_ms": "243.616642",
+   "hand_age_sec": "[null, 0.066718548]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143119411695437,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143119050725623",
+   "prior_depth_p95_m": "0.09447668404188404",
+   "marginal_innovation_score": "14.20490667096125",
+   "capture_to_analysis_ms": "241.027104",
+   "hand_age_sec": "[null, 0.133362903]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143119919508523,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143119650954682",
+   "prior_depth_p95_m": "0.04022093006306991",
+   "marginal_innovation_score": "4.237267531156723",
+   "capture_to_analysis_ms": "267.1864",
+   "hand_age_sec": "[null, 0.266804226]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143120482535840,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143120251202592",
+   "prior_depth_p95_m": "0.10581028962490602",
+   "marginal_innovation_score": "32.08425437994031",
+   "capture_to_analysis_ms": "229.821779",
+   "hand_age_sec": "[null, 0.867052136]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143120911960845,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143120651479177",
+   "prior_depth_p95_m": "0.08694361474618044",
+   "marginal_innovation_score": "13.133334949082787",
+   "capture_to_analysis_ms": "232.991617",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143121472491306,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143121251614115",
+   "prior_depth_p95_m": "0.04649185149372202",
+   "marginal_innovation_score": "5.005361561553499",
+   "capture_to_analysis_ms": "219.761943",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143121911755206,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143121651906600",
+   "prior_depth_p95_m": "0.0467936403275847",
+   "marginal_innovation_score": "5.93181564495355",
+   "capture_to_analysis_ms": "228.59715",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143122470494019,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143122252137609",
+   "prior_depth_p95_m": "0.05414569395349617",
+   "marginal_innovation_score": "6.576040038777943",
+   "capture_to_analysis_ms": "216.996791",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143122911930873,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143122652255939",
+   "prior_depth_p95_m": "0.05017049414819514",
+   "marginal_innovation_score": "7.424886465116041",
+   "capture_to_analysis_ms": "222.076739",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143123485356363,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143123252535994",
+   "prior_depth_p95_m": "0.021346381255779905",
+   "marginal_innovation_score": "3.878495099974176",
+   "capture_to_analysis_ms": "231.443978",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143123911926431,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143123652756118",
+   "prior_depth_p95_m": "0.025504527730179083",
+   "marginal_innovation_score": "3.8280741563706386",
+   "capture_to_analysis_ms": "224.446565",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143124500041911,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143124252984751",
+   "prior_depth_p95_m": "0.024166073531344045",
+   "marginal_innovation_score": "3.6740275819562274",
+   "capture_to_analysis_ms": "230.547126",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143124911887467,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143124653096017",
+   "prior_depth_p95_m": "0.018722639387070125",
+   "marginal_innovation_score": "2.162265545324107",
+   "capture_to_analysis_ms": "219.628155",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143125488303293,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143125253298303",
+   "prior_depth_p95_m": "0.014916847862693016",
+   "marginal_innovation_score": "2.4661043629199075",
+   "capture_to_analysis_ms": "233.657166",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143125911872756,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143125653444680",
+   "prior_depth_p95_m": "0.012735906424993004",
+   "marginal_innovation_score": "2.168808260876925",
+   "capture_to_analysis_ms": "224.910197",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143126485239987,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143126253778065",
+   "prior_depth_p95_m": "0.013281534373377544",
+   "marginal_innovation_score": "2.31654031576798",
+   "capture_to_analysis_ms": "230.126811",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143126911897723,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143126653832251",
+   "prior_depth_p95_m": "0.013165043164900268",
+   "marginal_innovation_score": "1.8019648667322952",
+   "capture_to_analysis_ms": "227.410267",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143127476952403,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143127254067299",
+   "prior_depth_p95_m": "0.012754122942869685",
+   "marginal_innovation_score": "4.343722941709286",
+   "capture_to_analysis_ms": "221.527081",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143127911845243,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143127654230491",
+   "prior_depth_p95_m": "0.014277692702610952",
+   "marginal_innovation_score": "2.531231292741842",
+   "capture_to_analysis_ms": "227.979631",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143128476966677,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143128254464172",
+   "prior_depth_p95_m": "0.013357736545703214",
+   "marginal_innovation_score": "2.716221146914119",
+   "capture_to_analysis_ms": "221.227029",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143128911956223,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143128654553315",
+   "prior_depth_p95_m": "0.01450454559986869",
+   "marginal_innovation_score": "4.392215396623463",
+   "capture_to_analysis_ms": "241.487925",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143129411714205,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143129054887067",
+   "prior_depth_p95_m": "0.015170836594964963",
+   "marginal_innovation_score": "3.474353390540188",
+   "capture_to_analysis_ms": "228.159664",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143129911715614,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143129655111930",
+   "prior_depth_p95_m": "0.01261889996752429",
+   "marginal_innovation_score": "3.5103701356160446",
+   "capture_to_analysis_ms": "216.538479",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143130482924101,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143130255376075",
+   "prior_depth_p95_m": "0.01095194889560691",
+   "marginal_innovation_score": "3.432295438395089",
+   "capture_to_analysis_ms": "226.272532",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143130911904025,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143130655520405",
+   "prior_depth_p95_m": "0.013696003332411763",
+   "marginal_innovation_score": "3.732578777495715",
+   "capture_to_analysis_ms": "227.990789",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143131476048267,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143131255708746",
+   "prior_depth_p95_m": "0.013050560986796035",
+   "marginal_innovation_score": "1.8584855694089006",
+   "capture_to_analysis_ms": "219.119318",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143131911958854,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143131655786559",
+   "prior_depth_p95_m": "0.015139783932532277",
+   "marginal_innovation_score": "2.8953421349118256",
+   "capture_to_analysis_ms": "228.013399",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143132484110783,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143132256020749",
+   "prior_depth_p95_m": "0.01404597612598857",
+   "marginal_innovation_score": "3.7374122697070864",
+   "capture_to_analysis_ms": "226.497454",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143132911827019,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143132656116455",
+   "prior_depth_p95_m": "0.014983915451744378",
+   "marginal_innovation_score": "2.8589691851107593",
+   "capture_to_analysis_ms": "217.091477",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143133482363098,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143133256488213",
+   "prior_depth_p95_m": "0.012185250419101457",
+   "marginal_innovation_score": "3.4436729720073407",
+   "capture_to_analysis_ms": "224.601195",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143133911901334,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143133656694386",
+   "prior_depth_p95_m": "0.017397497147888605",
+   "marginal_innovation_score": "3.9948495608999237",
+   "capture_to_analysis_ms": "219.488955",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143134487639800,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143134256986923",
+   "prior_depth_p95_m": "0.014740530486212489",
+   "marginal_innovation_score": "3.348650194911026",
+   "capture_to_analysis_ms": "217.68407",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143134949306023,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143134657134485",
+   "prior_depth_p95_m": "0.016678728525289642",
+   "marginal_innovation_score": "3.6214025498563367",
+   "capture_to_analysis_ms": "290.852742",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143135484956186,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143135257302645",
+   "prior_depth_p95_m": "0.01437943683434222",
+   "marginal_innovation_score": "3.3529256655254627",
+   "capture_to_analysis_ms": "226.235923",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143135911769416,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143135657472889",
+   "prior_depth_p95_m": "0.012512175532313378",
+   "marginal_innovation_score": "3.688448048619743",
+   "capture_to_analysis_ms": "226.593626",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143136485068090,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143136257611348",
+   "prior_depth_p95_m": "0.012277705902446485",
+   "marginal_innovation_score": "4.232366860021009",
+   "capture_to_analysis_ms": "226.19853",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143136911864979,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143136657631464",
+   "prior_depth_p95_m": "0.012647993587464912",
+   "marginal_innovation_score": "3.1227514929162257",
+   "capture_to_analysis_ms": "232.776648",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143137482411756,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143137257855475",
+   "prior_depth_p95_m": "0.013661985428688836",
+   "marginal_innovation_score": "2.43013676358426",
+   "capture_to_analysis_ms": "222.874809",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143137912001791,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143137658004788",
+   "prior_depth_p95_m": "0.011902677276556528",
+   "marginal_innovation_score": "3.2686814866991143",
+   "capture_to_analysis_ms": "226.07046",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143138481920129,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143138258276896",
+   "prior_depth_p95_m": "0.01427295961991961",
+   "marginal_innovation_score": "2.6256484058295415",
+   "capture_to_analysis_ms": "222.290537",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143138911702958,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143138658413975",
+   "prior_depth_p95_m": "0.01594839916289971",
+   "marginal_innovation_score": "3.2664203640286384",
+   "capture_to_analysis_ms": "234.106748",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143139488305508,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143139258674623",
+   "prior_depth_p95_m": "0.015642836188354426",
+   "marginal_innovation_score": "2.5242120625166535",
+   "capture_to_analysis_ms": "228.377077",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143139911859954,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143139658759864",
+   "prior_depth_p95_m": "0.017062285522971798",
+   "marginal_innovation_score": "1.688655563752337",
+   "capture_to_analysis_ms": "220.947414",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143140484914409,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143140259017072",
+   "prior_depth_p95_m": "0.012548606831961961",
+   "marginal_innovation_score": "4.475634513450216",
+   "capture_to_analysis_ms": "224.704435",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143140911827650,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143140659186987",
+   "prior_depth_p95_m": "0.015811036138304736",
+   "marginal_innovation_score": "5.113934434379815",
+   "capture_to_analysis_ms": "227.913075",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143141483789615,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143141259413417",
+   "prior_depth_p95_m": "0.012111180579834622",
+   "marginal_innovation_score": "4.575726309278092",
+   "capture_to_analysis_ms": "222.911516",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143141911771944,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143141659571614",
+   "prior_depth_p95_m": "0.013336220344761507",
+   "marginal_innovation_score": "2.127918686413857",
+   "capture_to_analysis_ms": "226.956716",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143142491005858,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143142259942643",
+   "prior_depth_p95_m": "0.012217147624927926",
+   "marginal_innovation_score": "3.3937854411779087",
+   "capture_to_analysis_ms": "229.785745",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143142911935206,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143142660089538",
+   "prior_depth_p95_m": "0.013050419489668284",
+   "marginal_innovation_score": "4.272695387195481",
+   "capture_to_analysis_ms": "226.905219",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143143482053580,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143143260213082",
+   "prior_depth_p95_m": "0.01510182765485063",
+   "marginal_innovation_score": "1.8942282535906199",
+   "capture_to_analysis_ms": "220.472838",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143143911775214,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143143660356760",
+   "prior_depth_p95_m": "0.012276633177783557",
+   "marginal_innovation_score": "4.502974010982424",
+   "capture_to_analysis_ms": "220.620517",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143144602916293,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143144260576505",
+   "prior_depth_p95_m": "0.012786257064485496",
+   "marginal_innovation_score": "1.2731608945198034",
+   "capture_to_analysis_ms": "224.697575",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143144934059824,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143144660739684",
+   "prior_depth_p95_m": "0.014943329057118315",
+   "marginal_innovation_score": "1.2089281559022143",
+   "capture_to_analysis_ms": "272.111313",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143145454290076,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143145060913279",
+   "prior_depth_p95_m": "0.0179976661841459",
+   "marginal_innovation_score": "3.97045890418087",
+   "capture_to_analysis_ms": "392.131018",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143145911745206,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143145661132673",
+   "prior_depth_p95_m": "0.012887756760826007",
+   "marginal_innovation_score": "1.285836620643225",
+   "capture_to_analysis_ms": "224.583793",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143146411573149,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143146061260447",
+   "prior_depth_p95_m": "0.013104543595899198",
+   "marginal_innovation_score": "3.136924172851543",
+   "capture_to_analysis_ms": "224.858508",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143146911827338,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143146661604616",
+   "prior_depth_p95_m": "0.011897390345801862",
+   "marginal_innovation_score": "1.5091762289243886",
+   "capture_to_analysis_ms": "222.830321",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143147451474010,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143147061699777",
+   "prior_depth_p95_m": "0.013120192427033384",
+   "marginal_innovation_score": "1.9838326405682427",
+   "capture_to_analysis_ms": "388.393426",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143147911530060,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143147661999270",
+   "prior_depth_p95_m": "0.01177394983500671",
+   "marginal_innovation_score": "4.385387845223263",
+   "capture_to_analysis_ms": "232.090723",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143148411766623,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143148062061916",
+   "prior_depth_p95_m": "0.012672744412024832",
+   "marginal_innovation_score": "3.7632371994249545",
+   "capture_to_analysis_ms": "233.589727",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143148911760521,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143148662407479",
+   "prior_depth_p95_m": "0.013266026751040105",
+   "marginal_innovation_score": "1.6798401639133176",
+   "capture_to_analysis_ms": "222.199984",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143149499044789,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143149262621098",
+   "prior_depth_p95_m": "0.011940462368139611",
+   "marginal_innovation_score": "3.1250998594518045",
+   "capture_to_analysis_ms": "220.435708",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143149948214092,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143149662757375",
+   "prior_depth_p95_m": "0.014470431288770633",
+   "marginal_innovation_score": "2.8168119116165067",
+   "capture_to_analysis_ms": "283.992437",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143150461631637,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143150062883171",
+   "prior_depth_p95_m": "0.018485760047123198",
+   "marginal_innovation_score": "3.0721938339936807",
+   "capture_to_analysis_ms": "397.570977",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143150911681396,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143150463001839",
+   "prior_depth_p95_m": "0.013274734379000327",
+   "marginal_innovation_score": "3.2179282467593318",
+   "capture_to_analysis_ms": "231.068119",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143151496574668,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143151263262127",
+   "prior_depth_p95_m": "0.013691782008104432",
+   "marginal_innovation_score": "2.2214649108397366",
+   "capture_to_analysis_ms": "231.927478",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143151911763264,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143151663513801",
+   "prior_depth_p95_m": "0.014147506828302164",
+   "marginal_innovation_score": "3.3361380597913377",
+   "capture_to_analysis_ms": "234.009615",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143152458135911,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143152063663909",
+   "prior_depth_p95_m": "0.0194548377086236",
+   "marginal_innovation_score": "2.36201939918856",
+   "capture_to_analysis_ms": "393.028092",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143152911844621,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143152663834401",
+   "prior_depth_p95_m": "0.014385290787679028",
+   "marginal_innovation_score": "5.164256975116651",
+   "capture_to_analysis_ms": "223.622756",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143153411741942,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143153063949767",
+   "prior_depth_p95_m": "0.0139807823135964",
+   "marginal_innovation_score": "1.7681325045882907",
+   "capture_to_analysis_ms": "230.931776",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143153949895657,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143153664225556",
+   "prior_depth_p95_m": "0.013826380171743657",
+   "marginal_innovation_score": "3.1626911100232853",
+   "capture_to_analysis_ms": "284.088897",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143154411809496,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143154064423110",
+   "prior_depth_p95_m": "0.013412391890280248",
+   "marginal_innovation_score": "4.3885273935861555",
+   "capture_to_analysis_ms": "268.528939",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143154945242116,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143154664577700",
+   "prior_depth_p95_m": "0.014070751262219293",
+   "marginal_innovation_score": "1.9747038820407894",
+   "capture_to_analysis_ms": "279.239708",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143155491470358,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143155264808941",
+   "prior_depth_p95_m": "0.012235667531099816",
+   "marginal_innovation_score": "2.60460413671994",
+   "capture_to_analysis_ms": "225.249844",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143155911891538,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143155464888945",
+   "prior_depth_p95_m": "0.011201638486306276",
+   "marginal_innovation_score": "3.2099094948385347",
+   "capture_to_analysis_ms": "217.365523",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143156411829275,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143156065123155",
+   "prior_depth_p95_m": "0.012104517118292801",
+   "marginal_innovation_score": "2.6437194940106563",
+   "capture_to_analysis_ms": "227.221159",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143156941768672,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143156665412805",
+   "prior_depth_p95_m": "0.01821570604772238",
+   "marginal_innovation_score": "4.187771817770554",
+   "capture_to_analysis_ms": "275.058323",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143157460611565,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143157065626731",
+   "prior_depth_p95_m": "0.019287923991386638",
+   "marginal_innovation_score": "3.1416006413690356",
+   "capture_to_analysis_ms": "393.735404",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143157911629409,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143157465781846",
+   "prior_depth_p95_m": "0.01380837300829107",
+   "marginal_innovation_score": "2.464309143884628",
+   "capture_to_analysis_ms": "228.317137",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143158492519089,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143158265962754",
+   "prior_depth_p95_m": "0.0110638265671121",
+   "marginal_innovation_score": "1.883173167811606",
+   "capture_to_analysis_ms": "225.395269",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143158953661418,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143158466070452",
+   "prior_depth_p95_m": "0.013990835351228192",
+   "marginal_innovation_score": "5.739498204536542",
+   "capture_to_analysis_ms": "486.116277",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143159452289254,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143159066258182",
+   "prior_depth_p95_m": "0.010347243215278011",
+   "marginal_innovation_score": "9.221131545123939",
+   "capture_to_analysis_ms": "384.724",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143159911978161,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143159466515072",
+   "prior_depth_p95_m": "0.011987070127634468",
+   "marginal_innovation_score": "2.9426605648621775",
+   "capture_to_analysis_ms": "240.63757",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143160434836381,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143160200052948",
+   "prior_depth_p95_m": "0.010421627462668892",
+   "marginal_innovation_score": "4.508338098532043",
+   "capture_to_analysis_ms": "233.351885",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143160911804041,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143160659632858",
+   "prior_depth_p95_m": "0.008022539010118911",
+   "marginal_innovation_score": "0.12074044559032178",
+   "capture_to_analysis_ms": "226.630841",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143161568832242,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143161259872118",
+   "prior_depth_p95_m": "0.005560752104888389",
+   "marginal_innovation_score": "0.08092820180946231",
+   "capture_to_analysis_ms": "307.546852",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143161911986829,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143161600621155",
+   "prior_depth_p95_m": "0.01701223176850156",
+   "marginal_innovation_score": "5.602279837625017",
+   "capture_to_analysis_ms": "235.633591",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143162437950144,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143162200803194",
+   "prior_depth_p95_m": "0.019215344309704507",
+   "marginal_innovation_score": "3.9362487318080834",
+   "capture_to_analysis_ms": "235.862722",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143162911864966,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143162660394358",
+   "prior_depth_p95_m": "0.006437516837900749",
+   "marginal_innovation_score": "0.10947077364980926",
+   "capture_to_analysis_ms": "211.735843",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143163427768721,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143163201347264",
+   "prior_depth_p95_m": "0.02131600743101252",
+   "marginal_innovation_score": "4.884246140673985",
+   "capture_to_analysis_ms": "225.181811",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143163911832358,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143163660791007",
+   "prior_depth_p95_m": "0.007860570868905991",
+   "marginal_innovation_score": "0.14678708121428727",
+   "capture_to_analysis_ms": "239.471491",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143164504580140,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143164261010945",
+   "prior_depth_p95_m": "0.007685891987486124",
+   "marginal_innovation_score": "0.16984001102255922",
+   "capture_to_analysis_ms": "237.173533",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143164911879675,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143164601900870",
+   "prior_depth_p95_m": "0.019049333277352812",
+   "marginal_innovation_score": "3.4704463383544093",
+   "capture_to_analysis_ms": "240.075616",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143165436245880,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143165202099657",
+   "prior_depth_p95_m": "0.011986447808621169",
+   "marginal_innovation_score": "7.991922764010373",
+   "capture_to_analysis_ms": "232.887891",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143165911753896,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143165661561030",
+   "prior_depth_p95_m": "0.00841483677816876",
+   "marginal_innovation_score": "0.24693680550518468",
+   "capture_to_analysis_ms": "218.112475",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143166429805066,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143166202372031",
+   "prior_depth_p95_m": "0.014696547956799366",
+   "marginal_innovation_score": "4.3716973892716195",
+   "capture_to_analysis_ms": "225.96563",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143166911979521,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143166661928194",
+   "prior_depth_p95_m": "0.00785803955052251",
+   "marginal_innovation_score": "0.14927839594787723",
+   "capture_to_analysis_ms": "225.513745",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143167505353839,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143167262154325",
+   "prior_depth_p95_m": "0.008061988498863658",
+   "marginal_innovation_score": "0.16424533974642594",
+   "capture_to_analysis_ms": "241.814309",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143167911960879,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143167602871287",
+   "prior_depth_p95_m": "0.019675686785532637",
+   "marginal_innovation_score": "3.253982122297603",
+   "capture_to_analysis_ms": "228.001712",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795143168474426773,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795143168262553871",
+   "prior_depth_p95_m": "0.008775652125778863",
+   "marginal_innovation_score": "0.20841872012527018",
+   "capture_to_analysis_ms": "210.448021",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 1, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 163}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ }
+]

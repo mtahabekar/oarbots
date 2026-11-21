@@ -1,0 +1,101 @@
+{
+ "run": "/home/taha/ros2_colcon_ws/src/oarbots/experiments/hardware/sessions/2026-11-20_fabric_run/live_120841",
+ "twin_vs_depth": {
+  "1": {
+   "points": 37918,
+   "median_mm": -59.3,
+   "mad_mm": 46.1,
+   "p95_abs_mm": 138.5,
+   "over_30mm": 0.69
+  },
+  "0": {
+   "points": 22820,
+   "median_mm": -66.3,
+   "mad_mm": 40.7,
+   "p95_abs_mm": 138.4,
+   "over_30mm": 0.752
+  }
+ },
+ "twin_vs_depth_map_mm": [
+  [
+   -1,
+   -1,
+   -4,
+   1,
+   9,
+   -10
+  ],
+  [
+   -70,
+   -54,
+   -58,
+   -36,
+   8,
+   14
+  ],
+  [
+   -89,
+   -111,
+   -101,
+   -80,
+   -37,
+   -12
+  ],
+  [
+   -6,
+   -115,
+   -112,
+   -108,
+   -106,
+   -73
+  ],
+  [
+   -99,
+   -123,
+   -106,
+   -111,
+   null,
+   -87
+  ],
+  [
+   -45,
+   -49,
+   -91,
+   -107,
+   -82,
+   -60
+  ]
+ ],
+ "estimate_vs_depth": {
+  "1": {
+   "points": 56223,
+   "median_mm": -15.9,
+   "mad_mm": 19.5,
+   "p95_abs_mm": 104.3,
+   "over_30mm": 0.387
+  },
+  "0": {
+   "points": 30137,
+   "median_mm": -15.4,
+   "mad_mm": 19.5,
+   "p95_abs_mm": 107.0,
+   "over_30mm": 0.373
+  }
+ },
+ "estimate_edge_strain_p95": 0.127,
+ "clearance_commands_on": {
+  "frames": 314,
+  "twin_min_m": 0.09,
+  "real_p5_m": -0.04,
+  "real_min_m": -0.193,
+  "real_minus_twin_median_m": -0.125,
+  "real_minus_twin_p5_m": -0.188,
+  "frames_real_below_zero": 17,
+  "frames_with_depth_inside_prism": 16,
+  "note": "real = third-closest sheet depth point to the CBF capsule per frame; check images before calling contact"
+ },
+ "estimate_clearance_commands_on": {
+  "p5_m": 0.032,
+  "minus_twin_median_m": -0.087
+ }
+}

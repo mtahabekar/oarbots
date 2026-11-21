@@ -1,0 +1,55 @@
+# Fabric CBF bridge on each robot helper (oarbot_runtime fabric_cbf_bridge).
+common:
+  # Joint-velocity output (2026-11-18): at the grasp pose both arms report Kinova CartesianFaultState 1
+  # and ignore Cartesian velocity; through joint velocity they follow down to 1 cm/s, 84-99 % delivered,
+  # 0.2-0.8 s lag, tool turn <= 0.4 deg (sessions/2026-11-18_joint_response). The guard forwards joint
+  # commands only in Fabric Follow (CBF) with the deadman held, at most max_arm_joint_dps per joint (hosts/*.args).
+  output: joint
+  # The arm's own joint-rate limit (kinova_description: 36 deg/s joints 1-3, 48 joints 4-6), also the guard's cap
+  # since 2026-11-19. At 15 deg/s the grip delivered only ~7 cm/s in its worst direction at the grasp pose.
+  max_joint_dps: 36.0
+  world_frame: world
+  # 15 cm/s: what the arm delivers in every direction at the grasp pose at 36 deg/s per joint (16 cm/s, MoveIt
+  # and the bridge's own kinematics, sessions/2026-11-19_workspace); the twin plans with the same speed.
+  # Before: 10 cm/s (2026-11-18), with the twin at its cap 93-96 % of the time.
+  max_speed_mps: 0.15
+  command_timeout_sec: 0.1      # a command older than this by its own stamp is ignored
+  # No force stop (user, 2026-11-19: no arm stops on fabric safety limits; the deadman is the stop). The
+  # wrist force is still read and reported (diagnostics force_change_n). The old 6 N stop was a placeholder
+  # from the payload margin and tripped Silver at 23:30 on 2026-11-18. Set > 0 to stop on a force change again.
+  force_limit_n: 0.0
+  require_force: false          # nothing uses the force for stopping, so a stale force does not stop either
+  force_timeout_sec: 0.25
+  pose_timeout_sec: 0.25
+  # Tool positions (world, metres) the arm may occupy while following the twin. Set to the
+  # reachable region around the grasp for this cell; the defaults do not restrict anything.
+  workspace_min: [-10.0, -10.0, -10.0]
+  workspace_max: [10.0, 10.0, 10.0]
+  # The box is a wall, never a stop (user, 2026-11-19): outward motion is held at a face, the rest passes,
+  # and arming works outside it. On 2026-11-18 23:48 Silver overshot its y face by 2.1 cm, the latched stop
+  # fired and it stood still for the last 40 s. The wall slows outward motion to 2/s x the distance left
+  # (about 1 / the arm's 0.2-0.8 s response lag), so the arm arrives at the face slowly.
+  workspace_stop: false
+  workspace_gain_per_s: 2.0
+blue:
+  # Workspace box (world, m) around the grasp grip (2026-11-19, scripts/hw/workspace_sweep.py, sessions/
+  # 2026-11-19_workspace): x +/-15 cm, y -12/+12 cm (+y toward the person), z -33/+9 cm. Every 3 cm grid point
+  # inside and one step beyond each face: collision-free in MoveIt, joint limits kept, reached continuously
+  # from the grasp with the grasp orientation, and >= 4 cm/s in every direction at 36 deg/s (clear of the
+  # wrist singular band that cuts the y-/z+ corner). Wrist links >= 48 cm from the other arm anywhere in its
+  # box. Largest joint change from the grasp: 35, 58, 57, 62, 56, 118 deg (joint 6: check the camera cable).
+  # Before: x +/-8, y -6/+12, z -12/+6 cm (2026-11-18).
+  workspace_min: [-0.576, -0.533, 0.723]
+  workspace_max: [-0.276, -0.293, 1.143]
+  # The frame the Kinova driver interprets Cartesian velocities in. Measured 2026-11-16 (gate H3,
+  # translation): Kinova x/y/z = j2n6s300_link_base x/y/z on both robots, 0.99+ along the axis.
+  # Rotation axes are not verified yet. experiments/hardware/sessions/2026-11-16_h3_translation
+  command_frame: oarbot_blue/j2n6s300_link_base
+  tool_frame: oarbot_blue/fabric_grip
+silver:
+  # Same sweep as Blue: x +/-15, y -12/+12, z -33/+9 cm around the grasp grip; largest joint change 36, 58,
+  # 57, 62, 56, 117 deg. Before: x +/-8, y -6/+12, z -12/+6 cm.
+  workspace_min: [0.261, -0.543, 0.729]
+  workspace_max: [0.561, -0.303, 1.149]
+  command_frame: oarbot_silver/j2n6s300_link_base   # mounted 180 degrees about Z on its chassis
+  tool_frame: oarbot_silver/fabric_grip

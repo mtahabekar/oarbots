@@ -1,0 +1,41 @@
+{
+  "observed_seconds": 20,
+  "fresh_within_0_5_s_percent": {
+    "human_left": 100.0,
+    "human_right": 85.4
+  },
+  "max_hand_age_s": {
+    "human_left": 0.258,
+    "human_right": 1.182
+  },
+  "twin_stale_grip_percent": 0.08,
+  "twin": {
+    "deadman": false,
+    "e_stop": false,
+    "fault": "",
+    "commands_enabled": "False",
+    "frame": "7421",
+    "virtual_collision": "False",
+    "material": "{\"version\": 0, \"bend\": 1.0, \"shear\": 1.0}",
+    "skipped_frames": "137",
+    "stale_grip_frames": "1422",
+    "replaced": "0",
+    "warmup": "idle",
+    "frame_ms_p50": "8.199972999989313",
+    "frame_ms_p95": "15.686214550032673",
+    "lag_sec": "0.159913325",
+    "box_clearance_m": "50.66669942389075",
+    "error_p50_m": "0.0852820380290516",
+    "error_p95_m": "0.2159161590079954",
+    "error_max_m": "0.23779817417847907",
+    "force_total_n": "0.9763369460717863",
+    "residual_total_n": "0.6421269749887543",
+    "force_net_n": "[-0.02, -0.2797, -0.6828]",
+    "diverged": "False",
+    "cbf_ms_p95": "5.252035550023491",
+    "cbf_status": "feasible",
+    "capsule_clearance_m": "50.63478623794749",
+    "message": "twin following the measured grips"
+  },
+  "parameter_bank_running": true
+}

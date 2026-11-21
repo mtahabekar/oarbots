@@ -1,0 +1,3202 @@
+[
+ {
+  "stamp": 1795195049345556517,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195049062985361",
+   "prior_depth_p95_m": "0.07861539151044998",
+   "marginal_innovation_score": "6.043642465663601",
+   "capture_to_analysis_ms": "232.867322",
+   "hand_age_sec": "[0.0, 0.0]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195049893336426,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195049663157314",
+   "prior_depth_p95_m": "0.08172663948886427",
+   "marginal_innovation_score": "4.371341604029842",
+   "capture_to_analysis_ms": "228.917295",
+   "hand_age_sec": "[0.333425696, 0.0]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195050345477110,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195050063294067",
+   "prior_depth_p95_m": "0.06808757319042896",
+   "marginal_innovation_score": "3.9403380162505246",
+   "capture_to_analysis_ms": "277.592232",
+   "hand_age_sec": "[0.0, 0.0]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195050845807255,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195050463433389",
+   "prior_depth_p95_m": "0.07400709682623337",
+   "marginal_innovation_score": "4.547359271816274",
+   "capture_to_analysis_ms": "280.236872",
+   "hand_age_sec": "[0.0, 0.0]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195051345552272,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195051063694073",
+   "prior_depth_p95_m": "0.07939696745165456",
+   "marginal_innovation_score": "5.036069506690658",
+   "capture_to_analysis_ms": "275.29113",
+   "hand_age_sec": "[0.0, 0.0]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195051911484121,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195051663923407",
+   "prior_depth_p95_m": "0.07678544626601853",
+   "marginal_innovation_score": "5.564469091844468",
+   "capture_to_analysis_ms": "246.08449",
+   "hand_age_sec": "[0.066722688, 0.0]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195052345522811,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195052064068690",
+   "prior_depth_p95_m": "0.07838699781952374",
+   "marginal_innovation_score": "6.02443754457728",
+   "capture_to_analysis_ms": "274.859099",
+   "hand_age_sec": "[0.0, 0.0]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195052845682439,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195052464190420",
+   "prior_depth_p95_m": "0.0773238311236074",
+   "marginal_innovation_score": "4.652758112281265",
+   "capture_to_analysis_ms": "245.623957",
+   "hand_age_sec": "[0.0, 0.0]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195053345826647,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195053064392142",
+   "prior_depth_p95_m": "0.08027167724964376",
+   "marginal_innovation_score": "5.3060275723684915",
+   "capture_to_analysis_ms": "246.557829",
+   "hand_age_sec": "[0.0, 0.0]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195053912558645,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195053664684675",
+   "prior_depth_p95_m": "0.07203091971636659",
+   "marginal_innovation_score": "4.626728204507304",
+   "capture_to_analysis_ms": "246.633002",
+   "hand_age_sec": "[0.0, 0.0]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195054345617109,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195054064834549",
+   "prior_depth_p95_m": "0.07542172425355526",
+   "marginal_innovation_score": "3.788167259250425",
+   "capture_to_analysis_ms": "275.787532",
+   "hand_age_sec": "[0.0, 0.0]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195054893949453,
+  "level": 1,
+  "message": "edge strain bound violated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195054665071906",
+   "prior_depth_p95_m": "0.07503200438059426",
+   "marginal_innovation_score": "3.135829196559112",
+   "capture_to_analysis_ms": "227.643396",
+   "hand_age_sec": "[0.0, 0.0]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195055345834755,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195054850316275",
+   "prior_depth_p95_m": "0.06750582062146239",
+   "marginal_innovation_score": "5.899051524962723",
+   "capture_to_analysis_ms": "459.19975",
+   "hand_age_sec": "[0.051871111, 0.051871111]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195055845878955,
+  "level": 1,
+  "message": "edge strain bound violated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195055265328237",
+   "prior_depth_p95_m": "0.07912020678161806",
+   "marginal_innovation_score": "3.5760354048769845",
+   "capture_to_analysis_ms": "278.709918",
+   "hand_age_sec": "[0.0, 0.0]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195056345816548,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195056065723052",
+   "prior_depth_p95_m": "0.0772004598011335",
+   "marginal_innovation_score": "3.4781395963979738",
+   "capture_to_analysis_ms": "227.710725",
+   "hand_age_sec": "[0.0, 0.0]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195056898338149,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195056665983909",
+   "prior_depth_p95_m": "0.050121225994615576",
+   "marginal_innovation_score": "3.5511209477580574",
+   "capture_to_analysis_ms": "231.055147",
+   "hand_age_sec": "[0.015044291, 0.0]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195057355911542,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195057066052361",
+   "prior_depth_p95_m": "0.06791059701876917",
+   "marginal_innovation_score": "3.105499494086683",
+   "capture_to_analysis_ms": "288.553129",
+   "hand_age_sec": "[0.21504918, 0.0]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195057845699486,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195057466264241",
+   "prior_depth_p95_m": "0.04957853995521472",
+   "marginal_innovation_score": "3.416295295595987",
+   "capture_to_analysis_ms": "243.314318",
+   "hand_age_sec": "[0.148403206, 0.0]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195058345797134,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195057866428076",
+   "prior_depth_p95_m": "0.04692763875463993",
+   "marginal_innovation_score": "2.283812788715472",
+   "capture_to_analysis_ms": "296.133022",
+   "hand_age_sec": "[0.015062598, 0.0]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195058845562350,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195058266565843",
+   "prior_depth_p95_m": "0.03776215441623975",
+   "marginal_innovation_score": "2.2982046104596914",
+   "capture_to_analysis_ms": "309.269822",
+   "hand_age_sec": "[0.015088726, 0.0]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195059345655995,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195059051893234",
+   "prior_depth_p95_m": "0.06784292655118769",
+   "marginal_innovation_score": "3.340328832036875",
+   "capture_to_analysis_ms": "247.421549",
+   "hand_age_sec": "[0.051756937, 0.051756937]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195059845586210,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195059452093125",
+   "prior_depth_p95_m": "0.0645572229368678",
+   "marginal_innovation_score": "2.9925756355317965",
+   "capture_to_analysis_ms": "235.485657",
+   "hand_age_sec": "[0.051765967, 0.051765967]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195060345935497,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195060052388599",
+   "prior_depth_p95_m": "0.0679029708590986",
+   "marginal_innovation_score": "3.3802432567288827",
+   "capture_to_analysis_ms": "246.276303",
+   "hand_age_sec": "[0.051919287, 0.051919287]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195060900882047,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195060652635665",
+   "prior_depth_p95_m": "0.0674555260262168",
+   "marginal_innovation_score": "3.430682539221964",
+   "capture_to_analysis_ms": "247.009209",
+   "hand_age_sec": "[0.052015237, 0.052015237]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195061345584484,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195061052688047",
+   "prior_depth_p95_m": "0.06583902647080726",
+   "marginal_innovation_score": "2.7459832099222483",
+   "capture_to_analysis_ms": "250.694955",
+   "hand_age_sec": "[0.051919636, 0.051919636]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195061903839948,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195061652851207",
+   "prior_depth_p95_m": "0.06936470292039652",
+   "marginal_innovation_score": "1.4813498837936425",
+   "capture_to_analysis_ms": "249.598849",
+   "hand_age_sec": "[0.051780496, 0.051780496]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195062403669518,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195062053016520",
+   "prior_depth_p95_m": "0.05185755652445112",
+   "marginal_innovation_score": "0.8955653134139416",
+   "capture_to_analysis_ms": "349.200074",
+   "hand_age_sec": "[0.051828144, 0.051828144]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195062845860964,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195062453179721",
+   "prior_depth_p95_m": "0.0439696437565555",
+   "marginal_innovation_score": "1.01526833434373",
+   "capture_to_analysis_ms": "240.61207",
+   "hand_age_sec": "[0.051841796, 0.051841796]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195063345465540,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195063053468429",
+   "prior_depth_p95_m": "0.06519570105949898",
+   "marginal_innovation_score": "3.314398399665226",
+   "capture_to_analysis_ms": "252.136225",
+   "hand_age_sec": "[0.051843425, 0.051843425]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195063918670660,
+  "level": 1,
+  "message": "edge strain bound violated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195063653719471",
+   "prior_depth_p95_m": "0.07583332138037421",
+   "marginal_innovation_score": "3.742943048685523",
+   "capture_to_analysis_ms": "263.390835",
+   "hand_age_sec": "[0.118593593, 0.051921032]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195064345883694,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195064053799453",
+   "prior_depth_p95_m": "0.06506441711399495",
+   "marginal_innovation_score": "3.6972972978640746",
+   "capture_to_analysis_ms": "258.791409",
+   "hand_age_sec": "[0.051870148, 0.051870148]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195064908098190,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195064654019812",
+   "prior_depth_p95_m": "0.05962276354603421",
+   "marginal_innovation_score": "4.251873655327215",
+   "capture_to_analysis_ms": "252.671344",
+   "hand_age_sec": "[0.051768374, 0.051768374]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195065406727137,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195065054140267",
+   "prior_depth_p95_m": "0.07120102361657982",
+   "marginal_innovation_score": "4.504024128494703",
+   "capture_to_analysis_ms": "351.426381",
+   "hand_age_sec": "[0.333437619, 0.0]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195065845725989,
+  "level": 1,
+  "message": "edge strain bound violated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195065454273740",
+   "prior_depth_p95_m": "0.08478624919534973",
+   "marginal_innovation_score": "5.604542274361026",
+   "capture_to_analysis_ms": "249.917033",
+   "hand_age_sec": "[0.733571092, 0.066693016]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195066405072008,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195066054509593",
+   "prior_depth_p95_m": "0.08626038155079767",
+   "marginal_innovation_score": "5.458142198958253",
+   "capture_to_analysis_ms": "349.281715",
+   "hand_age_sec": "[0.051720383, 0.051720383]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195066845676364,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195066454669770",
+   "prior_depth_p95_m": "0.0878491413482022",
+   "marginal_innovation_score": "5.0061068686654036",
+   "capture_to_analysis_ms": "233.374122",
+   "hand_age_sec": "[0.066675725, 0.051673126]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195067345836437,
+  "level": 1,
+  "message": "observations assimilated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195067054901757",
+   "prior_depth_p95_m": "0.07475983406135511",
+   "marginal_innovation_score": "1.6645085639894832",
+   "capture_to_analysis_ms": "233.134483",
+   "hand_age_sec": "[0.385127649, 0.066697571]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195067902390558,
+  "level": 1,
+  "message": "edge strain bound violated",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195067655113617",
+   "prior_depth_p95_m": "0.07061792741028405",
+   "marginal_innovation_score": "3.4069119679714133",
+   "capture_to_analysis_ms": "246.078146",
+   "hand_age_sec": "[0.985339509, 0.466839192]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195068345820864,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195068055299901",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "42.434837678044524",
+   "capture_to_analysis_ms": "220.216366",
+   "hand_age_sec": "[null, 0.867025476]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195068892963230,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195068655630363",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "28.981551247061816",
+   "capture_to_analysis_ms": "235.843753",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195069378739493,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195069055775277",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "23.57894803899905",
+   "capture_to_analysis_ms": "321.633501",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195069888602212,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195069656112364",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "25.971931935512362",
+   "capture_to_analysis_ms": "231.163529",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195070384685253,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195070056322938",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "21.106734633529875",
+   "capture_to_analysis_ms": "327.122906",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195070845588363,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195070456421330",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "22.500312780025865",
+   "capture_to_analysis_ms": "228.986918",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195071345782964,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195071056651598",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "32.163298687198775",
+   "capture_to_analysis_ms": "231.473438",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195071845863347,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195071456755968",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "27.02294142125784",
+   "capture_to_analysis_ms": "219.222187",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195072345783662,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195072056955301",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "38.05527891207303",
+   "capture_to_analysis_ms": "237.495678",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195072887272050,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195072657134821",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "55.562717189595524",
+   "capture_to_analysis_ms": "228.830525",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195073384463958,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195073057310105",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "33.608566847439384",
+   "capture_to_analysis_ms": "326.026663",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195073895626794,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195073657523287",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "33.26301536213868",
+   "capture_to_analysis_ms": "236.842811",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195074345876274,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195074057646224",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "33.20712908021629",
+   "capture_to_analysis_ms": "231.870598",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195074845676687,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195074457829195",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "38.00677804559893",
+   "capture_to_analysis_ms": "234.716701",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195075345730815,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195075058056048",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "28.004593231319152",
+   "capture_to_analysis_ms": "238.266637",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195075894366261,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195075658263981",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "26.774973807553103",
+   "capture_to_analysis_ms": "234.797072",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195076345694954,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195076058490059",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "22.36204268157926",
+   "capture_to_analysis_ms": "230.821793",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195076904933756,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195076658851160",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "23.14103707468911",
+   "capture_to_analysis_ms": "244.710066",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195077381543786,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195077059028409",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "26.99097684105982",
+   "capture_to_analysis_ms": "321.234534",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195077845639274,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195077259121425",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "25.80850074615265",
+   "capture_to_analysis_ms": "230.993498",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195078345927026,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195078059369976",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "31.384145451149166",
+   "capture_to_analysis_ms": "245.860817",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195078912109503,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195078659462900",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "31.13617935466363",
+   "capture_to_analysis_ms": "251.386468",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195079345712936,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195079059588317",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "31.60532368940811",
+   "capture_to_analysis_ms": "232.678282",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195079871808684,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195079659813955",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "41.559034908723824",
+   "capture_to_analysis_ms": "210.797826",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195080345428009,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195080059918655",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "19.48810700588852",
+   "capture_to_analysis_ms": "229.041886",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195080891083761,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195080660279356",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "31.64475897321852",
+   "capture_to_analysis_ms": "229.603211",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195081394730806,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195081060390144",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "34.399370765317315",
+   "capture_to_analysis_ms": "333.008415",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195081845607605,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195081460526230",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "36.57143581035543",
+   "capture_to_analysis_ms": "233.473696",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195082386207373,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195082060798281",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "31.362818314871813",
+   "capture_to_analysis_ms": "323.991587",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195082888228110,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195082661023825",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "27.950994883677875",
+   "capture_to_analysis_ms": "225.76412",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195083345717352,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195083061255105",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "31.88289360010485",
+   "capture_to_analysis_ms": "229.132514",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195083905655814,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195083661432469",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "43.582899138940384",
+   "capture_to_analysis_ms": "242.975232",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195084345447714,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195084061484348",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "29.83423481273716",
+   "capture_to_analysis_ms": "242.890888",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195084845590716,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195084461650542",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "43.68897881437016",
+   "capture_to_analysis_ms": "242.007232",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195085345540174,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195085061870000",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "26.212584393077407",
+   "capture_to_analysis_ms": "241.57579",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195085918024779,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195085662145186",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "32.2903089381802",
+   "capture_to_analysis_ms": "254.689646",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195086345789305,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195086062257888",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "42.23733511753664",
+   "capture_to_analysis_ms": "227.946792",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195086896743391,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195086662575805",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "35.21206893215791",
+   "capture_to_analysis_ms": "232.932683",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195087345863210,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195087062872016",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "36.15823830876182",
+   "capture_to_analysis_ms": "227.823505",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195087892853145,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195087662946965",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "29.031913699299533",
+   "capture_to_analysis_ms": "228.597711",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195088392325651,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195088063176073",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "38.44407468430973",
+   "capture_to_analysis_ms": "327.699014",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195088845514690,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195088463238654",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "37.12229506744204",
+   "capture_to_analysis_ms": "225.641499",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195089345701663,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195089063474856",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "22.524392816194762",
+   "capture_to_analysis_ms": "228.733933",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195089895785813,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195089663721893",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "39.42792760095849",
+   "capture_to_analysis_ms": "230.906188",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195090394645495,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195090063863343",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "35.346156129089266",
+   "capture_to_analysis_ms": "329.307071",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195090893940711,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195090664053390",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "36.9202268198158",
+   "capture_to_analysis_ms": "228.496182",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195091345495236,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195091064229119",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "37.16935162638279",
+   "capture_to_analysis_ms": "225.407971",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195091904047356,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195091664521864",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "48.45816645703221",
+   "capture_to_analysis_ms": "238.329122",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195092392647202,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195092064750558",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "42.5056136513396",
+   "capture_to_analysis_ms": "326.510246",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195092845290404,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195092464861442",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "50.81144166187653",
+   "capture_to_analysis_ms": "237.981478",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195093345723334,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195093065161992",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "47.51031317511591",
+   "capture_to_analysis_ms": "238.574981",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195093896537652,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195093665326431",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "33.38487335924779",
+   "capture_to_analysis_ms": "229.801124",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195094345658876,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195094065423584",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "39.2274293481193",
+   "capture_to_analysis_ms": "237.534964",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195094905906179,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195094665659360",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "19.387221356499115",
+   "capture_to_analysis_ms": "238.850688",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195095389843208,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195095065909800",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "52.02539366639078",
+   "capture_to_analysis_ms": "322.337611",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195095845596992,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195095465981011",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "38.14071779337257",
+   "capture_to_analysis_ms": "236.797847",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195096345559672,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195096066211920",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "18.919980015184994",
+   "capture_to_analysis_ms": "232.902658",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195096904879703,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195096666357654",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "32.98507975357049",
+   "capture_to_analysis_ms": "237.153878",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195097345850172,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195097066491630",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "40.352136495999105",
+   "capture_to_analysis_ms": "226.263963",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195097874709467,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195097614689065",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "13.745866523774364",
+   "capture_to_analysis_ms": "258.724829",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195098395538256,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195098000344924",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "47.578998468788015",
+   "capture_to_analysis_ms": "393.899637",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195098845717689,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195098615076554",
+   "prior_depth_p95_m": "0.07052825224801128",
+   "marginal_innovation_score": "9.446730949964559",
+   "capture_to_analysis_ms": "202.449588",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195099345605300,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195099015265486",
+   "prior_depth_p95_m": "0.03974365572085159",
+   "marginal_innovation_score": "3.1189681896175316",
+   "capture_to_analysis_ms": "277.409663",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195099877674820,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195099615523165",
+   "prior_depth_p95_m": "0.07412954595369939",
+   "marginal_innovation_score": "9.338403632833472",
+   "capture_to_analysis_ms": "260.617985",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195100388482131,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195100001046499",
+   "prior_depth_p95_m": "0.07531097129797895",
+   "marginal_innovation_score": "49.933894085406415",
+   "capture_to_analysis_ms": "386.337671",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195100845844502,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195100415796778",
+   "prior_depth_p95_m": "0.02571105332946845",
+   "marginal_innovation_score": "2.8783346123909004",
+   "capture_to_analysis_ms": "214.749808",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195101345579020,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195101016016108",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "11.074829958193881",
+   "capture_to_analysis_ms": "202.072224",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195101845722262,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195101616259225",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "16.580642909006507",
+   "capture_to_analysis_ms": "201.262957",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195102345460286,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195102016390256",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "17.27765289123944",
+   "capture_to_analysis_ms": "253.303082",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195102868792709,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195102616624110",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "19.69179987494241",
+   "capture_to_analysis_ms": "250.735537",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195103391322664,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195103002297588",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "53.848885512177596",
+   "capture_to_analysis_ms": "387.725913",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195103845692845,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195103416984207",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "12.953166954386292",
+   "capture_to_analysis_ms": "204.125686",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195104345752771,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195104017169947",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "11.828622951948635",
+   "capture_to_analysis_ms": "203.445547",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195104845644565,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195104617375915",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "14.855267952612998",
+   "capture_to_analysis_ms": "200.187677",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195105345705552,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195105017523446",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "13.04400295091593",
+   "capture_to_analysis_ms": "200.333524",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195105845547128,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195105617732912",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "11.608521606448637",
+   "capture_to_analysis_ms": "206.749216",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195106345427935,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195106017892534",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "24.75611046748014",
+   "capture_to_analysis_ms": "247.612438",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195106865275990,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195106618110384",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "11.100242124313125",
+   "capture_to_analysis_ms": "245.922379",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195107383430690,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195107003745475",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "22.363381612155642",
+   "capture_to_analysis_ms": "378.493289",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195107845923499,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195107418434669",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "18.02359678018892",
+   "capture_to_analysis_ms": "198.891994",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195108345734681,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195108018697562",
+   "prior_depth_p95_m": "0.0802595687486465",
+   "marginal_innovation_score": "12.556881051534843",
+   "capture_to_analysis_ms": "213.662949",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195108845634650,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195108618963407",
+   "prior_depth_p95_m": "0.08946999783759702",
+   "marginal_innovation_score": "12.46388747713086",
+   "capture_to_analysis_ms": "213.419615",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195109345531591,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195109019105975",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "16.621562362326053",
+   "capture_to_analysis_ms": "256.480966",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195109878038895,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195109619329690",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "10.06036757360013",
+   "capture_to_analysis_ms": "257.301465",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195110381850840,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195110004919883",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "50.127349227761904",
+   "capture_to_analysis_ms": "375.694194",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195110845537305,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195110419643213",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "24.03810620061713",
+   "capture_to_analysis_ms": "211.373185",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195111345899054,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195111019850211",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "7.592703117111447",
+   "capture_to_analysis_ms": "219.615667",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195111845675176,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195111620080863",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "25.53794665041761",
+   "capture_to_analysis_ms": "210.058225",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195112345865899,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195112020239272",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "10.209765832813108",
+   "capture_to_analysis_ms": "222.340175",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195112865843180,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195112620469168",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "12.287809122960974",
+   "capture_to_analysis_ms": "243.955984",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195113392118303,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195113006070677",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "31.910762654883516",
+   "capture_to_analysis_ms": "384.785341",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195113845513189,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195113420767573",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "16.413062660262522",
+   "capture_to_analysis_ms": "218.17942",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195114390610597,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195114006454823",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "38.891355018244475",
+   "capture_to_analysis_ms": "382.925813",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195114845680601,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195114421128216",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "15.94477761510629",
+   "capture_to_analysis_ms": "217.67342",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195115345693421,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195115021374726",
+   "prior_depth_p95_m": "0.05921575372202879",
+   "marginal_innovation_score": "16.266310546796447",
+   "capture_to_analysis_ms": "211.181891",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195115845763427,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195115621603303",
+   "prior_depth_p95_m": "0.02376818633311845",
+   "marginal_innovation_score": "12.026643452757943",
+   "capture_to_analysis_ms": "211.639546",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195116345664086,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195116021721703",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "7.348070776262084",
+   "capture_to_analysis_ms": "244.92927",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195116878220625,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195116621985445",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "23.059111909542587",
+   "capture_to_analysis_ms": "254.890318",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195117345740083,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195117022159242",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "9.803315249328444",
+   "capture_to_analysis_ms": "257.794988",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195117866268189,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195117622386596",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "20.511469347225333",
+   "capture_to_analysis_ms": "242.523295",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195118345917593,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195118022536670",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "24.644019787593614",
+   "capture_to_analysis_ms": "258.187328",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195118878820812,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195118622798724",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "20.908106126778183",
+   "capture_to_analysis_ms": "254.694169",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195119345550732,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195119022958911",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "12.687352028536473",
+   "capture_to_analysis_ms": "217.77934",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195119845615101,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195119623146298",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "14.545625566449274",
+   "capture_to_analysis_ms": "208.693626",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195120345909674,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195120023303766",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "17.360295170118018",
+   "capture_to_analysis_ms": "253.746419",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195120882036896,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195120623522102",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "13.38335286968996",
+   "capture_to_analysis_ms": "257.215052",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195121394195098,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195121009120078",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "38.7278397940757",
+   "capture_to_analysis_ms": "383.692846",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195121845648753,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195121423827830",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "16.798961311765623",
+   "capture_to_analysis_ms": "207.185594",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195122345810784,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195122024056555",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "15.190859393709394",
+   "capture_to_analysis_ms": "208.586979",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195122883333644,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195122624269613",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "14.515232207594105",
+   "capture_to_analysis_ms": "257.712782",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195123394353883,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195123009954730",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "34.775795973299694",
+   "capture_to_analysis_ms": "383.22276",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195123845853187,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195123424578141",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "17.502448324481716",
+   "capture_to_analysis_ms": "214.262384",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195124346069042,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195124024826454",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "21.405773160111995",
+   "capture_to_analysis_ms": "221.952434",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195124858879764,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195124625103278",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "13.181061162627106",
+   "capture_to_analysis_ms": "232.438153",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195125345552924,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195125025299988",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "14.800071418915973",
+   "capture_to_analysis_ms": "248.494962",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195125862353144,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195125625555586",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "9.413869237921977",
+   "capture_to_analysis_ms": "235.669498",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195126345568833,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195126025725808",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "9.296539283286862",
+   "capture_to_analysis_ms": "238.936484",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195126877048116,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195126625981680",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "15.884039987491446",
+   "capture_to_analysis_ms": "249.671305",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195127345726369,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195127026142323",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "18.113617323877936",
+   "capture_to_analysis_ms": "238.016212",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195127876543742,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195127626319585",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "17.009443685856844",
+   "capture_to_analysis_ms": "248.880937",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195128345766360,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195128026511217",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "14.661816326766568",
+   "capture_to_analysis_ms": "237.441671",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195128864983730,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195128626719583",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "12.869859191076305",
+   "capture_to_analysis_ms": "236.936438",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195129345546706,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195129026817743",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "15.086943801068177",
+   "capture_to_analysis_ms": "236.327235",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195129876270219,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195129627035430",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "12.016426543040296",
+   "capture_to_analysis_ms": "247.862639",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195130345891091,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195130027228634",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "19.87964821541591",
+   "capture_to_analysis_ms": "247.663222",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195130864156361,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195130627466514",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "13.92636867740631",
+   "capture_to_analysis_ms": "235.312203",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195131345810986,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195131027597650",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "11.03883908525009",
+   "capture_to_analysis_ms": "236.0606",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195131862706220,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195131627788738",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "13.254365674932188",
+   "capture_to_analysis_ms": "233.551599",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195132345895680,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195132027918819",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "13.532794876403699",
+   "capture_to_analysis_ms": "232.890208",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195132865220049,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195132628148372",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "16.045376321270822",
+   "capture_to_analysis_ms": "235.688206",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195133345753694,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195133028299888",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "11.8878677208967",
+   "capture_to_analysis_ms": "234.929913",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195133861441033,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195133628496830",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "12.694208421829915",
+   "capture_to_analysis_ms": "231.631386",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195134345731169,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195134028662645",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "14.473875012620486",
+   "capture_to_analysis_ms": "235.177202",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195134864731391,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195134628876649",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "8.895577649786679",
+   "capture_to_analysis_ms": "234.618578",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195135345689838,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195135029045861",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "7.703713120391967",
+   "capture_to_analysis_ms": "234.070818",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195135864401768,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195135629276661",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "14.258954980510627",
+   "capture_to_analysis_ms": "233.969435",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195136345495081,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195136029426492",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "21.06809172578725",
+   "capture_to_analysis_ms": "234.563521",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195136863541553,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195136629671755",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "14.115649127879601",
+   "capture_to_analysis_ms": "232.550332",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195137345978397,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195137029839545",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "12.916479974830722",
+   "capture_to_analysis_ms": "237.376221",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195137864911371,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195137630115720",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "10.504795100043678",
+   "capture_to_analysis_ms": "233.19334",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195138345860899,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195138030250714",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "14.500419860248778",
+   "capture_to_analysis_ms": "243.434384",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195138871286204,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195138630459699",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "19.5730424845932",
+   "capture_to_analysis_ms": "239.402651",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195139345689282,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195139030672229",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "19.683565894118143",
+   "capture_to_analysis_ms": "233.989753",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195139862016617,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195139630876071",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "20.01592142462223",
+   "capture_to_analysis_ms": "229.82048",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195140345741432,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195140031050565",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "13.447581121916908",
+   "capture_to_analysis_ms": "233.028796",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195140864272004,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195140631262035",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "11.266020032661247",
+   "capture_to_analysis_ms": "231.793141",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195141345706217,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195141031436260",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "19.021954177307922",
+   "capture_to_analysis_ms": "231.417267",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195141861706530,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195141631676514",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "13.027520369741392",
+   "capture_to_analysis_ms": "228.745554",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195142345944463,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195142031791186",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "21.96683519445126",
+   "capture_to_analysis_ms": "232.351794",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195142876649266,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195142632015899",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "11.475118039158481",
+   "capture_to_analysis_ms": "243.19151",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195143345866665,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195143032179961",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "10.456924211202757",
+   "capture_to_analysis_ms": "231.367321",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195143865081187,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195143632463016",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "13.190874187093609",
+   "capture_to_analysis_ms": "231.296196",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195144345820271,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195144032635752",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "14.468605238148768",
+   "capture_to_analysis_ms": "230.773806",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195144871220453,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195144632857663",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "16.280266345542724",
+   "capture_to_analysis_ms": "237.095465",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195145345642834,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195145032996819",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "16.55042148750697",
+   "capture_to_analysis_ms": "230.75539",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195145864551249,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195145633243537",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "23.574849173152145",
+   "capture_to_analysis_ms": "229.866228",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195146345922510,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195146033379581",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "13.34805232359663",
+   "capture_to_analysis_ms": "231.03289",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195146876287276,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195146633562635",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "11.597278402851217",
+   "capture_to_analysis_ms": "241.401707",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195147345616396,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195147033721469",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "8.097442194322523",
+   "capture_to_analysis_ms": "242.282611",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195147867488451,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195147633976542",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "14.825193452082063",
+   "capture_to_analysis_ms": "232.169127",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195148345827614,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195148034112302",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "17.468324876028646",
+   "capture_to_analysis_ms": "228.800069",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ },
+ {
+  "stamp": 1795195148864948547,
+  "level": 1,
+  "message": "human grip unobserved",
+  "values": {
+   "monitor_mode": "warmup",
+   "measurement_ns": "1795195148634346173",
+   "prior_depth_p95_m": "inf",
+   "marginal_innovation_score": "10.233327889214518",
+   "capture_to_analysis_ms": "229.373214",
+   "hand_age_sec": "[null, null]",
+   "dropped_captures": "{\"ExtrapolationException: Lookup would require extrapolation into the past.  Requested\": 2, \"ValueError: Missing causal, fresh human grip measurements for both corne\": 171, \"ValueError: Grips 1 and 3 are farther apart than the material allows; ch\": 1}",
+   "physics": "newton_style3d",
+   "contact_assumption": "four prescribed corners (robot TF, propagated glove estimate); no self/obstacle collision"
+  }
+ }
+]

@@ -1,0 +1,86 @@
+{
+ "run": "/home/taha/ros2_colcon_ws/src/oarbots/experiments/hardware/sessions/2026-11-20_fabric_run/live_120408",
+ "twin_vs_depth": {
+  "1": {
+   "points": 40979,
+   "median_mm": -63.2,
+   "mad_mm": 45.5,
+   "p95_abs_mm": 137.6,
+   "over_30mm": 0.771
+  },
+  "0": {
+   "points": 45891,
+   "median_mm": -79.2,
+   "mad_mm": 37.0,
+   "p95_abs_mm": 140.2,
+   "over_30mm": 0.883
+  }
+ },
+ "twin_vs_depth_map_mm": [
+  [
+   -6,
+   -54,
+   -79,
+   -100,
+   -45,
+   -34
+  ],
+  [
+   -72,
+   -13,
+   -110,
+   -117,
+   -89,
+   -28
+  ],
+  [
+   -108,
+   null,
+   2,
+   11,
+   -80,
+   42
+  ],
+  [
+   -87,
+   103,
+   103,
+   26,
+   12,
+   -26
+  ],
+  [
+   -60,
+   -94,
+   76,
+   29,
+   58,
+   -26
+  ],
+  [
+   -81,
+   -99,
+   -14,
+   -2,
+   14,
+   -51
+  ]
+ ],
+ "estimate_vs_depth": {
+  "1": {
+   "points": 76687,
+   "median_mm": -8.7,
+   "mad_mm": 15.1,
+   "p95_abs_mm": 112.7,
+   "over_30mm": 0.304
+  },
+  "0": {
+   "points": 81913,
+   "median_mm": -3.7,
+   "mad_mm": 7.9,
+   "p95_abs_mm": 109.9,
+   "over_30mm": 0.233
+  }
+ },
+ "estimate_edge_strain_p95": 0.133
+}

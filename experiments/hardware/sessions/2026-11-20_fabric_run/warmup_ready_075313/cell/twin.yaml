@@ -1,0 +1,81 @@
+# Empty work area confirmed by operator; collider outside cell, as in the prior empty-cell warm-up.
+sheet:
+  width_m: 0.84
+  height_m: 0.84
+  cells_x: 28
+  cells_y: 28
+  areal_density_kg_m2: 0.215
+  stretch:
+  - 30000.0
+  - 30000.0
+  - 6000.0
+  bend:
+  - 0.002
+  - 0.001
+  - 0.0005
+  patch_m: 0.03
+  substeps: 8
+  iterations: 6
+  linear_iterations: 3
+obstacle:
+  center:
+  - 0.0
+  - 0.0
+  - -50.0
+  half_extents:
+  - 0.1
+  - 0.1
+  - 0.1
+  yaw: 0.0
+feedback:
+  stiffness_per_s2: 25.0
+  damping_per_s: 6.0
+  integral_per_s3: 150.0
+  integral_limit_mps2: 5.0
+  integral_leak_sec: 5.0
+  accel_limit_mps2: 20.0
+  trusted_sigma_m: 0.02
+  max_error_m: 0.25
+cbf:
+  enabled: true
+  config: ''
+  period: 4
+  max_speed_mps: 0.15
+  margin_m: 0.095
+stretch_guard:
+  enabled: true
+  edge_slack_m: 0.035
+  diagonal_slack_m: 0.035
+  alpha_per_s: 2.0
+  max_speed_mps: 0.15
+  force_feedback: false
+  force_soft_n: 3.0
+  force_gain_mps_per_n: 0.004
+  force_max_speed_mps: 0.05
+  force_topics:
+  - /oarbot_blue/force_torque_calibrated
+  - /oarbot_silver/force_torque_calibrated
+  force_on_robot_sign: 1.0
+runtime:
+  world_frame: world
+  robot_grip_frames:
+  - oarbot_blue/fabric_grip
+  - oarbot_silver/fabric_grip
+  hand_topic: /fabric/hand_states
+  estimate_topic: /fabric/estimated_state
+  delay_sec: 0.15
+  hand_coast_sec: 1.0
+  hand_start_age_sec: 0.5
+  estimate_stale_sec: 1.0
+  state_every_frames: 4
+  formation_slack_m: 0.04
+  formation_lateral_slack_m: 0.02
+  formation_gain_per_s: 2.0
+  commands_enabled: false
+warmup:
+  insets_m:
+  - 0.02
+  - 0.04
+  speed_mps: 0.03
+  hold_sec: 5.0
+  settle_sec: 3.0

@@ -1,0 +1,17 @@
+4 workers requested; 26.5 GB available allows 3 (6 GB each, 4 GB kept free)
+        RG-32x10  14     warmup_10_0.1_111137   25:49: objective  18.55 mm, median   +7.3, p95   42.2
+        RG-32x10  14              live_115658  40:120: objective  27.40 mm, median   +8.0, p95   69.5
+        RG-32x10  14              live_120408   20:90: objective  40.04 mm, median  -15.5, p95  127.3
+        RG-32x10  14   warmup_hardware_215321  10:100: objective  30.48 mm, median   +8.1, p95  101.9
+        RG-16x10  14     warmup_10_0.1_111137   25:49: objective  20.35 mm, median   +6.6, p95   45.0
+        RG-16x10  14              live_115658  40:120: objective  28.93 mm, median   -1.7, p95   76.1
+        RG-16x10  14              live_120408   20:90: objective  41.38 mm, median  -46.1, p95  130.6
+        RG-16x10  14   warmup_hardware_215321  10:100: objective  31.02 mm, median   +9.9, p95  114.2
+         R-16x10  14     warmup_10_0.1_111137   25:49: objective  26.36 mm, median  -20.6, p95   61.0
+         R-16x10  14              live_115658  40:120: objective  34.04 mm, median  -29.1, p95   97.9
+         R-16x10  14              live_120408   20:90: objective  44.36 mm, median  -47.5, p95  130.7
+         R-16x10  14   warmup_hardware_215321  10:100: objective  32.81 mm, median   +6.6, p95  125.5
+     G-28x28-8x6  28     warmup_10_0.1_111137   25:49: objective  35.95 mm, median  -34.2, p95  132.7
+     G-28x28-8x6  28              live_115658  40:120: objective  32.81 mm, median  -23.9, p95   97.1
+     G-28x28-8x6  28              live_120408   20:90: objective  44.83 mm, median  -56.1, p95  139.9
+     G-28x28-8x6  28   warmup_hardware_215321  10:100: objective  29.80 mm, median   -1.0, p95  115.6

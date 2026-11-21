@@ -1,0 +1,192 @@
+{
+ "run": "experiments/hardware/sessions/2026-11-20_fabric_run/warmup_10_0.1_111137",
+ "window": "25:49",
+ "override": {
+  "cells_x": "40",
+  "cells_y": "40",
+  "substeps": "32",
+  "iterations": "10"
+ },
+ "node_m": 0.020999999999999998,
+ "names": [
+  "down_blue",
+  "in_blue",
+  "side_blue",
+  "inset_blue",
+  "down_silver",
+  "in_silver",
+  "side_silver",
+  "inset_silver",
+  "down_right",
+  "in_right",
+  "side_right",
+  "inset_right",
+  "down_left",
+  "in_left",
+  "side_left",
+  "inset_left"
+ ],
+ "calibrated": {
+  "down_blue": 0.02,
+  "in_blue": 0.0,
+  "side_blue": 0.0,
+  "inset_blue": 0.0,
+  "down_silver": 0.0,
+  "in_silver": 0.0,
+  "side_silver": 0.0,
+  "inset_silver": 0.0,
+  "down_right": 0.043,
+  "in_right": 0.0,
+  "side_right": 0.02,
+  "inset_right": 0.0,
+  "down_left": 0.043,
+  "in_left": 0.0,
+  "side_left": 0.0,
+  "inset_left": 0.0
+ },
+ "start": {
+  "kind": "start",
+  "seconds": 25.0,
+  "values": {
+   "down_blue": 0.0,
+   "in_blue": 0.0,
+   "side_blue": 0.0,
+   "inset_blue": 0.0,
+   "down_silver": 0.0,
+   "in_silver": 0.0,
+   "side_silver": 0.0,
+   "inset_silver": 0.0,
+   "down_right": 0.043,
+   "in_right": 0.0,
+   "side_right": 0.02,
+   "inset_right": 0.0,
+   "down_left": 0.043,
+   "in_left": 0.0,
+   "side_left": 0.0,
+   "inset_left": 0.0
+  },
+  "median_mm": -0.9931732394108704,
+  "mad_mm": 12.747820537674738,
+  "rms_tanh50_mm": 16.833948897339752,
+  "p95_abs_mm": 37.979907317616274,
+  "over_30mm": 0.10342484370752922,
+  "near_sheet": 0.9997282608695652
+ },
+ "final": {
+  "kind": "final",
+  "seconds": 877.4,
+  "values": {
+   "down_blue": 0.02,
+   "in_blue": 0.0,
+   "side_blue": 0.0,
+   "inset_blue": 0.0,
+   "down_silver": 0.0,
+   "in_silver": 0.0,
+   "side_silver": 0.0,
+   "inset_silver": 0.0,
+   "down_right": 0.043,
+   "in_right": 0.0,
+   "side_right": 0.02,
+   "inset_right": 0.0,
+   "down_left": 0.043,
+   "in_left": 0.0,
+   "side_left": 0.0,
+   "inset_left": 0.0
+  },
+  "median_mm": 3.271002649092205,
+  "mad_mm": 12.220389021207506,
+  "rms_tanh50_mm": 16.14142520889475,
+  "p95_abs_mm": 34.53061479830883,
+  "over_30mm": 0.08881936887921654,
+  "near_sheet": 0.9989130434782608
+ },
+ "validation": [
+  {
+   "run": "experiments/hardware/sessions/2026-11-20_fabric_run/live_115658",
+   "window": "40:120",
+   "point_grips_at_corners": {
+    "median_mm": -22.94905503030333,
+    "mad_mm": 27.761610535399704,
+    "rms_tanh50_mm": 32.36672533971933,
+    "p95_abs_mm": 89.01017740429066,
+    "over_30mm": 0.5350895460224906,
+    "near_sheet": 0.9349688473520249
+   },
+   "start": {
+    "median_mm": -2.215557249562623,
+    "mad_mm": 23.241653659298432,
+    "rms_tanh50_mm": 28.22941845046579,
+    "p95_abs_mm": 70.68887319722687,
+    "over_30mm": 0.3908057904840969,
+    "near_sheet": 0.9381327881619937
+   },
+   "calibrated": {
+    "median_mm": 3.642800047191307,
+    "mad_mm": 21.93390723507488,
+    "rms_tanh50_mm": 27.444642630075023,
+    "p95_abs_mm": 68.09482629311842,
+    "over_30mm": 0.3623060557314099,
+    "near_sheet": 0.9380354361370716
+   }
+  },
+  {
+   "run": "experiments/hardware/sessions/2026-11-20_fabric_run/live_120408",
+   "window": "20:90",
+   "point_grips_at_corners": {
+    "median_mm": -54.83308507981288,
+    "mad_mm": 48.431098156373366,
+    "rms_tanh50_mm": 43.53485891820357,
+    "p95_abs_mm": 136.49429542892796,
+    "over_30mm": 0.7452177149237067,
+    "near_sheet": 0.6156066715542522
+   },
+   "start": {
+    "median_mm": -64.43999817128237,
+    "mad_mm": 31.041685119620364,
+    "rms_tanh50_mm": 42.905433272639264,
+    "p95_abs_mm": 133.24155995253832,
+    "over_30mm": 0.8037143571785893,
+    "near_sheet": 0.7327712609970675
+   },
+   "calibrated": {
+    "median_mm": -44.12929147102325,
+    "mad_mm": 46.53435417403888,
+    "rms_tanh50_mm": 42.889836659484104,
+    "p95_abs_mm": 135.27992117704662,
+    "over_30mm": 0.7692764329529714,
+    "near_sheet": 0.6946939149560117
+   }
+  },
+  {
+   "run": "experiments/hardware/sessions/2026-11-19_fabric_run/warmup_hardware_215321",
+   "window": "10:100",
+   "point_grips_at_corners": {
+    "median_mm": 1.272118775658782,
+    "mad_mm": 17.821544240375434,
+    "rms_tanh50_mm": 31.155775702720874,
+    "p95_abs_mm": 115.11008771919184,
+    "over_30mm": 0.3840719332048812,
+    "near_sheet": 0.9090764331210192
+   },
+   "start": {
+    "median_mm": 1.4955285266627965,
+    "mad_mm": 18.381376990194045,
+    "rms_tanh50_mm": 29.70853648548582,
+    "p95_abs_mm": 111.36003338682956,
+    "over_30mm": 0.3689191528651394,
+    "near_sheet": 0.9197983014861996
+   },
+   "calibrated": {
+    "median_mm": -1.0942551827555085,
+    "mad_mm": 16.61648241944668,
+    "rms_tanh50_mm": 28.272911037542958,
+    "p95_abs_mm": 103.57453652759229,
+    "over_30mm": 0.29191321499013806,
+    "near_sheet": 0.914968152866242
+   }
+  }
+ ],
+ "evaluations": 115,
+ "seconds": 1153.054486666002,
+ "material": "twin.yaml as measured (bend 1.4e-5 N m strips, density 0.215)"
+}

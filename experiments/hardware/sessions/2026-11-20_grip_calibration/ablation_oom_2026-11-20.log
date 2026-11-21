@@ -1,0 +1,5 @@
+resolution: 14x14 25.00, 20x20 26.57, 28x28 27.55, 40x40 27.33 mm -> required 14x14
+bending: best x1, detectable True; shear: best x1, detectable True
+with grip points: shear x1 (True), bending x1 (False)
+/usr/lib/python3.12/multiprocessing/resource_tracker.py:254: UserWarning: resource_tracker: There appear to be 6 leaked semaphore objects to clean up at shutdown
+  warnings.warn('resource_tracker: There appear to be %d '

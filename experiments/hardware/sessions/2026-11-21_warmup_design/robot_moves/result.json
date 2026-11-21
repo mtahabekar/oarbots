@@ -1,0 +1,2093 @@
+{
+ "reference": "/home/taha/ros2_colcon_ws/src/oarbots/experiments/hardware/sessions/2026-11-20_fabric_run/warmup_10_0.1_111137",
+ "detect_mm": 6.40312423743285,
+ "model_error_mm": 20.0,
+ "hold_sec": 5.0,
+ "speed_mps": 0.03,
+ "candidates": {
+  "current": {
+   "kwargs": {
+    "insets_m": [
+     0.02,
+     0.04
+    ]
+   },
+   "geometry": {
+    "duration_s": 20.666666666666668,
+    "holds": 4,
+    "largest_displacement_cm": 4.0,
+    "workspace_margin_cm": {
+     "blue": 7.8,
+     "silver": 7.9
+    },
+    "pair_growth_cm": {
+     "0-1": 0.0,
+     "2-3": 0.0,
+     "0-2": 0.0,
+     "1-3": 0.0,
+     "0-3": 0.0,
+     "1-2": 0.0
+    },
+    "start_pair_m": {
+     "0-1": 0.7681225093756483,
+     "2-3": 0.7171225597279056,
+     "0-2": 0.6796551080858908,
+     "1-3": 0.6419948681201062,
+     "0-3": 1.018133686295107,
+     "1-2": 0.9666912168636885
+    }
+   },
+   "nominal_rms_mm": 2.0643998868763447,
+   "material": {
+    "stretch": {
+     "-1.0": {
+      "effect_mm": 12.80540507286787,
+      "unique_mm": 11.707772500813007,
+      "detectable": true,
+      "compensating_offsets_cm": {
+       "down_blue": 0.5,
+       "down_silver": 0.14,
+       "down_right": -0.3,
+       "down_left": 0.57,
+       "in_blue": 0.34,
+       "in_silver": 0.96,
+       "in_right": 0.54,
+       "in_left": -0.78
+      }
+     },
+     "-0.5": {
+      "effect_mm": 9.974833577871323,
+      "unique_mm": 8.717693388462067,
+      "detectable": true,
+      "compensating_offsets_cm": {
+       "down_blue": 0.49,
+       "down_silver": -0.11,
+       "down_right": 0.41,
+       "down_left": 0.75,
+       "in_blue": -0.73,
+       "in_silver": 0.1,
+       "in_right": 1.18,
+       "in_left": -0.25
+      }
+     },
+     "+0.5": {
+      "effect_mm": 43.02997887134552,
+      "unique_mm": 27.462217956781387,
+      "detectable": true,
+      "compensating_offsets_cm": {
+       "down_blue": -2.33,
+       "down_silver": -3.31,
+       "down_right": -2.5,
+       "down_left": -4.94,
+       "in_blue": 0.84,
+       "in_silver": 0.03,
+       "in_right": -1.44,
+       "in_left": 2.14
+      }
+     },
+     "+1.0": {
+      "effect_mm": 85.85897833108902,
+      "unique_mm": 75.2950832247734,
+      "detectable": true,
+      "compensating_offsets_cm": {
+       "down_blue": -4.62,
+       "down_silver": -4.5,
+       "down_right": 2.06,
+       "down_left": 1.97,
+       "in_blue": 6.13,
+       "in_silver": -4.09,
+       "in_right": 7.74,
+       "in_left": -1.91
+      }
+     }
+    },
+    "shear": {
+     "-1.0": {
+      "effect_mm": 4.190193489193916,
+      "unique_mm": 3.57931200414896,
+      "detectable": false,
+      "compensating_offsets_cm": {
+       "down_blue": 0.14,
+       "down_silver": 0.24,
+       "down_right": 0.11,
+       "down_left": -0.07,
+       "in_blue": 0.65,
+       "in_silver": 0.32,
+       "in_right": -0.45,
+       "in_left": -0.24
+      }
+     },
+     "-0.5": {
+      "effect_mm": 3.2309950329363346,
+      "unique_mm": 2.5731432251632214,
+      "detectable": false,
+      "compensating_offsets_cm": {
+       "down_blue": 0.09,
+       "down_silver": 0.17,
+       "down_right": -0.06,
+       "down_left": 0.21,
+       "in_blue": 0.17,
+       "in_silver": 0.39,
+       "in_right": 0.04,
+       "in_left": -0.36
+      }
+     },
+     "+0.5": {
+      "effect_mm": 7.115375716239214,
+      "unique_mm": 5.726812407374382,
+      "detectable": false,
+      "compensating_offsets_cm": {
+       "down_blue": -0.09,
+       "down_silver": -0.12,
+       "down_right": -0.23,
+       "down_left": -0.61,
+       "in_blue": -0.18,
+       "in_silver": -0.09,
+       "in_right": -0.22,
+       "in_left": 0.48
+      }
+     },
+     "+1.0": {
+      "effect_mm": 27.939101681113243,
+      "unique_mm": 19.627129659056664,
+      "detectable": true,
+      "compensating_offsets_cm": {
+       "down_blue": -1.24,
+       "down_silver": -1.24,
+       "down_right": -1.3,
+       "down_left": -2.86,
+       "in_blue": 0.21,
+       "in_silver": 0.1,
+       "in_right": -2.17,
+       "in_left": 1.28
+      }
+     }
+    },
+    "bend": {
+     "-1.0": {
+      "effect_mm": 0.4388683591969311,
+      "unique_mm": 0.3736261569429189,
+      "detectable": false,
+      "compensating_offsets_cm": {
+       "down_blue": 0.03,
+       "down_silver": -0.02,
+       "down_right": 0.03,
+       "down_left": -0.05,
+       "in_blue": 0.0,
+       "in_silver": -0.01,
+       "in_right": -0.03,
+       "in_left": 0.03
+      }
+     },
+     "-0.5": {
+      "effect_mm": 0.33129210351035,
+      "unique_mm": 0.2867131261155009,
+      "detectable": false,
+      "compensating_offsets_cm": {
+       "down_blue": 0.02,
+       "down_silver": -0.02,
+       "down_right": 0.02,
+       "down_left": -0.04,
+       "in_blue": 0.0,
+       "in_silver": -0.01,
+       "in_right": -0.02,
+       "in_left": 0.02
+      }
+     },
+     "+0.5": {
+      "effect_mm": 0.7912414148449898,
+      "unique_mm": 0.6865954492241144,
+      "detectable": false,
+      "compensating_offsets_cm": {
+       "down_blue": -0.04,
+       "down_silver": 0.03,
+       "down_right": -0.04,
+       "down_left": 0.11,
+       "in_blue": -0.03,
+       "in_silver": 0.02,
+       "in_right": 0.09,
+       "in_left": -0.04
+      }
+     },
+     "+1.0": {
+      "effect_mm": 2.691317582502961,
+      "unique_mm": 2.3864195682108402,
+      "detectable": false,
+      "compensating_offsets_cm": {
+       "down_blue": -0.18,
+       "down_silver": 0.18,
+       "down_right": -0.19,
+       "down_left": 0.35,
+       "in_blue": 0.02,
+       "in_silver": 0.03,
+       "in_right": 0.18,
+       "in_left": -0.09
+      }
+     }
+    }
+   },
+   "cramer_rao": {
+    "units": "decades for material, cm for offsets",
+    "noise_m": 0.08,
+    "frames": 99.0,
+    "sd": {
+     "stretch": 0.0442088283598423,
+     "shear": 0.19569042325019836,
+     "bend": 1.2885814905166626,
+     "down_blue": 0.4541902244091034,
+     "down_silver": 0.49426111578941345,
+     "down_right": 0.4353402554988861,
+     "down_left": 0.5282970070838928,
+     "in_blue": 0.6280993819236755,
+     "in_silver": 0.38403841853141785,
+     "in_right": 0.6185598373413086,
+     "in_left": 0.3126104474067688
+    },
+    "largest_correlation": {
+     "stretch": 0.6167357563972473,
+     "shear": 0.6167357563972473,
+     "bend": 0.328663170337677,
+     "down_blue": 0.4835115671157837,
+     "down_silver": 0.479993999004364,
+     "down_right": 0.47999393939971924,
+     "down_left": 0.5975494980812073,
+     "in_blue": 0.5975494980812073,
+     "in_silver": 0.7265082597732544,
+     "in_right": 0.5190978050231934,
+     "in_left": 0.7265082597732544
+    }
+   },
+   "nuisance_effect_mm_per_cm": {
+    "down_blue": 3.6970379296690226,
+    "down_silver": 3.1202451791614294,
+    "down_right": 3.6674882285296917,
+    "down_left": 3.8200849667191505,
+    "in_blue": 2.7137952856719494,
+    "in_silver": 4.165492486208677,
+    "in_right": 2.376353368163109,
+    "in_left": 5.470280535519123
+   }
+  },
+  "deep": {
+   "kwargs": {
+    "insets_m": [
+     0.04,
+     0.08
+    ]
+   },
+   "geometry": {
+    "duration_s": 23.333333333333336,
+    "holds": 4,
+    "largest_displacement_cm": 8.0,
+    "workspace_margin_cm": {
+     "blue": 3.8,
+     "silver": 3.9
+    },
+    "pair_growth_cm": {
+     "0-1": 0.0,
+     "2-3": 0.0,
+     "0-2": 0.0,
+     "1-3": 0.0,
+     "0-3": 0.0,
+     "1-2": 0.0
+    },
+    "start_pair_m": {
+     "0-1": 0.7681225093756483,
+     "2-3": 0.7171225597279056,
+     "0-2": 0.6796551080858908,
+     "1-3": 0.6419948681201062,
+     "0-3": 1.018133686295107,
+     "1-2": 0.9666912168636885
+    }
+   },
+   "nominal_rms_mm": 2.1009701304137707,
+   "material": {
+    "stretch": {
+     "-1.0": {
+      "effect_mm": 12.599702924489975,
+      "unique_mm": 11.690414510667324,
+      "detectable": true,
+      "compensating_offsets_cm": {
+       "down_blue": 0.36,
+       "down_silver": 0.26,
+       "down_right": -0.21,
+       "down_left": 0.41,
+       "in_blue": 0.7,
+       "in_silver": 0.84,
+       "in_right": 0.29,
+       "in_left": -0.61
+      }
+     },
+     "-0.5": {
+      "effect_mm": 9.583779610693455,
+      "unique_mm": 8.46235640347004,
+      "detectable": true,
+      "compensating_offsets_cm": {
+       "down_blue": 0.34,
+       "down_silver": -0.16,
+       "down_right": 0.52,
+       "down_left": 0.68,
+       "in_blue": -0.48,
+       "in_silver": -0.09,
+       "in_right": 1.04,
+       "in_left": -0.04
+      }
+     },
+     "+0.5": {
+      "effect_mm": 42.50006377696991,
+      "unique_mm": 27.38618664443493,
+      "detectable": true,
+      "compensating_offsets_cm": {
+       "down_blue": -2.03,
+       "down_silver": -3.67,
+       "down_right": -1.95,
+       "down_left": -4.7,
+       "in_blue": 0.0,
+       "in_silver": -0.43,
+       "in_right": -1.46,
+       "in_left": 2.64
+      }
+     },
+     "+1.0": {
+      "effect_mm": 82.21521228551865,
+      "unique_mm": 74.75525885820389,
+      "detectable": true,
+      "compensating_offsets_cm": {
+       "down_blue": -4.95,
+       "down_silver": -3.44,
+       "down_right": 1.23,
+       "down_left": 1.4,
+       "in_blue": 6.19,
+       "in_silver": -3.95,
+       "in_right": 5.84,
+       "in_left": -1.39
+      }
+     }
+    },
+    "shear": {
+     "-1.0": {
+      "effect_mm": 4.084529355168343,
+      "unique_mm": 3.5092008765786886,
+      "detectable": false,
+      "compensating_offsets_cm": {
+       "down_blue": 0.22,
+       "down_silver": 0.2,
+       "down_right": 0.07,
+       "down_left": -0.06,
+       "in_blue": 0.53,
+       "in_silver": 0.34,
+       "in_right": -0.34,
+       "in_left": -0.24
+      }
+     },
+     "-0.5": {
+      "effect_mm": 3.228035056963563,
+      "unique_mm": 2.6242502499371767,
+      "detectable": false,
+      "compensating_offsets_cm": {
+       "down_blue": 0.17,
+       "down_silver": 0.15,
+       "down_right": -0.03,
+       "down_left": 0.18,
+       "in_blue": 0.11,
+       "in_silver": 0.36,
+       "in_right": 0.11,
+       "in_left": -0.31
+      }
+     },
+     "+0.5": {
+      "effect_mm": 7.157507818192244,
+      "unique_mm": 5.763103254139423,
+      "detectable": false,
+      "compensating_offsets_cm": {
+       "down_blue": -0.02,
+       "down_silver": -0.21,
+       "down_right": 0.03,
+       "down_left": -0.55,
+       "in_blue": -0.26,
+       "in_silver": -0.18,
+       "in_right": -0.38,
+       "in_left": 0.61
+      }
+     },
+     "+1.0": {
+      "effect_mm": 27.79248170554638,
+      "unique_mm": 19.78030614554882,
+      "detectable": true,
+      "compensating_offsets_cm": {
+       "down_blue": -0.96,
+       "down_silver": -1.62,
+       "down_right": -0.8,
+       "down_left": -2.67,
+       "in_blue": -0.33,
+       "in_silver": -0.07,
+       "in_right": -2.46,
+       "in_left": 1.55
+      }
+     }
+    },
+    "bend": {
+     "-1.0": {
+      "effect_mm": 0.3842869773507118,
+      "unique_mm": 0.3300420648884028,
+      "detectable": false,
+      "compensating_offsets_cm": {
+       "down_blue": 0.01,
+       "down_silver": -0.02,
+       "down_right": 0.03,
+       "down_left": -0.04,
+       "in_blue": 0.02,
+       "in_silver": -0.01,
+       "in_right": -0.03,
+       "in_left": 0.03
+      }
+     },
+     "-0.5": {
+      "effect_mm": 0.30121655436232686,
+      "unique_mm": 0.2637719444464892,
+      "detectable": false,
+      "compensating_offsets_cm": {
+       "down_blue": 0.01,
+       "down_silver": -0.02,
+       "down_right": 0.02,
+       "down_left": -0.03,
+       "in_blue": 0.01,
+       "in_silver": -0.0,
+       "in_right": -0.02,
+       "in_left": 0.02
+      }
+     },
+     "+0.5": {
+      "effect_mm": 0.8699889294803143,
+      "unique_mm": 0.7619445095770061,
+      "detectable": false,
+      "compensating_offsets_cm": {
+       "down_blue": -0.04,
+       "down_silver": 0.05,
+       "down_right": -0.07,
+       "down_left": 0.09,
+       "in_blue": -0.01,
+       "in_silver": 0.02,
+       "in_right": 0.07,
+       "in_left": -0.05
+      }
+     },
+     "+1.0": {
+      "effect_mm": 2.528753597289324,
+      "unique_mm": 2.3159149568527937,
+      "detectable": false,
+      "compensating_offsets_cm": {
+       "down_blue": -0.15,
+       "down_silver": 0.15,
+       "down_right": -0.14,
+       "down_left": 0.31,
+       "in_blue": -0.04,
+       "in_silver": 0.01,
+       "in_right": 0.19,
+       "in_left": -0.05
+      }
+     }
+    }
+   },
+   "cramer_rao": {
+    "units": "decades for material, cm for offsets",
+    "noise_m": 0.08,
+    "frames": 112.0,
+    "sd": {
+     "stretch": 0.04169654846191406,
+     "shear": 0.18391573429107666,
+     "bend": 1.0917915105819702,
+     "down_blue": 0.4316557049751282,
+     "down_silver": 0.46747928857803345,
+     "down_right": 0.39078837633132935,
+     "down_left": 0.492971807718277,
+     "in_blue": 0.5861910581588745,
+     "in_silver": 0.3307064473628998,
+     "in_right": 0.5662497878074646,
+     "in_left": 0.2567296028137207
+    },
+    "largest_correlation": {
+     "stretch": 0.6509889960289001,
+     "shear": 0.6509889960289001,
+     "bend": 0.2934008538722992,
+     "down_blue": 0.5353803038597107,
+     "down_silver": 0.5181756019592285,
+     "down_right": 0.5181756019592285,
+     "down_left": 0.5353803038597107,
+     "in_blue": 0.5150226950645447,
+     "in_silver": 0.6636469960212708,
+     "in_right": 0.47194987535476685,
+     "in_left": 0.6636470556259155
+    }
+   },
+   "nuisance_effect_mm_per_cm": {
+    "down_blue": 3.791128983721137,
+    "down_silver": 3.149541560560465,
+    "down_right": 3.808232955634594,
+    "down_left": 3.7773901131004095,
+    "in_blue": 2.590430900454521,
+    "in_silver": 4.281488247215748,
+    "in_right": 2.29862704873085,
+    "in_left": 5.8943359181284904
+   }
+  },
+  "shear": {
+   "kwargs": {
+    "insets_m": [
+     0.02,
+     0.04
+    ],
+    "lateral_m": 0.08
+   },
+   "geometry": {
+    "duration_s": 46.333333333333336,
+    "holds": 7,
+    "largest_displacement_cm": 9.337633921554826,
+    "workspace_margin_cm": {
+     "blue": 3.2,
+     "silver": 3.6
+    },
+    "pair_growth_cm": {
+     "0-1": 0.0,
+     "2-3": 0.0,
+     "0-2": 0.0,
+     "1-3": 0.0,
+     "0-3": 3.65,
+     "1-2": 3.4
+    },
+    "start_pair_m": {
+     "0-1": 0.7681225093756483,
+     "2-3": 0.7171225597279056,
+     "0-2": 0.6796551080858908,
+     "1-3": 0.6419948681201062,
+     "0-3": 1.018133686295107,
+     "1-2": 0.9666912168636885
+    }
+   },
+   "nominal_rms_mm": 1.9465322839096189,
+   "material": {
+    "stretch": {
+     "-1.0": {
+      "effect_mm": 11.395469307899475,
+      "unique_mm": 10.827828198671341,
+      "detectable": true,
+      "compensating_offsets_cm": {
+       "down_blue": 0.86,
+       "down_silver": 0.24,
+       "down_right": -0.22,
+       "down_left": 0.31,
+       "in_blue": -0.16,
+       "in_silver": 0.62,
+       "in_right": 0.07,
+       "in_left": -0.5
+      }
+     },
+     "-0.5": {
+      "effect_mm": 8.905922994017601,
+      "unique_mm": 8.042161352932453,
+      "detectable": true,
+      "compensating_offsets_cm": {
+       "down_blue": 0.47,
+       "down_silver": 0.3,
+       "down_right": 0.13,
+       "down_left": 0.61,
+       "in_blue": -0.34,
+       "in_silver": -0.32,
+       "in_right": 0.36,
+       "in_left": -0.06
+      }
+     },
+     "+0.5": {
+      "effect_mm": 29.179027304053307,
+      "unique_mm": 23.535231128335,
+      "detectable": true,
+      "compensating_offsets_cm": {
+       "down_blue": -2.11,
+       "down_silver": -0.65,
+       "down_right": -1.36,
+       "down_left": -2.66,
+       "in_blue": 1.69,
+       "in_silver": -0.05,
+       "in_right": -1.44,
+       "in_left": 2.37
+      }
+     },
+     "+1.0": {
+      "effect_mm": 64.29142504930496,
+      "unique_mm": 58.300890028476715,
+      "detectable": true,
+      "compensating_offsets_cm": {
+       "down_blue": -4.55,
+       "down_silver": -1.35,
+       "down_right": -1.83,
+       "down_left": -0.01,
+       "in_blue": 6.21,
+       "in_silver": -4.71,
+       "in_right": 2.53,
+       "in_left": -1.44
+      }
+     }
+    },
+    "shear": {
+     "-1.0": {
+      "effect_mm": 3.903251839801669,
+      "unique_mm": 3.4662962425500154,
+      "detectable": false,
+      "compensating_offsets_cm": {
+       "down_blue": 0.25,
+       "down_silver": 0.33,
+       "down_right": 0.06,
+       "down_left": 0.04,
+       "in_blue": 0.25,
+       "in_silver": 0.04,
+       "in_right": -0.31,
+       "in_left": -0.06
+      }
+     },
+     "-0.5": {
+      "effect_mm": 3.127689240500331,
+      "unique_mm": 2.706811996176839,
+      "detectable": false,
+      "compensating_offsets_cm": {
+       "down_blue": 0.16,
+       "down_silver": 0.28,
+       "down_right": -0.02,
+       "down_left": 0.12,
+       "in_blue": 0.2,
+       "in_silver": 0.08,
+       "in_right": -0.15,
+       "in_left": -0.11
+      }
+     },
+     "+0.5": {
+      "effect_mm": 5.860951263457537,
+      "unique_mm": 4.9035148695111275,
+      "detectable": false,
+      "compensating_offsets_cm": {
+       "down_blue": -0.58,
+       "down_silver": -0.24,
+       "down_right": -0.01,
+       "down_left": -0.14,
+       "in_blue": 0.25,
+       "in_silver": -0.12,
+       "in_right": 0.18,
+       "in_left": 0.68
+      }
+     },
+     "+1.0": {
+      "effect_mm": 19.46825347840786,
+      "unique_mm": 16.370829194784164,
+      "detectable": true,
+      "compensating_offsets_cm": {
+       "down_blue": -1.47,
+       "down_silver": -0.13,
+       "down_right": -0.51,
+       "down_left": -1.27,
+       "in_blue": 0.68,
+       "in_silver": -0.4,
+       "in_right": -1.35,
+       "in_left": 1.74
+      }
+     }
+    },
+    "bend": {
+     "-1.0": {
+      "effect_mm": 0.5814656033180654,
+      "unique_mm": 0.5344676319509745,
+      "detectable": false,
+      "compensating_offsets_cm": {
+       "down_blue": 0.0,
+       "down_silver": -0.01,
+       "down_right": -0.01,
+       "down_left": 0.0,
+       "in_blue": -0.05,
+       "in_silver": 0.0,
+       "in_right": 0.07,
+       "in_left": 0.02
+      }
+     },
+     "-0.5": {
+      "effect_mm": 0.47821085900068283,
+      "unique_mm": 0.4366254433989525,
+      "detectable": false,
+      "compensating_offsets_cm": {
+       "down_blue": 0.01,
+       "down_silver": -0.01,
+       "down_right": -0.01,
+       "down_left": -0.0,
+       "in_blue": -0.04,
+       "in_silver": 0.0,
+       "in_right": 0.05,
+       "in_left": 0.02
+      }
+     },
+     "+0.5": {
+      "effect_mm": 1.6167302383109927,
+      "unique_mm": 1.398320309817791,
+      "detectable": false,
+      "compensating_offsets_cm": {
+       "down_blue": -0.13,
+       "down_silver": 0.0,
+       "down_right": -0.0,
+       "down_left": 0.23,
+       "in_blue": -0.06,
+       "in_silver": -0.08,
+       "in_right": 0.27,
+       "in_left": 0.05
+      }
+     },
+     "+1.0": {
+      "effect_mm": 3.757528029382229,
+      "unique_mm": 3.2895319163799286,
+      "detectable": false,
+      "compensating_offsets_cm": {
+       "down_blue": -0.15,
+       "down_silver": 0.22,
+       "down_right": 0.11,
+       "down_left": 0.22,
+       "in_blue": 0.16,
+       "in_silver": -0.4,
+       "in_right": -0.02,
+       "in_left": 0.35
+      }
+     }
+    }
+   },
+   "cramer_rao": {
+    "units": "decades for material, cm for offsets",
+    "noise_m": 0.08,
+    "frames": 227.0,
+    "sd": {
+     "stretch": 0.03196056932210922,
+     "shear": 0.13181130588054657,
+     "bend": 0.43194580078125,
+     "down_blue": 0.293917715549469,
+     "down_silver": 0.24400672316551208,
+     "down_right": 0.2202671319246292,
+     "down_left": 0.3270843029022217,
+     "in_blue": 0.34528619050979614,
+     "in_silver": 0.2935313284397125,
+     "in_right": 0.34437522292137146,
+     "in_left": 0.21935908496379852
+    },
+    "largest_correlation": {
+     "stretch": 0.6040074825286865,
+     "shear": 0.6040075421333313,
+     "bend": 0.316059947013855,
+     "down_blue": 0.4550667405128479,
+     "down_silver": 0.4140434265136719,
+     "down_right": 0.3326394557952881,
+     "down_left": 0.6345607042312622,
+     "in_blue": 0.6345607042312622,
+     "in_silver": 0.6458976864814758,
+     "in_right": 0.488328218460083,
+     "in_left": 0.6458976864814758
+    }
+   },
+   "nuisance_effect_mm_per_cm": {
+    "down_blue": 3.634996246546507,
+    "down_silver": 3.55873117223382,
+    "down_right": 3.8002950605005026,
+    "down_left": 3.8907115813344717,
+    "in_blue": 3.0803417321294546,
+    "in_silver": 3.3853529021143913,
+    "in_right": 2.6773761492222548,
+    "in_left": 4.673480521887541
+   }
+  },
+  "lift": {
+   "kwargs": {
+    "insets_m": [
+     0.02,
+     0.04
+    ],
+    "lift_m": 0.06
+   },
+   "geometry": {
+    "duration_s": 48.66666666666667,
+    "holds": 8,
+    "largest_displacement_cm": 7.211102550927984,
+    "workspace_margin_cm": {
+     "blue": 2.8,
+     "silver": 3.0
+    },
+    "pair_growth_cm": {
+     "0-1": 0.0,
+     "2-3": 0.0,
+     "0-2": 0.0,
+     "1-3": 0.0,
+     "0-3": 0.0,
+     "1-2": 0.0
+    },
+    "start_pair_m": {
+     "0-1": 0.7681225093756483,
+     "2-3": 0.7171225597279056,
+     "0-2": 0.6796551080858908,
+     "1-3": 0.6419948681201062,
+     "0-3": 1.018133686295107,
+     "1-2": 0.9666912168636885
+    }
+   },
+   "nominal_rms_mm": 2.006637630984187,
+   "material": {
+    "stretch": {
+     "-1.0": {
+      "effect_mm": 10.229816660284996,
+      "unique_mm": 9.845156222581863,
+      "detectable": true,
+      "compensating_offsets_cm": {
+       "down_blue": 0.32,
+       "down_silver": 0.2,
+       "down_right": -0.39,
+       "down_left": 0.23,
+       "in_blue": 0.24,
+       "in_silver": 0.35,
+       "in_right": 0.54,
+       "in_left": -0.64
+      }
+     },
+     "-0.5": {
+      "effect_mm": 6.687129847705364,
+      "unique_mm": 6.217880640178919,
+      "detectable": false,
+      "compensating_offsets_cm": {
+       "down_blue": 0.25,
+       "down_silver": -0.05,
+       "down_right": -0.02,
+       "down_left": 0.52,
+       "in_blue": -0.39,
+       "in_silver": 0.43,
+       "in_right": 0.77,
+       "in_left": -0.4
+      }
+     },
+     "+0.5": {
+      "effect_mm": 28.50906550884247,
+      "unique_mm": 22.814542055130005,
+      "detectable": true,
+      "compensating_offsets_cm": {
+       "down_blue": -1.46,
+       "down_silver": -1.46,
+       "down_right": -0.94,
+       "down_left": -2.77,
+       "in_blue": 0.83,
+       "in_silver": 0.13,
+       "in_right": -1.88,
+       "in_left": 1.87
+      }
+     },
+     "+1.0": {
+      "effect_mm": 67.38200038671494,
+      "unique_mm": 61.89975142478943,
+      "detectable": true,
+      "compensating_offsets_cm": {
+       "down_blue": -4.32,
+       "down_silver": -2.7,
+       "down_right": -3.43,
+       "down_left": -0.24,
+       "in_blue": 3.56,
+       "in_silver": -0.27,
+       "in_right": 4.95,
+       "in_left": -3.63
+      }
+     }
+    },
+    "shear": {
+     "-1.0": {
+      "effect_mm": 3.069452941417694,
+      "unique_mm": 2.8411156963557005,
+      "detectable": false,
+      "compensating_offsets_cm": {
+       "down_blue": 0.09,
+       "down_silver": 0.17,
+       "down_right": 0.11,
+       "down_left": 0.03,
+       "in_blue": 0.25,
+       "in_silver": 0.1,
+       "in_right": -0.2,
+       "in_left": -0.03
+      }
+     },
+     "-0.5": {
+      "effect_mm": 2.290225587785244,
+      "unique_mm": 2.0843776874244213,
+      "detectable": false,
+      "compensating_offsets_cm": {
+       "down_blue": 0.08,
+       "down_silver": 0.15,
+       "down_right": -0.04,
+       "down_left": 0.14,
+       "in_blue": 0.04,
+       "in_silver": 0.14,
+       "in_right": 0.07,
+       "in_left": -0.18
+      }
+     },
+     "+0.5": {
+      "effect_mm": 4.821347538381815,
+      "unique_mm": 4.22705290839076,
+      "detectable": false,
+      "compensating_offsets_cm": {
+       "down_blue": -0.12,
+       "down_silver": -0.06,
+       "down_right": -0.13,
+       "down_left": -0.35,
+       "in_blue": -0.0,
+       "in_silver": 0.08,
+       "in_right": -0.23,
+       "in_left": 0.32
+      }
+     },
+     "+1.0": {
+      "effect_mm": 19.12791095674038,
+      "unique_mm": 15.845570713281631,
+      "detectable": true,
+      "compensating_offsets_cm": {
+       "down_blue": -0.66,
+       "down_silver": -0.46,
+       "down_right": -0.29,
+       "down_left": -1.88,
+       "in_blue": 0.45,
+       "in_silver": -0.09,
+       "in_right": -2.36,
+       "in_left": 1.24
+      }
+     }
+    },
+    "bend": {
+     "-1.0": {
+      "effect_mm": 0.32508777803741395,
+      "unique_mm": 0.29816519236192107,
+      "detectable": false,
+      "compensating_offsets_cm": {
+       "down_blue": -0.0,
+       "down_silver": -0.02,
+       "down_right": 0.01,
+       "down_left": -0.02,
+       "in_blue": 0.0,
+       "in_silver": 0.01,
+       "in_right": 0.02,
+       "in_left": 0.02
+      }
+     },
+     "-0.5": {
+      "effect_mm": 0.25419265148229897,
+      "unique_mm": 0.23547113232780248,
+      "detectable": false,
+      "compensating_offsets_cm": {
+       "down_blue": -0.0,
+       "down_silver": -0.02,
+       "down_right": 0.01,
+       "down_left": -0.01,
+       "in_blue": 0.0,
+       "in_silver": 0.01,
+       "in_right": 0.01,
+       "in_left": 0.02
+      }
+     },
+     "+0.5": {
+      "effect_mm": 0.6581402267329395,
+      "unique_mm": 0.6092815892770886,
+      "detectable": false,
+      "compensating_offsets_cm": {
+       "down_blue": 0.02,
+       "down_silver": 0.06,
+       "down_right": -0.02,
+       "down_left": 0.03,
+       "in_blue": -0.0,
+       "in_silver": 0.0,
+       "in_right": -0.04,
+       "in_left": -0.05
+      }
+     },
+     "+1.0": {
+      "effect_mm": 2.515761647373438,
+      "unique_mm": 2.381938975304365,
+      "detectable": false,
+      "compensating_offsets_cm": {
+       "down_blue": 0.02,
+       "down_silver": 0.27,
+       "down_right": -0.13,
+       "down_left": 0.11,
+       "in_blue": -0.02,
+       "in_silver": 0.05,
+       "in_right": -0.15,
+       "in_left": -0.11
+      }
+     }
+    }
+   },
+   "cramer_rao": {
+    "units": "decades for material, cm for offsets",
+    "noise_m": 0.08,
+    "frames": 239.0,
+    "sd": {
+     "stretch": 0.03467107191681862,
+     "shear": 0.16312117874622345,
+     "bend": 0.8609659075737,
+     "down_blue": 0.2943146228790283,
+     "down_silver": 0.3128392696380615,
+     "down_right": 0.2947744131088257,
+     "down_left": 0.33545899391174316,
+     "in_blue": 0.4086299240589142,
+     "in_silver": 0.2433936595916748,
+     "in_right": 0.41332656145095825,
+     "in_left": 0.2384486347436905
+    },
+    "largest_correlation": {
+     "stretch": 0.6759366393089294,
+     "shear": 0.6759366393089294,
+     "bend": 0.18043498694896698,
+     "down_blue": 0.5089162588119507,
+     "down_silver": 0.586780309677124,
+     "down_right": 0.5867803692817688,
+     "down_left": 0.5977885127067566,
+     "in_blue": 0.5977884531021118,
+     "in_silver": 0.690996527671814,
+     "in_right": 0.5140147805213928,
+     "in_left": 0.690996527671814
+    }
+   },
+   "nuisance_effect_mm_per_cm": {
+    "down_blue": 3.742476226761937,
+    "down_silver": 3.39295482262969,
+    "down_right": 3.56006040237844,
+    "down_left": 3.726907540112734,
+    "in_blue": 2.6276332791894674,
+    "in_silver": 4.071945324540138,
+    "in_right": 2.343269297853112,
+    "in_left": 4.3905735947191715
+   }
+  },
+  "narrow": {
+   "kwargs": {
+    "insets_m": [
+     0.02,
+     0.04
+    ],
+    "transverse_m": 0.08
+   },
+   "geometry": {
+    "duration_s": 36.0,
+    "holds": 6,
+    "largest_displacement_cm": 9.337633921554826,
+    "workspace_margin_cm": {
+     "blue": 3.2,
+     "silver": 3.6
+    },
+    "pair_growth_cm": {
+     "0-1": 0.0,
+     "2-3": 0.0,
+     "0-2": 0.0,
+     "1-3": 0.0,
+     "0-3": 0.0,
+     "1-2": 0.0
+    },
+    "start_pair_m": {
+     "0-1": 0.7681225093756483,
+     "2-3": 0.7171225597279056,
+     "0-2": 0.6796551080858908,
+     "1-3": 0.6419948681201062,
+     "0-3": 1.018133686295107,
+     "1-2": 0.9666912168636885
+    }
+   },
+   "nominal_rms_mm": 2.1900120191276073,
+   "material": {
+    "stretch": {
+     "-1.0": {
+      "effect_mm": 12.100709602236748,
+      "unique_mm": 11.144217103719711,
+      "detectable": true,
+      "compensating_offsets_cm": {
+       "down_blue": 0.02,
+       "down_silver": -0.2,
+       "down_right": -0.0,
+       "down_left": 0.49,
+       "in_blue": 0.49,
+       "in_silver": 0.78,
+       "in_right": 0.61,
+       "in_left": -0.29
+      }
+     },
+     "-0.5": {
+      "effect_mm": 7.679736707359552,
+      "unique_mm": 7.205704227089882,
+      "detectable": true,
+      "compensating_offsets_cm": {
+       "down_blue": 0.05,
+       "down_silver": 0.17,
+       "down_right": -0.01,
+       "down_left": 0.52,
+       "in_blue": -0.16,
+       "in_silver": -0.21,
+       "in_right": 0.65,
+       "in_left": -0.04
+      }
+     },
+     "+0.5": {
+      "effect_mm": 33.600758761167526,
+      "unique_mm": 25.325490161776543,
+      "detectable": true,
+      "compensating_offsets_cm": {
+       "down_blue": -1.16,
+       "down_silver": -2.27,
+       "down_right": -0.85,
+       "down_left": -3.47,
+       "in_blue": 0.94,
+       "in_silver": 1.08,
+       "in_right": -2.17,
+       "in_left": 1.44
+      }
+     },
+     "+1.0": {
+      "effect_mm": 73.45181703567505,
+      "unique_mm": 66.53625518083572,
+      "detectable": true,
+      "compensating_offsets_cm": {
+       "down_blue": -5.41,
+       "down_silver": -3.68,
+       "down_right": 0.64,
+       "down_left": -0.05,
+       "in_blue": 5.83,
+       "in_silver": -5.89,
+       "in_right": 3.96,
+       "in_left": 0.74
+      }
+     }
+    },
+    "shear": {
+     "-1.0": {
+      "effect_mm": 4.414115566760302,
+      "unique_mm": 3.4695384092628956,
+      "detectable": false,
+      "compensating_offsets_cm": {
+       "down_blue": 0.12,
+       "down_silver": 0.1,
+       "down_right": 0.08,
+       "down_left": 0.11,
+       "in_blue": 0.25,
+       "in_silver": 0.48,
+       "in_right": 0.04,
+       "in_left": -0.19
+      }
+     },
+     "-0.5": {
+      "effect_mm": 3.6637112498283386,
+      "unique_mm": 2.6594416704028845,
+      "detectable": false,
+      "compensating_offsets_cm": {
+       "down_blue": 0.08,
+       "down_silver": 0.08,
+       "down_right": 0.03,
+       "down_left": 0.23,
+       "in_blue": 0.06,
+       "in_silver": 0.43,
+       "in_right": 0.23,
+       "in_left": -0.19
+      }
+     },
+     "+0.5": {
+      "effect_mm": 6.2378160655498505,
+      "unique_mm": 5.110580008476973,
+      "detectable": false,
+      "compensating_offsets_cm": {
+       "down_blue": 0.02,
+       "down_silver": -0.06,
+       "down_right": -0.04,
+       "down_left": -0.5,
+       "in_blue": -0.02,
+       "in_silver": -0.08,
+       "in_right": -0.39,
+       "in_left": 0.44
+      }
+     },
+     "+1.0": {
+      "effect_mm": 23.069782182574272,
+      "unique_mm": 17.994452267885208,
+      "detectable": true,
+      "compensating_offsets_cm": {
+       "down_blue": -0.44,
+       "down_silver": -1.2,
+       "down_right": -0.16,
+       "down_left": -2.23,
+       "in_blue": 0.43,
+       "in_silver": 0.54,
+       "in_right": -2.72,
+       "in_left": 0.96
+      }
+     }
+    },
+    "bend": {
+     "-1.0": {
+      "effect_mm": 0.42142628808505833,
+      "unique_mm": 0.3991273115389049,
+      "detectable": false,
+      "compensating_offsets_cm": {
+       "down_blue": 0.02,
+       "down_silver": -0.02,
+       "down_right": -0.0,
+       "down_left": -0.02,
+       "in_blue": -0.01,
+       "in_silver": 0.02,
+       "in_right": 0.03,
+       "in_left": 0.0
+      }
+     },
+     "-0.5": {
+      "effect_mm": 0.3599095798563212,
+      "unique_mm": 0.34334653173573315,
+      "detectable": false,
+      "compensating_offsets_cm": {
+       "down_blue": 0.01,
+       "down_silver": -0.02,
+       "down_right": -0.0,
+       "down_left": -0.01,
+       "in_blue": -0.01,
+       "in_silver": 0.01,
+       "in_right": 0.03,
+       "in_left": 0.0
+      }
+     },
+     "+0.5": {
+      "effect_mm": 1.3761526206508279,
+      "unique_mm": 1.2167805107310414,
+      "detectable": false,
+      "compensating_offsets_cm": {
+       "down_blue": -0.03,
+       "down_silver": 0.05,
+       "down_right": 0.01,
+       "down_left": 0.12,
+       "in_blue": -0.05,
+       "in_silver": 0.07,
+       "in_right": 0.14,
+       "in_left": -0.02
+      }
+     },
+     "+1.0": {
+      "effect_mm": 2.87769571878016,
+      "unique_mm": 2.7204607613384724,
+      "detectable": false,
+      "compensating_offsets_cm": {
+       "down_blue": -0.16,
+       "down_silver": 0.21,
+       "down_right": -0.06,
+       "down_left": 0.25,
+       "in_blue": 0.06,
+       "in_silver": 0.01,
+       "in_right": -0.04,
+       "in_left": 0.03
+      }
+     }
+    }
+   },
+   "cramer_rao": {
+    "units": "decades for material, cm for offsets",
+    "noise_m": 0.08,
+    "frames": 176.0,
+    "sd": {
+     "stretch": 0.035055194050073624,
+     "shear": 0.15113700926303864,
+     "bend": 0.5471388101577759,
+     "down_blue": 0.30565759539604187,
+     "down_silver": 0.3529098629951477,
+     "down_right": 0.2859944701194763,
+     "down_left": 0.3730967342853546,
+     "in_blue": 0.45940181612968445,
+     "in_silver": 0.23255951702594757,
+     "in_right": 0.40712156891822815,
+     "in_left": 0.1420758217573166
+    },
+    "largest_correlation": {
+     "stretch": 0.6780278086662292,
+     "shear": 0.6780278086662292,
+     "bend": 0.15912286937236786,
+     "down_blue": 0.5412725210189819,
+     "down_silver": 0.57319176197052,
+     "down_right": 0.57319176197052,
+     "down_left": 0.5412724614143372,
+     "in_blue": 0.4896266460418701,
+     "in_silver": 0.446246474981308,
+     "in_right": 0.45189368724823,
+     "in_left": 0.4069584012031555
+    }
+   },
+   "nuisance_effect_mm_per_cm": {
+    "down_blue": 4.076835699379444,
+    "down_silver": 3.5517613869160414,
+    "down_right": 4.066932946443558,
+    "down_left": 3.7922074552625418,
+    "in_blue": 2.6028049178421497,
+    "in_silver": 4.2477985844016075,
+    "in_right": 2.552283462136984,
+    "in_left": 6.64107222110033
+   }
+  },
+  "deep+shear": {
+   "kwargs": {
+    "insets_m": [
+     0.04,
+     0.08
+    ],
+    "lateral_m": 0.08
+   },
+   "geometry": {
+    "duration_s": 49.0,
+    "holds": 7,
+    "largest_displacement_cm": 11.932427016577249,
+    "workspace_margin_cm": {
+     "blue": 2.7,
+     "silver": 3.8
+    },
+    "pair_growth_cm": {
+     "0-1": 0.0,
+     "2-3": 0.0,
+     "0-2": 0.0,
+     "1-3": 0.0,
+     "0-3": 1.06,
+     "1-2": 1.03
+    },
+    "start_pair_m": {
+     "0-1": 0.7681225093756483,
+     "2-3": 0.7171225597279056,
+     "0-2": 0.6796551080858908,
+     "1-3": 0.6419948681201062,
+     "0-3": 1.018133686295107,
+     "1-2": 0.9666912168636885
+    }
+   },
+   "nominal_rms_mm": 2.058090642094612,
+   "material": {
+    "stretch": {
+     "-1.0": {
+      "effect_mm": 11.813103221356869,
+      "unique_mm": 11.446233838796616,
+      "detectable": true,
+      "compensating_offsets_cm": {
+       "down_blue": 0.71,
+       "down_silver": 0.2,
+       "down_right": 0.07,
+       "down_left": 0.03,
+       "in_blue": 0.09,
+       "in_silver": 0.4,
+       "in_right": -0.03,
+       "in_left": -0.23
+      }
+     },
+     "-0.5": {
+      "effect_mm": 8.782303892076015,
+      "unique_mm": 7.939096540212631,
+      "detectable": true,
+      "compensating_offsets_cm": {
+       "down_blue": 0.43,
+       "down_silver": 0.21,
+       "down_right": 0.38,
+       "down_left": 0.35,
+       "in_blue": -0.09,
+       "in_silver": -0.4,
+       "in_right": 0.02,
+       "in_left": 0.09
+      }
+     },
+     "+0.5": {
+      "effect_mm": 29.63501214981079,
+      "unique_mm": 24.46562610566616,
+      "detectable": true,
+      "compensating_offsets_cm": {
+       "down_blue": -1.45,
+       "down_silver": -0.23,
+       "down_right": -1.18,
+       "down_left": -2.8,
+       "in_blue": 1.25,
+       "in_silver": -0.61,
+       "in_right": -1.17,
+       "in_left": 2.62
+      }
+     },
+     "+1.0": {
+      "effect_mm": 62.69408017396927,
+      "unique_mm": 57.65480175614357,
+      "detectable": true,
+      "compensating_offsets_cm": {
+       "down_blue": -4.03,
+       "down_silver": -0.93,
+       "down_right": -1.68,
+       "down_left": -0.7,
+       "in_blue": 7.18,
+       "in_silver": -4.24,
+       "in_right": 0.88,
+       "in_left": -1.03
+      }
+     }
+    },
+    "shear": {
+     "-1.0": {
+      "effect_mm": 3.7191687151789665,
+      "unique_mm": 3.275360446423292,
+      "detectable": false,
+      "compensating_offsets_cm": {
+       "down_blue": 0.33,
+       "down_silver": 0.27,
+       "down_right": 0.09,
+       "down_left": -0.07,
+       "in_blue": 0.29,
+       "in_silver": 0.07,
+       "in_right": -0.38,
+       "in_left": -0.05
+      }
+     },
+     "-0.5": {
+      "effect_mm": 3.0589913949370384,
+      "unique_mm": 2.7186668012291193,
+      "detectable": false,
+      "compensating_offsets_cm": {
+       "down_blue": 0.22,
+       "down_silver": 0.21,
+       "down_right": 0.04,
+       "down_left": 0.06,
+       "in_blue": 0.16,
+       "in_silver": 0.1,
+       "in_right": -0.2,
+       "in_left": -0.09
+      }
+     },
+     "+0.5": {
+      "effect_mm": 5.756611004471779,
+      "unique_mm": 4.935900680720806,
+      "detectable": false,
+      "compensating_offsets_cm": {
+       "down_blue": -0.37,
+       "down_silver": 0.04,
+       "down_right": -0.07,
+       "down_left": -0.16,
+       "in_blue": 0.27,
+       "in_silver": -0.1,
+       "in_right": 0.03,
+       "in_left": 0.62
+      }
+     },
+     "+1.0": {
+      "effect_mm": 19.92502436041832,
+      "unique_mm": 16.992833465337753,
+      "detectable": true,
+      "compensating_offsets_cm": {
+       "down_blue": -1.06,
+       "down_silver": 0.06,
+       "down_right": -0.14,
+       "down_left": -1.29,
+       "in_blue": 0.43,
+       "in_silver": -0.58,
+       "in_right": -1.44,
+       "in_left": 1.92
+      }
+     }
+    },
+    "bend": {
+     "-1.0": {
+      "effect_mm": 0.7700739661231637,
+      "unique_mm": 0.6766482838429511,
+      "detectable": false,
+      "compensating_offsets_cm": {
+       "down_blue": -0.0,
+       "down_silver": 0.01,
+       "down_right": -0.02,
+       "down_left": -0.0,
+       "in_blue": -0.03,
+       "in_silver": -0.01,
+       "in_right": 0.1,
+       "in_left": 0.04
+      }
+     },
+     "-0.5": {
+      "effect_mm": 0.6866654148325324,
+      "unique_mm": 0.6056708516553044,
+      "detectable": false,
+      "compensating_offsets_cm": {
+       "down_blue": 0.0,
+       "down_silver": 0.02,
+       "down_right": -0.02,
+       "down_left": -0.0,
+       "in_blue": -0.02,
+       "in_silver": -0.01,
+       "in_right": 0.09,
+       "in_left": 0.03
+      }
+     },
+     "+0.5": {
+      "effect_mm": 2.4403485003858805,
+      "unique_mm": 1.782046863809228,
+      "detectable": false,
+      "compensating_offsets_cm": {
+       "down_blue": -0.07,
+       "down_silver": 0.19,
+       "down_right": 0.03,
+       "down_left": 0.1,
+       "in_blue": 0.25,
+       "in_silver": -0.18,
+       "in_right": 0.11,
+       "in_left": 0.11
+      }
+     },
+     "+1.0": {
+      "effect_mm": 3.9876895025372505,
+      "unique_mm": 3.3761810045689344,
+      "detectable": false,
+      "compensating_offsets_cm": {
+       "down_blue": -0.08,
+       "down_silver": 0.33,
+       "down_right": 0.11,
+       "down_left": 0.19,
+       "in_blue": 0.18,
+       "in_silver": -0.34,
+       "in_right": -0.1,
+       "in_left": 0.21
+      }
+     }
+    }
+   },
+   "cramer_rao": {
+    "units": "decades for material, cm for offsets",
+    "noise_m": 0.08,
+    "frames": 241.0,
+    "sd": {
+     "stretch": 0.03106401115655899,
+     "shear": 0.12998530268669128,
+     "bend": 0.3369288444519043,
+     "down_blue": 0.2760191261768341,
+     "down_silver": 0.2758822739124298,
+     "down_right": 0.24692176282405853,
+     "down_left": 0.3128981292247772,
+     "in_blue": 0.3544762134552002,
+     "in_silver": 0.26463040709495544,
+     "in_right": 0.3288533687591553,
+     "in_left": 0.1933089643716812
+    },
+    "largest_correlation": {
+     "stretch": 0.6547970771789551,
+     "shear": 0.6547970771789551,
+     "bend": 0.25373920798301697,
+     "down_blue": 0.5356167554855347,
+     "down_silver": 0.5487462878227234,
+     "down_right": 0.5487462878227234,
+     "down_left": 0.5356167554855347,
+     "in_blue": 0.5152927041053772,
+     "in_silver": 0.6042921543121338,
+     "in_right": 0.47799697518348694,
+     "in_left": 0.6042921543121338
+    }
+   },
+   "nuisance_effect_mm_per_cm": {
+    "down_blue": 3.8186905439943075,
+    "down_silver": 4.0520490147173405,
+    "down_right": 4.0492103435099125,
+    "down_left": 3.818355966359377,
+    "in_blue": 2.9391716234385967,
+    "in_silver": 3.4500788897275925,
+    "in_right": 3.0480881687253714,
+    "in_left": 4.954686388373375
+   }
+  },
+  "all": {
+   "kwargs": {
+    "insets_m": [
+     0.04,
+     0.08
+    ],
+    "transverse_m": 0.08,
+    "lift_m": 0.06,
+    "lateral_m": 0.08
+   },
+   "geometry": {
+    "duration_s": 92.33333333333333,
+    "holds": 13,
+    "largest_displacement_cm": 11.932427016577249,
+    "workspace_margin_cm": {
+     "blue": 2.7,
+     "silver": 3.0
+    },
+    "pair_growth_cm": {
+     "0-1": 0.0,
+     "2-3": 0.0,
+     "0-2": 0.0,
+     "1-3": 0.0,
+     "0-3": 1.06,
+     "1-2": 1.03
+    },
+    "start_pair_m": {
+     "0-1": 0.7681225093756483,
+     "2-3": 0.7171225597279056,
+     "0-2": 0.6796551080858908,
+     "1-3": 0.6419948681201062,
+     "0-3": 1.018133686295107,
+     "1-2": 0.9666912168636885
+    }
+   },
+   "nominal_rms_mm": 2.2071884013712406,
+   "material": {
+    "stretch": {
+     "-1.0": {
+      "effect_mm": 11.139929294586182,
+      "unique_mm": 10.662696324288845,
+      "detectable": true,
+      "compensating_offsets_cm": {
+       "down_blue": 0.15,
+       "down_silver": -0.21,
+       "down_right": -0.01,
+       "down_left": 0.44,
+       "in_blue": -0.33,
+       "in_silver": 0.79,
+       "in_right": 0.4,
+       "in_left": -0.27
+      }
+     },
+     "-0.5": {
+      "effect_mm": 6.772864144295454,
+      "unique_mm": 6.310721393674612,
+      "detectable": false,
+      "compensating_offsets_cm": {
+       "down_blue": 0.41,
+       "down_silver": 0.01,
+       "down_right": 0.18,
+       "down_left": 0.26,
+       "in_blue": -0.11,
+       "in_silver": 0.12,
+       "in_right": 0.21,
+       "in_left": -0.13
+      }
+     },
+     "+0.5": {
+      "effect_mm": 22.870095446705818,
+      "unique_mm": 19.648101180791855,
+      "detectable": true,
+      "compensating_offsets_cm": {
+       "down_blue": -0.89,
+       "down_silver": -0.97,
+       "down_right": -0.64,
+       "down_left": -1.84,
+       "in_blue": 1.16,
+       "in_silver": 0.42,
+       "in_right": -1.59,
+       "in_left": 1.45
+      }
+     },
+     "+1.0": {
+      "effect_mm": 48.78484085202217,
+      "unique_mm": 45.799266546964645,
+      "detectable": true,
+      "compensating_offsets_cm": {
+       "down_blue": -2.56,
+       "down_silver": -2.19,
+       "down_right": -0.37,
+       "down_left": -0.97,
+       "in_blue": 3.38,
+       "in_silver": -2.2,
+       "in_right": 1.01,
+       "in_left": -0.75
+      }
+     }
+    },
+    "shear": {
+     "-1.0": {
+      "effect_mm": 3.7900011520832777,
+      "unique_mm": 3.249317640438676,
+      "detectable": false,
+      "compensating_offsets_cm": {
+       "down_blue": 0.25,
+       "down_silver": 0.21,
+       "down_right": -0.01,
+       "down_left": 0.04,
+       "in_blue": 0.15,
+       "in_silver": 0.34,
+       "in_right": -0.13,
+       "in_left": -0.08
+      }
+     },
+     "-0.5": {
+      "effect_mm": 3.8310366217046976,
+      "unique_mm": 2.8387345373630524,
+      "detectable": false,
+      "compensating_offsets_cm": {
+       "down_blue": 0.2,
+       "down_silver": 0.17,
+       "down_right": -0.11,
+       "down_left": 0.1,
+       "in_blue": 0.19,
+       "in_silver": 0.55,
+       "in_right": 0.13,
+       "in_left": -0.2
+      }
+     },
+     "+0.5": {
+      "effect_mm": 5.229969043284655,
+      "unique_mm": 4.814444109797478,
+      "detectable": false,
+      "compensating_offsets_cm": {
+       "down_blue": -0.07,
+       "down_silver": 0.08,
+       "down_right": -0.12,
+       "down_left": -0.39,
+       "in_blue": 0.57,
+       "in_silver": 0.05,
+       "in_right": -0.26,
+       "in_left": 0.36
+      }
+     },
+     "+1.0": {
+      "effect_mm": 16.27764105796814,
+      "unique_mm": 14.485911466181278,
+      "detectable": true,
+      "compensating_offsets_cm": {
+       "down_blue": -0.44,
+       "down_silver": -0.32,
+       "down_right": -0.22,
+       "down_left": -1.17,
+       "in_blue": 0.89,
+       "in_silver": 0.05,
+       "in_right": -1.95,
+       "in_left": 0.98
+      }
+     }
+    },
+    "bend": {
+     "-1.0": {
+      "effect_mm": 0.7941669318825006,
+      "unique_mm": 0.7584853447042406,
+      "detectable": false,
+      "compensating_offsets_cm": {
+       "down_blue": -0.01,
+       "down_silver": 0.0,
+       "down_right": -0.01,
+       "down_left": -0.01,
+       "in_blue": 0.06,
+       "in_silver": -0.02,
+       "in_right": 0.02,
+       "in_left": 0.03
+      }
+     },
+     "-0.5": {
+      "effect_mm": 0.6690682494081557,
+      "unique_mm": 0.651287380605936,
+      "detectable": false,
+      "compensating_offsets_cm": {
+       "down_blue": -0.01,
+       "down_silver": -0.01,
+       "down_right": 0.0,
+       "down_left": -0.0,
+       "in_blue": 0.04,
+       "in_silver": -0.02,
+       "in_right": 0.01,
+       "in_left": 0.03
+      }
+     },
+     "+0.5": {
+      "effect_mm": 1.7398176714777946,
+      "unique_mm": 1.5909175854176283,
+      "detectable": false,
+      "compensating_offsets_cm": {
+       "down_blue": 0.01,
+       "down_silver": 0.12,
+       "down_right": -0.03,
+       "down_left": -0.0,
+       "in_blue": 0.2,
+       "in_silver": 0.05,
+       "in_right": -0.13,
+       "in_left": -0.07
+      }
+     },
+     "+1.0": {
+      "effect_mm": 3.98852676153183,
+      "unique_mm": 3.8477289490401745,
+      "detectable": false,
+      "compensating_offsets_cm": {
+       "down_blue": 0.16,
+       "down_silver": 0.19,
+       "down_right": 0.04,
+       "down_left": 0.06,
+       "in_blue": -0.09,
+       "in_silver": 0.0,
+       "in_right": -0.33,
+       "in_left": 0.04
+      }
+     }
+    }
+   },
+   "cramer_rao": {
+    "units": "decades for material, cm for offsets",
+    "noise_m": 0.08,
+    "frames": 457.0,
+    "sd": {
+     "stretch": 0.02700785920023918,
+     "shear": 0.10020489990711212,
+     "bend": 0.23606115579605103,
+     "down_blue": 0.18377439677715302,
+     "down_silver": 0.1968258172273636,
+     "down_right": 0.17623834311962128,
+     "down_left": 0.21295803785324097,
+     "in_blue": 0.25042030215263367,
+     "in_silver": 0.144352525472641,
+     "in_right": 0.2646086513996124,
+     "in_left": 0.11497462540864944
+    },
+    "largest_correlation": {
+     "stretch": 0.6417595148086548,
+     "shear": 0.64175945520401,
+     "bend": 0.18087197840213776,
+     "down_blue": 0.5364687442779541,
+     "down_silver": 0.5559455156326294,
+     "down_right": 0.5559455156326294,
+     "down_left": 0.5364687442779541,
+     "in_blue": 0.4902530908584595,
+     "in_silver": 0.3833608031272888,
+     "in_right": 0.4064273238182068,
+     "in_left": 0.2586607038974762
+    }
+   },
+   "nuisance_effect_mm_per_cm": {
+    "down_blue": 4.236615262925625,
+    "down_silver": 3.543396247550845,
+    "down_right": 3.8433047011494637,
+    "down_left": 3.9744647219777107,
+    "in_blue": 2.8293910436332226,
+    "in_silver": 3.9844131097197533,
+    "in_right": 2.2769628558307886,
+    "in_left": 4.745274316519499
+   }
+  },
+  "recorded live_115658 40:120": {
+   "kwargs": null,
+   "geometry": {
+    "duration_s": 79.983334933
+   },
+   "nominal_rms_mm": 2.8218624647706747,
+   "material": {
+    "stretch": {
+     "-1.0": {
+      "effect_mm": 24.201063439249992,
+      "unique_mm": 20.964397117495537,
+      "detectable": true,
+      "compensating_offsets_cm": {
+       "down_blue": 0.0,
+       "down_silver": 0.15,
+       "down_right": 0.1,
+       "down_left": 0.45,
+       "in_blue": -0.15,
+       "in_silver": 0.3,
+       "in_right": 0.36,
+       "in_left": 0.33
+      }
+     },
+     "-0.5": {
+      "effect_mm": 20.434822887182236,
+      "unique_mm": 17.403854057192802,
+      "detectable": true,
+      "compensating_offsets_cm": {
+       "down_blue": -0.13,
+       "down_silver": 0.02,
+       "down_right": 0.32,
+       "down_left": 0.51,
+       "in_blue": -0.04,
+       "in_silver": 0.18,
+       "in_right": 0.23,
+       "in_left": 0.17
+      }
+     },
+     "+0.5": {
+      "effect_mm": 26.39898471534252,
+      "unique_mm": 25.68165957927704,
+      "detectable": true,
+      "compensating_offsets_cm": {
+       "down_blue": 0.17,
+       "down_silver": -0.31,
+       "down_right": 0.2,
+       "down_left": -0.58,
+       "in_blue": 0.12,
+       "in_silver": 0.24,
+       "in_right": -0.23,
+       "in_left": -0.26
+      }
+     },
+     "+1.0": {
+      "effect_mm": 45.638833194971085,
+      "unique_mm": 44.39277574419975,
+      "detectable": true,
+      "compensating_offsets_cm": {
+       "down_blue": -0.06,
+       "down_silver": -0.03,
+       "down_right": 0.0,
+       "down_left": -0.74,
+       "in_blue": 0.12,
+       "in_silver": 0.16,
+       "in_right": -0.63,
+       "in_left": -0.2
+      }
+     }
+    },
+    "shear": {
+     "-1.0": {
+      "effect_mm": 14.108779840171337,
+      "unique_mm": 10.739676654338837,
+      "detectable": true,
+      "compensating_offsets_cm": {
+       "down_blue": -0.42,
+       "down_silver": 0.36,
+       "down_right": -0.35,
+       "down_left": 0.09,
+       "in_blue": 0.59,
+       "in_silver": 0.22,
+       "in_right": 0.1,
+       "in_left": 0.45
+      }
+     },
+     "-0.5": {
+      "effect_mm": 10.388114489614964,
+      "unique_mm": 8.078443817794323,
+      "detectable": true,
+      "compensating_offsets_cm": {
+       "down_blue": -0.12,
+       "down_silver": -0.26,
+       "down_right": 0.27,
+       "down_left": 0.08,
+       "in_blue": 0.01,
+       "in_silver": 0.2,
+       "in_right": 0.33,
+       "in_left": 0.29
+      }
+     },
+     "+0.5": {
+      "effect_mm": 10.038669221103191,
+      "unique_mm": 8.280238136649132,
+      "detectable": true,
+      "compensating_offsets_cm": {
+       "down_blue": 0.31,
+       "down_silver": 0.18,
+       "down_right": -0.1,
+       "down_left": -0.27,
+       "in_blue": -0.1,
+       "in_silver": 0.23,
+       "in_right": 0.43,
+       "in_left": -0.2
+      }
+     },
+     "+1.0": {
+      "effect_mm": 24.534018710255623,
+      "unique_mm": 23.803502321243286,
+      "detectable": true,
+      "compensating_offsets_cm": {
+       "down_blue": 0.42,
+       "down_silver": -0.05,
+       "down_right": 0.14,
+       "down_left": -0.58,
+       "in_blue": 0.17,
+       "in_silver": 0.06,
+       "in_right": -0.31,
+       "in_left": -0.04
+      }
+     }
+    },
+    "bend": {
+     "-1.0": {
+      "effect_mm": 10.009365156292915,
+      "unique_mm": 3.2489788718521595,
+      "detectable": false,
+      "compensating_offsets_cm": {
+       "down_blue": 0.1,
+       "down_silver": 0.16,
+       "down_right": 0.1,
+       "down_left": 0.15,
+       "in_blue": 0.08,
+       "in_silver": 0.58,
+       "in_right": 0.03,
+       "in_left": -0.2
+      }
+     },
+     "-0.5": {
+      "effect_mm": 5.191457457840443,
+      "unique_mm": 2.921868348494172,
+      "detectable": false,
+      "compensating_offsets_cm": {
+       "down_blue": -0.09,
+       "down_silver": -0.03,
+       "down_right": 0.01,
+       "down_left": 0.08,
+       "in_blue": 0.04,
+       "in_silver": 0.02,
+       "in_right": 0.41,
+       "in_left": 0.1
+      }
+     },
+     "+0.5": {
+      "effect_mm": 9.96251031756401,
+      "unique_mm": 5.923689808696508,
+      "detectable": false,
+      "compensating_offsets_cm": {
+       "down_blue": 0.29,
+       "down_silver": 0.6,
+       "down_right": 0.2,
+       "down_left": 0.28,
+       "in_blue": 0.04,
+       "in_silver": -0.22,
+       "in_right": -0.3,
+       "in_left": -0.04
+      }
+     },
+     "+1.0": {
+      "effect_mm": 12.199661694467068,
+      "unique_mm": 9.28646419197321,
+      "detectable": true,
+      "compensating_offsets_cm": {
+       "down_blue": -0.05,
+       "down_silver": 0.16,
+       "down_right": 0.26,
+       "down_left": 0.32,
+       "in_blue": 0.32,
+       "in_silver": 0.06,
+       "in_right": -0.08,
+       "in_left": -0.01
+      }
+     }
+    }
+   },
+   "cramer_rao": {
+    "units": "decades for material, cm for offsets",
+    "noise_m": 0.08,
+    "frames": 395.0,
+    "sd": {
+     "stretch": 0.01818986050784588,
+     "shear": 0.05369482561945915,
+     "bend": 0.08025135099887848,
+     "down_blue": 0.10190200805664062,
+     "down_silver": 0.1125025674700737,
+     "down_right": 0.09993346780538559,
+     "down_left": 0.08013731241226196,
+     "in_blue": 0.11749298125505447,
+     "in_silver": 0.09962598979473114,
+     "in_right": 0.11183095723390579,
+     "in_left": 0.12633992731571198
+    },
+    "largest_correlation": {
+     "stretch": 0.5919673442840576,
+     "shear": 0.5919674038887024,
+     "bend": 0.5097519159317017,
+     "down_blue": 0.49779826402664185,
+     "down_silver": 0.4700658619403839,
+     "down_right": 0.29117026925086975,
+     "down_left": 0.27477389574050903,
+     "in_blue": 0.6078546047210693,
+     "in_silver": 0.4700658619403839,
+     "in_right": 0.5097519159317017,
+     "in_left": 0.6078546047210693
+    }
+   },
+   "nuisance_effect_mm_per_cm": {
+    "down_blue": 10.423234663903713,
+    "down_silver": 10.465094819664955,
+    "down_right": 10.111128911376,
+    "down_left": 9.8319873213768,
+    "in_blue": 10.095570236444473,
+    "in_silver": 10.683423839509487,
+    "in_right": 8.379349485039711,
+    "in_left": 10.447722859680653
+   }
+  }
+ }
+}

@@ -1,0 +1,29 @@
+{
+ "overhead": {
+  "changed_pixels": 2744,
+  "points_in_roi": 2277,
+  "floor_z_corrected_m": 0.0027,
+  "floor_points": 35470,
+  "floor_tilt_error_deg": 0.695
+ },
+ "blue_wrist": {
+  "changed_pixels": 9595,
+  "points_in_roi": 9565,
+  "floor_z_corrected_m": -0.0013,
+  "floor_points": 53183,
+  "floor_tilt_error_deg": 0.23
+ },
+ "silver_wrist": {
+  "changed_pixels": 12667,
+  "points_in_roi": 12659,
+  "floor_z_corrected_m": -0.0064,
+  "floor_points": 48184,
+  "floor_tilt_error_deg": 0.14
+ }
+}
+24501 foreground points, 1 supported clusters; the selected obstacle has 24424 points (100 %)
+overhead: 2232 points in the selected obstacle
+blue_wrist: 9546 points in the selected obstacle
+silver_wrist: 12646 points in the selected obstacle
+prism: 18 sides (20 faces), top 0.552 m; capsule: center [0.0015, 0.2333], radius 0.142 m, cylinder 0.552 m, cap 0.000 m (sphere 100.000 m), 35 L (the earlier box-based capsule: 63 L)
+written: /home/taha/ros2_colcon_ws/src/oarbots/experiments/hardware/sessions/2026-11-20_obstacle/box1_113547/obstacle.yaml, .urdf, .obj, .png, obstacle_points.npz

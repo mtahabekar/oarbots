@@ -1,0 +1,12 @@
+blue: no nonzero commands
+silver: no nonzero commands
+twin while enabled: none (commands sent) 100 %
+warm-up start coefficients: bend x10, shear x10 (material version 0)
+warm-up at 10:39:02: commands on 100 % of the window, a twin fault 0 %
+   hold t+ 0.0- 3.0 s  target inset   0 cm  reached blue  0.0 cm, silver  0.0 cm
+   hold t+ 3.7- 8.7 s  target inset   2 cm  reached blue  0.0 cm, silver  0.0 cm
+   hold t+ 9.3-14.3 s  target inset   4 cm  reached blue  0.0 cm, silver  0.0 cm
+   hold t+15.7-20.7 s  target inset   0 cm  reached blue  0.0 cm, silver  0.0 cm
+   full 3D return error: blue 0.0 mm (xyz [0.0, 0.0, 0.0] mm), silver 0.0 mm (xyz [0.0, 0.0, 0.0] mm)
+   ROBOTS DID NOT MOVE (at most 0 mm toward the hands): any fit from this window is meaningless
+bank: no completed fit in this recording (the run ended before the fit, about 4 min)

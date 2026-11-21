@@ -1,0 +1,36 @@
+== live_115658 40:120: 80 s
+    blue: range x  20.9 y  17.7 z  42.1 cm; speed p50  6.4 p95 14.2 cm/s
+  silver: range x  22.9 y  17.1 z  41.7 cm; speed p50  5.6 p95 13.6 cm/s
+   right: range x  44.8 y  35.2 z  59.9 cm; speed p50  8.4 p95 31.4 cm/s
+    left: range x  45.1 y  37.9 z  70.5 cm; speed p50 10.4 p95 40.8 cm/s
+  hands-centre minus robots-centre: range x 14.3 y 25.5 z 25.6 cm; mean dz 1.7 cm
+  pair blue-silver: 0.534-0.773 m (median 0.623)
+  pair right-left: 0.121-0.842 m (median 0.698)
+  pair blue-right: 0.533-0.786 m (median 0.720)
+  pair silver-left: 0.523-0.814 m (median 0.746)
+  pair blue-left: 0.777-1.152 m (median 0.998)
+  pair silver-right: 0.746-1.098 m (median 0.962)
+== live_120408 20:90: 70 s
+    blue: range x  12.2 y  23.9 z  33.3 cm; speed p50  0.0 p95 13.6 cm/s
+  silver: range x  15.3 y  23.3 z  34.9 cm; speed p50  0.0 p95 13.5 cm/s
+   right: range x  62.7 y  75.9 z  81.3 cm; speed p50  4.6 p95 41.9 cm/s
+    left: range x  80.4 y 112.6 z 110.8 cm; speed p50 10.1 p95 74.4 cm/s
+  hands-centre minus robots-centre: range x 67.8 y 71.0 z 89.4 cm; mean dz -6.1 cm
+  pair blue-silver: 0.572-0.779 m (median 0.653)
+  pair right-left: 0.085-0.842 m (median 0.674)
+  pair blue-right: 0.157-0.842 m (median 0.657)
+  pair silver-left: 0.216-0.842 m (median 0.665)
+  pair blue-left: 0.240-1.190 m (median 0.954)
+  pair silver-right: 0.272-1.084 m (median 0.908)
+== warmup_10_0.1_111137 warmup: 21 s
+    blue: range x   0.7 y   4.7 z   0.4 cm; speed p50  0.0 p95  3.7 cm/s
+  silver: range x   0.5 y   5.1 z   0.3 cm; speed p50  0.0 p95  3.7 cm/s
+   right: range x   1.6 y   2.1 z   2.4 cm; speed p50  1.7 p95 22.7 cm/s
+    left: range x   1.7 y   1.8 z   1.9 cm; speed p50  1.2 p95 11.2 cm/s
+  hands-centre minus robots-centre: range x 1.2 y 5.5 z 1.9 cm; mean dz 0.1 cm
+  pair blue-silver: 0.765-0.770 m (median 0.767)
+  pair right-left: 0.712-0.733 m (median 0.722)
+  pair blue-right: 0.625-0.681 m (median 0.654)
+  pair silver-left: 0.590-0.643 m (median 0.618)
+  pair blue-left: 0.985-1.022 m (median 1.004)
+  pair silver-right: 0.925-0.972 m (median 0.951)

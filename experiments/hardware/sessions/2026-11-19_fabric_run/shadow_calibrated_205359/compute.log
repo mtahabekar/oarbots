@@ -17,3 +17,6 @@
 [twin-4] [INFO] [1795139641.089029813] [fabric_twin]: fabric twin waiting for four grips; cloth library at /home/taha/ros2_colcon_ws/src/fabric_sim_isaacsim_newton
 [observer-3] [INFO] [1795139641.150605323] [fabric_state_estimator]: Preparing physics backend before accepting live captures
 [twin-4] [INFO] [1795139660.486201614] [fabric_twin]: twin started from a surface between the grips in 0.8 s: 841 particles, obstacle clearance 50.568 m
+[rviz2-6] terminate called after throwing an instance of 'std::system_error'
+[rviz2-6]   what():  Invalid argument
+[ERROR] [rviz2-6]: process has died [pid 262906, exit code -6, cmd '/opt/ros/jazzy/lib/rviz2/rviz2 -d /home/taha/ros2_colcon_ws/src/oarbots/experiments/hardware/sessions/2026-11-19_fabric_run/shadow_calibrated_205359/cell/fabric_cell.rviz --ros-args -r __node:=fabric_cell_rviz'].

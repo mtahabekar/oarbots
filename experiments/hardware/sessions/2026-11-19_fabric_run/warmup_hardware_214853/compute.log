@@ -1,0 +1,26 @@
+[INFO] [launch]: All log files can be found below /home/taha/.ros/log/2026-11-19-21-48-53-984453-taha-Legion-7-16IAX10-308376
+[INFO] [launch]: Default logging verbosity is set to INFO
+[INFO] [launch.user]: Using nominal grip transforms from /home/taha/ros2_colcon_ws/src/oarbots/experiments/hardware/sessions/2026-11-19_fabric_run/warmup_hardware_214853/cell/calibration.yaml (shadow run, no commands).
+[INFO] [calibration_publisher-1]: process started with pid [308390]
+[INFO] [fusion-2]: process started with pid [308391]
+[INFO] [observer-3]: process started with pid [308392]
+[INFO] [twin-4]: process started with pid [308393]
+[INFO] [parameter_bank-5]: process started with pid [308394]
+[INFO] [demo_markers-6]: process started with pid [308395]
+[INFO] [rviz2-7]: process started with pid [308396]
+[INFO] [recorder-8]: process started with pid [308397]
+[INFO] [twin_recorder-9]: process started with pid [308398]
+[rviz2-7] [INFO] [1795142934.293144904] [rviz2]: Stereo is NOT SUPPORTED
+[rviz2-7] [INFO] [1795142934.293241975] [rviz2]: OpenGl version: 4.6 (GLSL 4.6)
+[rviz2-7] [INFO] [1795142934.316968705] [rviz2]: Stereo is NOT SUPPORTED
+[rviz2-7] [INFO] [1795142934.462670463] [rviz2]: Stereo is NOT SUPPORTED
+[calibration_publisher-1] [INFO] [1795142934.466607320] [cell_calibration]: published 5 calibration transforms from /home/taha/ros2_colcon_ws/src/oarbots/experiments/hardware/sessions/2026-11-19_fabric_run/warmup_hardware_214853/cell/calibration.yaml
+[twin-4] [INFO] [1795142935.644083746] [fabric_twin]: fabric twin waiting for four grips; cloth library at /home/taha/ros2_colcon_ws/src/fabric_sim_isaacsim_newton
+[observer-3] [INFO] [1795142935.721930673] [fabric_state_estimator]: Preparing physics backend before accepting live captures
+[parameter_bank-5] [INFO] [1795142935.825225270] [fabric_parameter_bank]: parameter bank ready; depth from 2 cameras
+[twin-4] [INFO] [1795142957.241258635] [fabric_twin]: twin started from a surface between the grips in 0.8 s: 841 particles, obstacle clearance 50.535 m
+[twin-4] [ERROR] [1795143009.857615049] [fabric_twin]: robot commands NOT enabled: a grip is not measured now
+[twin-4] [INFO] [1795143021.847176996] [fabric_twin]: warm-up excitation started: insets [0.02, 0.04] m at 0.03 m/s, 21 s, started at 1795143021.67 s
+[parameter_bank-5] [INFO] [1795143043.495278063] [fabric_parameter_bank]: calibration started
+[twin-4] [ERROR] [1795143091.745965787] [fabric_twin]: robot commands NOT enabled: a grip is not measured now
+[twin-4] [INFO] [1795143103.905338567] [fabric_twin]: warm-up excitation started: insets [0.02, 0.04] m at 0.03 m/s, 21 s, started at 1795143103.64 s

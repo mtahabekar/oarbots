@@ -1,0 +1,100 @@
+# Fabric twin configuration (plain structured YAML, one `config_file` parameter).
+# The stand-in sheet (not carbon): dimensions, density and bending measured (2026-11-17 lab log). The carbon
+# values stay in the package defaults (src/fabric_twin/config, fabric_sim_cell, the Isaac plant). Shear and
+# stretch are uncalibrated; obstacle geometry is a starting value for hardware validation.
+sheet:
+  width_m: 0.84
+  height_m: 0.84
+  cells_x: 28            # 29 x 29 particles: the simulator's validated real-time ("lean") mesh
+  cells_y: 28
+  areal_density_kg_m2: 0.215  # 152 g / (0.84 m × 0.84 m), sheet only
+  stretch: [30000.0, 30000.0, 6000.0]   # Style3D weft, warp, shear; uncalibrated nominal values
+  # Cantilever (Peirce / ASTM D1388), 2026-11-17: G = 1.4e-5 N m (1.1-1.8e-5), bending length 1.9 cm, no
+  # difference between strips (directions not recorded): isotropic. Style3D's edge stiffness is in N m (Bergou
+  # quadratic bending); taken as G. Was the carbon placeholder [0.002, 0.001, 0.0005], ~140x stiffer (2026-11-20).
+  bend: [1.4e-5, 1.4e-5, 1.4e-5]
+  patch_m: 0.03          # side of each grip patch: set to the measured finger contact size
+  # 2026-11-20 replay study: at 28 x 28 this is a rigid 2 x 2 particle square held flat, which cannot rotate as
+  # a pinch does; it keeps the sheet 57-77 mm too high. A one-particle pin (patch_m below the cell, e.g. 0.005)
+  # gave -6..+1 mm on every mesh from 14 x 14 to 56 x 56. Candidate change, not applied (needs the CBF model checked).
+  substeps: 8
+  iterations: 6
+  linear_iterations: 3
+  # 2026-11-20 analysis (docs report "Fabric twin: RA-L readiness ..."): at 8 substeps x 6 iterations the sheet
+  # does not converge within a frame and floats 97 mm above the real sheet on the warm-up replay (20 x 20 mesh at
+  # 32 x 10: 16 mm); cloth self-contact makes identical runs differ by 21-44 mm. Candidates, after a timing run on
+  # this laptop: self_collision false, then more iterations/substeps or a 14-20 cell mesh within 16.7 ms a frame.
+  self_collision: true
+obstacle:                # a box in the world frame; the CBF uses its enclosing capsule
+  center: [0.0, 0.0, 0.16]
+  half_extents: [0.22, 0.22, 0.16]
+  yaw: 0.0
+feedback:
+  stiffness_per_s2: 25.0
+  damping_per_s: 6.0
+  integral_per_s3: 150.0
+  integral_limit_mps2: 5.0
+  integral_leak_sec: 5.0
+  accel_limit_mps2: 20.0
+  trusted_sigma_m: 0.02
+  max_error_m: 0.25
+cbf:
+  enabled: true
+  # Empty: this package's config/cbf.json: clearance rows only (no model tension or strain
+  # rows), a 7-cell prediction grid, and arm acceleration limited to 0.4 m/s^2.
+  config: ''
+  period: 4              # twin frames per control update (15 Hz)
+  # What the arms deliver: 16 cm/s in every direction at the grasp at 36 deg/s per joint (2026-11-19 sweep;
+  # was 0.1). Never plan faster than that; the bridge caps at the same 0.15.
+  max_speed_mps: 0.15
+  # Clearance target around the capsule: 2 cm of twin error plus 0.15 m/s x 0.5 s of measured arm lag.
+  # The capsule itself already lies outside the box (7.3 cm above the top of the default box).
+  # It shapes the command; it never stops the arms (a virtual collision is reported only, 2026-11-19).
+  # The 0.6 m Isaac descent rehearsal at this setting cleared the table by 6.25 cm (lab log 2026-11-19).
+  margin_m: 0.095
+stretch_guard:
+  # Model-free stretch guard, the last layer before a command leaves the twin, with priority over
+  # obstacle clearance: every grip pair through a robot stays at least this much shorter than the
+  # sheet between them, using measured grips (robot TF, glove filter). It replaces the CBF's
+  # model-predicted tension limit; see docs/fabric-hardware-test-guide.md, "Tension".
+  # Slack: must exceed the grip position error (robot grip calibration + glove tag-to-pinch error)
+  # plus arm speed x command latency. 3.5 cm = about 1 cm + 1 cm + 0.15 m/s x 0.1 s; recompute on site.
+  # It slows separating motion; it never stops the arms.
+  enabled: true
+  edge_slack_m: 0.035
+  diagonal_slack_m: 0.035
+  alpha_per_s: 2.0
+  max_speed_mps: 0.15
+  # Yield to the measured cloth pull on each robot above force_soft_n. Off until the wrist force
+  # sign, frame and compensation are verified (platform gates H5/H6). force_soft_n is a
+  # PLACEHOLDER: set it to about half of the smallest measured capacity (arm payload margin,
+  # robot grip slip force, what the person holds comfortably).
+  force_feedback: false
+  force_soft_n: 3.0
+  force_gain_mps_per_n: 0.004
+  force_max_speed_mps: 0.05
+  force_topics: [/oarbot_blue/force_torque_calibrated, /oarbot_silver/force_torque_calibrated]
+  force_on_robot_sign: 1.0   # +1: the calibrated force is the cloth's pull on the tool
+runtime:
+  world_frame: world
+  robot_grip_frames: [oarbot_blue/fabric_grip, oarbot_silver/fabric_grip]
+  hand_topic: /fabric/hand_states
+  estimate_topic: /fabric/estimated_state
+  # The twin runs this far behind the clock so grips are interpolated between measurements:
+  # about one glove period plus the hand-fusion delay. Add max_speed * delay to the CBF margin.
+  delay_sec: 0.15
+  hand_coast_sec: 1.0
+  hand_start_age_sec: 0.5
+  estimate_stale_sec: 1.0
+  state_every_frames: 4
+  # Each robot grip keeps its starting offset from its human grip, shortened by this much, so
+  # following lag changes the sag instead of stretching the sheet.
+  formation_slack_m: 0.04
+  formation_lateral_slack_m: 0.02   # each robot grip this much toward the other robot
+  formation_gain_per_s: 2.0
+  commands_enabled: false   # shadow mode: commands are computed and logged, zero is sent
+warmup:
+  insets_m: [0.02, 0.04]
+  speed_mps: 0.03
+  hold_sec: 5.0
+  settle_sec: 3.0
