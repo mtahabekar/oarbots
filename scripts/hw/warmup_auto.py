@@ -11,8 +11,9 @@ For an operator who holds the sheet and cannot type. Run it, then walk to the sh
   2. Waits until the twin follows the measured grips and both hands are seen steadily, saying which glove
      is unseen. Turns commands on (formation captured now: hold the sheet as it should stay; retried while a
      hand drops out), arms both bridges.
-  3. Deadman operator: "press and hold". Starts the warm-up (robots step 2 then 4 cm toward the hands and
-     back, 21 s). If the deadman is released during it, the run is incomplete: commands off, the run is
+  3. Deadman operator: "press and hold". Starts the warm-up (twin.yaml `warmup`, since 2026-11-21: 24 labelled
+     holds, ~194 s; robots first while the hands stay still, then spoken hand moves for the person, robots
+     still). If the deadman is released during it, the run is incomplete: commands off, the run is
      stopped, saved and repeated from step 1.
   4. "Release the deadman": commands off, bridges disarmed. The bank fits until convergence (progress spoken).
      Speaks the fit (start -> result, search edge, released), stops the twin, saves, writes review.txt.

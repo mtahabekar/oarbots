@@ -5,10 +5,11 @@
 #   scripts/hw/start_pose.sh --tolerance 1.5    # degrees, largest joint (default 1.5; a move ends within ~1.1)
 #   scripts/hw/start_pose.sh --pose <yaml>      # use an alternate pair of joint targets, e.g. warmup_grasp.yaml
 # `fabric_run.sh go` runs this first; `fabric_run.sh recentre` runs it without the tolerance check.
-# The move: scripts/hw/grasp_joints.py on each helper, both arms at once, a straight line in joint space,
-# MoveIt-checked and kept 15 cm from the other arm. The arms move only while the tablet deadman is held with
-# Fabric Follow (CBF) on for both: release, press, hold; releasing stops them, pressing again resumes. Each arm
-# holds still at the start pose until the deadman is released. The laptop speaks the steps (spd-say).
+# The move: scripts/hw/grasp_joints.py on each helper, ONE ARM AT A TIME (both at once hit each other on
+# 2026-11-21), a straight line in joint space, MoveIt-checked against the other arm's actual pose and kept 15 cm
+# from it. An arm moves only while the tablet deadman is held with Fabric Follow (CBF) on: release, press, hold
+# for each arm; releasing stops it, pressing again resumes. Each arm holds still at the start pose until the
+# deadman is released. The laptop speaks the steps (spd-say).
 # The CBF bridges share the arms' joint input: they are stopped for the move and started again (disarmed).
 # First it restarts both arms' Kinova velocity API (the driver's silent latch, see below).
 # The whole script is one block, so bash reads all of it before running any: editing this file while a run
@@ -22,7 +23,7 @@ tol=1.5; check=0; force=0; pose="$repo/experiments/hardware/cell/grasp.yaml"
 while [ $# -gt 0 ]; do case "$1" in
     --check) check=1 ;; --tolerance) tol="$2"; shift ;; --force) force=1 ;;
     --pose) pose="$(realpath -- "$2")"; shift ;;
-    *) sed -n '2,12p' "$0"; exit 2 ;; esac; shift; done
+    *) sed -n '2,13p' "$0"; exit 2 ;; esac; shift; done
 # shellcheck source=lab_ssh.sh
 source "$here/lab_ssh.sh"; lab_ssh_setup
 set +u
@@ -63,29 +64,44 @@ fi
 
 # The bridges publish on the arms' joint input; the preflight refuses a second publisher: stop them first.
 for r in blue silver; do scripts/hw/lab.sh session "$r" exec systemctl --user stop fabric-bridge >/dev/null 2>&1; done
-for r in blue silver; do
-    out="$(scripts/hw/lab.sh session "$r" exec python3 fabric_ws/scripts/hw/grasp_joints.py --robot "$r" --to ${target[$r]} --check-only 2>&1 | grep -E 'Preflight|ABORT')"
-    echo "  $r preflight: $(sed -E 's/.*"joint_change_deg": (\[[^]]*\]).*"closest_to_other_arm_m": ([0-9.]*).*/joint change \1 deg, other arm \2 m away/' <<< "$out")"
-    if ! grep -q 'Preflight passed' <<< "$out" || grep -q ABORT <<< "$out"; then
-        say "Start pose: $r failed its check"
-        for b in blue silver; do scripts/hw/lab.sh session "$b" start-cell-bridge "/home/oarbot_$b/fabric_ws/experiments/hardware/cell" >/dev/null 2>&1; done
-        exit 1
-    fi
-done
-say "Arms are off the start pose. Release, then press and hold the deadman to bring them back."
-for r in blue silver; do
+# One arm at a time (2026-11-21 10:02: both arms moving at once from Home hit each other at 7 % of the path. Each
+# preflight had checked its own path against the other arm standing still, 0.205 / 0.185 m, while both moved toward
+# each other.) Each arm is preflighted against the other arm's actual pose just before it moves: the arm with more
+# clearance goes first, the second is checked again after the first has arrived. An arm already within the
+# tolerance stays (with --force both move).
+restart_bridges() { for b in blue silver; do scripts/hw/lab.sh session "$b" start-cell-bridge "/home/oarbot_$b/fabric_ws/experiments/hardware/cell" >/dev/null 2>&1; done; }
+preflight() {  # preflight <robot>: prints the clearance to the other arm (m); fails if MoveIt or the 15 cm check fails
+    local out
+    out="$(scripts/hw/lab.sh session "$1" exec python3 fabric_ws/scripts/hw/grasp_joints.py --robot "$1" --to ${target[$1]} --check-only 2>&1 | grep -E 'Preflight|ABORT')"
+    echo "  $1 preflight: $(sed -E 's/.*"joint_change_deg": (\[[^]]*\]).*"closest_to_other_arm_m": ([0-9.]*).*/joint change \1 deg, other arm \2 m away/' <<< "$out")" >&2
+    if ! grep -q 'Preflight passed' <<< "$out" || grep -q ABORT <<< "$out"; then say "Start pose: $1 failed its check" >&2; return 1; fi
+    sed -E 's/.*"closest_to_other_arm_m": ([0-9.]*).*/\1/' <<< "$out"
+}
+move_arm() {  # move_arm <robot>: deadman-supervised move of one arm; fails on an abort
+    local r="$1" name="${1^}" pid told=0
+    say "Moving $name only. Release, then press and hold the deadman."
     scripts/hw/lab.sh session "$r" exec python3 fabric_ws/scripts/hw/grasp_joints.py --robot "$r" --to ${target[$r]} --wait 600 > "$state/start_pose_$r.log" 2>&1 &
+    pid=$!
+    while kill -0 "$pid" 2>/dev/null; do
+        if [ $told = 0 ] && grep -q Arrived "$state/start_pose_$r.log" 2>/dev/null; then say "$name at the start pose. Release the deadman."; told=1; fi
+        sleep 0.5
+    done
+    wait "$pid"
+    echo "  $r: $(grep -E 'Done|ABORT' "$state/start_pose_$r.log" | tail -1)"
+    if grep -q ABORT "$state/start_pose_$r.log"; then say "Start pose aborted on $name"; return 1; fi
+}
+mapfile -t movers < <(echo "$offsets" | awk -v t="$tol" -v f="$force" '$2 > t || f == 1 {print $1}')
+if [ "${#movers[@]}" = 2 ]; then
+    cb="$(preflight blue)" || { restart_bridges; exit 1; }
+    cs="$(preflight silver)" || { restart_bridges; exit 1; }
+    if awk -v a="$cb" -v b="$cs" 'BEGIN {exit !(a >= b)}'; then movers=(blue silver); else movers=(silver blue); fi
+    echo "  order: ${movers[0]} first (more clearance), then ${movers[1]} (checked again once ${movers[0]} has arrived)"
+fi
+for i in "${!movers[@]}"; do
+    r="${movers[$i]}"
+    if [ "$i" -gt 0 ] || [ "${#movers[@]}" = 1 ]; then preflight "$r" >/dev/null || { restart_bridges; exit 1; }; fi
+    move_arm "$r" || { restart_bridges; exit 1; }
 done
-told=0   # 1: arrival announced, 2: abort announced
-while [ -n "$(jobs -rp)" ]; do
-    if [ $told = 0 ] && grep -q Arrived "$state/start_pose_blue.log" 2>/dev/null && grep -q Arrived "$state/start_pose_silver.log" 2>/dev/null; then
-        say "Arms at the start pose. Release the deadman."; told=1
-    fi
-    if [ $told != 2 ] && grep -q ABORT "$state"/start_pose_*.log 2>/dev/null; then say "Start pose aborted"; told=2; fi
-    sleep 0.5
-done
-wait
-for r in blue silver; do echo "  $r: $(grep -E 'Done|ABORT' "$state/start_pose_$r.log" | tail -1)"; done
 for r in blue silver; do
     scripts/hw/lab.sh session "$r" start-cell-bridge "/home/oarbot_$r/fabric_ws/experiments/hardware/cell" 2>&1 | tail -1 | sed "s/^/  $r: /"
 done
