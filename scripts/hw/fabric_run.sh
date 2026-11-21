@@ -52,6 +52,11 @@
 #   fabric_run.sh save <run_dir>        large recordings to /home/taha/fabric_hw_data, camera logs from the hosts
 #   fabric_run.sh check                 read-only readiness: arms vs grasp and box, fingers, guards (state, joint
 #                                       cap), bridges (state, force/box stop), perception output, camera frame age
+#   fabric_run.sh clocks [--fix]        each host's clock against the laptop (target 5 ms, tablet 10); --fix restarts
+#                                       systemd-timesyncd on a host over the target so it syncs to the laptop again
+#                                       (a host that booted without the lab link falls back to campus NTP, 2026-11-21)
+#   fabric_run.sh deadman-watch [seconds]   read-only: print every change of /tablet_gui/deadman and e-stop and their
+#                                       rate (check the toggle deadman: press once -> ON stays, press again -> OFF)
 #   fabric_run.sh bases [seconds]       read-only: each Dingo base from its roof marker (overhead camera, on the NUC)
 #                                       against calibration.yaml; OK/WARN/FAIL by the grip shift it causes
 #                                       (scripts/hw/base_check.py; also cell_up.sh step 7)
@@ -524,6 +529,40 @@ EOF
                 fi ;;
             *) obstacle_help >&2; exit 2 ;;
         esac ;;
+    clocks)
+        targets=(oarbot_blue@192.168.1.71 oarbot_silver@192.168.1.110 nuc@192.168.1.90 tablet@192.168.1.99)
+        python3 "$here/clock_offsets.py" "${targets[@]}" 2>/dev/null | tee "$state/clocks.txt"
+        if [ "${1:-}" = --fix ]; then
+            fixed=0
+            while read -r host off unit _; do
+                limit=5; [[ "$host" == tablet* ]] && limit=10
+                if [ "$unit" = ms ] && awk -v a="${off#[+-]}" -v l="$limit" 'BEGIN {exit !(a > l)}'; then
+                    echo "  $host $off ms: restarting systemd-timesyncd (lab NTP server 192.168.1.200 first)"
+                    lab_sudo "$host" systemctl restart systemd-timesyncd && fixed=1
+                fi
+            done < "$state/clocks.txt"
+            [ $fixed = 1 ] && { sleep 8; echo "after:"; python3 "$here/clock_offsets.py" "${targets[@]}" 2>/dev/null; }
+        fi ;;
+    deadman-watch)
+        ros_env; python3 - "${1:-60}" <<'PY'
+import sys, time, rclpy
+from std_msgs.msg import Bool
+rclpy.init(); n = rclpy.create_node('deadman_watch'); st = {}; count = {'deadman': 0, 'e_stop': 0}
+def cb(name):
+    def f(m):
+        count[name] += 1
+        if st.get(name) != m.data:
+            st[name] = m.data
+            print(f"{time.strftime('%H:%M:%S')}  {name}: {'ON' if m.data else 'OFF'}", flush=True)
+    return f
+for name in count:
+    n.create_subscription(Bool, f'/tablet_gui/{name}', cb(name), 10)
+end, t0 = time.time() + float(sys.argv[1]), time.time()
+while time.time() < end:
+    rclpy.spin_once(n, timeout_sec=0.1)
+print('rates: ' + ', '.join(f'{k} {v / (time.time() - t0):.1f} Hz' for k, v in count.items()))
+PY
+        ;;
     bases) python3 "$here/base_check.py" "${1:-10}" ;;
     review) ros_env; python3 "$here/run_review.py" "${1:?review <run_dir>}" ;;
     audit) offline_env; ~/venvs/fabric_ros/bin/python "$here/twin_audit.py" "${1:?audit <run_dir>}" "${@:2}" ;;
