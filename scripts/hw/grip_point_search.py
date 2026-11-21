@@ -70,20 +70,38 @@ def recorded_offsets(run):
     return dict(tool=tool, hands=hands)
 
 
-def _init(config, override, names, run, window, depth_every, points):
+def _init(config, override, names, run, window, depth_every, points, near_m=0., far_weight=1., fixed=None):
     import identify_replay as ir
     from fabric_twin.identify import Forward
     spec = _spec(config, override)
-    _state['forward'] = Forward(spec, ir.load(Path(run), window, depth_every, points, 1.), names, point_grips=True)
+    win = ir.load(Path(run), window, depth_every, points, 1.)
+    _state['forward'] = Forward(spec, win, names, point_grips=True)
+    if fixed:
+        _state['forward'].set_fixed(**fixed)
+    # Corner weighting (user, 2026-11-21): depth points within near_m of the nearest measured grip count fully, the
+    # rest with far_weight, so the grip points are fitted from the sheet next to them, not from the belly's shape.
+    if near_m > 0:
+        _state['weights'] = np.concatenate([
+            np.where(np.min(np.linalg.norm(np.asarray(p)[:, None, :]-win.grips[k][None], axis=2), axis=1) < near_m,
+                     1., far_weight) for k, p in zip(win.depth_index, win.points)])
+    else:
+        _state['weights'] = None
 
 
 def _evaluate(theta):
     from fabric_twin.identify import summary
-    return summary(_state['forward'].raw(np.asarray(theta, float)[None]))[0]
+    raw = _state['forward'].raw(np.asarray(theta, float)[None])
+    row = summary(raw)[0]
+    w = _state['weights']
+    if w is not None:
+        x = raw[0]
+        t = np.where(np.isfinite(x), .05*np.tanh(np.nan_to_num(x)/.05), .05)
+        row['weighted_rms_mm'] = float(np.sqrt(np.sum(w*t**2)/np.sum(w))*1e3)
+    return row
 
 
 def objective(result):
-    return result['rms_tanh50_mm']
+    return result.get('weighted_rms_mm', result['rms_tanh50_mm'])
 
 
 class Pool:
@@ -130,13 +148,24 @@ def main():
     ap.add_argument('--validate', nargs='*', default=[], help='held-out run_dir:window pairs')
     ap.add_argument('--depth-every', type=int, default=2)
     ap.add_argument('--points', type=int, default=64)
+    ap.add_argument('--near-m', type=float, default=0., help='corner weighting: points within this of a grip weigh 1')
+    ap.add_argument('--far-weight', type=float, default=1., help='weight of the other points (with --near-m)')
+    ap.add_argument('--material', default='', help='also fit these log10 material scales, e.g. stretch,bend,shear')
+    ap.add_argument('--material-step', type=float, default=.25, help='first material step, decades')
+    ap.add_argument('--fix-from', type=Path, help="hold a previous result's calibrated values fixed (e.g. the grips)")
     ap.add_argument('--no-pattern', dest='pattern', action='store_false',
                     help='do not keep moving in an improving direction (pattern move, on by default since 2026-11-21)')
     ap.add_argument('--out', type=Path, required=True, help='output folder (log.jsonl, result.json)')
     a = ap.parse_args()
     a.out.mkdir(parents=True, exist_ok=True)
     override = dict(item.split('=') for item in a.override)
-    names = [f'{k}_{c}' for c in a.corners.split(',') for k in a.kinds.split(',')]
+    names = [f'{k}_{c}' for c in a.corners.split(',') for k in a.kinds.split(',') if k]
+    names += [m for m in a.material.split(',') if m]
+    fixed = {}
+    if a.fix_from:
+        fixed = {k: v for k, v in json.loads(a.fix_from.read_text())['calibrated'].items() if k not in names}
+        print(f'held fixed from {a.fix_from}: ' + ', '.join(f'{k}={v:+.3f}' for k, v in fixed.items() if v), flush=True)
+    init_extra = (a.near_m, a.far_weight, fixed)
     from fabric_twin.identify import PARAMETERS
     spec = _spec(a.config, override)
     node = spec.width_m/spec.cells_x
@@ -154,10 +183,12 @@ def main():
             theta[names.index(key)] = float(value)
     lower = np.array([PARAMETERS[n].lower for n in names]); upper = np.array([PARAMETERS[n].upper for n in names])
     is_inset = np.array([n.startswith('inset_') for n in names])
-    step = np.where(is_inset, node, a.step)
+    is_mat = np.array([PARAMETERS[n].log10 for n in names])
+    step = np.where(is_inset, node, np.where(is_mat, a.material_step, a.step))
+    min_step = np.where(is_mat, a.material_step/8, a.min_step)
     log = open(a.out / 'log.jsonl', 'w')
     a.workers = safe_workers(a.workers)
-    pool = Pool(a.workers, a.config, override, names, str(a.run.resolve()), a.window, a.depth_every, a.points)
+    pool = Pool(a.workers, a.config, override, names, str(a.run.resolve()), a.window, a.depth_every, a.points, *init_extra)
     begun = time.perf_counter()
 
     def record(kind, t, r):
@@ -185,11 +216,12 @@ def main():
             if gain > a.tolerance_mm and gain > gains.get(i, (0, 0, None))[0]:
                 gains[i] = (gain, sign, r)
         if not gains:
-            if np.all(step[~is_inset] <= a.min_step+1e-9):
+            if np.all(step[~is_inset] <= min_step[~is_inset]+1e-9):
                 print(f'pass {npass}: no improving move at the smallest step; done', flush=True)
                 break
-            step[~is_inset] = np.maximum(step[~is_inset]/2, a.min_step)
-            print(f'pass {npass}: no improving move; offset step -> {step[~is_inset][0]*100:.2f} cm', flush=True)
+            step[~is_inset] = np.maximum(step[~is_inset]/2, min_step[~is_inset])
+            print(f'pass {npass}: no improving move; steps -> ' + ', '.join(sorted({f'{v:.3g} decades' if m else f'{v*100:.2f} cm'
+                  for v, m in zip(step[~is_inset], is_mat[~is_inset])})), flush=True)
             continue
         # Candidates: the best single move, and cumulative combinations of the best 2, 3, 4, 6, 8 and all improving
         # moves (applying all ten at once overshot on hardware data), evaluated together in one parallel batch.
@@ -225,7 +257,8 @@ def main():
             if j < len(ext)-1:
                 break
         print(f'pass {npass}: objective {objective(best):.2f} mm, median {best["median_mm"]:.1f}, p95 {best["p95_abs_mm"]:.1f}; '
-              f'{len(gains)} improving coordinates; ' + ', '.join(f'{n}={v*100:.1f}cm' for n, v in zip(names, theta) if v), flush=True)
+              f'{len(gains)} improving coordinates; ' + ', '.join(
+                  f'{n}=x{10**v:.2f}' if PARAMETERS[n].log10 else f'{n}={v*100:.1f}cm' for n, v in zip(names, theta) if v), flush=True)
     pool.close()
     final = record('final', theta, best)
     validation = []
@@ -236,7 +269,8 @@ def main():
             start[names.index(key)] = float(value)
     for item in a.validate:
         run, window = item.rsplit(':', 2)[0], ':'.join(item.rsplit(':', 2)[1:])
-        vpool = Pool(min(a.workers, 3), a.config, override, names, str(Path(run).resolve()), window, a.depth_every, a.points)
+        vpool = Pool(min(a.workers, 3), a.config, override, names, str(Path(run).resolve()), window, a.depth_every, a.points,
+                     *init_extra)
         corner, began, fitted = vpool.map([np.zeros(len(names)), start, theta])
         vpool.close()
         validation.append(dict(run=run, window=window, point_grips_at_corners=corner, start=began, calibrated=fitted))

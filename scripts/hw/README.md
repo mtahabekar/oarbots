@@ -436,6 +436,22 @@ scripts/hw/fabric_run.sh identify <held_out_run> --mode evaluate --params stretc
   batched worlds (see the module note).
 - Pick windows where the sheet touches nothing (warm-ups, no-obstacle runs): the replay has no obstacle.
 
+#### Fast fit on the still hold: grip points, then stretch (2026-11-21)
+
+The person's still hold before a warm-up's motion (3 s before its start plus its 3 s start hold) is enough to fit the
+four grip points and the stretch stiffness, in that order, in a couple of minutes:
+```bash
+scripts/hw/fabric_run.sh static-fit <run> [<run> ...]                     # 40 x 40 at 32 x 10 by default
+scripts/hw/fabric_run.sh static-fit <run> ... --reuse-grips --override cells_x=28 cells_y=28 substeps=16 iterations=10 --tag static_fit_28x28
+```
+Stage 1, grip points: 12 numbers (down/in/side per corner), depth points within 20 cm of a grip weigh 1 and the rest 0.1
+(corner weighting: an unweighted fit dropped the hands 10-12 cm to imitate the belly's sag), Levenberg-Marquardt with
+a parallel forward-difference Jacobian (~33 simulations, ~90 s). Grip points change from hold to hold: fit them every
+time. Stage 2, stretch (weft/warp scale) with the grips held: parallel bracketing line search (~17 simulations, ~45 s at
+40 x 40, ~17 s at 28 x 28); stretch is the cloth's and should agree between runs. Shear and bending are not fitted (a
+still sheet does not show them). The live twin's stretch (twin.yaml) came from this on 2026-11-21. `grip-fit` is the
+older compass-search version of the same two stages (slower). Offline GPU jobs run in a memory fence.
+
 #### Calibrate from a warm-up: grip points, resolution, bending, shear (2026-11-20)
 
 `warmup-auto` records measured glove motion but its online bank fits only bending and shear. To fit the glove

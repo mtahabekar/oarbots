@@ -75,6 +75,9 @@
 #                                       fit of the four grip points (down/in/side) on the person's still hold before
 #                                       the warm-up motion, 40 x 40 mesh, keep-moving search; result in <run>/grip_fit
 #                                       (apply with grip-apply). Refuses while a twin runs (memory; 2026-11-21 OOM)
+#   fabric_run.sh static-fit <run_dir> [<run_dir> ...] [options]   offline, GPU, ~minutes: grip points (corner-weighted)
+#                                       then stretch on each run's still hold, Levenberg-Marquardt with a parallel
+#                                       Jacobian (scripts/hw/static_fit.py); stretch should agree across runs
 #   fabric_run.sh grip-apply <result.json> --bag <bag_dir> [--write]   write those grip points into the cell config:
 #                                       fabric_grip transforms, hand offsets, twin grip insets (scripts/hw/grip_point_apply.py)
 #   fabric_run.sh warmup-calibrate <warmup_run> --grips <result.json> --out <dir> [--validate run:window ...]
@@ -611,9 +614,26 @@ PY
         if [ -n "$(twin_pids)" ]; then echo "A twin (compute launch) is running: stop it first (its GPU memory and the workers' do not fit together)" >&2; exit 1; fi
         offline_env
         pgrep -f nvidia-cuda-mps-control >/dev/null || { nvidia-cuda-mps-control -d && echo "MPS started"; }
-        fenced ~/venvs/fabric_ros/bin/python "$here/grip_point_search.py" "$run" --window still:3 --kinds down,in,side \
-            --override cells_x=40 cells_y=40 substeps=32 iterations=10 --step 0.02 --min-step 0.005 --max-passes 10 \
-            --workers 6 --depth-every 1 --points 128 --out "$run/grip_fit" "$@" 2>&1 | tee "$run/grip_fit.log" ;;
+        # Stage 1: grip points from the sheet near them (corner-weighted, user 2026-11-21: an unweighted fit dropped the
+        # hands 10-12 cm to imitate the belly's sag). Stage 2: STRETCH only on the whole sheet with the fitted grips held
+        # (user: a still hanging sheet's sag is set by stretch; shear and bending are invisible to it, and today's online
+        # fits moved shear x0.06..x16 with no change in error). Both on the still window: place, settle, score.
+        # GRIP_FIT_STAGES="2" runs stage 2 alone (on an existing grip_fit/grips/result.json).
+        common=(--window still:3 --override cells_x=40 cells_y=40 substeps=32 iterations=10 --max-passes 10 \
+                --workers 6 --depth-every 1 --points 128)
+        stages="${GRIP_FIT_STAGES:-1 2}"
+        { if [[ "$stages" == *1* ]]; then echo "== stage 1: grip points (points within 20 cm of a grip weigh 1, the rest 0.1)"
+          fenced ~/venvs/fabric_ros/bin/python "$here/grip_point_search.py" "$run" "${common[@]}" --kinds down,in,side \
+              --step 0.02 --min-step 0.005 --near-m 0.2 --far-weight 0.1 --out "$run/grip_fit/grips" "$@" || exit 1; fi
+          if [[ "$stages" == *2* ]]; then echo "== stage 2: stretch with the fitted grips held (whole sheet)"
+          fenced ~/venvs/fabric_ros/bin/python "$here/grip_point_search.py" "$run" "${common[@]}" --kinds "" --start \
+              --material stretch --material-step 0.25 --fix-from "$run/grip_fit/grips/result.json" \
+              --out "$run/grip_fit/material" "$@"; fi; } 2>&1 | tee -a "$run/grip_fit.log" ;;
+    static-fit)
+        if [ -n "$(twin_pids)" ]; then echo "A twin (compute launch) is running: stop it first" >&2; exit 1; fi
+        offline_env
+        pgrep -f nvidia-cuda-mps-control >/dev/null || { nvidia-cuda-mps-control -d && echo "MPS started"; }
+        fenced ~/venvs/fabric_ros/bin/python "$here/static_fit.py" "$@" ;;
     grip-search) offline_env; fenced ~/venvs/fabric_ros/bin/python "$here/grip_point_search.py" "${1:?grip-search <run_dir> --out <dir>}" "${@:2}" ;;
     deploy-helpers)
         git fetch -q fork; echo "deploying fork/jazzy-platform-hardening $(git rev-parse --short fork/jazzy-platform-hardening) to both helpers"

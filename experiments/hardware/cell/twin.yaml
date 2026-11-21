@@ -14,7 +14,11 @@ sheet:
   cells_x: 28
   cells_y: 28
   areal_density_kg_m2: 0.215  # 152 g / (0.84 m × 0.84 m), sheet only
-  stretch: [30000.0, 30000.0, 6000.0]   # Style3D weft, warp, shear; uncalibrated nominal values
+  # Weft/warp stretch fitted 2026-11-21 (scripts/hw/static_fit.py, still hold before the warm-up, grips fitted first,
+  # 28 x 28 at 16 x 10): x0.036 (run warmup_10_0.1_113825) and x0.040 (warmup_10_10_121921), fitted independently,
+  # 0.04 decades apart; RMS 40.6 -> 26.0 and 42.8 -> 29.2 mm; the real sheet sagged 4-11 cm deeper than the nominal twin.
+  # Geometric mean x0.038 of the nominal 30000. Shear (6000) not fitted: a still sheet does not show it. Was [30000, 30000, 6000].
+  stretch: [1140.0, 1140.0, 6000.0]   # Style3D weft, warp, shear
   # Cantilever (Peirce / ASTM D1388), 2026-11-17: G = 1.4e-5 N m (1.1-1.8e-5), bending length 1.9 cm, no
   # difference between strips (directions not recorded): isotropic. Style3D's edge stiffness is in N m (Bergou
   # quadratic bending); taken as G. Was the carbon placeholder [0.002, 0.001, 0.0005], ~140x stiffer (2026-11-20).
