@@ -32,6 +32,9 @@
 #                                       twin/go uses it); default: the last successful detect or fit
 #   fabric_run.sh obstacle clear | show back to twin.yaml's virtual box | what the twin will use
 #   NO_OBSTACLE=1 fabric_run.sh go      baseline with no obstacle at all (no model, no virtual box; CBF and stretch guard on)
+#   TWIN=fitted|nominal|old CBF=on|off fabric_run.sh go   E3 conditions (default fitted, on): nominal = same model with
+#                                       nominal stretch and no grip offsets; old = the 2026-11-20 sheet model; CBF=off =
+#                                       following only (clearance still logged); written to <run>/condition.txt
 #   fabric_run.sh status [seconds]      go/no-go readout (scripts/hw/twin_monitor.py)
 #   fabric_run.sh watch [seconds]       readout every 5 s during a commanded run
 #   fabric_run.sh enable                twin commands on (formation captured now) + both bridges armed; checks that
@@ -58,6 +61,12 @@
 #                                       (a host that booted without the lab link falls back to campus NTP, 2026-11-21)
 #   fabric_run.sh deadman-watch [seconds]   read-only: print every change of /tablet_gui/deadman and e-stop and their
 #                                       rate (check the toggle deadman: press once -> ON stays, press again -> OFF)
+#   fabric_run.sh prediction-eval <run> [...] [--horizons 0.1 0.33 1] [--config twin.yaml --tag name]   E2, offline, GPU:
+#                                       the twin's free-run prediction from its recorded state vs raw depth, with the
+#                                       hold and live baselines (scripts/hw/prediction_eval.py -> <run>/prediction_eval.json)
+#   fabric_run.sh estimator-withheld <run> --withhold blue|overhead [--window a:b] [--stride n]   E6, offline, GPU: the
+#                                       estimator replayed without one camera, scored on that camera's depth, against
+#                                       the same replay with all cameras (scripts/hw/estimator_withheld.py)
 #   fabric_run.sh results [--since YYYY-MM-DD]   every audited run in one table for the paper
 #                                       (experiments/hardware/results/runs.csv; scripts/hw/results_table.py)
 #   fabric_run.sh bases [seconds]       read-only: each Dingo base from its roof marker (overhead camera, on the NUC)
@@ -301,6 +310,49 @@ open(path, 'w').write('# No-obstacle baseline: virtual collider 50 m below the c
 PY
             echo "No-obstacle run: $cell (no obstacle model; CBF and stretch guard ON). Keep the work area clear."
         fi
+        # Run condition (E3, 2026-11-21): TWIN=fitted (default: the cell as fitted) | nominal (same mesh, solver and point
+        # grips; nominal stretch, no fitted grip offsets) | old (the 2026-11-20 sheet model: 28 x 28, 8 x 6, 3 cm patches,
+        # self-contact, nominal stretch, no grip offsets); CBF=on (default) | off (following only: the nominal formation
+        # command goes to the arms unfiltered; clearance still computed and logged; stretch guard on). Only the run's own
+        # copy of the cell changes; condition.txt records it.
+        twin_variant="${TWIN:-fitted}"; cbf_mode="${CBF:-on}"
+        case "$twin_variant" in fitted|nominal|old) ;; *) echo "TWIN must be fitted, nominal or old, not $twin_variant" >&2; exit 1 ;; esac
+        case "$cbf_mode" in on|off) ;; *) echo "CBF must be on or off, not $cbf_mode" >&2; exit 1 ;; esac
+        if [ "$cmd" != warmup-twin ] && { [ "$twin_variant" != fitted ] || [ "$cbf_mode" = off ]; }; then
+            [ "$cell" = "$run/cell" ] || { cell="$run/cell"; cp experiments/hardware/cell/fabric_cell.rviz "$cell/"; }
+            python3 - "$cell" "$twin_variant" "$cbf_mode" "$repo/experiments/hardware/sessions/2026-11-20_grip_calibration/cell_before_apply" <<'PY' || exit 1
+import re, shutil, sys
+from pathlib import Path
+import yaml
+cell, variant, cbf, old = Path(sys.argv[1]), sys.argv[2], sys.argv[3], Path(sys.argv[4])
+twin = yaml.safe_load((cell / 'twin.yaml').read_text())
+notes = []
+if variant == 'nominal':
+    twin['sheet']['stretch'] = [30000.0, 30000.0, 6000.0]
+    fusion = (cell / 'fusion.yaml').read_text()
+    (cell / 'fusion.yaml').write_text(re.sub(r'(world_grip_offset_m: )\[[^\]]*\]', r'\1[0.0, 0.0, 0.0, 0.0, 0.0, 0.0]', fusion))
+    cal = (cell / 'calibration.yaml').read_text()
+    cal, n = re.subn(r'(child: oarbot_(?:blue|silver)/fabric_grip\n  translation: )\[[^\]]*\]', r'\1[0.0, 0.0, 0.0]', cal)
+    if n != 2:
+        sys.exit('TWIN=nominal: could not find both fabric_grip transforms in calibration.yaml')
+    (cell / 'calibration.yaml').write_text(cal)
+    notes.append('TWIN=nominal: same mesh, solver and point grips; nominal stretch; no fitted grip offsets')
+elif variant == 'old':
+    twin['sheet'] = yaml.safe_load((old / 'twin.yaml').read_text())['sheet']
+    for name in ('fusion.yaml', 'calibration.yaml'):
+        shutil.copy(old / name, cell / name)
+    notes.append('TWIN=old: the 2026-11-20 sheet model (28 x 28, 8 x 6, 3 cm patches, self-contact, nominal stretch), '
+                 'no grip offsets')
+if cbf == 'off':
+    twin.setdefault('cbf', {})['controller'] = 'none'
+    notes.append('CBF=off: following only, the nominal command unfiltered (clearance still computed and logged; '
+                 'stretch guard on)')
+(cell / 'twin.yaml').write_text('# Run condition: ' + '; '.join(notes) + '\n' + yaml.safe_dump(twin, sort_keys=False))
+print('\n'.join(notes))
+PY
+        fi
+        printf 'TWIN=%s\nCBF=%s\nNO_OBSTACLE=%s\n' "$twin_variant" "$cbf_mode" "${NO_OBSTACLE:-0}" > "$run/condition.txt"
+        echo "Condition: TWIN=$twin_variant CBF=$cbf_mode$([ "$cbf_mode" = off ] && echo ' (FOLLOWING ONLY: nothing keeps the sheet off the obstacle)')"
         if [ -f "$cell/obstacle.yaml" ]; then   # the obstacle this run uses: its model plus the capture's mesh and picture
             obj="$(cat "$repo/experiments/hardware/cell/obstacle_source.txt" 2>/dev/null)"
             [ -d "$obj" ] && [ -f "$obj/obstacle.yaml" ] && cmp -s "$obj/obstacle.yaml" "$cell/obstacle.yaml" || obj="$(sed -n 's/^  object: //p' "$cell/obstacle.yaml")"
@@ -598,6 +650,9 @@ while time.time() < end:
 print('rates: ' + ', '.join(f'{k} {v / (time.time() - t0):.1f} Hz' for k, v in count.items()))
 PY
         ;;
+    estimator-withheld) offline_env; PYTHONPATH="$repo/src/fabric_reference_reconstruction:$PYTHONPATH" \
+        fenced ~/venvs/fabric_ros/bin/python "$here/estimator_withheld.py" "$@" ;;
+    prediction-eval) offline_env; fenced ~/venvs/fabric_ros/bin/python "$here/prediction_eval.py" "$@" ;;
     results) offline_env; ~/venvs/fabric_ros/bin/python "$here/results_table.py" "$@" ;;
     bases) python3 "$here/base_check.py" "${1:-10}" ;;
     review) ros_env; python3 "$here/run_review.py" "${1:?review <run_dir>}" ;;

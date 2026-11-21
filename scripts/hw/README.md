@@ -29,6 +29,18 @@ scripts/hw/fabric_run.sh go                            # twin + CBF + stretch gu
 scripts/hw/fabric_run.sh stop-go                       # end: commands off, saved, reviewed, audited
 scripts/hw/fabric_run.sh results                       # all audited runs -> experiments/hardware/results/runs.csv
 ```
+E3 conditions (recorded in <run>/condition.txt; only the run's own copy of the cell changes):
+```bash
+scripts/hw/fabric_run.sh go                            # (a) CBF on, fitted twin (default: TWIN=fitted CBF=on)
+TWIN=nominal scripts/hw/fabric_run.sh go               # (b) CBF on, same model, nominal stretch, no fitted grip offsets
+TWIN=old scripts/hw/fabric_run.sh go                   #     CBF on, the 2026-11-20 sheet model (patches, self-contact)
+CBF=off scripts/hw/fabric_run.sh go                    # (c) following only: nothing keeps the sheet off the obstacle
+```
+Offline after a session (GPU):
+```bash
+scripts/hw/fabric_run.sh prediction-eval <run> [--config <twin.yaml> --tag nominal]   # E2: free-run prediction vs depth
+scripts/hw/fabric_run.sh estimator-withheld <run> --withhold blue                     # E6: estimator without Blue's camera
+```
 Saved per run: the run folder (cell snapshot, commit, review.txt, audit.json, status/CBF logs, auto_start or warm-up
 log, fit_apply results) and in /home/taha/fabric_hw_data/<day>_fabric_run_<run>/ the bag (forces, joints, TF,
 gloves, hands, observations, twin and estimator topics, commands to bridge/guard/driver, deadman, e-stop, overhead

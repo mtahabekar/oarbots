@@ -109,6 +109,9 @@ def main():
         if day < a.since:
             continue
         row = dict(day=day, run=run.name, kind=run.name.split('_')[0])
+        cond = dict(line.split('=', 1) for line in (run / 'condition.txt').read_text().split() if '=' in line) \
+            if (run / 'condition.txt').exists() else {}
+        row.update(twin_variant=cond.get('TWIN'), cbf=cond.get('CBF'))
         row.update(config(run))
         row.update(status_stats(run / 'twin.status.jsonl'))
         row.update(review_stats(run / 'review.txt'))
@@ -118,7 +121,7 @@ def main():
     keys = list(dict.fromkeys(k for r in rows for k in r))
     with open(OUT / 'runs.csv', 'w', newline='') as f:
         w = csv.DictWriter(f, keys); w.writeheader(); w.writerows(rows)
-    short = ['day', 'run', 'mesh', 'solver', 'grips', 'stretch', 'obstacle', 'frame_ms_p95', 'commands_s_blue',
+    short = ['day', 'run', 'twin_variant', 'cbf', 'mesh', 'solver', 'grips', 'stretch', 'obstacle', 'frame_ms_p95', 'commands_s_blue',
              'twin_depth_median_mm_cam0', 'twin_depth_median_mm_cam1', 'real_min_cm', 'real_p5_cm',
              'real_minus_twin_median_cm', 'frames_real_inside']
     lines = ['| ' + ' | '.join(short) + ' |', '|' + ' --- |'*len(short)]

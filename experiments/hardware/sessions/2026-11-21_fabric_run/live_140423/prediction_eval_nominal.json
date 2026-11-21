@@ -1,0 +1,239 @@
+{
+ "run": "/home/taha/ros2_colcon_ws/src/oarbots/experiments/hardware/sessions/2026-11-21_fabric_run/live_140423",
+ "config": "experiments/hardware/results/configs/twin_nominal_2026-11-21.yaml",
+ "mesh": [
+  28,
+  28
+ ],
+ "solver": [
+  8,
+  6
+ ],
+ "stretch": [
+  30000.0,
+  30000.0,
+  6000.0
+ ],
+ "starts": 281,
+ "every_s": 1.0,
+ "horizons_s": [
+  0.1,
+  0.33,
+  1.0
+ ],
+ "results": {
+  "0.1": {
+   "model": {
+    "1": {
+     "points": 22678,
+     "median_mm": 2.6,
+     "mad_mm": 18.7,
+     "p95_abs_mm": 60.3,
+     "rms_tanh50_mm": 22.9
+    },
+    "0": {
+     "points": 36785,
+     "median_mm": -12.8,
+     "mad_mm": 29.6,
+     "p95_abs_mm": 65.4,
+     "rms_tanh50_mm": 28.9
+    },
+    "all": {
+     "points": 59463,
+     "median_mm": -4.7,
+     "mad_mm": 25.1,
+     "p95_abs_mm": 63.7,
+     "rms_tanh50_mm": 26.8
+    }
+   },
+   "hold": {
+    "1": {
+     "points": 22695,
+     "median_mm": 5.2,
+     "mad_mm": 19.4,
+     "p95_abs_mm": 63.3,
+     "rms_tanh50_mm": 23.6
+    },
+    "0": {
+     "points": 36778,
+     "median_mm": -11.0,
+     "mad_mm": 30.9,
+     "p95_abs_mm": 68.0,
+     "rms_tanh50_mm": 29.3
+    },
+    "all": {
+     "points": 59473,
+     "median_mm": -2.4,
+     "mad_mm": 26.1,
+     "p95_abs_mm": 66.1,
+     "rms_tanh50_mm": 27.2
+    }
+   },
+   "live": {
+    "1": {
+     "points": 22708,
+     "median_mm": 4.6,
+     "mad_mm": 18.6,
+     "p95_abs_mm": 60.2,
+     "rms_tanh50_mm": 22.8
+    },
+    "0": {
+     "points": 36780,
+     "median_mm": -10.7,
+     "mad_mm": 30.0,
+     "p95_abs_mm": 65.7,
+     "rms_tanh50_mm": 28.9
+    },
+    "all": {
+     "points": 59488,
+     "median_mm": -2.6,
+     "mad_mm": 25.0,
+     "p95_abs_mm": 63.7,
+     "rms_tanh50_mm": 26.8
+    }
+   }
+  },
+  "0.33": {
+   "model": {
+    "1": {
+     "points": 34730,
+     "median_mm": -0.3,
+     "mad_mm": 20.9,
+     "p95_abs_mm": 70.5,
+     "rms_tanh50_mm": 24.9
+    },
+    "0": {
+     "points": 54363,
+     "median_mm": -17.1,
+     "mad_mm": 27.4,
+     "p95_abs_mm": 63.4,
+     "rms_tanh50_mm": 28.7
+    },
+    "all": {
+     "points": 89093,
+     "median_mm": -9.0,
+     "mad_mm": 25.9,
+     "p95_abs_mm": 65.7,
+     "rms_tanh50_mm": 27.3
+    }
+   },
+   "hold": {
+    "1": {
+     "points": 34758,
+     "median_mm": 3.9,
+     "mad_mm": 23.4,
+     "p95_abs_mm": 76.5,
+     "rms_tanh50_mm": 26.4
+    },
+    "0": {
+     "points": 54295,
+     "median_mm": -15.9,
+     "mad_mm": 29.9,
+     "p95_abs_mm": 70.7,
+     "rms_tanh50_mm": 29.8
+    },
+    "all": {
+     "points": 89053,
+     "median_mm": -6.1,
+     "mad_mm": 28.6,
+     "p95_abs_mm": 73.0,
+     "rms_tanh50_mm": 28.6
+    }
+   },
+   "live": {
+    "1": {
+     "points": 34840,
+     "median_mm": 3.9,
+     "mad_mm": 19.5,
+     "p95_abs_mm": 66.4,
+     "rms_tanh50_mm": 24.0
+    },
+    "0": {
+     "points": 54468,
+     "median_mm": -12.8,
+     "mad_mm": 28.3,
+     "p95_abs_mm": 62.6,
+     "rms_tanh50_mm": 28.4
+    },
+    "all": {
+     "points": 89308,
+     "median_mm": -4.3,
+     "mad_mm": 25.3,
+     "p95_abs_mm": 63.5,
+     "rms_tanh50_mm": 26.7
+    }
+   }
+  },
+  "1.0": {
+   "model": {
+    "0": {
+     "points": 3396,
+     "median_mm": -25.1,
+     "mad_mm": 24.4,
+     "p95_abs_mm": 60.1,
+     "rms_tanh50_mm": 29.7
+    },
+    "1": {
+     "points": 1187,
+     "median_mm": -2.7,
+     "mad_mm": 20.6,
+     "p95_abs_mm": 114.2,
+     "rms_tanh50_mm": 26.5
+    },
+    "all": {
+     "points": 4583,
+     "median_mm": -18.2,
+     "mad_mm": 27.8,
+     "p95_abs_mm": 64.0,
+     "rms_tanh50_mm": 28.9
+    }
+   },
+   "hold": {
+    "0": {
+     "points": 3380,
+     "median_mm": -28.9,
+     "mad_mm": 26.7,
+     "p95_abs_mm": 94.7,
+     "rms_tanh50_mm": 34.4
+    },
+    "1": {
+     "points": 1078,
+     "median_mm": 5.1,
+     "mad_mm": 21.1,
+     "p95_abs_mm": 110.9,
+     "rms_tanh50_mm": 26.5
+    },
+    "all": {
+     "points": 4458,
+     "median_mm": -17.8,
+     "mad_mm": 33.3,
+     "p95_abs_mm": 97.4,
+     "rms_tanh50_mm": 32.6
+    }
+   },
+   "live": {
+    "0": {
+     "points": 3396,
+     "median_mm": -16.1,
+     "mad_mm": 32.7,
+     "p95_abs_mm": 62.1,
+     "rms_tanh50_mm": 30.2
+    },
+    "1": {
+     "points": 1181,
+     "median_mm": 4.0,
+     "mad_mm": 18.1,
+     "p95_abs_mm": 100.0,
+     "rms_tanh50_mm": 25.3
+    },
+    "all": {
+     "points": 4577,
+     "median_mm": -7.1,
+     "mad_mm": 30.4,
+     "p95_abs_mm": 67.5,
+     "rms_tanh50_mm": 29.0
+    }
+   }
+  }
+ }
+}

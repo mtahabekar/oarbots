@@ -1,0 +1,45 @@
+{
+ "run": "/home/taha/ros2_colcon_ws/src/oarbots/experiments/hardware/sessions/2026-11-21_fabric_run/live_140423",
+ "withheld": {
+  "cameras": [
+   "/nuc/fabric/observations"
+  ],
+  "frames": 145,
+  "dropped": 5,
+  "degraded": 122,
+  "seconds": 25.4,
+  "vs_withheld_camera": {
+   "points": 30586,
+   "median_mm": -3.9,
+   "mad_mm": 12.7,
+   "p95_abs_mm": 80.2,
+   "over_30mm": 0.197,
+   "coverage_95": 0.912
+  }
+ },
+ "withheld_topic": "/oarbot_blue/azure_kinect/fabric/observations",
+ "camera_index": 0,
+ "window_s": [
+  60.0,
+  90.0
+ ],
+ "stride": 1,
+ "all": {
+  "cameras": [
+   "/oarbot_blue/azure_kinect/fabric/observations",
+   "/nuc/fabric/observations"
+  ],
+  "frames": 290,
+  "dropped": 11,
+  "degraded": 267,
+  "seconds": 30.0,
+  "vs_withheld_camera": {
+   "points": 31352,
+   "median_mm": -1.7,
+   "mad_mm": 6.4,
+   "p95_abs_mm": 29.4,
+   "over_30mm": 0.048,
+   "coverage_95": 0.977
+  }
+ }
+}
