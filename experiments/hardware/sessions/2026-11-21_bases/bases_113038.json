@@ -1,0 +1,102 @@
+{
+ "oarbot_blue": {
+  "measured": {
+   "x": -0.4278,
+   "y": -1.069,
+   "yaw_deg": 90.0
+  },
+  "calibration": {
+   "x": -0.4223,
+   "y": -1.0607,
+   "yaw_deg": 90.2833375448112
+  },
+  "dx_mm": -5.5,
+  "dy_mm": -8.3,
+  "dyaw_deg": -0.28,
+  "grip_shift_mm": 8.8,
+  "method": "corners",
+  "level": "OK",
+  "raw": {
+   "robot": "oarbot_blue",
+   "n": 150,
+   "how": [
+    "marker"
+   ],
+   "x": -0.4278,
+   "y": -1.069,
+   "yaw_deg": 90.0,
+   "sd_mm": [
+    1.2,
+    0.6
+   ],
+   "sd_yaw_deg": 0.16,
+   "to_target_mm": 8.7,
+   "to_target_deg": -0.0,
+   "by_method": {
+    "marker": {
+     "n": 150,
+     "x": -0.4278,
+     "y": -1.069,
+     "yaw_deg": 90.0,
+     "sd_mm": [
+      1.2,
+      0.6
+     ],
+     "sd_yaw_deg": 0.16
+    }
+   }
+  }
+ },
+ "oarbot_silver": {
+  "measured": {
+   "x": 0.4124,
+   "y": -1.0747,
+   "yaw_deg": 90.66
+  },
+  "calibration": {
+   "x": 0.4165,
+   "y": -1.0708,
+   "yaw_deg": 90.56001610712399
+  },
+  "dx_mm": -4.1,
+  "dy_mm": -3.9,
+  "dyaw_deg": 0.1,
+  "grip_shift_mm": 6.6,
+  "method": "corners",
+  "level": "OK",
+  "raw": {
+   "robot": "oarbot_silver",
+   "n": 150,
+   "how": [
+    "marker"
+   ],
+   "x": 0.4124,
+   "y": -1.0747,
+   "yaw_deg": 90.66,
+   "sd_mm": [
+    1.3,
+    0.5
+   ],
+   "sd_yaw_deg": 0.17,
+   "to_target_mm": 12.4,
+   "to_target_deg": -0.66,
+   "by_method": {
+    "marker": {
+     "n": 150,
+     "x": 0.4124,
+     "y": -1.0747,
+     "yaw_deg": 90.66,
+     "sd_mm": [
+      1.3,
+      0.5
+     ],
+     "sd_yaw_deg": 0.17
+    }
+   }
+  }
+ },
+ "time": "2026-11-21T11:30:38",
+ "seconds": 10.0,
+ "ok_mm": 10.0,
+ "fail_mm": 20.0
+}

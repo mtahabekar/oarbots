@@ -16,8 +16,8 @@ import sys
 import time
 
 REMOTE = ('for i in 1 2 3 4 5 6 7 8; do read x; date +%s.%N; done; '
-          '(timedatectl show -p Timezone -p NTPSynchronized --value; systemctl is-active chrony systemd-timesyncd) '
-          '2>/dev/null | tr "\\n" " "')
+          '(timedatectl show -p Timezone -p NTPSynchronized --value; systemctl is-active chrony systemd-timesyncd; '
+          'timedatectl show-timesync -p ServerAddress --value || echo none) 2>/dev/null | tr "\\n" " "')
 
 
 def offset(host):
@@ -43,9 +43,11 @@ def main():
     for host in sys.argv[1:]:
         try:
             off, rtt, rest = offset(host)
-            tz, synced, *daemons = rest + ['?'] * 4
+            tz, synced, *daemons = rest + ['?'] * 5
+            # server: the NTP server timesyncd follows (the lab's is the laptop, 192.168.1.200; a host that booted
+            # without the lab link falls back to campus NTP: `fabric_run.sh clocks --fix`)
             print(f'{host:30s} {off * 1e3:+8.1f} ms  (round trip {rtt * 1e3:.1f} ms)  tz {tz}  synchronized {synced}  '
-                  f'chrony {daemons[0]}  timesyncd {daemons[1]}')
+                  f'chrony {daemons[0]}  timesyncd {daemons[1]}  server {daemons[2] or "none"}')
         except (ValueError, OSError) as e:
             print(f'{host:30s} failed: {e}')
 

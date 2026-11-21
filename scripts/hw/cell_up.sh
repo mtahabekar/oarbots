@@ -66,7 +66,7 @@ python3 "$here/clock_offsets.py" "${SSH_TARGET[blue]}" "${SSH_TARGET[silver]}" "
 while read -r host off unit _; do
     [ "$unit" = ms ] || { warn "$host: no offset ($off $unit)"; continue; }
     a="${off#[+-]}"; limit=5; [[ "$host" == tablet* ]] && limit=10
-    awk -v a="$a" -v l="$limit" 'BEGIN{exit !(a<=l)}' && ok "$host $off ms" || warn "$host $off ms (over $limit ms: wait for timesyncd, or check its server)"
+    awk -v a="$a" -v l="$limit" 'BEGIN{exit !(a<=l)}' && ok "$host $off ms" || warn "$host $off ms (over $limit ms: scripts/hw/fabric_run.sh clocks --fix)"
 done
 
 step "4 Deployed code (~/fabric_ws on each machine against the fork's jazzy-platform-hardening)"

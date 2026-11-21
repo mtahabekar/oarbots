@@ -533,15 +533,27 @@ EOF
         targets=(oarbot_blue@192.168.1.71 oarbot_silver@192.168.1.110 nuc@192.168.1.90 tablet@192.168.1.99)
         python3 "$here/clock_offsets.py" "${targets[@]}" 2>/dev/null | tee "$state/clocks.txt"
         if [ "${1:-}" = --fix ]; then
-            fixed=0
-            while read -r host off unit _; do
+            # The lab drop-in (2026-11-17) plus, since 2026-11-21, a 64 s poll cap: timesyncd backed off to 34 min
+            # polls while its frequency was ~35 ppm off, so Silver and the NUC swung -22..+28 ms between polls.
+            dropin='# Fabric cell (2026-11-17): sync to the compute laptop on the lab LAN first, the campus server second.
+# 2026-11-21: poll at most every 64 s (34 min polls let a 35 ppm frequency error drift ~70 ms).
+# Revert: delete this file, then: sudo systemctl restart systemd-timesyncd
+[Time]
+NTP=192.168.1.200 ntp-ipv4.rpi.edu
+PollIntervalMinSec=16
+PollIntervalMaxSec=64'
+            for host in "${targets[@]}"; do
+                have="$("$LAB_SSH" "$host" 'cat /etc/systemd/timesyncd.conf.d/fabric-lab.conf 2>/dev/null')"
+                server="$(grep "^$host " "$state/clocks.txt" | sed -n 's/.*server \([^ ]*\).*/\1/p')"
+                off="$(grep "^$host " "$state/clocks.txt" | awk '{print $2}')"
                 limit=5; [[ "$host" == tablet* ]] && limit=10
-                if [ "$unit" = ms ] && awk -v a="${off#[+-]}" -v l="$limit" 'BEGIN {exit !(a > l)}'; then
-                    echo "  $host $off ms: restarting systemd-timesyncd (lab NTP server 192.168.1.200 first)"
-                    lab_sudo "$host" systemctl restart systemd-timesyncd && fixed=1
+                if [ "$have" != "$dropin" ] || [ "$server" != 192.168.1.200 ] || awk -v a="${off#[+-]}" -v l="$limit" 'BEGIN {exit !(a > l)}'; then
+                    echo "  $host ($off ms, server ${server:-?}): lab timesyncd drop-in written, timesyncd restarted"
+                    # password on stdin for sudo, then the file content
+                    { cat "$LAB_PW_FILE"; printf '%s\n' "$dropin"; } | "$LAB_SSH" "$host" "sudo -k -S -p '' sh -c 'mkdir -p /etc/systemd/timesyncd.conf.d && cat > /etc/systemd/timesyncd.conf.d/fabric-lab.conf && systemctl restart systemd-timesyncd'"
                 fi
-            done < "$state/clocks.txt"
-            [ $fixed = 1 ] && { sleep 8; echo "after:"; python3 "$here/clock_offsets.py" "${targets[@]}" 2>/dev/null; }
+            done
+            sleep 10; echo "after:"; python3 "$here/clock_offsets.py" "${targets[@]}" 2>/dev/null
         fi ;;
     deadman-watch)
         ros_env; python3 - "${1:-60}" <<'PY'
